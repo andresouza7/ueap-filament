@@ -3,13 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SocialUserResource\Pages;
+use App\Filament\Resources\SocialUserResource\RelationManagers\CalendarOccurrencesRelationManager;
 use App\Filament\Resources\SocialUserResource\RelationManagers\OrdinancesRelationManager;
+use App\Filament\Resources\SocialUserResource\RelationManagers\PostsRelationManager;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\SocialUser;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -29,11 +32,12 @@ class SocialUserResource extends Resource
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $slug = 'servidor';
 
     protected static ?string $navigationGroup = 'Social';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -71,7 +75,7 @@ class SocialUserResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -88,6 +92,11 @@ class SocialUserResource extends Resource
                 Section::make('Dados Funcionais')
                     ->columns(2)
                     ->schema([
+                        ImageEntry::make('profile_photo_url')
+                            ->columnSpanFull()
+                            ->hiddenLabel()
+                            // ->circular()
+                            ->width(100),
                         TextEntry::make('person.name')->label('Nome'),
                         TextEntry::make('enrollment')->label('Matrícula'),
                         TextEntry::make('email')->label('Email'),
@@ -103,7 +112,9 @@ class SocialUserResource extends Resource
     {
         return [
             //
-            OrdinancesRelationManager::class
+            PostsRelationManager::class,
+            OrdinancesRelationManager::class,
+            CalendarOccurrencesRelationManager::class
         ];
     }
 

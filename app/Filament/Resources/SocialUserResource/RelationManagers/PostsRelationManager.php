@@ -6,20 +6,22 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OrdinancesRelationManager extends RelationManager
+class PostsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'ordinances';
-    protected static ?string $title = 'Portarias';
+    protected static string $relationship = 'posts';
+    protected static ?string $title = 'Postagens';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('description')
+                Forms\Components\TextInput::make('uuid')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -28,17 +30,24 @@ class OrdinancesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('description')
+            ->recordTitleAttribute('uuid')
             ->columns([
-                Tables\Columns\TextColumn::make('number')->label('Número')->searchable(),
-                Tables\Columns\TextColumn::make('year')->label('Ano')->searchable(),
-                Tables\Columns\TextColumn::make('subject')->label('Assunto')->searchable(),
-                Tables\Columns\TextColumn::make('description')->label('Descrição')->searchable(),
+                Stack::make([
+                    TextColumn::make('user.login')
+                        ->icon('heroicon-o-user'),
+                    TextColumn::make('updated_at')
+                        ->badge()
+                        ->color('gray')
+                        ->dateTime(),
+                    TextColumn::make('text')
+                        ->label('Lotação')
+                        ->html()
+                        ->searchable()
+                ])->space(3)
             ])
-            ->defaultSort(function (Builder $query): Builder {
-                return $query
-                    ->orderByRaw('CHAR_LENGTH(number) DESC')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
-            })
+            ->contentGrid([
+                'xl' => 1,
+            ])
             ->filters([
                 //
             ])

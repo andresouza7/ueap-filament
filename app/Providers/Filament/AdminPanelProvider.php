@@ -29,6 +29,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('Intranet')
+            ->brandLogo(asset('img/logo.png'))
+            ->brandLogoHeight('50px')
             ->login()
             ->colors([
                 'primary' => Color::Teal,
@@ -38,18 +40,28 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+            ->navigationGroups([
+                'Minha Área',
+                'Social',
+                'Gerência'
+            ])
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
-                ->url(fn () => route('filament.admin.resources.servidor.view', Auth::id()))
-                ->icon('heroicon-o-cog-6-tooth')
-                ->sort(1)
-                ->group('Minha Área')
+                    ->url(fn() => route('filament.admin.resources.servidor.view', Auth::id()))
+                    ->icon('heroicon-o-user-circle')
+                    ->sort(1)
+                    ->group('Minha Área'),
+                NavigationItem::make('Minhas Portarias')
+                    ->url(fn() => route('filament.admin.resources.servidor.view', [Auth::id(), 'activeRelationManager' => 1]))
+                    ->icon('heroicon-o-document-text')
+                    ->sort(2)
+                    ->group('Minha Área')
                 // ->visible(fn (): bool => auth()->user()?->user_type === 'admin'),
-                ])
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
+                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

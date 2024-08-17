@@ -18,12 +18,13 @@ class SocialPost extends Model
         'text'
     ];
 
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id')->with('person');
     }
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class, 'group_id');
     }
 }

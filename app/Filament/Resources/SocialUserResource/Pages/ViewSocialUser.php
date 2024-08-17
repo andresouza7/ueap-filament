@@ -9,4 +9,14 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewSocialUser extends ViewRecord
 {
     protected static string $resource = SocialUserResource::class;
+
+    public function hasCombinedRelationManagerTabsWithContent(): bool
+    {
+        return true;
+    }
+
+    public function getContentTabIcon(): ?string
+    {
+        return 'heroicon-m-eye';
+    }
 }

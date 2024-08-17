@@ -25,11 +25,12 @@ class Profile extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil';
     // protected static bool $shouldRegisterNavigation = false;
     protected static string $view = 'filament.pages.profile';
     protected static ?string $title = 'Alterar Perfil';
     protected static ?string $navigationGroup = 'Minha Área';
+    protected static ?int $navigationSort = 4;
 
     // Form Data
     public ?array $data = [];

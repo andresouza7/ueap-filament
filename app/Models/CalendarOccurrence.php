@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CalendarOccurrence extends Model
 {
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'calendar_occurrences';
 
     protected $dates = ['start_date', 'end_date'];
 
@@ -25,10 +28,8 @@ class CalendarOccurrence extends Model
         'description'
     ];
 
-    use HasFactory, SoftDeletes;
-
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 }

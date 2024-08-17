@@ -21,6 +21,7 @@ class Password extends Page implements Forms\Contracts\HasForms
     protected static string $view = 'filament.pages.password';
     protected static ?string $title = 'Alterar Senha';
     protected static ?string $navigationGroup = 'Minha Área';
+    protected static ?int $navigationSort = 5;
 
     public ?array $data = [];
     public ?User $record = null;
@@ -59,7 +60,6 @@ class Password extends Page implements Forms\Contracts\HasForms
 
         // Emit notification
         $this->getSavedNotification()?->send();
-
     }
 
     protected function getSavedNotification(): ?Notification
@@ -76,29 +76,33 @@ class Password extends Page implements Forms\Contracts\HasForms
 
     public function form(Forms\Form $form): Forms\Form
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('current_password')
-                ->label('Senha Atual')
-                ->password()
-                ->required()
-                ->rules([
-                    fn(): Closure => function (string $attribute, $value, Closure $fail) {
-                        if (!Hash::check($value, Auth::user()->password)) {
-                            $fail('A senha atual está incorreta.');
-                        }
-                    }
-                ]),
-            Forms\Components\TextInput::make('password')
-                ->label('Nova Senha')
-                ->password()
-                ->revealable()
-                ->required(),
-            Forms\Components\TextInput::make('confirm_password')
-                ->label('Confirmar Senha')
-                ->password()->password()->same('password')
-                ->revealable()
-                ->required(),
-        ])
+        return $form
+            ->columns(2)
+            ->schema([
+                // Forms\Components\TextInput::make('current_password')
+                //     ->label('Senha Atual')
+                //     ->password()
+                //     ->revealable()
+                //     ->required()
+                //     ->rules([
+                //         fn(): Closure => function (string $attribute, $value, Closure $fail) {
+                //             if (!Hash::check($value, Auth::user()->password)) {
+                //                 $fail('A senha atual está incorreta.');
+                //             }
+                //         }
+                //     ]),
+                Forms\Components\TextInput::make('password')
+                    ->label('Nova Senha')
+                    ->password()
+                    ->revealable()
+                    ->required(),
+                Forms\Components\TextInput::make('confirm_password')
+                    ->label('Confirmar Senha')
+                    ->password()->password()->same('password')
+                    ->revealable()
+                    ->required(),
+
+            ])
             ->model($this->record)
             ->statePath('data')
             ->operation('edit');

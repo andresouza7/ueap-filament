@@ -60,11 +60,13 @@ class User extends Authenticatable implements HasName
         'profile_photo_url'
     ];
 
-    public function getProfilePhotoUrlAttribute() {
-        return 'https://api.dicebear.com/7.x/bottts/png';
+    public function getProfilePhotoUrlAttribute()
+    {
+        return asset('img/hacker.png');
     }
 
-    public function getFilamentName(): string {
+    public function getFilamentName(): string
+    {
         return $this->login ?? 'user';
     }
 
@@ -103,5 +105,15 @@ class User extends Authenticatable implements HasName
     {
         // Access the ordinances through the related person
         return $this->person->ordinances();
+    }
+
+    public function calendar_occurrences()
+    {
+        return $this->hasMany(CalendarOccurrence::class, 'user_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(SocialPost::class, 'user_id');
     }
 }

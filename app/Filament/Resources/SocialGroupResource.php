@@ -23,11 +23,12 @@ class SocialGroupResource extends Resource
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $slug = 'setores';
 
     protected static ?string $navigationGroup = 'Social';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
