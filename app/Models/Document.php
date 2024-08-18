@@ -20,15 +20,16 @@ class Document extends Model
         'title',
         'description',
         'status',
-        'user_created_id'
+        'user_created_id',
+        'user_updated_id'
     ];
 
-    public function created_by()
+    public function user_created()
     {
         return $this->belongsTo(User::class, 'user_created_id');
     }
 
-    public function updated_by()
+    public function user_updated()
     {
         return $this->belongsTo(User::class, 'user_updated_id');
     }

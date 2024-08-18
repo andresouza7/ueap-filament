@@ -45,4 +45,9 @@ class Group extends Model
     {
         return $this->hasOne(CommissionedRole::class)->with('occupant');
     }
+
+    public function document_categories()
+    {
+        return $this->belongsToMany(DocumentCategory::class, 'document_category_group');
+    }
 }

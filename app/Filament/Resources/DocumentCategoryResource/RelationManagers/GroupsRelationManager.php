@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\RelationManagers;
+namespace App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,13 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class GroupsRelationManager extends RelationManager
 {
     protected static string $relationship = 'groups';
-    protected static ?string $title = 'Permissões';
+    protected static ?string $title = 'Setores vinculados';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -28,11 +28,10 @@ class GroupsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->inverseRelationship('document_categories')
             ->recordTitleAttribute('description')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
             ])
             ->filters([
                 //
@@ -41,17 +40,17 @@ class GroupsRelationManager extends RelationManager
                 // Tables\Actions\CreateAction::make(),
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
-                    ->label('Habilitar Permissão')
+                    ->label('Vincular Setor'),
             ])
             ->actions([
-                Tables\Actions\DetachAction::make()->label('Remover Permissão'),
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DetachBulkAction::make(),
                     // Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\DetachBulkAction::make()->label('Remover Permissões'),
                 ]),
             ]);
     }
