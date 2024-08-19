@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentCategoryUserResource extends Resource
 {
@@ -89,7 +90,7 @@ class DocumentCategoryUserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $userGroupIds = auth()->user()->groups->pluck('id')->toArray();
+        $userGroupIds = Auth::user()->groups->pluck('id')->toArray();
 
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([

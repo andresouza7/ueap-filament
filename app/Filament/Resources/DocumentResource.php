@@ -5,12 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DocumentResource\Pages;
 use App\Filament\Resources\DocumentResource\RelationManagers;
 use App\Models\Document;
+use App\Models\DocumentCategory;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DocumentResource extends Resource
@@ -30,28 +34,31 @@ class DocumentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->label('Tipo')
+                    ->options(DocumentCategory::pluck('name', 'slug')->toArray())
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('title')
+                    ->label('Título')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Descrição')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('user_created_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('user_updated_id')
-                    ->numeric(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'draft' => 'Rascunho',
+                        'published' => 'Publicado',
+                        'unpublished' => 'Despublicado'
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('year')
+                    ->label('Ano')
                     ->maxLength(255),
+                SpatieMediaLibraryFileUpload::make('anexo')
+                    ->openable()
+                    ->required()
             ]);
     }
 
@@ -79,6 +86,7 @@ class DocumentResource extends Resource
                 Tables\Columns\TextColumn::make('user_updated.login')
                     ->label('Editado Por')
                     ->sortable(),
+                // SpatieMediaLibraryImageColumn::make('anexo'),
                 Tables\Columns\TextColumn::make('user_created.login')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
@@ -101,12 +109,18 @@ class DocumentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('anexo')
+                    ->label('Baixar')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn(Model $record) => $record->getFirstMediaUrl()) // Adjust to your media method
+                    ->openUrlInNewTab()
+                    ->disabled(fn(Model $record) => empty($record->getFirstMediaUrl())),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\ForceDeleteBulkAction::make(),
+                    // Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
