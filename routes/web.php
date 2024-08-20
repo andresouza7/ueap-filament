@@ -6,6 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function() {
-    return redirect()->route('filament.admin.auth.login');
+Route::get('/login', function () {
+    return redirect()->route('filament.app.auth.login');
 })->name('login');

@@ -12,6 +12,7 @@ class WebPage extends Model
 
     protected $fillable = [
         'uuid',
+        'web_menu_id',
         'user_created_id',
         'web_category_id',
         'slug',
@@ -34,5 +35,10 @@ class WebPage extends Model
     public function user_updated()
     {
         return $this->belongsTo(User::class, 'user_updated_id', 'id', 'users');
+    }
+
+    public function web_menu()
+    {
+        return $this->belongsTo(WebMenu::class, 'web_menu_id');
     }
 }
