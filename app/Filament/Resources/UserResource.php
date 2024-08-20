@@ -16,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -24,7 +25,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Gerência';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -67,10 +68,12 @@ class UserResource extends Resource
                                             ->relationship('commissioned_role', 'description')
                                             ->searchable()
                                             ->preload(),
-                                        Forms\Components\Toggle::make('active')
-                                            ->hiddenOn('create')
-                                            ->label('Vínculo Ativo')
-                                            ->required(),
+                                        Forms\Components\Select::make('roles')
+                                            ->label('Permissões')
+                                            ->relationship('roles', 'name')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload(),
                                     ]),
                                 Tabs\Tab::make('Dados Pessoais')
                                     ->schema([
@@ -193,7 +196,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            GroupsRelationManager::class
+            // GroupsRelationManager::class
         ];
     }
 
@@ -209,6 +212,9 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        // dd(auth()->user()->getRoleNames());
+        // $role = Role::create(['name' => 'test']);
+        // auth()->user()->assignRole('test');
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 // SoftDeletingScope::class,
