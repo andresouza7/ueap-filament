@@ -55,6 +55,7 @@ class SocialUserResource extends Resource
                 //
                 Stack::make([
                     ImageColumn::make('profile_photo_url')
+                        ->size('80px')
                         ->circular(),
                     TextColumn::make('person.name')
                         ->icon('heroicon-o-user')
@@ -75,7 +76,7 @@ class SocialUserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

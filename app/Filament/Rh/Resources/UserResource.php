@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Rh\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers\GroupsRelationManager;
-use App\Filament\Resources\UserResource\RelationManagers\PersonRelationManager;
+use App\Filament\Rh\Resources\UserResource\Pages;
+use App\Filament\Rh\Resources\UserResource\RelationManagers\GroupsRelationManager;
+use App\Filament\Rh\Resources\UserResource\RelationManagers\PersonRelationManager;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
@@ -23,7 +23,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Usuário';
 
-    protected static ?string $navigationGroup = 'Gerência';
+    protected static ?string $navigationGroup = 'RH';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
@@ -130,22 +130,23 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('group.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('login')
+                Tables\Columns\TextColumn::make('person.name')
+                    ->label('Nome')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('enrollment')
+                    ->label('Matrícula')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('group.name')
+                    ->label('Lotação')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('effective_role.description')
+                    ->label('Cargo Efetivo')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('commissioned_role.description')
+                    ->label('Cargo Comissionado')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -158,30 +159,12 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('uuid')
-                    ->label('UUID'),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('current_team_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('profile_photo_path')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('two_factor_confirmed_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('gauth_id')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gauth_type')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
             ])
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

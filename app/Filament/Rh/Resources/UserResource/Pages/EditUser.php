@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Rh\Resources\UserResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Rh\Resources\UserResource;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -21,7 +21,7 @@ class EditUser extends EditRecord
             // Actions\ForceDeleteAction::make(),
             // Actions\RestoreAction::make(),
             Actions\Action::make('resetPassword')
-                ->label('Reset Password')
+                ->label('Resetar Senha')
                 ->action(function (User $record) {
                     // Get the related person's cpf_cnpj value
                     $cpfCnpj = $record->person->cpf_cnpj;
@@ -34,15 +34,15 @@ class EditUser extends EditRecord
 
                     // Notify the user of the password reset
                     Notification::make()
-                        ->title('Password Reset')
-                        ->body('The password has been reset successfully.')
+                        ->title('Operação concluída')
+                        ->body('Senha resetada com sucesso!')
                         ->success()
                         ->send();
                 })
                 ->requiresConfirmation()
                 ->icon('heroicon-s-key')
-                ->modalHeading('Confirm Password Reset')
-                ->modalDescription('Are you sure you want to reset the password for this user?')
+                ->modalHeading('Confirmar redefinição da senha')
+                ->modalDescription('O usuário será deslogado de qualquer sessão ativa e sua senha padrão será redefinida para o seu CPF.')
                 ->color('danger'),
         ];
     }

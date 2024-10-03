@@ -66,9 +66,9 @@ class SocialPostResource extends Resource
                         ->searchable()
                 ])->space(3)
             ])
-            ->contentGrid([
-                'xl' => 1,
-            ])
+            // ->contentGrid([
+            //     'xl' => 1,
+            // ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

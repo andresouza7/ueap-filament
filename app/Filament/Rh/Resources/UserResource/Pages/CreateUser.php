@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Rh\Resources\UserResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Rh\Resources\UserResource;
 use App\Models\Person;
 use App\Models\User;
 use Exception;
