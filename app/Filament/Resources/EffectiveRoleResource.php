@@ -31,11 +31,9 @@ class EffectiveRoleResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('description')
+                    ->label('Descrição')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
             ]);
     }
 

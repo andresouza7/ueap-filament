@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CommissionedRoleResource\Pages;
-use App\Filament\Resources\CommissionedRoleResource\RelationManagers;
-use App\Models\CommissionedRole;
+use App\Filament\Resources\GroupResource\Pages;
+use App\Filament\Resources\GroupResource\RelationManagers;
+use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,54 +13,50 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CommissionedRoleResource extends Resource
+class GroupResource extends Resource
 {
-    protected static ?string $model = CommissionedRole::class;
-    protected static ?string $modelLabel = 'Cargo Comissionado';
-    protected static ?string $pluralModelLabel = 'Cargos Comissionados';
-
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-
-    protected static ?string $slug = 'cargo-comissionado';
+    protected static ?string $model = Group::class;
+    protected static ?string $modelLabel = 'Setor';
+    protected static ?string $pluralModelLabel = 'Setores';
 
     protected static ?string $navigationGroup = 'Gerência';
-    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('description')
-                    ->label('Descrição')
-                    ->required()
+                Forms\Components\TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('position')
-                    ->label('Ordem')
+                Forms\Components\TextInput::make('description')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('ramal')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('group_parent_id')
                     ->numeric(),
-                Forms\Components\Select::make('group_id')
-                    ->label('Vinculado a')
-                    ->relationship('group', 'description')
-                    ->preload()
+                Forms\Components\TextInput::make('uuid')
+                    ->label('UUID')
+                    ->required(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort(fn(Builder $query) => $query->orderBy('position', 'asc')->orderBy('description'))
+            ->defaultSort('name')
             ->columns([
                 Tables\Columns\TextColumn::make('id')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('group.name')
-                    ->label('Vinculado a'),
-                Tables\Columns\TextColumn::make('occupant.name')
-                    ->label('Ocupante'),
-                Tables\Columns\TextColumn::make('position')
-                    ->label('Ordem')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('parent.name')
+                    ->label('Pertence a')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -82,11 +78,11 @@ class CommissionedRoleResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                    // Tables\Actions\ForceDeleteBulkAction::make(),
-                    // Tables\Actions\RestoreBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                //     Tables\Actions\ForceDeleteBulkAction::make(),
+                //     Tables\Actions\RestoreBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -100,9 +96,9 @@ class CommissionedRoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCommissionedRoles::route('/'),
-            'create' => Pages\CreateCommissionedRole::route('/create'),
-            'edit' => Pages\EditCommissionedRole::route('/{record}/edit'),
+            'index' => Pages\ListGroups::route('/'),
+            'create' => Pages\CreateGroup::route('/create'),
+            'edit' => Pages\EditGroup::route('/{record}/edit'),
         ];
     }
 
