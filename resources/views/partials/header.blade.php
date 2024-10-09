@@ -18,7 +18,9 @@
 </nav>
 
 <!-- Text Header -->
-<img src="{{ asset('img/banner-large.jpg') }}" alt="banner ueap" class="mx-auto" />
+<img src="{{ asset('img/banner-large.jpg') }}" alt="banner ueap" class="mx-auto hidden md:block" />
+<img src="{{ asset('img/banner-small.jpg') }}" alt="banner ueap" class="mx-auto md:hidden" />
+
 {{-- <header class="w-full container mx-auto">
     <div class="flex flex-col items-center py-12">
         <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
@@ -30,16 +32,17 @@
 
 <!-- Topic Nav -->
 <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
-    <div class="block sm:hidden">
+    <div class="block lg:hidden">
         <a href="#"
-            class="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center"
+            class="block lg:hidden text-sm font-bold uppercase text-center flex justify-center items-center"
             @click="open = !open">
-            Topics <i :class="open ? 'fa-chevron-down' : 'fa-chevron-up'" class="fas ml-2"></i>
+            Menu <i :class="open ? 'fa-chevron-down' : 'fa-chevron-up'" class="fas ml-2"></i>
         </a>
     </div>
-    <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
+
+    <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow lg:flex sm:items-center lg:w-auto">
         <div
-            class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
+            class="w-full container mx-auto flex flex-col lg:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
 
             @php
                 $items = \App\Models\WebMenuItem::whereHas('menu', function ($query) {
@@ -53,6 +56,7 @@
 
             @foreach ($items as $item)
                 @if ($item->sub_itens->count())
+                    <!-- Context Menu Container -->
                     @livewire('dropdown-menu', [
                         'id' => $item->id,
                         'label' => $item->name,

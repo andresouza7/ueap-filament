@@ -28,7 +28,7 @@
 <body class="bg-white font-family-karla">
 
     <!-- Page Container -->
-    <div class="container mx-auto flex flex-wrap" style="width: 1230px">
+    <div class="container mx-auto flex flex-wrap" style="max-width: 1230px">
 
         <!-- Header Section -->
         @include('partials.header')
@@ -48,6 +48,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     @livewireScripts
+
+    <!-- Plugin Vlibras -->
+    <div class="hidden xl:block">
+        <div vw class="enabled">
+            <div vw-access-button class="active"></div>
+            <div vw-plugin-wrapper>
+                <div class="vw-plugin-top-wrapper"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
         </button>
     
         <!-- Dropdown menu -->
-        <div id="dropdownDelay{{ $id }}" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <div id="dropdownDelay{{ $id }}" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow max-w-64 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
                 @foreach ($items as $name => $url)
                     <li>

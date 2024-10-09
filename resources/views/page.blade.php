@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="flex flex-col md:flex-row w-full">
-        <section class="w-full md:w-3/4 flex flex-col items-center px-3">
+        <section class="md:w-2/3 flex flex-col items-center px-3">
             <!-- Post Content -->
             <article class="flex flex-col shadow my-4">
                 <!-- Your content here... -->
@@ -24,7 +24,7 @@
                     </p>
                     <h1 class="text-2xl font-bold pb-3">Introduction</h1>
 
-                    {!! str_replace(["\r\n", "\n", "\r"], '', $page->text) !!}
+                    <div class="break-words">{!! str_replace(["\r\n", "\n", "\r"], '', $page->text) !!}</div>
                 </div>
             </article>
 
@@ -68,7 +68,7 @@
             </div>
         </section>
 
-        <aside class="w-full md:w-1/4 flex flex-col items-center px-3">
+        <aside class="md:w-1/3 flex flex-col items-center px-3">
             <!-- Sidebar Content -->
             <div class="w-full bg-white shadow flex flex-col my-4 p-6">
                 <p class="text-xl font-semibold pb-5">About Us</p>
