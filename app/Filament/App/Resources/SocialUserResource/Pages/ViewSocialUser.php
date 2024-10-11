@@ -10,6 +10,10 @@ class ViewSocialUser extends ViewRecord
 {
     protected static string $resource = SocialUserResource::class;
 
+
+    protected ?string $heading = 'Perfil do usuário';
+    protected ?string $subheading = 'Visualize os dados funcionais e documentos relacionados a este usuário.';
+
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {
         return true;
@@ -17,6 +21,6 @@ class ViewSocialUser extends ViewRecord
 
     public function getContentTabIcon(): ?string
     {
-        return 'heroicon-m-eye';
+        return 'heroicon-o-user';
     }
 }

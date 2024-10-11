@@ -1,6 +1,6 @@
-<div id="gallery" class="relative w-full" data-carousel="slide">
+<div id="gallery" class="relative w-full h-full" data-carousel="slide">
     <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden md:h-96">
+    <div class="relative overflow-hidden h-full">
         <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"

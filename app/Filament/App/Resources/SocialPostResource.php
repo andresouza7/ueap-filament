@@ -9,7 +9,10 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -54,21 +57,26 @@ class SocialPostResource extends Resource
             ->recordUrl(fn() => null)
             ->columns([
                 Stack::make([
-                    TextColumn::make('user.login')
-                        ->icon('heroicon-o-user'),
-                    TextColumn::make('updated_at')
-                        ->badge()
-                        ->color('gray')
-                        ->dateTime(),
+                    Split::make([
+                        ImageColumn::make('user.profile_photo_url')
+                            ->grow(false)
+                            ->size('40px')
+                            ->circular(),
+                        TextColumn::make('user.login')
+                            ->weight(FontWeight::Bold)
+                            ->grow(false),
+                        TextColumn::make('updated_at')
+                            ->badge()
+                            ->color('gray')
+                            ->dateTime('d M Y, H:i'),
+                    ]),
+
                     TextColumn::make('text')
                         ->label('Lotação')
                         ->html()
                         ->searchable()
                 ])->space(3)
             ])
-            // ->contentGrid([
-            //     'xl' => 1,
-            // ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

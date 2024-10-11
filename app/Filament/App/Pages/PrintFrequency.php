@@ -112,6 +112,8 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
     public function table(Table $table): Table
     {
         return $table
+            ->heading('Minhas Ocorrências de Ponto')
+            ->description('Cadastre e gerencie alterações de expediente na sua folha de ponto.')
             ->recordTitleAttribute('description')
             ->query(CalendarOccurrence::query()->where('user_id', Auth::id())->where('type', 2))
             ->defaultSort('start_date', 'desc')
@@ -133,12 +135,14 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
             ])
             ->headerActions([
                 CreateAction::make()
-                    ->recordTitleAttribute('kljlçjl')
+                    ->recordTitle('Ocorrência de Ponto')
+                    // ->recordTitleAttribute('kljlçjl')
                     ->form([
                         Select::make('type')
                             ->options([
                                 'FACULTADO',
-                                'FALTA'
+                                'FALTA',
+                                'ATESTADO'
                             ]),
                         TextInput::make('start_date')
                             ->required()

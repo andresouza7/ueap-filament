@@ -6,12 +6,10 @@ use App\Filament\App\Resources\SocialUserResource\Pages;
 use App\Filament\App\Resources\SocialUserResource\RelationManagers\CalendarOccurrencesRelationManager;
 use App\Filament\App\Resources\SocialUserResource\RelationManagers\OrdinancesRelationManager;
 use App\Filament\App\Resources\SocialUserResource\RelationManagers\PostsRelationManager;
-use App\Models\Person;
 use App\Models\User;
-use App\Models\SocialUser;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -20,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -51,21 +50,40 @@ class SocialUserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading('Consulta de servidores da UEAP')
+            ->description('Esta tabela apresenta os servidores da Universidade, incluindo seus cargos, departamentos e status de atividade. Utilize os filtros e opções de busca para localizar informações específicas.')
             ->columns([
                 //
                 Stack::make([
-                    ImageColumn::make('profile_photo_url')
-                        ->size('80px')
-                        ->circular(),
-                    TextColumn::make('person.name')
-                        ->icon('heroicon-o-user')
-                        ->label('Nome')
-                        ->searchable(),
-                    TextColumn::make('group.name')
-                        ->icon('heroicon-o-building-office-2')
-                        ->weight(FontWeight::Bold)
-                        ->formatStateUsing(fn($state) => strtoupper($state))
-                        ->label('Lotação')
+                    Split::make([
+                        ImageColumn::make('profile_photo_url')
+                            ->grow(false)
+                            ->size('50px')
+                            ->circular(),
+                        TextColumn::make('login')
+                            ->size('100px')
+                            ->weight(FontWeight::Bold)
+                            // ->icon('heroicon-o-user')
+                            ->label('Nome')
+                            ->searchable(),
+                    ]),
+                    Stack::make([
+                        TextColumn::make('effective_role.description')
+                            ->tooltip(fn($state) => $state)
+                            ->size(TextColumn\TextColumnSize::ExtraSmall)
+                            ->weight(FontWeight::SemiBold)
+                            ->words(5)
+                            ->icon('heroicon-o-briefcase')
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->label('Lotação'),
+                        TextColumn::make('group.name')
+                            ->badge()
+                            ->icon('heroicon-o-building-office-2')
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->label('Lotação'),
+
+                    ])->space(2)
+
                 ])->space(2)
             ])
             ->contentGrid([
@@ -93,18 +111,50 @@ class SocialUserResource extends Resource
                 Section::make('Dados Funcionais')
                     ->columns(2)
                     ->schema([
-                        ImageEntry::make('profile_photo_url')
-                            ->columnSpanFull()
-                            ->hiddenLabel()
-                            // ->circular()
-                            ->width(100),
-                        TextEntry::make('person.name')->label('Nome'),
-                        TextEntry::make('enrollment')->label('Matrícula'),
-                        TextEntry::make('email')->label('Email'),
-                        TextEntry::make('group.description')->label('Lotação'),
-                        TextEntry::make('effective_role.description')->label('Cargo Efetivo'),
-                        TextEntry::make('commissioned_role.description')->label('Cargo Comissionado')
-                            ->columnSpanFull(),
+                        Group::make([
+                            ImageEntry::make('profile_photo_url')
+                                ->grow(false)
+                                ->hiddenLabel()
+                                ->circular()
+                                ->alignCenter()
+                                ->size(200),
+                            TextEntry::make('login')
+                                ->size(TextEntry\TextEntrySize::Large)
+                                ->weight(FontWeight::Bold)
+                                ->alignCenter()
+                                ->hiddenLabel(),
+                            TextEntry::make('enrollment')
+                                ->formatStateUsing(fn($state) => "Mat.: " . $state)
+                                ->hiddenLabel()
+                                ->alignCenter()
+                                ->copyable()
+                                ->badge()
+                                ->color('success'),
+                        ]),
+
+                        Group::make([
+                            \Filament\Infolists\Components\Split::make([
+                                TextEntry::make('person.name')
+                                    ->label('Nome')
+                            ]),
+
+                            TextEntry::make('email')
+                                ->label('Email')
+                                ->icon('heroicon-m-envelope'),
+                            TextEntry::make('group.description')
+                            ->url(fn($record) => $record->group ? SocialGroupResource::getUrl('view', ['record' => $record->group->id]) : null) 
+                                ->label('Lotação')
+                                ->icon('heroicon-o-building-office-2'),
+                            TextEntry::make('effective_role.description')
+                                ->label('Cargo Efetivo')
+                                ->icon('heroicon-o-briefcase'),
+                            TextEntry::make('commissioned_role.description')
+                                ->label('Cargo Comissionado')
+                                ->icon('heroicon-o-briefcase')
+                                ->columnSpanFull(),
+                        ])->columnStart([
+                            'sm' => 2,
+                        ])
                     ])
             ]);
     }

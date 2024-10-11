@@ -65,7 +65,8 @@ class User extends Authenticatable implements HasName, FilamentUser
 
     public function getProfilePhotoUrlAttribute()
     {
-        return asset('img/hacker.png');
+        // return asset('img/hacker.png');
+        return "https://picsum.photos/200";
     }
 
     public function getFilamentName(): string

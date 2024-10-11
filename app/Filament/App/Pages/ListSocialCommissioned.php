@@ -5,6 +5,9 @@ namespace App\Filament\App\Pages;
 use App\Filament\App\Resources\SocialUserResource;
 use App\Models\CommissionedRole;
 use Filament\Pages\Page;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -25,18 +28,28 @@ class ListSocialCommissioned extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
+        ->heading('Consulta de cargos comissionados')
+        ->description('Esta tabela exibe os cargos comissionados da instituição e seus responsáveis. Utilize os filtros e opções de busca para encontrar uma informação específica.')
             ->recordTitleAttribute('description')
             ->query(CommissionedRole::query())
             ->defaultSort('description')
             ->columns([
-                TextColumn::make('description')
-                    ->label('Descrição')
-                    ->searchable(),
-                TextColumn::make('occupant.login')
-                    ->label('Ocupante')
-                    ->formatStateUsing(fn($state) => $state ?? '-') // Display '-' if null
-                    ->url(fn($record) => $record->occupant ? SocialUserResource::getUrl('view', ['record' => $record->occupant->id]) : null) // Generate URL only if occupant exists
-                    ->searchable()
+                Split::make([
+                    TextColumn::make('description')
+                        ->icon('heroicon-o-briefcase')
+                        ->description('Cargo', 'above')
+                        ->weight(FontWeight::SemiBold)
+                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->searchable(),
+                    TextColumn::make('occupant.person.name')
+                        ->description('Responsável', 'above')
+                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->icon('heroicon-o-user')
+                        ->formatStateUsing(fn($state) => $state ?? '-') // Display '-' if null
+                        ->url(fn($record) => $record->occupant ? SocialUserResource::getUrl('view', ['record' => $record->occupant->id]) : null) // Generate URL only if occupant exists
+                        ->searchable()
+                ])->from('md')
+
             ])
             ->filters([
                 Filter::make('without_occupant')

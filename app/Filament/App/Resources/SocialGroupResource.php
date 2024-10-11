@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -40,18 +42,40 @@ class SocialGroupResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading('Consulta de setores da UEAP')
+            ->description('Esta tabela exibe os setores da instituição, incluindo suas descrições e hierarquias. Utilize os filtros e opções de busca para encontrar um departamento específico ou visualizar detalhes das relações entre eles.')
             ->columns([
                 //
                 Stack::make([
-                    TextColumn::make('name')
-                        ->formatStateUsing(fn($state) => strtoupper($state))
-                        ->weight(FontWeight::Bold)
-                        ->icon('heroicon-o-building-office-2')
-                        ->label('Nome')
-                        ->searchable(),
+                    Split::make([
+                        ImageColumn::make('photo_url')
+                            ->grow(false),
+                        TextColumn::make('name')
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->weight(FontWeight::Bold)
+                            ->size(TextColumn\TextColumnSize::Large)
+                            ->searchable(),
+                    ]),
+
                     TextColumn::make('description')
-                        ->label('Lotação')
-                        ->searchable()
+                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->weight(FontWeight::SemiBold)
+                        ->searchable(),
+                    Split::make([
+                        TextColumn::make('parent.name')
+                            ->grow(false)
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->icon('heroicon-o-building-office-2')
+                            ->tooltip('Vinculado ao setor')
+                            ->badge(),
+                        ImageColumn::make('users.profile_photo_url')
+                            ->alignEnd()
+                            ->height(25)
+                            ->circular()
+                            ->stacked()
+                            ->limit(3)
+                            ->limitedRemainingText()
+                    ]),
                 ])->space(3)
             ])
             ->contentGrid([

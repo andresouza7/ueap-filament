@@ -16,6 +16,14 @@ class Group extends Model
         'description',
     ];
 
+    protected $appends = [
+        'photo_url'
+    ];
+
+    public function getPhotoUrlAttribute() {
+        return asset('img/brasao_ueap_sem_nome.png');
+    }
+
     public function sub_groups()
     {
         return $this->hasMany(Group::class, 'group_parent_id');

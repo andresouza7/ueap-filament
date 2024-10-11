@@ -25,7 +25,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-white font-family-karla">
+<body class="bg-gray-100 font-family-karla">
 
     <!-- Page Container -->
     <div class="container mx-auto flex flex-wrap" style="max-width: 1230px">
