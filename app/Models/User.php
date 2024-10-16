@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasName, FilamentUser
+class User extends Authenticatable implements HasName, FilamentUser, HasMedia
 {
-    use HasFactory, Notifiable, SoftDeletes, HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +35,8 @@ class User extends Authenticatable implements HasName, FilamentUser
         'effective_role_id',
         'commissioned_role_id',
         'group_id',
-        'person_id'
+        'person_id',
+        'signature_url'
     ];
 
     /**
@@ -60,13 +63,19 @@ class User extends Authenticatable implements HasName, FilamentUser
     }
 
     protected $appends = [
-        'profile_photo_url'
+        'profile_photo_url',
+        'signature_url'
     ];
 
     public function getProfilePhotoUrlAttribute()
     {
         // return asset('img/hacker.png');
         return "https://picsum.photos/200";
+    }
+
+    public function getSignatureUrlAttribute()
+    {
+        return $this->getFirstMediaUrl('signatures');
     }
 
     public function getFilamentName(): string

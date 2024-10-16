@@ -8,6 +8,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -24,6 +25,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class PrintFrequency extends Page implements HasTable, HasForms, HasActions
 {
@@ -34,80 +36,6 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
     protected static ?string $title = 'Folha de Ponto';
     protected static ?string $navigationGroup = 'Minha Área';
     protected static ?int $navigationSort = 3;
-
-    public $record = null;
-
-    public function form(Form $form): Form
-    {
-        return $form->schema([
-
-            Tabs::make('Tabs')
-                ->tabs([
-                    Tabs\Tab::make('Emitir Folha')
-                        ->schema([
-                            // ...
-                            Split::make([
-                                Group::make([
-                                    Select::make('type')
-                                        ->label('Ponto')
-                                        ->options([
-                                            'Efetivo',
-                                            'Comissionado',
-                                            'Sem Preenchimento'
-                                        ]),
-                                    Select::make('month')
-                                        ->label('Mês')
-                                        ->options([
-                                            'Janeiro',
-                                            'Fevereiro',
-                                            'Março',
-                                            'Abril',
-                                            'Maio',
-                                            'Junho',
-                                            'Julho',
-                                            'Agosto',
-                                            'Setembro',
-                                            'Outubro',
-                                            'Novembro',
-                                            'Dezembro',
-                                        ]),
-                                    TextInput::make('year')
-                                        ->label('Ano'),
-                                    Toggle::make('usar_assinatura'),
-                                ]),
-                                Group::make([
-                                    Split::make([
-                                        TextInput::make('manha_start')
-                                            ->label('Entrada Manhã'),
-                                        TextInput::make('manha_end')
-                                            ->label('Saída Manhã'),
-                                    ]),
-                                    Split::make([
-                                        TextInput::make('manha_start')
-                                            ->label('Entrada Manhã'),
-                                        TextInput::make('manha_end')
-                                            ->label('Saída Manhã'),
-                                    ]),
-                                    Split::make([
-                                        TextInput::make('manha_start')
-                                            ->label('Entrada Manhã'),
-                                        TextInput::make('manha_end')
-                                            ->label('Saída Manhã'),
-                                    ]),
-                                    Toggle::make('preencher_horario'),
-                                ]),
-                            ])->from('md')
-                        ]),
-                    Tabs\Tab::make('Upload Assinatura')
-                        ->schema([
-                            // ...
-                        ]),
-                ])
-        ])
-            ->model($this->record)
-            ->statePath('data')
-            ->operation('edit');
-    }
 
     public function table(Table $table): Table
     {

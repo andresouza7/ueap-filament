@@ -66,7 +66,7 @@ class SocialUserResource extends Resource
                             // ->icon('heroicon-o-user')
                             ->label('Nome')
                             ->searchable(),
-                    ]),
+                    ])->extraAttributes(['class' => 'mb-5']),
                     Stack::make([
                         TextColumn::make('effective_role.description')
                             ->tooltip(fn($state) => $state)
@@ -109,7 +109,7 @@ class SocialUserResource extends Resource
         return $infolist
             ->schema([
                 Section::make('Dados Funcionais')
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         Group::make([
                             ImageEntry::make('profile_photo_url')
@@ -117,6 +117,7 @@ class SocialUserResource extends Resource
                                 ->hiddenLabel()
                                 ->circular()
                                 ->alignCenter()
+                                ->columnSpan(1)
                                 ->size(200),
                             TextEntry::make('login')
                                 ->size(TextEntry\TextEntrySize::Large)

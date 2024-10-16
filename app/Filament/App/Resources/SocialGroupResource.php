@@ -3,11 +3,19 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\SocialGroupResource\Pages;
+use App\Filament\App\Resources\SocialGroupResource\RelationManagers\UsersRelationManager;
 use App\Models\Group;
 use App\Models\SocialGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Group as ComponentsGroup;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Split as ComponentsSplit;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -55,7 +63,7 @@ class SocialGroupResource extends Resource
                             ->weight(FontWeight::Bold)
                             ->size(TextColumn\TextColumnSize::Large)
                             ->searchable(),
-                    ]),
+                    ])->extraAttributes(['class' => 'mb-5']),
 
                     TextColumn::make('description')
                         ->size(TextColumn\TextColumnSize::ExtraSmall)
@@ -68,13 +76,17 @@ class SocialGroupResource extends Resource
                             ->icon('heroicon-o-building-office-2')
                             ->tooltip('Vinculado ao setor')
                             ->badge(),
-                        ImageColumn::make('users.profile_photo_url')
+                        TextColumn::make('users_count')->counts('users')
+                            ->icon('heroicon-o-users')
+                            ->weight(FontWeight::SemiBold)
                             ->alignEnd()
-                            ->height(25)
-                            ->circular()
-                            ->stacked()
-                            ->limit(3)
-                            ->limitedRemainingText()
+                        // ImageColumn::make('users.profile_photo_url')
+                        //     ->alignEnd()
+                        //     ->height(25)
+                        //     ->circular()
+                        //     ->stacked()
+                        //     ->limit(3)
+                        //     ->limitedRemainingText()
                     ]),
                 ])->space(3)
             ])
@@ -95,10 +107,41 @@ class SocialGroupResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Dados Funcionais')
+                    ->columns(2)
+                    ->schema([
+                        ComponentsGroup::make([
+                            ImageEntry::make('photo_url')
+                            ->hiddenLabel()
+                            ->alignCenter()
+                            ->grow(false),
+                        TextEntry::make('description')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight(FontWeight::Bold)
+                            ->alignCenter(),
+                            TextEntry::make('parent.name')
+                            ->hiddenLabel()
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->icon('heroicon-o-building-office-2')
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight(FontWeight::Bold)
+                            ->badge()
+                            ->alignCenter()
+                        ]),
+                    ])
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
-            //
+            UsersRelationManager::class,
         ];
     }
 
