@@ -58,7 +58,7 @@ class SocialUserResource extends Resource
                     Split::make([
                         ImageColumn::make('profile_photo_url')
                             ->grow(false)
-                            ->size('50px')
+                            ->size('60px')
                             ->circular(),
                         TextColumn::make('login')
                             ->size('100px')
@@ -131,7 +131,7 @@ class SocialUserResource extends Resource
                                 ->copyable()
                                 ->badge()
                                 ->color('success'),
-                        ]),
+                        ])->extraAttributes(['class' => 'h-full flex items-center justify-center']),
 
                         Group::make([
                             \Filament\Infolists\Components\Split::make([

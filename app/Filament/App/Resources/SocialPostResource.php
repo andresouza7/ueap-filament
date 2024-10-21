@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Filament\Support\Colors\Color;
 
 class SocialPostResource extends Resource
 {
@@ -60,12 +61,22 @@ class SocialPostResource extends Resource
                     Split::make([
                         ImageColumn::make('user.profile_photo_url')
                             ->grow(false)
-                            ->size('40px')
+                            ->size('60px')
                             ->circular(),
                         TextColumn::make('user.login')
+                            ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => $record->user->id]))
                             ->weight(FontWeight::Bold)
                             ->grow(false),
+                        TextColumn::make('user.group.name')
+                            ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                            ->formatStateUsing(fn($state) => strtoupper($state))
+                            ->weight(FontWeight::Bold)
+                            ->color(Color::Teal)
+                            ->extraAttributes(['class' => 'uppercase'])
+                            ->grow(false),
                         TextColumn::make('updated_at')
+                            ->size(TextColumn\TextColumnSize::ExtraSmall)
+                            ->extraAttributes(['class' => 'italic'])
                             ->badge()
                             ->color('gray')
                             ->dateTime('d M Y, H:i'),
@@ -75,7 +86,7 @@ class SocialPostResource extends Resource
                         ->label('Lotação')
                         ->html()
                         ->searchable()
-                ])->space(3)
+                ])->space(3)->extraAttributes(['class' => 'gap-2 p-2'])
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

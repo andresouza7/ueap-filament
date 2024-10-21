@@ -14,11 +14,11 @@
 
         <x-filament::section>
             <x-slot name="heading">
-                User details
+                Preencher folha de ponto
             </x-slot>
 
             <x-slot name="description">
-                This is all the information we hold about the user.
+                Selecione o tipo de ponto, o mês, e o ano desejado. Informe os horários de entrada e saída para cada turno do dia. Você também pode optar por usar sua assinatura cadastrada.
             </x-slot>
 
             {{-- Content --}}

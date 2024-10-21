@@ -343,13 +343,17 @@
                                     $retorno .= "<td align='center'> - </td>";
 
                                     if (
-                                        $request->use_signature == 'yes' and
-                                        file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
+                                        // $request->use_signature == 'yes' and
+                                        // file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
+                                        $request->use_signature &&
+                                    auth()->user()->signature_url
                                     ) {
                                         $retorno .=
-                                            "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
-                                            $user->uuid .
-                                            ".jpg'></td>";
+                                    "<td align='center'> <img style='height:15px;'  src='".auth()->user()->signature_url."''></td>";
+                                        // $retorno .=
+                                        //     "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
+                                        //     $user->uuid .
+                                        //     ".jpg'></td>";
                                     } else {
                                         $retorno .= "<td align='center'></td>";
                                     }
@@ -419,13 +423,15 @@
                                 }
 
                                 if (
-                                    $request->use_signature == 'yes' and
-                                    file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
+                                    $request->use_signature && 
+                                    auth()->user()->signature_url
+                                    // file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
                                 ) {
                                     $retorno .=
-                                        "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
-                                        $user->uuid .
-                                        ".jpg'></td>";
+                                    "<td align='center'> <img style='height:15px;'  src='".auth()->user()->signature_url."''></td>";
+                                        // "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
+                                        // $user->uuid .
+                                        // ".jpg'></td>";
                                 } else {
                                     $retorno .= "<td align='center'></td>";
                                 }

@@ -12,7 +12,8 @@
     <!-- Tailwind CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+        /* @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap'); */
 
         .font-family-karla {
             font-family: Karla;

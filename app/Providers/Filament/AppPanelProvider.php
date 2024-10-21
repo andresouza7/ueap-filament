@@ -36,6 +36,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Teal,
             ])
+            ->font('Karla')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
@@ -51,7 +52,7 @@ class AppPanelProvider extends PanelProvider
                     ->url(fn() => route('filament.app.resources.servidor.view', [Auth::id(), 'activeRelationManager' => 1]))
                     ->icon('heroicon-o-document-text')
                     ->sort(2)
-                    ->group('Minha Área')
+                    ->group('Minha Área'),
                 // ->visible(fn (): bool => auth()->user()?->user_type === 'admin'),
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\CalendarOccurrence;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
@@ -23,6 +24,7 @@ class FrequencyEmit extends Component implements HasForms
     public function mount(): void
     {
         $this->form->fill([
+            'type' => 0,
             'month' => date('m') - 1,
             'year' => date('Y')
         ]);
@@ -53,6 +55,7 @@ class FrequencyEmit extends Component implements HasForms
             Split::make([
                 Group::make([
                     Select::make('type')
+                        ->required()
                         ->label('Ponto')
                         ->options([
                             'Efetivo',
@@ -60,45 +63,61 @@ class FrequencyEmit extends Component implements HasForms
                             'Sem Preenchimento'
                         ]),
                     Select::make('month')
+                        ->required()
+                        ->native(false)
                         ->label('Mês')
                         ->options([
-                            'Janeiro',
-                            'Fevereiro',
-                            'Março',
-                            'Abril',
-                            'Maio',
-                            'Junho',
-                            'Julho',
-                            'Agosto',
-                            'Setembro',
-                            'Outubro',
-                            'Novembro',
-                            'Dezembro',
+                            1 => 'Janeiro',
+                            2 => 'Fevereiro',
+                            3 => 'Março',
+                            4 => 'Abril',
+                            5 => 'Maio',
+                            6 => 'Junho',
+                            7 => 'Julho',
+                            8 => 'Agosto',
+                            9 => 'Setembro',
+                            10 => 'Outubro',
+                            11 => 'Novembro',
+                            12 => 'Dezembro',
                         ]),
                     TextInput::make('year')
+                        ->required()
                         ->label('Ano'),
-                    Toggle::make('usar_assinatura'),
+                    Toggle::make('use_signature')
+                        ->label('Usar assinatura'),
                 ]),
                 Group::make([
                     Split::make([
-                        TextInput::make('manha_start')
+                        DateTimePicker::make('manha_start')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Entrada Manhã'),
-                        TextInput::make('manha_end')
+                        DateTimePicker::make('manha_end')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Saída Manhã'),
                     ]),
                     Split::make([
-                        TextInput::make('tarde_start')
+                        DateTimePicker::make('tarde_start')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Entrada Tarde'),
-                        TextInput::make('tarde_end')
+                        DateTimePicker::make('tarde_end')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Saída Tarde'),
                     ]),
                     Split::make([
-                        TextInput::make('noite_start')
+                        DateTimePicker::make('noite_start')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Entrada Noite'),
-                        TextInput::make('noite_end')
+                        DateTimePicker::make('noite_end')
+                            ->date(false)
+                            ->seconds(false)
                             ->label('Saída Noite'),
                     ]),
-                    Toggle::make('preencher_horario'),
+                    // Toggle::make('preencher_horario'),
                 ]),
             ])->from('md')
         ])
