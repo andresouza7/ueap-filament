@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -45,8 +46,8 @@ class QuestionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('dimension_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('dimension.category.name'),
+                Tables\Columns\TextColumn::make('dimension.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -59,6 +60,7 @@ class QuestionResource extends Resource
             ])
             ->filters([
                 //
+                SelectFilter::make('category')->relationship('dimension.category', 'name')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

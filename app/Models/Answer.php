@@ -15,7 +15,13 @@ class Answer extends Model
         'score',
     ];
 
-    public function evaluation() {
+    public function evaluation()
+    {
         return $this->belongsTo(Evaluation::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
     }
 }

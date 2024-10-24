@@ -18,6 +18,9 @@ class EvaluationResource extends Resource
 {
     protected static ?string $model = Evaluation::class;
 
+    protected static ?string $modelLabel = 'Avaliação';
+    protected static ?string $pluralModelLabel = 'Avaliações';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -38,11 +41,10 @@ class EvaluationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('respondent_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('respondent.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('category.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('course_id')
                     ->numeric()

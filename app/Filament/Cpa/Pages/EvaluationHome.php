@@ -2,14 +2,22 @@
 
 namespace App\Filament\Cpa\Pages;
 
+use App\Models\Category;
+use App\Models\Course;
 use App\Models\Evaluation;
 use App\Models\Respondent;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 
 class EvaluationHome extends Page implements HasForms
 {
@@ -32,10 +40,68 @@ class EvaluationHome extends Page implements HasForms
     {
         return $form
             ->schema([
-                TextInput::make('cpf')
-                    ->label('CPF')
-                    ->required()
-                // ...
+                Wizard::make([
+                    Wizard\Step::make('Identificação')
+                        ->description('Informe seu CPF para começar.')
+                        ->schema([
+                            // ...
+                            TextInput::make('cpf')
+                                ->helperText('Seus dados não serão compartilhados com a comissão avaliadora.')
+                                ->live(onBlur: true)
+                                ->label('CPF')
+                                ->afterStateUpdated(function (?string $state, Set $set) {
+                                    // ...
+                                    $respondent = Respondent::where('cpf', $state)->first();
+                                    if ($respondent) {
+                                        $set('category_id', $respondent->category_id);
+                                        $set('name', $respondent->name);
+                                    }
+                                })
+                                ->required(),
+                            TextInput::make('name')
+                                ->live(onBlur: true)
+                                ->visible(fn(Get $get) => $get('cpf'))
+                                ->required()
+                                ->label('Nome')
+                                ->afterStateUpdated(function (?string $state, Get $get, Set $set) {
+                                    // ...
+                                    $respondent = Respondent::where('cpf', $get('cpf'))->first();
+
+                                    if (!$respondent) {
+                                        $respondent = Respondent::create([
+                                            'cpf' => $get('cpf'),
+                                            'name' => $state,
+                                            'category_id' => 4
+                                        ]);
+                                    }
+
+                                    $set('category_id', optional($respondent)->category_id);
+                                }),
+                        ]),
+                    Wizard\Step::make('Confirme seus dados.')
+                        ->schema([
+                            // ...
+                            Select::make('category_id')
+                                ->options(fn() => Category::all()->pluck('name', 'id'))
+                                ->label('Categoria')
+                                ->required(),
+                            TextInput::make('name')
+                                ->required()
+                                ->label('Nome'),
+                            Select::make('course')
+                                ->label('Curso')
+                                ->visible(fn(Get $get) => in_array($get('category_id'), [2, 3]))
+                                ->required()
+                                ->options(fn() => Course::all()->pluck('name', 'id')),
+                        ]),
+                ])->submitAction(new HtmlString(Blade::render(<<<BLADE
+                <x-filament::button
+                    type="submit"
+                    size="sm"
+                >
+                    Iniciar Avaliação
+                </x-filament::button>
+            BLADE))),
             ])
             ->statePath('data');
     }
@@ -47,30 +113,26 @@ class EvaluationHome extends Page implements HasForms
 
     public function onStartEvaluation()
     {
-        $respondent = Respondent::where('cpf', $this->data['cpf'])->first();
-
-        // if null redirect to sociedade civil page
-        if (!$respondent) {
-            Notification::make()
-                ->title('CPF não encontrado')
-                ->danger()
-                ->send();
-
-            return false;
-        }
-
-        $evaluation = Evaluation::firstOrCreate([
-            'respondent_id' => $respondent->id,
-            'category_id' => $respondent->category_id,
+        $respondent = Respondent::firstOrCreate([
+            'cpf' => $this->data['cpf'],
+            'name' => $this->data['name']
         ]);
 
-        return redirect()->route('filament.cpa.pages.evaluation-question', $evaluation->id);
-    }
+        if (!$respondent->category_id) {
+            $respondent->update(['category_id' => 4]);
+        }
 
-    private function createRespondentEvaluation() {}
+        $evaluationData = [
+            'respondent_id' => $respondent->id,
+            'category_id' => $respondent->category_id,
+        ];
 
-    private function verifyCpf()
-    {
-        return Respondent::where('cpf', $this->data['cpf'])->exists();
+        if (!empty($this->data['course_id'])) {
+            $evaluationData['course_id'] = $this->data['course_id'];
+        }
+
+        $evaluation = Evaluation::firstOrCreate($evaluationData);
+
+        return redirect()->route('filament.cpa.pages.evaluation-question', ['id' => $evaluation->id]);
     }
 }

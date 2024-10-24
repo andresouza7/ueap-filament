@@ -29,7 +29,12 @@ class AnswersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('evaluation_id')
             ->columns([
-                Tables\Columns\TextColumn::make('evaluation_id'),
+                Tables\Columns\TextColumn::make('evaluation_id')
+                    ->label('ID Avaliação'),
+                Tables\Columns\TextColumn::make('question.title')
+                    ->label('Pergunta'),
+                Tables\Columns\TextColumn::make('score')
+                    ->label('Nota')
             ])
             ->filters([
                 //
