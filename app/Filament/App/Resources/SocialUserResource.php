@@ -7,8 +7,10 @@ use App\Filament\App\Resources\SocialUserResource\RelationManagers\CalendarOccur
 use App\Filament\App\Resources\SocialUserResource\RelationManagers\OrdinancesRelationManager;
 use App\Filament\App\Resources\SocialUserResource\RelationManagers\PostsRelationManager;
 use App\Models\User;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section;
@@ -24,6 +26,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class SocialUserResource extends Resource
 {
@@ -118,7 +122,32 @@ class SocialUserResource extends Resource
                                 ->circular()
                                 ->alignCenter()
                                 ->columnSpan(1)
-                                ->size(200),
+                                ->size(200)
+                                ->action(
+                                    Action::make('alterar_foto')
+                                        ->icon('heroicon-m-clipboard')
+                                        ->disabled(fn($record) => $record->id !== Auth::id())
+                                        ->tooltip('Alterar Foto')
+                                        ->form([
+                                            FileUpload::make('attachment')
+                                                ->label('Arquivo')
+                                                ->directory('users')
+                                                ->uploadingMessage('Fazendo upload...')
+                                                ->image()
+                                                ->acceptedFileTypes(['image/jpg'])
+                                                ->avatar()
+                                                ->imageEditor()
+                                                // ->circleCropper()
+                                                ->maxSize(1024 * 10)
+                                                ->getUploadedFileNameForStorageUsing(
+                                                    fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
+                                                )
+                                                ->helperText('*É necessário salvar as alterações para concluir.')
+                                        ])
+                                        ->action(function (array $data, $record): void {
+                                            redirect()->route('filament.app.resources.servidor.view', $record->id);
+                                        })
+                                ),
                             TextEntry::make('login')
                                 ->size(TextEntry\TextEntrySize::Large)
                                 ->weight(FontWeight::Bold)
@@ -143,7 +172,7 @@ class SocialUserResource extends Resource
                                 ->label('Email')
                                 ->icon('heroicon-m-envelope'),
                             TextEntry::make('group.description')
-                            ->url(fn($record) => $record->group ? SocialGroupResource::getUrl('view', ['record' => $record->group->id]) : null) 
+                                ->url(fn($record) => $record->group ? SocialGroupResource::getUrl('view', ['record' => $record->group->id]) : null)
                                 ->label('Lotação')
                                 ->icon('heroicon-o-building-office-2'),
                             TextEntry::make('effective_role.description')

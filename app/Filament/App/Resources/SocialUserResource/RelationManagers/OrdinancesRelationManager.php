@@ -37,7 +37,7 @@ class OrdinancesRelationManager extends RelationManager
             ])
             ->defaultSort(function (Builder $query): Builder {
                 return $query
-                    ->orderByRaw('CHAR_LENGTH(number) DESC')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+                    ->orderBy('year', 'DESC')->orderBy('number', 'DESC');
             })
             ->filters([
                 //

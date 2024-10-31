@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -69,13 +70,24 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
 
     public function getProfilePhotoUrlAttribute()
     {
-        // return asset('img/hacker.png');
-        return "https://picsum.photos/200";
+        $filePath = "users/{$this->id}.jpg";
+
+        if (Storage::exists($filePath)) {
+            return Storage::url($filePath);
+        }
+
+        // Return a default image URL if the profile photo does not exist
+        return "https://picsum.photos/200"; // Or any default image URL you prefer
     }
 
     public function getSignatureUrlAttribute()
     {
-        return $this->getFirstMediaUrl('signatures');
+        // return $this->getFirstMediaUrl('signatures');
+        if (file_exists(public_path('storage/signatures/' . $this->uuid . '.jpg'))) {
+            return public_path('storage/signatures/' . $this->uuid . '.jpg');
+        }
+
+        return null;
     }
 
     public function getFilamentName(): string

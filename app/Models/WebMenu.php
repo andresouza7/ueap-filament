@@ -20,12 +20,12 @@ class WebMenu extends Model
         'status'
     ];
 
-    // public function menu_place()
-    // {
-    //     return $this->belongsTo(WebMenuPlace::class, 'web_menu_place_id');
-    // }
+    public function menu_place()
+    {
+        return $this->belongsTo(WebMenuPlace::class, 'web_menu_place_id');
+    }
 
-    public function items()
+    public function itens()
     {
         return $this->hasMany(WebMenuItem::class);
     }

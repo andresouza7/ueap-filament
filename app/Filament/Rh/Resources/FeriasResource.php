@@ -57,6 +57,7 @@ class FeriasResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
+                    ->limit(80)
                     ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('user.login')
                     ->label('Usuário')

@@ -28,10 +28,10 @@ class WebPost extends Model
 
     // protected $appends = ['image_url'];
 
-    // public function category()
-    // {
-    //     return $this->belongsTo(WebCategory::class, 'web_category_id');
-    // }
+    public function category()
+    {
+        return $this->belongsTo(WebCategory::class, 'web_category_id');
+    }
 
     public function user_created()
     {
