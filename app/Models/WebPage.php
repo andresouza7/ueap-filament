@@ -22,10 +22,10 @@ class WebPage extends Model
         'status',
     ];
 
-    // public function category()
-    // {
-    //     return $this->belongsTo(WebCategory::class, 'web_category_id');
-    // }
+    public function category()
+    {
+        return $this->belongsTo(WebCategory::class, 'web_category_id');
+    }
 
     public function user_created()
     {
@@ -40,5 +40,10 @@ class WebPage extends Model
     public function web_menu()
     {
         return $this->belongsTo(WebMenu::class, 'web_menu_id');
+    }
+
+    public function menu_items()
+    {
+        return $this->hasManyThrough(WebMenuItem::class, WebMenu::class, 'id', 'web_menu_id', 'web_menu_id', 'id');
     }
 }

@@ -25,7 +25,7 @@ class WebMenu extends Model
         return $this->belongsTo(WebMenuPlace::class, 'web_menu_place_id');
     }
 
-    public function itens()
+    public function items()
     {
         return $this->hasMany(WebMenuItem::class);
     }

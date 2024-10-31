@@ -100,7 +100,7 @@
                                 $menu_top = \App\Models\WebMenu::where('web_menu_place_id', 5)->first();
 
                                 if ($menu_top) {
-                                    $menu_top_itens = $menu_top->itens
+                                    $menu_top_itens = $menu_top->items
                                         ->where('menu_parent_id', null)
                                         ->where('status', 'published')
                                         ->sortBy('position');
@@ -149,13 +149,15 @@
                 <div class='col-md px-2 m-0'>
                     <div class='section'>
                         @php
-                            $menu_lateral = \App\Models\WebMenu::where('web_menu_place_id', 4)->get();
+                            $menu_lateral = \App\Models\WebMenu::where('web_menu_place_id', 4)
+                                ->orderBy('position')
+                                ->get();
                         @endphp
 
                         @foreach ($menu_lateral as $menu)
                             <div class='titulo'>{{ $menu->name }}</div>
                             <ul class="nav flex-column">
-                                @foreach ($menu->itens->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
+                                @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ $item->url }}"> {{ $item->name }}</i></a>
                                     </li>
@@ -196,7 +198,7 @@
                             @foreach ($menu_lateral->where('status', 'published') as $menu)
                                 <div class='titulo'>Menu</div>
                                 <ul class="nav flex-column">
-                                    @foreach ($menu->itens->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
+                                    @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ $item->url }}">{{ $item->name }}</a>
                                         </li>
@@ -250,7 +252,7 @@
 
                         <div class="col-12 mx-1">
                             <a style="width:100%; text-align:center;" title="Acessar Intranet Ueap" target="_blank"
-                                href="{{route('filament.app.pages.dashboard')}}">INTRANET</a>
+                                href="{{ route('filament.app.pages.dashboard') }}">INTRANET</a>
                         </div>
 
                         <div class="col-12 mx-1">
