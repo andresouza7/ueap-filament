@@ -31,11 +31,8 @@ class SocialGroupResource extends Resource
     protected static ?string $model = Group::class;
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
-
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
-
     protected static ?string $slug = 'setores';
-
     protected static ?string $navigationGroup = 'Social';
     protected static ?int $navigationSort = 3;
 
@@ -56,39 +53,32 @@ class SocialGroupResource extends Resource
                 //
                 Stack::make([
                     Split::make([
-                        ImageColumn::make('photo_url')
-                            ->grow(false),
+                        // ImageColumn::make('photo_url')
+                        //     ->grow(false),
                         TextColumn::make('name')
                             ->formatStateUsing(fn($state) => strtoupper($state))
                             ->weight(FontWeight::Bold)
                             ->size(TextColumn\TextColumnSize::Large)
                             ->searchable(),
-                    ])->extraAttributes(['class' => 'mb-5']),
+                    ])->extraAttributes(['class' => 'mb-4']),
 
-                    TextColumn::make('description')
+                    TextColumn::make('description')->extraAttributes(['class' => 'mt-1'])
                         ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->color('gray')
                         ->weight(FontWeight::SemiBold)
                         ->searchable(),
                     Split::make([
                         TextColumn::make('parent.name')
-                            ->grow(false)
+                            ->color('primary')
                             ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->icon('heroicon-o-building-office-2')
-                            ->tooltip('Vinculado ao setor')
-                            ->badge(),
+                            ->size(TextColumn\TextColumnSize::ExtraSmall)
+                            ->weight(FontWeight::SemiBold),
                         TextColumn::make('users_count')->counts('users')
                             ->icon('heroicon-o-users')
                             ->weight(FontWeight::SemiBold)
                             ->alignEnd()
-                        // ImageColumn::make('users.profile_photo_url')
-                        //     ->alignEnd()
-                        //     ->height(25)
-                        //     ->circular()
-                        //     ->stacked()
-                        //     ->limit(3)
-                        //     ->limitedRemainingText()
                     ]),
-                ])->space(3)
+                ])
             ])
             ->contentGrid([
                 'md' => 2,
@@ -116,23 +106,23 @@ class SocialGroupResource extends Resource
                     ->schema([
                         ComponentsGroup::make([
                             ImageEntry::make('photo_url')
-                            ->hiddenLabel()
-                            ->alignCenter()
-                            ->grow(false),
-                        TextEntry::make('description')
-                            ->hiddenLabel()
-                            ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->size(TextEntry\TextEntrySize::Large)
-                            ->weight(FontWeight::Bold)
-                            ->alignCenter(),
+                                ->hiddenLabel()
+                                ->alignCenter()
+                                ->grow(false),
+                            TextEntry::make('description')
+                                ->hiddenLabel()
+                                ->formatStateUsing(fn($state) => strtoupper($state))
+                                ->size(TextEntry\TextEntrySize::Large)
+                                ->weight(FontWeight::Bold)
+                                ->alignCenter(),
                             TextEntry::make('parent.name')
-                            ->hiddenLabel()
-                            ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->icon('heroicon-o-building-office-2')
-                            ->size(TextEntry\TextEntrySize::Large)
-                            ->weight(FontWeight::Bold)
-                            ->badge()
-                            ->alignCenter()
+                                ->hiddenLabel()
+                                ->formatStateUsing(fn($state) => strtoupper($state))
+                                ->icon('heroicon-o-building-office-2')
+                                ->size(TextEntry\TextEntrySize::Large)
+                                ->weight(FontWeight::Bold)
+                                ->badge()
+                                ->alignCenter()
                         ]),
                     ])
             ]);

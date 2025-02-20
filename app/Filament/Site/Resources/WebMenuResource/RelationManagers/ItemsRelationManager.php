@@ -8,8 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ItemsRelationManager extends RelationManager
 {
@@ -24,6 +23,39 @@ class ItemsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Checkbox::make('use_internal')
+                    ->label('Usar página interna')
+                    ->reactive(),
+                Forms\Components\Select::make('url')
+                    ->label('URL Interna')
+                    ->searchable()
+                    ->preload()
+                    ->getSearchResultsUsing(function (string $query) {
+                        return WebPage::where('title', 'ilike', "%{$query}%")
+                            ->get()
+                            ->mapWithKeys(function ($item) {
+                                return ['pagina/' . $item->slug => $item->title];
+                            });
+                    })
+                    ->getOptionLabelUsing(function ($value) {
+                        // return WebPage::where('slug', str_replace('pagina/', '', $value))->first()->title ?? $value;
+                        return WebPage::where('slug', $value)->first()->title ?? $value;
+                    })
+                    ->required()
+                    ->hidden(fn($get) => !$get('use_internal')),
+                Forms\Components\TextInput::make('url')
+                    ->label('URL Externa')
+                    ->required()
+                    ->maxLength(255)
+                    ->hidden(fn($get) => $get('use_internal')),
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(65535),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'published' => 'Publicado',
+                        'unpublished' => 'Não Publicado',
+                    ])
+                    ->required(),
             ]);
     }
 
@@ -46,7 +78,14 @@ class ItemsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['uuid'] = Str::uuid()->toString();
+                        $data['web_menu_id'] = $this->ownerRecord->id;
+                        $data['position'] = $this->ownerRecord->items()->count() + 1;
+                        unset($data['use_internal']); // Remove the checkbox value from the data
+                        return $data;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

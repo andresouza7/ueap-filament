@@ -22,9 +22,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Usuário';
-
     protected static ?string $navigationGroup = 'RH';
-
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
@@ -103,21 +101,25 @@ class UserResource extends Resource
                                         // ...
                                         Group::make()
                                             ->relationship('record')
+                                            ->columns(2)
                                             ->schema([
                                                 Forms\Components\TextInput::make('ordinance')
                                                     ->label('Doc. de Admissão')
+                                                    ->helperText('Decreto ou Contrato')
                                                     ->required()
                                                     ->maxLength(255),
+                                                Forms\Components\DatePicker::make('ordinance_date')
+                                                    ->label('Data do Documento')
+                                                    ->helperText('Da publicação ou assinatura'),
+                                                Forms\Components\DatePicker::make('admission_date')
+                                                    ->label('Data de Admissão')
+                                                    ->helperText('Entrada em exercício'),
                                                 Forms\Components\Select::make('category')
                                                     ->label('Categoria')
                                                     ->options([
                                                         'docente' => 'Docente',
                                                         'técnico' => 'Técnico'
                                                     ]),
-                                                Forms\Components\DatePicker::make('ordinance_date')
-                                                    ->label('Data do Documento'),
-                                                Forms\Components\DatePicker::make('admission_date')
-                                                    ->label('Data de Admissão')
                                             ])
                                     ]),
                             ]),
@@ -129,24 +131,22 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('login')
             ->columns([
                 Tables\Columns\TextColumn::make('person.name')
                     ->label('Nome')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('enrollment')
-                    ->label('Matrícula')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('group.name')
                     ->label('Lotação')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('effective_role.description')
                     ->label('Cargo Efetivo')
+                    ->limit(30)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('commissioned_role.description')
                     ->label('Cargo Comissionado')
+                    ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

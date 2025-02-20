@@ -18,6 +18,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Split;
@@ -34,11 +35,8 @@ class SocialUserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
-
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
     protected static ?string $slug = 'servidor';
-
     protected static ?string $navigationGroup = 'Social';
     protected static ?int $navigationSort = 2;
 
@@ -57,38 +55,39 @@ class SocialUserResource extends Resource
             ->heading('Consulta de servidores da UEAP')
             ->description('Esta tabela apresenta os servidores da Universidade, incluindo seus cargos, departamentos e status de atividade. Utilize os filtros e opções de busca para localizar informações específicas.')
             ->columns([
-                //
-                Stack::make([
-                    Split::make([
-                        ImageColumn::make('profile_photo_url')
-                            ->grow(false)
-                            ->size('60px')
-                            ->circular(),
+                Split::make([
+                    ImageColumn::make('profile_photo_url')
+                        ->grow(false)
+                        ->size('70px')
+                        ->circular(),
+                    Stack::make([
                         TextColumn::make('login')
                             ->size('100px')
-                            ->weight(FontWeight::Bold)
-                            // ->icon('heroicon-o-user')
-                            ->label('Nome')
-                            ->searchable(),
-                    ])->extraAttributes(['class' => 'mb-5']),
-                    Stack::make([
-                        TextColumn::make('effective_role.description')
-                            ->tooltip(fn($state) => $state)
-                            ->size(TextColumn\TextColumnSize::ExtraSmall)
                             ->weight(FontWeight::SemiBold)
-                            ->words(5)
-                            ->icon('heroicon-o-briefcase')
-                            ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->label('Lotação'),
-                        TextColumn::make('group.name')
-                            ->badge()
-                            ->icon('heroicon-o-building-office-2')
-                            ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->label('Lotação'),
+                            ->formatStateUsing(fn($state) => collect(explode('.', $state))
+                                ->map(fn($part) => ucfirst(trim($part)))
+                                ->implode(' '))
+                            ->searchable(),
 
+                        Stack::make([
+                            TextColumn::make('effective_role.description')
+                                ->tooltip(fn($state) => $state)
+                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->color('gray')
+                                ->weight(FontWeight::SemiBold)
+                                ->words(5)
+                                ->columnSpanFull()
+                                ->formatStateUsing(fn($state) => strtoupper($state)),
+
+                            TextColumn::make('group.name')
+                                ->color('primary')
+                                ->formatStateUsing(fn($state) => strtoupper($state))
+                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->weight(FontWeight::SemiBold),
+                        ])
                     ])->space(2)
 
-                ])->space(2)
+                ]),
             ])
             ->contentGrid([
                 'md' => 2,

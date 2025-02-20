@@ -28,15 +28,14 @@ class ListSocialCommissioned extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-        ->heading('Consulta de cargos comissionados')
-        ->description('Esta tabela exibe os cargos comissionados da instituição e seus responsáveis. Utilize os filtros e opções de busca para encontrar uma informação específica.')
+            ->heading('Consulta de cargos comissionados')
+            ->description('Esta tabela exibe os cargos comissionados da instituição e seus responsáveis. Utilize os filtros e opções de busca para encontrar uma informação específica.')
             ->recordTitleAttribute('description')
             ->query(CommissionedRole::query())
             ->defaultSort('description')
             ->columns([
                 Split::make([
                     TextColumn::make('description')
-                        ->icon('heroicon-o-briefcase')
                         ->description('Cargo', 'above')
                         ->weight(FontWeight::SemiBold)
                         ->size(TextColumn\TextColumnSize::ExtraSmall)
@@ -44,7 +43,6 @@ class ListSocialCommissioned extends Page implements HasTable
                     TextColumn::make('occupant.person.name')
                         ->description('Responsável', 'above')
                         ->size(TextColumn\TextColumnSize::ExtraSmall)
-                        ->icon('heroicon-o-user')
                         ->formatStateUsing(fn($state) => $state ?? '-') // Display '-' if null
                         ->url(fn($record) => $record->occupant ? SocialUserResource::getUrl('view', ['record' => $record->occupant->id]) : null) // Generate URL only if occupant exists
                         ->searchable()

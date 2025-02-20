@@ -68,8 +68,7 @@ class WebMenuResource extends Resource
                 Tables\Columns\TextColumn::make('items_count')
                     ->label('Itens')
                     ->counts('items')
-                    ->numeric()
-                    ->searchable(),
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->searchable(),
