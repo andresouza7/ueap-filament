@@ -66,9 +66,12 @@ class WebPostResource extends Resource
                             ->maxLength(255),
                     ]),
                     Group::make([
-                        Forms\Components\TextInput::make('web_category_id')
-                            ->required()
-                            ->numeric(),
+                        Forms\Components\Select::make('web_category_id')
+                            ->label('Categoria')
+                            ->preload()
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->required(),
                         Forms\Components\TextInput::make('title')
                             ->label('Título')
                             ->required()
@@ -77,8 +80,8 @@ class WebPostResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('slug')
                             ->required()
+                            ->helperText('Preenchimento automático')
                             ->suffixIcon('heroicon-m-globe-alt')
-                            ->prefix('campo automático')
                             ->maxLength(255),
                         Forms\Components\Select::make('status')
                             ->required()

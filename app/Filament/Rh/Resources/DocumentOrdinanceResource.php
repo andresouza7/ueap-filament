@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -20,9 +21,7 @@ class DocumentOrdinanceResource extends Resource
 {
     protected static ?string $model = DocumentOrdinance::class;
     protected static ?string $modelLabel = 'Portaria';
-
     protected static ?string $navigationGroup = 'RH';
-
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
@@ -51,11 +50,13 @@ class DocumentOrdinanceResource extends Resource
                     ->label('Origem')
                     ->maxLength(255),
                 FileUpload::make('attachment')
+                    ->hiddenOn('create')
                     ->label('Arquivo')
-                    ->directory('test')
+                    ->directory('documents/ordinances')
                     ->uploadingMessage('Fazendo upload...')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(1024 * 10)
+
                     ->getUploadedFileNameForStorageUsing(
                         fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
                     )
@@ -110,7 +111,7 @@ class DocumentOrdinanceResource extends Resource
                     ->label('Baixar')
                     ->action(function ($record) {
                         // Assuming files are stored in 'test' directory with filename as {id}.pdf
-                        $filePath = "test/{$record->id}.pdf";
+                        $filePath = "documents/ordinances/{$record->id}.pdf";
 
                         if (Storage::exists($filePath)) {
                             return Storage::download($filePath);
@@ -118,7 +119,7 @@ class DocumentOrdinanceResource extends Resource
 
                         // If file not found, flash a message
                     })
-                    ->visible(fn($record) => Storage::exists("test/{$record->id}.pdf"))
+                    ->visible(fn($record) => Storage::exists("documents/ordinances/{$record->id}.pdf"))
                     ->icon('heroicon-m-arrow-down-tray'),
                 Tables\Actions\EditAction::make(),
             ])
@@ -141,7 +142,7 @@ class DocumentOrdinanceResource extends Resource
         return [
             'index' => Pages\ListDocumentOrdinances::route('/'),
             'create' => Pages\CreateDocumentOrdinance::route('/create'),
-            'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
+            // 'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
             'edit' => Pages\EditDocumentOrdinance::route('/{record}/edit'),
         ];
     }
