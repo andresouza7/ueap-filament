@@ -53,7 +53,7 @@ class LatestPosts extends BaseWidget
                                 // ->extraAttributes(['class' => 'italic'])
                                 ->color('gray')
                                 ->dateTime('d M Y, H:i'),
-                        ]),
+                        ])->grow(false),
                     ]),
 
                     TextColumn::make('text')

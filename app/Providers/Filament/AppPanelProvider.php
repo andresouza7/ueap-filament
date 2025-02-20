@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
+use App\Filament\App\Pages\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -30,7 +31,7 @@ class AppPanelProvider extends PanelProvider
             ->path('app')
             ->brandLogo(asset('img/logo.png'))
             ->brandLogoHeight('36px')
-            ->login()
+            ->login(Login::class)
             ->profile(EditProfile::class)
             // ->passwordReset()
             ->colors([

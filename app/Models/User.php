@@ -159,4 +159,6 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     {
         return $this->hasMany(SocialPost::class, 'user_id');
     }
+
+    
 }
