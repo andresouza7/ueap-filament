@@ -9,10 +9,8 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewSocialUser extends ViewRecord
 {
     protected static string $resource = SocialUserResource::class;
-
-
-    protected ?string $heading = 'Perfil do usuário';
-    protected ?string $subheading = 'Visualize os dados funcionais e documentos relacionados a este usuário.';
+    protected ?string $heading = 'Perfil do Usuário';
+    protected ?string $subheading = 'Informações funcionais e documentos deste usuário.';
 
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {
@@ -22,5 +20,10 @@ class ViewSocialUser extends ViewRecord
     public function getContentTabIcon(): ?string
     {
         return 'heroicon-o-user';
+    }
+
+    public function getContentTabLabel(): ?string
+    {
+        return 'Usuário';
     }
 }

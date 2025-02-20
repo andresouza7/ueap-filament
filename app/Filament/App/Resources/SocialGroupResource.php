@@ -13,6 +13,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Split as ComponentsSplit;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
@@ -47,10 +48,9 @@ class SocialGroupResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Consulta de setores da UEAP')
-            ->description('Esta tabela exibe os setores da instituição, incluindo suas descrições e hierarquias. Utilize os filtros e opções de busca para encontrar um departamento específico ou visualizar detalhes das relações entre eles.')
+            ->heading('Consulta de Setores da UEAP')
+            ->description('Lista dos setores da instituição e suas hierarquias. Use o filtro de busca para localizar informações específicas.')
             ->columns([
-                //
                 Stack::make([
                     Split::make([
                         // ImageColumn::make('photo_url')
@@ -101,28 +101,32 @@ class SocialGroupResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Dados Funcionais')
-                    ->columns(2)
+                Section::make('Informações funcionais')
+                    ->columns(1)
                     ->schema([
-                        ComponentsGroup::make([
+                        ComponentsSplit::make([
                             ImageEntry::make('photo_url')
+                                ->size('48px')
+                                ->grow(false)
+                                ->hiddenLabel(),
+                            TextEntry::make('name')
                                 ->hiddenLabel()
-                                ->alignCenter()
-                                ->grow(false),
+                                ->formatStateUsing(fn($state) => "<div style='font-size: 30px; font-weight: bold;'>" . strtoupper(e($state)) . "/UEAP</div>")
+                                ->html(),
+                        ])->verticallyAlignCenter()->extraAttributes(['class' => 'my-4']),
+
+                        ComponentsGroup::make([
                             TextEntry::make('description')
-                                ->hiddenLabel()
+                                ->label('Nome')
+                                ->color('gray')
                                 ->formatStateUsing(fn($state) => strtoupper($state))
-                                ->size(TextEntry\TextEntrySize::Large)
-                                ->weight(FontWeight::Bold)
-                                ->alignCenter(),
-                            TextEntry::make('parent.name')
-                                ->hiddenLabel()
+                                ->weight(FontWeight::SemiBold),
+                            TextEntry::make('parent.description')
+                                ->visible(fn($state) => $state)
+                                ->label('Vinculado a')
                                 ->formatStateUsing(fn($state) => strtoupper($state))
-                                ->icon('heroicon-o-building-office-2')
-                                ->size(TextEntry\TextEntrySize::Large)
-                                ->weight(FontWeight::Bold)
-                                ->badge()
-                                ->alignCenter()
+                                ->weight(FontWeight::SemiBold)
+                                ->color('gray'),
                         ]),
                     ])
             ]);
@@ -139,7 +143,7 @@ class SocialGroupResource extends Resource
     {
         return [
             'index' => Pages\ListSocialGroups::route('/'),
-            'create' => Pages\CreateSocialGroup::route('/create'),
+            // 'create' => Pages\CreateSocialGroup::route('/create'),
             // 'edit' => Pages\EditSocialGroup::route('/{record}/edit'),
             'view' => Pages\ViewSocialGroup::route('/{record}'),
         ];

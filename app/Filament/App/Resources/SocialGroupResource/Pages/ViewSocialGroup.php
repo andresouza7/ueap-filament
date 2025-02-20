@@ -11,7 +11,7 @@ class ViewSocialGroup extends ViewRecord
     protected static string $resource = SocialGroupResource::class;
 
     protected ?string $heading = 'Setor';
-    protected ?string $subheading = 'Visualize os dados e documentos relacionados a este setor e consulte os servidores aqui lotados.';
+    protected ?string $subheading = 'Encontre informações sobre este setor e consulte os servidores nele lotados.';
 
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {
@@ -20,6 +20,11 @@ class ViewSocialGroup extends ViewRecord
 
     public function getContentTabIcon(): ?string
     {
-        return 'heroicon-o-user';
+        return 'heroicon-o-building-office-2';
+    }
+
+    public function getContentTabLabel(): ?string
+    {
+        return 'Setor';
     }
 }

@@ -64,9 +64,17 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     }
 
     protected $appends = [
+        'nickname',
         'profile_photo_url',
         'signature_url'
     ];
+
+    public function getNicknameAttribute()
+    {
+        return collect(explode('.', $this->login))
+            ->map(fn($part) => ucfirst(trim($part)))
+            ->implode(' ');
+    }
 
     public function getProfilePhotoUrlAttribute()
     {

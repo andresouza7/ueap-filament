@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use App\Filament\App\Resources\SocialUserResource;
 use App\Models\SocialPost;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -14,10 +15,13 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestPosts extends BaseWidget
 {
+    protected int | string | array $columnSpan = 'full';
+
     public function table(Table $table): Table
     {
         return $table
             ->heading('Postagens')
+            ->description('Fique por dentro do que acontece na Universidade.')
             ->query(SocialPost::query())
             ->defaultSort('created_at', 'desc')
             ->columns([
@@ -25,22 +29,37 @@ class LatestPosts extends BaseWidget
                     Split::make([
                         ImageColumn::make('user.profile_photo_url')
                             ->grow(false)
-                            ->size('40px')
+                            ->size('60px')
                             ->circular(),
-                        TextColumn::make('user.login')
-                            ->weight(FontWeight::Bold)
-                            ->grow(false),
-                        TextColumn::make('updated_at')
-                            ->badge()
-                            ->color('gray')
-                            ->dateTime('d M Y, H:i'),
+                        Stack::make([
+                            Split::make([
+                                TextColumn::make('user.login')
+                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => $record->user->id]))
+                                    ->weight(FontWeight::Bold)
+                                    ->formatStateUsing(fn($state) => collect(explode('.', $state))
+                                        ->map(fn($part) => ucfirst(trim($part)))
+                                        ->implode(' '))
+                                    ->grow(false),
+
+                                TextColumn::make('user.group.name')
+                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                                    ->formatStateUsing(fn($state) => strtoupper($state))
+                                    ->weight(FontWeight::Bold)
+                                    ->color('primary')
+                            ]),
+
+                            TextColumn::make('updated_at')
+                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                // ->extraAttributes(['class' => 'italic'])
+                                ->color('gray')
+                                ->dateTime('d M Y, H:i'),
+                        ]),
                     ]),
 
                     TextColumn::make('text')
-                        ->label('Lotação')
                         ->html()
                         ->searchable()
-                ])->space(3)
+                ])->space(3)->extraAttributes(['class' => 'gap-2 p-2'])
             ]);
     }
 }

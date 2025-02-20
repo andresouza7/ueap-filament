@@ -52,8 +52,8 @@ class SocialUserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Consulta de servidores da UEAP')
-            ->description('Esta tabela apresenta os servidores da Universidade, incluindo seus cargos, departamentos e status de atividade. Utilize os filtros e opções de busca para localizar informações específicas.')
+            ->heading('Consulta de Servidores da UEAP')
+            ->description('Lista dos servidores da universidade, seus cargos e lotações. Use o filtro de busca para encontrar informações.')
             ->columns([
                 Split::make([
                     ImageColumn::make('profile_photo_url')
