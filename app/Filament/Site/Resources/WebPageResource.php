@@ -3,6 +3,8 @@
 namespace App\Filament\Site\Resources;
 
 use App\Filament\Site\Resources\WebPageResource\Pages;
+use App\Filament\Site\Resources\WebPageResource\Pages\EditWebPage;
+use App\Filament\Site\Resources\WebPageResource\Pages\ViewWebPage;
 use App\Filament\Site\Resources\WebPageResource\RelationManagers;
 use App\Filament\Site\Resources\WebPageResource\RelationManagers\MenuItemsRelationManager;
 use App\Models\WebMenu;
@@ -12,23 +14,22 @@ use App\Models\WebPage;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Pages\SubNavigationPosition;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class WebPageResource extends Resource
 {
     protected static ?string $model = WebPage::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
-
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Site';
-
-
 
     public static function form(Form $form): Form
     {
@@ -43,7 +44,7 @@ class WebPageResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->suffixIcon('heroicon-m-globe-alt')
-                    ->prefix('campo automático')
+                    ->prefix('pagina/')
                     ->maxLength(255),
                 Forms\Components\Select::make('web_category_id')
                     ->relationship('category', 'name')
@@ -108,8 +109,8 @@ class WebPageResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
-                    ->limit(50)
-                    ->description(fn(WebPage $record): string => Str::limit($record->slug, 20))
+                    ->words(7)
+                    // ->description(fn(WebPage $record): string => Str::limit($record->slug, 20))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
@@ -117,9 +118,10 @@ class WebPageResource extends Resource
                 Tables\Columns\TextColumn::make('hits')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user_created.login')
+                    ->label('Autor'),
                 Tables\Columns\TextColumn::make('user_updated.login')
-                    ->label('Editado Por')
-                    ->sortable(),
+                    ->label('Editado Por'),
                 Tables\Columns\TextColumn::make('web_category_id')
                     ->numeric()
                     ->sortable()
@@ -133,9 +135,10 @@ class WebPageResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Última Edição')
+                    ->dateTime('d/m/y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -143,9 +146,20 @@ class WebPageResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
-                SelectFilter::make('user_updated.login')
+                SelectFilter::make('user_created_id')
+                    ->relationship('user_created', 'login')
+                    ->searchable()
+                    ->label('Autor'),
+                SelectFilter::make('user_updated_id')
+                    ->relationship('user_updated', 'login')
+                    ->searchable()
                     ->label('Editado Por'),
                 SelectFilter::make('status')
+                    ->options([
+                        'draft' => 'Rascunho',
+                        'published' => 'Publicado',
+                        'unpublished' => 'Despublicado'
+                    ])
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),

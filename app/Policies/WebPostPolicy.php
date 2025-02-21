@@ -45,7 +45,7 @@ class WebPostPolicy
      */
     public function delete(User $user, WebPost $webPost): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**

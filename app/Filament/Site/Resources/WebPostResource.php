@@ -22,9 +22,7 @@ use Illuminate\Support\Str;
 class WebPostResource extends Resource
 {
     protected static ?string $model = WebPost::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
-
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
     protected static ?string $navigationGroup = 'Site';
 
     public static function form(Form $form): Form
@@ -120,8 +118,8 @@ class WebPostResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
-                    ->limit(60)
-                    ->description(fn(WebPost $record): string => Str::limit($record->slug, 60))
+                    ->words(7)
+                    // ->description(fn(WebPost $record): string => Str::limit($record->slug, 60))
                     ->searchable(),
                 Tables\Columns\IconColumn::make('featured')
                     ->label('Destaque')
@@ -136,6 +134,9 @@ class WebPostResource extends Resource
                     ->label('Data Publicação')
                     ->sortable()
                     ->dateTime('d/m/Y'),
+                Tables\Columns\TextColumn::make('user_created.login')
+                    ->label('Autor')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('user_updated.login')
                     ->label('Editado Por')
                     ->sortable(),
