@@ -9,10 +9,16 @@ use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Illuminate\Validation\ValidationException;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Forms\Form;
+use Illuminate\Contracts\Support\Htmlable;
 
 class Login extends BaseLogin
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public function getHeading(): string | Htmlable
+    {
+        return 'Intranet Login';
+    }
 
     public function form(Form $form): Form
     {

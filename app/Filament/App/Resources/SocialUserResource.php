@@ -54,6 +54,7 @@ class SocialUserResource extends Resource
         return $table
             ->heading('Consulta de Servidores da UEAP')
             ->description('Lista dos servidores da universidade, seus cargos e lotações. Use o filtro de busca para encontrar informações.')
+            ->defaultSort('login')
             ->columns([
                 Split::make([
                     ImageColumn::make('profile_photo_url')

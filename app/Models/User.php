@@ -85,7 +85,7 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         }
 
         // Return a default image URL if the profile photo does not exist
-        return "https://picsum.photos/200"; // Or any default image URL you prefer
+        return asset('img/user-default.png'); // Or any default image URL you prefer
     }
 
     public function getSignatureUrlAttribute()

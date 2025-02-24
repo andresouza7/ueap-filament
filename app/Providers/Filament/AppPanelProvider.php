@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\View\View;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -30,12 +31,13 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->brandLogo(asset('img/logo.png'))
+            ->darkModeBrandLogo(asset('img/logo-white.png'))
             ->brandLogoHeight('36px')
             ->login(Login::class)
             ->profile(EditProfile::class)
             // ->passwordReset()
             ->colors([
-                'primary' => Color::Teal,
+                'primary' => Color::Emerald,
             ])
             ->font('Karla')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
@@ -43,6 +45,10 @@ class AppPanelProvider extends PanelProvider
             ->pages([
                 // Pages\Dashboard::class,
             ])
+            ->renderHook(
+                'panels::auth.login.form.after',
+                fn (): View => view('filament.app.pages.login')
+            )
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
                     ->url(fn() => route('filament.app.resources.servidor.view', Auth::id()))
