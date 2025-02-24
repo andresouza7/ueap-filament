@@ -1,5 +1,4 @@
 <div>
-    {{-- Be like water. --}}
     <form wire:submit.prevent="create">
         {{ $this->form }}
         <br />
@@ -8,4 +7,12 @@
             Emitir Ponto
         </x-filament::button>
     </form>
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('open-new-tab', (url) => {
+                window.open(url, '_blank');
+            });
+        });
+    </script>
 </div>

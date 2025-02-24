@@ -10,7 +10,6 @@ class ManagerController extends Controller
 {
     public function frequencyPrint(Request $request)
     {
-
         // dd($request->all());
 
         if ($request->uuid) {
@@ -50,9 +49,7 @@ class ManagerController extends Controller
         $lastName = $parts[1];
 
         // Formatando o nome do arquivo
-        // $filename = "fp_" . strtolower(getMonthName($month)) . "_{$year}_{$firstName}_{$lastName}";
-
-        $filename = 'some file name';
+        $filename = "fp_" . $month . "_{$year}_{$firstName}_{$lastName}";
 
         return view('manager.frequency-print', compact('user', 'month', 'year', 'type', 'occurrences', 'occurrences_user', 'filename'));
     }
