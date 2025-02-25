@@ -1,10 +1,12 @@
-<x-filament::button style="margin-top: -12px;" color="danger">Entrar com Email Institucional</x-filament::button>
+<x-filament::button style="margin-top: -12px; background: white; color: black;">Entrar com Email Institucional</x-filament::button>
+<x-filament::button style="margin-top: -12px;" color="danger">Suporte DINFO</x-filament::button>
 
 <style>
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh; /* dynamic viewport height */
     background: url('/img/login-bg.jpg') no-repeat center center fixed;
     background-size: cover;
     position: relative;
@@ -22,6 +24,7 @@ body::before {
 }
 
 .fi-simple-main {
+    margin: 0;
     width: 450px;
     border-radius: 0;
     padding: 30px;
@@ -32,12 +35,12 @@ body::before {
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
 
-.fi-simple-main span, .fi-simple-main h1 {
+.fi-simple-main span:not(.fi-btn-label), .fi-simple-main h1 {
     color: white;
 }
 
 .fi-logo {
-    width: 260px;
+    width: 240px;
     height: 80px !important;
 }
 

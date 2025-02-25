@@ -17,7 +17,7 @@ class Login extends BaseLogin
 
     public function getHeading(): string | Htmlable
     {
-        return 'Intranet Login';
+        return 'Login Intranet';
     }
 
     public function form(Form $form): Form
@@ -25,8 +25,8 @@ class Login extends BaseLogin
         return $form
             ->schema([
                 TextInput::make('login')
+                    ->label('Usuário')
                     ->extraInputAttributes(['tabindex' => 1])
-                    ->label('Login')
                     ->required()
                     ->autofocus(),
                 $this->getPasswordFormComponent(),
