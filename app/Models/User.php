@@ -160,5 +160,9 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $this->hasMany(SocialPost::class, 'user_id');
     }
 
-    
+    public function canManageDocument(Document $document): bool
+    {
+        $categoryGroups = $document->category->groups->pluck('name');
+        return $this->hasAnyRole($categoryGroups->toArray());
+    }
 }

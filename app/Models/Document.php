@@ -37,6 +37,11 @@ class Document extends Model implements HasMedia
             ->nonQueued();
     }
 
+    public function category()
+    {
+        return $this->belongsTo(DocumentCategory::class, 'type', 'slug');
+    }
+
     public function user_created()
     {
         return $this->belongsTo(User::class, 'user_created_id');

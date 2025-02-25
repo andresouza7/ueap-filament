@@ -37,7 +37,7 @@ class AppPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             // ->passwordReset()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Teal,
             ])
             ->font('Karla')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')

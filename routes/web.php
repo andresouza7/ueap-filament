@@ -5,11 +5,14 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\TransparencyController;
+use App\Models\Document;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('home');
-// });
+Route::get('/debug', function () {
+    $documents = Document::with('category')->first();
+    dd($documents);
+    // return view('home');
+});
 
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
