@@ -2,10 +2,9 @@
 
 namespace App\Filament\Transparencia\Resources;
 
-use App\Filament\Transparencia\Resources\DocumentResource\Pages;
-use App\Filament\Transparencia\Resources\DocumentResource\RelationManagers;
-use App\Models\Document;
-use App\Models\DocumentCategory;
+use App\Filament\Transparencia\Resources\RegistroPrecoResource\Pages;
+use App\Filament\Transparencia\Resources\RegistroPrecoResource\RelationManagers;
+use App\Models\TransparencyOrder;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,30 +13,31 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DocumentResource extends Resource
+class RegistroPrecoResource extends Resource
 {
-    protected static ?string $model = Document::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $model = TransparencyOrder::class;
+    protected static ?string $modelLabel = 'Registro de Preço';
+    protected static ?string $pluralModelLabel = 'Registro de Preço';
+    protected static ?string $slug = 'registro-preco';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('type')
-                    ->relationship('category', 'slug', function(Builder $query) {
-                        
-                    })
-                    ->required(),
+                Forms\Components\TextInput::make('type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('month')
+                    ->numeric(),
+                Forms\Components\TextInput::make('year')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('year')
                     ->maxLength(255),
             ]);
     }
@@ -45,29 +45,19 @@ class DocumentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(function (Builder $query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('type', 'transparency');
-                });
-            })
-            ->defaultSort('created_at', 'desc')
             ->columns([
+
+                Tables\Columns\TextColumn::make('month')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('year')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('title')
-                    ->words(6)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Categoria')
+                    ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('year')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('user_created.login')
-                    ->label('Autor')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user_updated.login')
-                    ->label('Última edição por')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -85,7 +75,7 @@ class DocumentResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -105,9 +95,10 @@ class DocumentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDocuments::route('/'),
-            'create' => Pages\CreateDocument::route('/create'),
-            'edit' => Pages\EditDocument::route('/{record}/edit'),
+            'index' => Pages\ListRegistroPreco::route('/'),
+            'create' => Pages\CreateRegistroPreco::route('/create'),
+            'view' => Pages\ViewRegistroPreco::route('/{record}'),
+            'edit' => Pages\EditRegistroPreco::route('/{record}/edit'),
         ];
     }
 }

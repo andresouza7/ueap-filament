@@ -14,16 +14,7 @@ class DocumentCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        // Get the IDs of the groups the user belongs to
-        $userGroupIds = $user->groups->pluck('id')->toArray();
-
-        // Check if there are any entries in the 'document_category_group' table 
-        // where 'group_id' exists in the user's group IDs
-        $hasAccessToDocuments = DB::table('document_category_group')
-            ->whereIn('group_id', $userGroupIds)
-            ->exists();
-
-        return $hasAccessToDocuments;
+        return true;
     }
 
     /**
