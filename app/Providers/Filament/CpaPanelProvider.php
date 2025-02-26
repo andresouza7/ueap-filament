@@ -22,12 +22,11 @@ class CpaPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        styleFilamentPanel($panel);
+        
         return $panel
             ->id('cpa')
             ->path('cpa')
-            ->colors([
-                'primary' => Color::Indigo,
-            ])
             ->discoverResources(in: app_path('Filament/Cpa/Resources'), for: 'App\\Filament\\Cpa\\Resources')
             ->discoverPages(in: app_path('Filament/Cpa/Pages'), for: 'App\\Filament\\Cpa\\Pages')
             ->pages([

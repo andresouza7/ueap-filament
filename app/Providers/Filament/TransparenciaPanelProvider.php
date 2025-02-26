@@ -22,12 +22,12 @@ class TransparenciaPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        styleFilamentPanel($panel);
+
         return $panel
             ->id('transparencia')
             ->path('transparencia')
-            ->colors([
-                'primary' => Color::Amber,
-            ])
+            ->brandName('Transparência')
             ->discoverResources(in: app_path('Filament/Transparencia/Resources'), for: 'App\\Filament\\Transparencia\\Resources')
             ->discoverPages(in: app_path('Filament/Transparencia/Pages'), for: 'App\\Filament\\Transparencia\\Pages')
             ->pages([

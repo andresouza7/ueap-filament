@@ -27,6 +27,8 @@ class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        styleFilamentPanel($panel);
+        
         return $panel
             ->id('app')
             ->path('app')
@@ -36,10 +38,6 @@ class AppPanelProvider extends PanelProvider
             ->login(Login::class)
             ->profile(EditProfile::class)
             // ->passwordReset()
-            ->colors([
-                'primary' => Color::Teal,
-            ])
-            ->font('Karla')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([

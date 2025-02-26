@@ -24,15 +24,14 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        styleFilamentPanel($panel);
+
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
             ->brandName('Intranet - Admin Panel')
             // ->login()
-            ->colors([
-                'primary' => Color::Red,
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverResources(in: app_path('Filament/Rh/Resources'), for: 'App\\Filament\\Rh\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

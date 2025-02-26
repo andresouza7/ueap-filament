@@ -38,11 +38,11 @@ class DocumentCategoryResource extends Resource
                 $query->where('type', 'transparency');
 
                 // filtrar se o usuario tem a permissao do grupo que pode acessar essas categorias 
-                $query->whereHas('groups', function ($query) {
-                    // Get the IDs of the groups the user belongs to
-                    $userGroupIds = auth()->user()->groups->pluck('id')->toArray();
-                    $query->whereIn('group_id', $userGroupIds);
-                });
+                // $query->whereHas('groups', function ($query) {
+                //     // Get the IDs of the groups the user belongs to
+                //     $userGroupIds = auth()->user()->groups->pluck('id')->toArray();
+                //     $query->whereIn('group_id', $userGroupIds);
+                // });
             })
             ->columns([
                 Tables\Columns\TextColumn::make('name')

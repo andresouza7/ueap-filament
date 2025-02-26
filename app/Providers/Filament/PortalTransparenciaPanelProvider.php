@@ -18,24 +18,24 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class SitePanelProvider extends PanelProvider
+class PortalTransparenciaPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         styleFilamentPanel($panel);
 
         return $panel
-            ->id('site')
-            ->path('site')
-            ->discoverResources(in: app_path('Filament/Site/Resources'), for: 'App\\Filament\\Site\\Resources')
-            ->discoverPages(in: app_path('Filament/Site/Pages'), for: 'App\\Filament\\Site\\Pages')
+            ->id('portalTransparencia')
+            ->path('portalTransparencia')
+            ->discoverResources(in: app_path('Filament/PortalTransparencia/Resources'), for: 'App\\Filament\\PortalTransparencia\\Resources')
+            ->discoverPages(in: app_path('Filament/PortalTransparencia/Pages'), for: 'App\\Filament\\PortalTransparencia\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Site/Widgets'), for: 'App\\Filament\\Site\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/PortalTransparencia/Widgets'), for: 'App\\Filament\\PortalTransparencia\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -49,7 +49,7 @@ class SitePanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                // Authenticate::class,
             ]);
     }
 }

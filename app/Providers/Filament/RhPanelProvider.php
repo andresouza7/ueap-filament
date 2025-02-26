@@ -22,14 +22,12 @@ class RhPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        styleFilamentPanel($panel);
+        
         return $panel
             ->id('rh')
             ->path('rh')
             ->brandName('Intranet - RH')
-            ->colors([
-                'primary' => Color::Amber,
-            ])
-            ->font('Karla')
             ->discoverResources(in: app_path('Filament/Rh/Resources'), for: 'App\\Filament\\Rh\\Resources')
             ->discoverPages(in: app_path('Filament/Rh/Pages'), for: 'App\\Filament\\Rh\\Pages')
             ->pages([

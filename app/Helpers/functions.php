@@ -1,4 +1,8 @@
 <?php
+
+use Filament\Panel;
+use Filament\Support\Colors\Color;
+
 function clean_text($text)
 {
     $map = array(
@@ -9,4 +13,12 @@ function clean_text($text)
     );
 
     return strtr($text, $map);
+}
+
+function styleFilamentPanel(Panel $panel): Panel
+{
+    return $panel->font('Karla')
+        ->colors([
+            'primary' => Color::Teal,
+        ]);
 }
