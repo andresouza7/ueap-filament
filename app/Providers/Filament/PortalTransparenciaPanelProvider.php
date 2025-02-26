@@ -27,6 +27,7 @@ class PortalTransparenciaPanelProvider extends PanelProvider
         return $panel
             ->id('portalTransparencia')
             ->path('portalTransparencia')
+            ->viteTheme('resources/css/filament/portalTransparencia/theme.css')
             ->discoverResources(in: app_path('Filament/PortalTransparencia/Resources'), for: 'App\\Filament\\PortalTransparencia\\Resources')
             ->discoverPages(in: app_path('Filament/PortalTransparencia/Pages'), for: 'App\\Filament\\PortalTransparencia\\Pages')
             ->pages([
