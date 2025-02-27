@@ -1,0 +1,5 @@
+1. passar as pages para resource
+2. configurar global search em cada um
+3. criar custom class para o component global search e por na dashboard
+4. adicionar os links nos cards
+4. ajustar a logo do gea

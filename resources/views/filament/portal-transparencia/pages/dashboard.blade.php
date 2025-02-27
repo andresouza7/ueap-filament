@@ -14,6 +14,7 @@
         {{-- BARRA DE PESQUISA --}}
         <div class="bg-white p-6 shadow-lg rounded-lg border border-gray-200">
             <h3 class="text-lg font-bold mb-4">O que você procura?</h3>
+            @livewire(Filament\Livewire\GlobalSearch::class)
             <div class="flex items-center space-x-4">
                 <input type="text" placeholder="Search..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                 <button class="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Buscar</button>
