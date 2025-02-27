@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class WebPost extends Model
 {
@@ -26,7 +27,7 @@ class WebPost extends Model
         'status'
     ];
 
-    // protected $appends = ['image_url'];
+    protected $appends = ['image_url'];
 
     public function category()
     {
@@ -50,8 +51,8 @@ class WebPost extends Model
             ->orWhere('text', 'ilike', "%$value%");
     }
 
-    // public function getImageUrlAttribute()
-    // {
-    //     return file_service('web/posts', 'jpg')->getFileUrl($this->id);
-    // }
+    public function getImageUrlAttribute()
+    {
+        return Storage::url('web/posts/' . $this->id . '.jpg');
+    }
 }

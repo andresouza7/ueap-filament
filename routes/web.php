@@ -6,8 +6,10 @@ use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\TransparencyController;
 use App\Models\Document;
+use App\Models\WebPost;
 use App\Services\TransparenciaSearchService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/debug', function () {
@@ -18,6 +20,10 @@ Route::get('/debug', function () {
 
 Route::get('/web', function () {
     return view('site.newpages.home');
+});
+Route::get('/web/post/{id}', function (Request $request) {
+    $post = WebPost::where('id', $request->id)->first();
+    return view('site.newpages.post-show', compact('post'));
 });
 
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');

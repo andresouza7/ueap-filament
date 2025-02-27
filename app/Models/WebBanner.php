@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class WebBanner extends Model
 {
@@ -40,6 +41,6 @@ class WebBanner extends Model
 
     public function getImageUrlAttribute()
     {
-        return file_service('web/banners', 'jpg')->getFileUrl($this->id);
+        return Storage::url('web/banners/' . $this->id . '.jpg');
     }
 }

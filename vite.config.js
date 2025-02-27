@@ -11,6 +11,7 @@ export default defineConfig({
             ],
             refresh: [
                 ...refreshPaths,
+                'resources/views/**',
                 'app/Filament/**',
                 'app/Forms/Components/**',
                 'app/Livewire/**',
