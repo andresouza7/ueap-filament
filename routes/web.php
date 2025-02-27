@@ -14,6 +14,10 @@ Route::get('/debug', function () {
     // return view('home');
 });
 
+Route::get('/web', function () {
+    return view('site.newpages.home');
+});
+
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
 // Route::get('/blog', function () {
