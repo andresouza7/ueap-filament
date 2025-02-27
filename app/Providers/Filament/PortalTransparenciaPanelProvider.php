@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,11 +28,29 @@ class PortalTransparenciaPanelProvider extends PanelProvider
         return $panel
             ->id('portalTransparencia')
             ->path('portalTransparencia')
+            ->brandName('Transparência UEAP')
             ->viteTheme('resources/css/filament/portalTransparencia/theme.css')
             ->discoverResources(in: app_path('Filament/PortalTransparencia/Resources'), for: 'App\\Filament\\PortalTransparencia\\Resources')
             ->discoverPages(in: app_path('Filament/PortalTransparencia/Pages'), for: 'App\\Filament\\PortalTransparencia\\Pages')
             ->pages([
                 // Pages\Dashboard::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Institucional')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Execução Orçamentária e Finanças')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Institucional')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Contratos')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Licitações')
+                    ->collapsed(),
             ])
             ->discoverWidgets(in: app_path('Filament/PortalTransparencia/Widgets'), for: 'App\\Filament\\PortalTransparencia\\Widgets')
             ->widgets([

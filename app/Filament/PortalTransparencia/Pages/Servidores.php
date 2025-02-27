@@ -14,7 +14,7 @@ class Servidores extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    // protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Institucional';
     protected static ?int $navigationSort = 2;
 
