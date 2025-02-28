@@ -3,35 +3,35 @@
 @section('title', 'Home')
 
 @section('content')
-
     <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
         <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+            <!-- Main Content -->
             <article
                 class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                 <header class="mb-4 lg:mb-6 not-format">
-                    <address class="flex items-center mb-6 not-italic">
-                        <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                            <img class="mr-4 w-16 h-16 rounded-full" src="{{ $page->user_created->profile_photo_url }}"
-                                alt="Jese Leos">
-                            <div>
-                                <a href="#" rel="author"
-                                    class="text-xl font-bold text-gray-900 dark:text-white">{{ $page->user_created->nickname }}</a>
-                                <p class="text-xs italic text-gray-500 dark:text-gray-400">
-                                    {{ $page->user_created->group->description }}</p>
-                                <p class="text-xs italic text-gray-500 dark:text-gray-400">{{ $page->created_at }}</p>
-                            </div>
-                        </div>
-                    </address>
-                    <h1
-                        class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
-                        {{ $page->title }}
-                    </h1>
+
+                    <!-- Page Title and Drawer Toggle Button -->
+                    <div class="flex items-center justify-between">
+                        <h1
+                            class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                            {{ $page->title }}
+                        </h1>
+                        <!-- Drawer Toggle Button -->
+                        <button
+                            class="lg:hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
+                            aria-controls="drawer-example">
+                            Menu
+                        </button>
+                    </div>
                 </header>
 
+                <!-- Post Image -->
                 @if ($page->image_url)
-                    <img class="w-full mb-4 lg:mb-6" src="{{ $page->image_url }}" alt="page Image">
+                    <img class="w-full mb-4 lg:mb-6 rounded-lg shadow-sm" src="{{ $page->image_url }}" alt="Post Image">
                 @endif
 
+                <!-- Post Content -->
                 <div
                     class="text-justify leading-loose text-neutral-600 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:me-3 first-letter:float-start">
                     <div class="record-text">
@@ -39,74 +39,82 @@
                     </div>
                 </div>
             </article>
+
+            @if (isset($page) and $page->web_menu_id > 0)
+                <!-- Vertical Navbar (Hidden on Mobile) -->
+                <aside class="hidden lg:block w-64 ml-8">
+                    <nav class="sticky top-16">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Menu</h2>
+                        <ul class="space-y-2">
+                            <!-- Mock Links -->
+                            @php
+                                $menu_lateral = \App\Models\WebMenu::where('web_menu_place_id', 6)
+                                    ->where('id', $page->web_menu_id)
+                                    ->get();
+                            @endphp
+
+                            @foreach ($menu_lateral->where('status', 'published') as $menu)
+                                <ul class="nav flex-column">
+                                    @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
+                                        <li>
+                                            <a href="{{ $item->url }}"
+                                                class="flex items-center p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
+                                                <span class="ml-3">{{ $item->name }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endforeach
+
+                        </ul>
+                    </nav>
+                </aside>
+            @endif
         </div>
+
+        @if (isset($page) and $page->web_menu_id > 0)
+            <!-- Drawer Component -->
+            <div id="drawer-example"
+                class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+                tabindex="-1" aria-labelledby="drawer-label">
+                <h5 id="drawer-label"
+                    class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+                    <svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    Menu da Página
+                </h5>
+                <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close menu</span>
+                </button>
+
+                <!-- Drawer Content (Mock Links) -->
+                <nav>
+                    <ul class="space-y-2">
+                        @foreach ($menu_lateral->where('status', 'published') as $menu)
+                            <ul class="nav flex-column">
+                                @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
+                                    <li>
+                                        <a href="{{ $item->url }}"
+                                            class="flex items-center p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
+                                            <span class="ml-3">{{ $item->name }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endforeach
+
+                    </ul>
+                </nav>
+            </div>
+        @endif
     </main>
-
-    <aside aria-label="Related articles" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
-        <div class="px-4 mx-auto max-w-screen-xl">
-            <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related articles</h2>
-            <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-                @for ($i = 1; $i <= 4; $i++)
-                    <article class="max-w-xs">
-                        <a href="#">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-{{ $i }}.png"
-                                class="mb-5 rounded-lg" alt="Image {{ $i }}">
-                        </a>
-                        <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                            <a href="#">Article Title {{ $i }}</a>
-                        </h2>
-                        <p class="mb-4 text-gray-500 dark:text-gray-400">This is a short description for article
-                            {{ $i }}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <a href="#"
-                            class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
-                            Read in {{ $i * 2 }} minutes
-                        </a>
-                    </article>
-                @endfor
-            </div>
-        </div>
-    </aside>
-
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-md sm:text-center">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">Sign up
-                    for our newsletter</h2>
-                <p class="mx-auto mb-8 max-w-2xl text-gray-500 md:mb-12 sm:text-xl dark:text-gray-400">Stay up to date with
-                    the roadmap progress, announcements and exclusive discounts feel free to sign up with your email.</p>
-                <form action="#">
-                    <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
-                        <div class="relative w-full">
-                            <label for="email"
-                                class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email
-                                address</label>
-                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                    <path
-                                        d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                                    <path
-                                        d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                                </svg>
-                            </div>
-                            <input
-                                class="block p-3 pl-9 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 sm:rounded-none sm:rounded-l-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Enter your email" type="email" id="email" required="">
-                        </div>
-                        <div>
-                            <button type="submit"
-                                class="py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 sm:rounded-none sm:rounded-r-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Subscribe</button>
-                        </div>
-                    </div>
-                    <div
-                        class="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer dark:text-gray-300">
-                        We care about the protection of your data. <a href="#"
-                            class="font-medium text-primary-600 dark:text-primary-500 hover:underline">Read our Privacy
-                            Policy</a>.
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
 @endsection
