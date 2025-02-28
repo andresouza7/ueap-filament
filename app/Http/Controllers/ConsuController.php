@@ -64,7 +64,7 @@ class ConsuController extends Controller
         }
 
         $resolutions = $query->paginate(25)->withQueryString();
-        return view('site.pages.resolution-list', compact('resolutions'));
+        return view('novosite.pages.resolution-list', compact('resolutions'));
     }
 
     public function listAta(Request $request)

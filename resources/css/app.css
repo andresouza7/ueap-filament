@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.record-text a {
+    @apply text-blue-500 break-all;
+}
+.record-text a:hover {
+    @apply text-blue-700
+}
+
+.record-text table {
+    @apply border border-gray-300 dark:border-gray-600 w-full text-left ;
+}
+
+.record-text th,
+.record-text td {
+    @apply border border-gray-300 dark:border-gray-600 px-4 py-2 ;
+}

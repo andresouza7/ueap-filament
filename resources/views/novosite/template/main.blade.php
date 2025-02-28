@@ -10,7 +10,7 @@
 </head>
 
 <body class="bg-gray-100">
-    @include('site.template.partials.navbar')
+    @include('novosite.template.partials.navbar')
 
     {{-- <header class="bg-blue-600 text-white py-6 text-center">
         <h1 class="text-3xl font-bold">Universidade Exemplo</h1>
@@ -20,7 +20,8 @@
         @yield('content')
     </main>
 
-    @include('site.template.partials.footer')
+    @include('novosite.template.partials.address')
+    @include('novosite.template.partials.footer')
 </body>
 
 </html>
