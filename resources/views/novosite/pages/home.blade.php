@@ -77,17 +77,17 @@
                         @endforeach
                     </div> --}}
 
-                    <div class="flex flex-col gap-2"> <!-- Added gap-2 for spacing between items -->
-                        @foreach ($posts as $post)
-                            <div class="relative overflow-hidden rounded-sm shadow-md hover:scale-105 transition-transform duration-300">
-                                <div class="w-full flex items-center gap-2"> <!-- Added items-center to vertically align content -->
+                    <div class="grid grid-rows-2 gap-2 sm:grid-rows-none"> <!-- Show only 2 rows on small screens -->
+                        @foreach ($posts as $index => $post)
+                            <div class="relative overflow-hidden rounded-sm shadow-md hover:scale-105 transition-transform duration-300 sm:block {{ $index >= 2 ? 'hidden sm:block' : '' }}">
+                                <div class="w-full flex items-center gap-2">
                                     <!-- Thumbnail Image -->
-                                    <img src="{{ $post->image_url }}" class="h-12 w-16 object-contain rounded-sm" /> <!-- Changed object-contain to object-cover for better image fit -->
+                                    <img src="{{ $post->image_url }}" class="h-12 w-16 object-contain rounded-sm" />
                     
                                     <!-- Text Content -->
-                                    <div class="flex-1 p-2 text-justify hover:underline"> <!-- flex-1 to allow text to take remaining space -->
+                                    <div class="flex-1 text-justify hover:underline">
                                         <a href="{{ route('novosite.post.show', $post->slug) }}"
-                                            class="text-xs font-semibold text-gray-100 line-clamp-2"> <!-- Changed text color to gray-800 for better readability -->
+                                            class="text-xs font-semibold text-gray-100 line-clamp-2">
                                             {{ $post->title }}
                                         </a>
                                     </div>
@@ -98,7 +98,7 @@
 
                     <!-- Botão "Saiba Mais" -->
                     <a href="{{ route('novosite.post.list') }}"
-                        class="inline-flex items-center text-gray-100 hover:text-gray-300 mt-4 font-medium text-sm transition-colors duration-200">
+                        class="inline-flex items-center text-gray-100 hover:text-gray-300 mt-3 font-medium text-sm transition-colors duration-200">
                         Ver Mais
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">

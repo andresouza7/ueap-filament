@@ -3,34 +3,47 @@
 @section('title', 'Home')
 
 @section('content')
-    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
-        <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+    <main class="bg-neutral-200 dark:bg-gray-900 antialiased">
+
+
+        <!-- Main Content Container -->
+        <div class="p-4 sm:p-16 flex flex-col justify-between mx-auto max-w-4xl">
+
             <article
-                class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-                <header class="mb-4 lg:mb-6 not-format">
-                    <address class="flex items-center mb-6 not-italic">
-                        <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                            <img class="mr-4 w-16 h-16 rounded-full" src="{{ $post->user_created->profile_photo_url }}"
-                                alt="Jese Leos">
-                            <div>
+                class="pt-8 px-4 sm:px-16 pb-16 lg:pt-16 lg:pb-24 mx-auto w-full bg-white format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                <header class="mb-6">
+                    <!-- Author Section - Full Width -->
+                    <div class="w-full pb-4 mb-4 border-b ">
+                        <address class="flex items-center gap-4 max-w-4xl mx-auto">
+                            <img class="w-16 h-16 rounded-full border-2 border-blue-500"
+                                src="{{ $post->user_created->profile_photo_url }}" alt="Author Profile Photo">
+                            <div class="flex flex-col">
                                 <a href="#" rel="author"
-                                    class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->user_created->nickname }}</a>
-                                <p class="text-xs italic text-gray-500 dark:text-gray-400">
-                                    {{ $post->user_created->group->description }}</p>
-                                <p class="text-xs italic text-gray-500 dark:text-gray-400">{{ $post->created_at }}</p>
+                                    class="text-xl font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+                                    {{ $post->user_created->nickname }}
+                                </a>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ $post->user_created->group->description }}
+                                </span>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 italic mt-1">
+                                    {{ $post->created_at->format('F j, Y') }}
+                                </span>
                             </div>
-                        </div>
-                    </address>
-                    <h1
-                        class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                        </address>
+                    </div>
+
+                    <!-- Post Title -->
+                    <h1 class="text-2xl font-extrabold leading-snug text-gray-900 dark:text-white lg:text-4xl">
                         {{ $post->title }}
                     </h1>
                 </header>
 
+                <!-- Post Image -->
                 @if ($post->image_url)
-                    <img class="w-full mb-4 lg:mb-6" src="{{ $post->image_url }}" alt="Post Image">
+                    <img class="w-full mb-4 lg:mb-6 rounded-sm shadow-sm" src="{{ $post->image_url }}" alt="Post Image">
                 @endif
 
+                <!-- Post Content -->
                 <div
                     class="text-justify leading-loose text-neutral-600 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:me-3 first-letter:float-start">
                     {!! clean_text($post->text) !!}
@@ -39,17 +52,18 @@
         </div>
     </main>
 
+
     <aside aria-label="Related articles" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
         <div class="px-4 mx-auto max-w-screen-xl">
             <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Leia Também</h2>
             <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($extra_posts as $post)
                     <article class="max-w-xs">
-                        <a href="{{route('novosite.post.show', $post->slug)}}">
+                        <a href="{{ route('novosite.post.show', $post->slug) }}">
                             <img src="{{ $post->image_url }}" class="mb-5 rounded-lg h-48" alt="{{ $post->title }}">
                         </a>
                         <h2 class="mb-2 text-xl font-semibold leading-tight text-gray-900 dark:text-white">
-                            <a href="{{route('novosite.post.show', $post->slug)}}">{{ $post->title }}</a>
+                            <a href="{{ route('novosite.post.show', $post->slug) }}">{{ $post->title }}</a>
                         </h2>
                         <p class="mb-4 text-gray-500 dark:text-gray-400">{{ $post->created_at }}</p>
                         {{-- <a href="#"
