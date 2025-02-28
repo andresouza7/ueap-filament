@@ -7,8 +7,8 @@
     <div class="w-full relative min-h-[400px] py-4 lg:py-16 bg-cover bg-center"
         style="background-image: url('{{ asset('img/home-bg.jpg') }}');">
         <div class="absolute inset-0 bg-black opacity-60"></div> {{-- Overlay for better readability --}}
-        <div class="container mx-auto w-full px-4 lg:px-8 py-8 relative z-10">
-            <div class="grid md:grid-cols-3 gap-6">
+        <div class="container mx-auto w-full max-w-6xl px-4 lg:px-8 py-8 relative z-10">
+            <div class="grid md:grid-cols-3 gap-4">
                 <!-- Carousel -->
                 <div id="controls-carousel" class="relative col-span-2" data-carousel="slide" data-carousel-interval="5000">
                     <div class="relative h-72 md:h-96 overflow-hidden rounded-sm">
@@ -55,17 +55,16 @@
                     </button>
                 </div>
                 <!-- Notícias principais -->
-                <div class="col-span-2 md:col-span-1">
+                <div class="col-span-2 md:col-span-1 bg-black/50 p-3 rounded-sm"> <!-- Dark overlay background -->
                     {{-- Destaques Heading --}}
-                    <h2 class="text-2xl font-semibold text-white mb-4">Notícias Destaque</h2>
-                    <div class="w-full h-px bg-white/50 mb-6"></div> {{-- White Divider --}}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <h2 class="text-xl font-thin text-white mb-2">Destaques</h2>
+                    <div class="w-full h-px bg-white/50 mb-4"></div> {{-- White Divider --}}
+                    {{-- <div class="grid grid-cols-2 gap-4">
                         @foreach ($posts as $post)
                             <div
                                 class="relative overflow-hidden rounded-sm shadow-md hover:scale-105 transition-transform duration-300">
                                 <div class="w-full h-32 bg-gray-300 bg-cover bg-center"
                                     style="background-image: url('{{ $post->image_url ?? '' }}');">
-                                    {{-- Dark Overlay at the Bottom --}}
                                     <div
                                         class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3">
                                         <a href="{{ route('novosite.post.show', $post->slug) }}"
@@ -76,18 +75,39 @@
                                 </div>
                             </div>
                         @endforeach
+                    </div> --}}
+
+                    <div class="flex flex-col gap-2"> <!-- Added gap-2 for spacing between items -->
+                        @foreach ($posts as $post)
+                            <div class="relative overflow-hidden rounded-sm shadow-md hover:scale-105 transition-transform duration-300">
+                                <div class="w-full flex items-center gap-2"> <!-- Added items-center to vertically align content -->
+                                    <!-- Thumbnail Image -->
+                                    <img src="{{ $post->image_url }}" class="h-12 w-16 object-contain rounded-sm" /> <!-- Changed object-contain to object-cover for better image fit -->
+                    
+                                    <!-- Text Content -->
+                                    <div class="flex-1 p-2 text-justify hover:underline"> <!-- flex-1 to allow text to take remaining space -->
+                                        <a href="{{ route('novosite.post.show', $post->slug) }}"
+                                            class="text-xs font-semibold text-gray-100 line-clamp-2"> <!-- Changed text color to gray-800 for better readability -->
+                                            {{ $post->title }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
                     <!-- Botão "Saiba Mais" -->
-                    <a href="{{route('novosite.post.list')}}"
-                        class="inline-flex items-center text-gray-100 hover:text-gray-300 mt-2 font-medium transition-colors duration-200">
-                        Ver todas
+                    <a href="{{ route('novosite.post.list') }}"
+                        class="inline-flex items-center text-gray-100 hover:text-gray-300 mt-4 font-medium text-sm transition-colors duration-200">
+                        Ver Mais
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -95,19 +115,30 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
-                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Payments tool for software companies</h1>
-                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">From checkout to global sales tax compliance, companies around the world use Flowbite to simplify their payment stack.</p>
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                <h1
+                    class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+                    Payments tool for software companies</h1>
+                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">From
+                    checkout to global sales tax compliance, companies around the world use Flowbite to simplify their
+                    payment stack.</p>
+                <a href="#"
+                    class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     Get started
-                    <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                 </a>
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                <a href="#"
+                    class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                     Speak to Sales
-                </a> 
+                </a>
             </div>
             <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
                 <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png" alt="mockup">
-            </div>                
+            </div>
         </div>
     </section>
 
@@ -150,7 +181,7 @@
 
         <!-- Botão "Ver Todos os Eventos" (opcional) -->
         <div class="text-center mt-12">
-            <a href="{{route('novosite.post.list')}}"
+            <a href="{{ route('novosite.post.list') }}"
                 class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200">
                 Ver Todos os Eventos
             </a>

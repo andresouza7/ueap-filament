@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
+        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(5)->get();
         $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(3)->get();
         return view('novosite.pages.home', compact('posts', 'events'));
     }
