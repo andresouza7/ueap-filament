@@ -2,12 +2,12 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
    
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
-        <a href="/novo" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="https://flowbite.com" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="{{ asset('img/nova_logo_black.png') }}" class="h-8" alt="Flowbite Logo" />
         </a>
 
         <div id="mega-menu" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-            <ul class="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+            <ul class="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse z-50">
                 @php
                     $menu = \App\Models\WebMenu::where('slug', 'topo')->orderBy('position')->first();
                     $items = $menu->items
@@ -36,7 +36,7 @@
                                     <ul class="space-y-4" aria-labelledby="mega-menu-dropdown-button-{{ $item->id }}">
                                         @foreach ($item->sub_itens as $subitem)
                                             <li>
-                                                <a href="/novo/{{ $subitem->url }}"
+                                                <a href="{{ $subitem->url }}"
                                                     class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500">
                                                     {{ $subitem->name }}
                                                 </a>
@@ -48,7 +48,7 @@
                         </li>
                     @else
                         <li>
-                            <a href="/novo/{{ $item->url }}"
+                            <a href="{{ $item->url }}"
                                 class="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
                                 aria-current="page">{{ $item->name }}</a>
                         </li>
