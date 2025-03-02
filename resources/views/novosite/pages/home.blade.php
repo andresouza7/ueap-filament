@@ -7,6 +7,6 @@
     @include('novosite.template.partials.home-menu')
     @include('novosite.template.partials.servicos')
     @include('novosite.template.partials.programas')
-    @include('novosite.template.partials.eventos')
+    @include('novosite.template.partials.stats')
     @include('novosite.template.partials.faq')
 @endsection

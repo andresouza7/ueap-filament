@@ -5,10 +5,12 @@
     {{-- <div class="absolute inset-0 bg-gradient-to-b from-blue-700 to-blue-500 z-10" 
          style="clip-path: polygon(0% 80%, 100% 80%, 100% 100%, 0% 100%);">
     </div> --}}
-    <div class="absolute inset-0 bg-gradient-to-b from-blue-700 to-blue-500 z-10" 
-         style="clip-path: polygon(0% 70%, 100% 70%, 100% 92%, 0% 90%);">
-    </div>
-    
+    {{-- <div class="absolute inset-0 bg-gradient-to-b from-blue-700 to-blue-600 z-10 shadow-lg"
+    style="clip-path: ellipse(130% 20% at 50% 90%);">
+</div> --}}
+    {{-- <div class="absolute inset-0 bg-gradient-to-r from-blue-700 via-green-500 to-blue-500 z-10"
+        style="clip-path: polygon(0% 71%, 100% 71%, 100% 80%, 0% 80%);">
+    </div> --}}
 
     <div class="max-w-screen-xl px-4 mx-auto relative z-20">
         <!-- Título, Descrição e Botões -->
@@ -18,10 +20,10 @@
                 <h1 class="w-full mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
                     <span class="text-blue-500">Ensino,</span>
                     <span class="text-green-600">Pesquisa</span>
-                    <span class="text-gray-500">e</span>
+                    <span class="text-gray-400">e</span>
                     <span class="text-yellow-500">Extensão</span>
                 </h1>
-                <div class="w-full h-1 bg-gradient-to-r from-gray-400 to-gray-300"></div>
+                <div class="w-full h-0.5 bg-gradient-to-r from-gray-400 to-gray-300"></div>
                 <p class="w-full mt-6 lg:mt-4 font-light text-gray-800 md:text-base lg:text-lg">
                     A UEAP promove a integração entre pesquisa, ensino e extensão, oferecendo programas sociais que
                     incentivam a formação acadêmica, a inovação e o desenvolvimento comunitário. Nossas iniciativas
@@ -29,7 +31,8 @@
                 </p>
 
                 <!-- CTA "Conheça nossos programas" -->
-                <h1 class="w-full mt-6 lg:mt-16 mb-4 text-xl tracking-tight leading-none md:text-2xl text-gray-700 font-semibold">
+                <h1
+                    class="w-full mt-6 lg:mt-16 mb-4 text-xl tracking-tight leading-none md:text-2xl text-gray-700 font-semibold">
                     Conheça nossos programas
                 </h1>
             </div>
@@ -43,7 +46,8 @@
         <!-- Grid de Programas Sociais -->
         <div class="lg:pt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <!-- Programa 1: PIBID -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-users text-blue-600 text-xl"></i>
                 </div>
@@ -54,7 +58,8 @@
             </div>
 
             <!-- Programa 2: PRP -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-flask text-blue-600 text-xl"></i>
                 </div>
@@ -65,7 +70,8 @@
             </div>
 
             <!-- Programa 3: PROACE -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-hand-holding-heart text-blue-600 text-xl"></i>
                 </div>
@@ -76,7 +82,8 @@
             </div>
 
             <!-- Programa 4: PROAPE -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-book-open text-blue-600 text-xl"></i>
                 </div>
@@ -87,7 +94,8 @@
             </div>
 
             <!-- Programa 5: PROBICT -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-microscope text-blue-600 text-xl"></i>
                 </div>
@@ -98,7 +106,8 @@
             </div>
 
             <!-- Programa 6: PROMONITORIA -->
-            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
+            <div
+                class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition">
                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
                     <i class="fas fa-chalkboard-teacher text-blue-600 text-xl"></i>
                 </div>
@@ -110,3 +119,4 @@
         </div>
     </div>
 </section>
+

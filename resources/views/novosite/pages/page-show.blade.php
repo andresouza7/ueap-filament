@@ -57,7 +57,7 @@
                                 <ul class="nav flex-column">
                                     @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                         <li>
-                                            <a href="{{ $item->url }}"
+                                            <a href="/novo/{{ $item->url }}"
                                                 class="flex items-center p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
                                                 <span class="ml-3">{{ $item->name }}</span>
                                             </a>
@@ -103,7 +103,7 @@
                             <ul class="nav flex-column">
                                 @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                     <li>
-                                        <a href="{{ $item->url }}"
+                                        <a href="/novo/{{ $item->url }}"
                                             class="flex items-center p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
                                             <span class="ml-3">{{ $item->name }}</span>
                                         </a>

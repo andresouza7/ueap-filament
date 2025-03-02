@@ -13,6 +13,6 @@ export default {
     // require('daisyui'),
     require('flowbite/plugin')
   ],
-  darkMode: 'class'
+  darkMode: 'class',
 }
 
