@@ -1,13 +1,13 @@
 @extends('novosite.template.main')
 
-@section('title', 'Home')
+@section('title', 'Página')
 
 @section('content')
-    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
-        <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-100 dark:bg-gray-900 antialiased">
+        <div class="flex justify-between p-2 lg:p-12 mx-auto max-w-screen-xl bg-white">
             <!-- Main Content -->
             <article
-                class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                class="mx-auto w-full max-w-4xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                 <header class="mb-4 lg:mb-6 not-format">
 
                     <!-- Page Title and Drawer Toggle Button -->
@@ -21,7 +21,14 @@
                             class="lg:hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                             type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
                             aria-controls="drawer-example">
-                            Menu
+                            <div class="flex items-center">
+                                <span>Menu</span>
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </div>
                         </button>
                     </div>
                 </header>
@@ -42,11 +49,11 @@
 
             @if (isset($page) and $page->web_menu_id > 0)
                 <!-- Vertical Navbar (Hidden on Mobile) -->
-                <aside class="hidden lg:block w-64 ml-8">
+                <aside class="hidden lg:block w-64 ml-8 border-l border-gray-200 dark:border-gray-700 pl-8">
                     <nav class="sticky top-16">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Menu</h2>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Menu da Página</h2>
                         <ul class="space-y-2">
-                            <!-- Mock Links -->
+                            <!-- Menu Links -->
                             @php
                                 $menu_lateral = \App\Models\WebMenu::where('web_menu_place_id', 6)
                                     ->where('id', $page->web_menu_id)
@@ -65,7 +72,6 @@
                                     @endforeach
                                 </ul>
                             @endforeach
-
                         </ul>
                     </nav>
                 </aside>
@@ -96,7 +102,7 @@
                     <span class="sr-only">Close menu</span>
                 </button>
 
-                <!-- Drawer Content (Mock Links) -->
+                <!-- Drawer Content (Menu Links) -->
                 <nav>
                     <ul class="space-y-2">
                         @foreach ($menu_lateral->where('status', 'published') as $menu)
@@ -111,7 +117,6 @@
                                 @endforeach
                             </ul>
                         @endforeach
-
                     </ul>
                 </nav>
             </div>
