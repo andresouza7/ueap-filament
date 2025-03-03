@@ -3,12 +3,12 @@
     <div class="max-w-screen-xl mx-auto px-8">
         {{-- <h2 class="text-3xl font-bold text-blue-800 text-center mb-8">Acesso Rápido</h2> --}}
         <div class="mr-auto place-self-center lg:col-span-7">
-            <h1 class="w-full mb-4 text-xl lg:text-4xl font-medium tracking-tight leading-none">
+            <h1 class="w-full mb-4 text-2xl font-medium tracking-tight leading-none border-l-4 border-green-600 pl-4">
                 ACESSO RÁPIDO
             </h1>
-            <div class="w-full h-0.5 bg-gradient-to-r from-gray-400 to-gray-300"></div>
+            {{-- <div class="w-full h-0.5 bg-gradient-to-r from-gray-400 to-gray-300"></div> --}}
             <p class="w-full mt-6 lg:mt-4 font-light text-gray-800 md:text-base lg:text-lg">
-                Destinada à comunidade acadêmica e ao público em geral, esta área oferece acesso rápido a informações
+                Destinada à comunidade acadêmica e ao público em geral, esta área facilita o acesso a informações
                 essenciais.
             </p>
 
@@ -18,7 +18,7 @@
                 O que você procura?
             </h1>
         </div>
-        <div class="grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4">
+        <div class="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
             <!-- Card 1: Calendário Acadêmico -->
             <a href="#"
                 class="group relative rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2 overflow-hidden aspect-square">

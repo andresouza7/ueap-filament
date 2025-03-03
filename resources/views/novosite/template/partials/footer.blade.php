@@ -24,9 +24,7 @@
                 <div>
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Reconhecimento do MEC</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        Nossa instituição é reconhecida pelo Ministério da Educação (MEC), garantindo qualidade e
-                        excelência em
-                        educação.
+                        Nossa instituição é reconhecida pelo Ministério da Educação (MEC), consulte o nosso registro.
                     </p>
                     <img src="{{ asset('img/banner-mec.png') }}" alt="Banner do MEC" />
                 </div>

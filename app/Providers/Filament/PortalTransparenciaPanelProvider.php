@@ -30,6 +30,7 @@ class PortalTransparenciaPanelProvider extends PanelProvider
             ->path('portalTransparencia')
             ->brandName('Transparência UEAP')
             ->viteTheme('resources/css/filament/portalTransparencia/theme.css')
+            ->sidebarFullyCollapsibleOnDesktop(false)
             ->discoverResources(in: app_path('Filament/PortalTransparencia/Resources'), for: 'App\\Filament\\PortalTransparencia\\Resources')
             ->discoverPages(in: app_path('Filament/PortalTransparencia/Pages'), for: 'App\\Filament\\PortalTransparencia\\Pages')
             ->pages([

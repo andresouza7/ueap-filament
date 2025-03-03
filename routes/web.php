@@ -18,6 +18,10 @@ Route::get('/debug', function () {
     // return view('home');
 });
 
+Route::get('/tailwind', function() {
+    return view('tailwind');
+});
+
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
 Route::get('/login', function () {

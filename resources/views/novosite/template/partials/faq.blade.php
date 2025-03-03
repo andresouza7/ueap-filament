@@ -1,6 +1,6 @@
 <!-- Seção de Accordion -->
 <section class="bg-white py-16">
-    <div class="max-w-screen-2xl mx-auto px-6">
+    <div class="max-w-screen-xl mx-auto px-8">
         <!-- Título da Seção -->
         <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Perguntas Frequentes</h2>
 

@@ -1,7 +1,8 @@
 <nav class="bg-white dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 lg:p-4">
         {{-- Logo --}}
-        <a href="/novo" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="/novo
+        " class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="{{ asset('img/nova_logo_black.png') }}" class="h-8" alt="Logo UEAP" />
         </a>
 
