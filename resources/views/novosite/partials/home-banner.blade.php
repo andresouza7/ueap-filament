@@ -3,11 +3,11 @@
     style="background-image: url('{{ asset('img/home-bg.jpg') }}');">
     <div class="absolute inset-0 bg-black opacity-60"></div> {{-- Overlay for better readability --}}
     <div class="lg:container mx-auto w-full lg:py-8 relative z-10">
-        <div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4">
+        <div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4 items-stretch">
             <!-- Carousel -->
             <div id="controls-carousel" class="relative col-span-1 lg:col-span-2" data-carousel="slide"
                 data-carousel-interval="5000">
-                <div class="relative h-[200px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-sm">
+                <div class="relative h-[220px] md:h-[400px] lg:h-[540px] overflow-hidden rounded-sm">
                     @php
                         $banners = \App\Models\WebBanner::latest('id')->take(3)->get();
                     @endphp

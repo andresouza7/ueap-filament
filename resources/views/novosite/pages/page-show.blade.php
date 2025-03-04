@@ -3,11 +3,18 @@
 @section('title', 'Página')
 
 @section('content')
-    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-100 dark:bg-gray-900 antialiased">
-        <div class="flex justify-between p-2 lg:p-12 mx-auto max-w-screen-xl bg-white">
+    <main class="antialiased">
+        <div class="w-full bg-green-800 text-white">
+            <div class="mx-auto max-w-screen-xl px-8 py-2">
+                <h1 class="text-xl font-medium">/ Páginas</h1>
+                <a href="/novo" class="text-sm text-gray-100 mt-2">Voltar ao Início</a>
+            </div>
+        </div>
+
+        <div class="flex justify-between p-2 lg:p-12 mx-auto max-w-screen-xl">
             <!-- Main Content -->
             <article
-                class="mx-auto w-full max-w-4xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                class="mx-auto w-full max-w-4xl px-6 format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                 <header class="mb-4 lg:mb-6 not-format">
 
                     <!-- Page Title and Drawer Toggle Button -->
@@ -40,7 +47,7 @@
 
                 <!-- Post Content -->
                 <div
-                    class="text-justify leading-loose text-neutral-600 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:me-3 first-letter:float-start">
+                    class="text-justify leading-loose text-neutral-600">
                     <div class="record-text">
                         {!! clean_text($page->text) !!}
                     </div>
@@ -51,7 +58,7 @@
                 <!-- Vertical Navbar (Hidden on Mobile) -->
                 <aside class="hidden lg:block w-64 ml-8 border-l border-gray-200 dark:border-gray-700 pl-8">
                     <nav class="sticky top-16">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Menu da Página</h2>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b-2 border-green-600">Menu da Página</h2>
                         <ul class="space-y-2">
                             <!-- Menu Links -->
                             @php
@@ -61,7 +68,7 @@
                             @endphp
 
                             @foreach ($menu_lateral->where('status', 'published') as $menu)
-                                <ul class="nav flex-column">
+                                <ul class="nav flex-column font-medium text-sm">
                                     @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                         <li>
                                             <a href="/novo/{{ $item->url }}"
