@@ -2,51 +2,147 @@
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
-                <a href="https://flowbite.com/" class="flex items-center">
-                    <img src="{{ asset('img/nova_logo_black.png') }}" class="h-8 me-3" alt="FlowBite Logo" />
-                    <img src="{{ asset('img/logo_gea.png') }}" class="h-8 me-3" alt="FlowBite Logo" />
-                    {{-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> --}}
-                </a>
+                <!-- Logotipos da Instituição -->
+                <div class="mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Universidade do Estado do Amapá
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        A UEAP, em parceria com o Governo do Estado do Amapá, trabalha para promover educação de
+                        qualidade e desenvolvimento regional.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://flowbite.com/" class="flex items-center">
+                            <img src="{{ asset('img/nova_logo_black.png') }}" class="h-8" alt="Logotipo Principal" />
+                        </a>
+                        <a href="https://flowbite.com/" class="flex items-center">
+                            <img src="{{ asset('img/logo_gea.png') }}" class="h-8" alt="Logotipo GEA" />
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Banner do MEC -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Reconhecimento do MEC</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Nossa instituição é reconhecida pelo Ministério da Educação (MEC), consulte o nosso registro.
+                    </p>
+                    <img src="{{ asset('img/banner-mec.png') }}" alt="Banner do MEC" />
+                </div>
             </div>
+
             <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                 <div>
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Institucional</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                        <li class="mb-4">
-                            <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                        <li>
+                            <a href="#" class="hover:underline">História da Instituição</a>
                         </li>
                         <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                            <a href="#" class="hover:underline">Missão e Valores</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Estrutura Organizacional</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Políticas Institucionais</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Relatórios Anuais</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Transparência e Prestação de Contas</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Trabalhe Conosco</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Parceiros e Colaboradores</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Eventos e Notícias</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Contato e Localização</a>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
-                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                        <li class="mb-4">
-                            <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Serviços</h2>
+
+                    <!-- Subcategoria: Público Geral -->
+                    <h3 class="mb-3 text-xs font-semibold text-gray-900 uppercase dark:text-white">Público Geral</h3>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium mb-6">
+                        <li>
+                            <a href="#" class="hover:underline">Agendamento de Visitas</a>
                         </li>
                         <li>
-                            <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                            <a href="#" class="hover:underline">Biblioteca Pública</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Eventos Abertos</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Cursos de Extensão</a>
+                        </li>
+                    </ul>
+
+                    <!-- Subcategoria: Acadêmicos -->
+                    <h3 class="mb-3 text-xs font-semibold text-gray-900 uppercase dark:text-white">Acadêmicos</h3>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium mb-6">
+                        <li>
+                            <a href="#" class="hover:underline">Portal do Aluno</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Calendário Acadêmico</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Biblioteca Digital</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Programas de Bolsas</a>
+                        </li>
+                    </ul>
+
+                    <!-- Subcategoria: Servidores -->
+                    <h3 class="mb-3 text-xs font-semibold text-gray-900 uppercase dark:text-white">Servidores</h3>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li>
+                            <a href="#" class="hover:underline">Portal do Servidor</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Gestão de Ponto Eletrônico</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Treinamentos e Capacitações</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Benefícios e Auxílios</a>
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                {{-- <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Transparência</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                        <li class="mb-4">
+                        <li>
                             <a href="#" class="hover:underline">Privacy Policy</a>
                         </li>
                         <li>
                             <a href="#" class="hover:underline">Terms &amp; Conditions</a>
                         </li>
+                        <li>
+                            <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                        </li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023. Site desenvolvido pela DINFO/UEAP.
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023. Site desenvolvido pela
+                DINFO/UEAP.
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0">
                 <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
@@ -97,3 +193,10 @@
         </div>
     </div>
 </footer>
+{{-- 
+<div class="bg-gradient-to-t from-green-500 via-green-500/50 to-white">
+    <div class="container mx-auto px-4 py-16 text-white">
+      <h1 class="text-4xl font-bold">Welcome to My App</h1>
+      <p class="mt-4 text-lg">This is a recreation of the Next.js welcome page gradient effect.</p>
+    </div>
+  </div> --}}

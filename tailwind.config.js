@@ -7,12 +7,16 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        neon: "0 0 10px theme('colors.green.200'), 0 0 25px theme('colors.green.700')"
+      }
+    },
   },
   plugins: [
     // require('daisyui'),
     require('flowbite/plugin')
   ],
-  darkMode: 'class'
+  darkMode: 'class',
 }
 

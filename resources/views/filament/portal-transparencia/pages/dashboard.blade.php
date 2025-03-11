@@ -1,24 +1,17 @@
 <x-filament::page>
     <div class="space-y-8">
         {{-- BANNER TOPO --}}
-        <div class="relative bg-green-700 text-white p-8 mb-8 rounded-lg shadow-lg">
+        <div class="relative bg-green-600 text-white p-8 mb-8 rounded-lg shadow-lg">
             <div class="flex justify-between">
-                <img src="{{ asset('img/brasao_light.png') }}" alt="Portal da Transparência" class="mb-4 w-32 sm:w-40 md:w-48">
-                <img src="{{ asset('img/logo_gea.png') }}" alt="Portal da Transparência" class="mb-4 w-28 sm:w-36 md:w-44">
+                <div>
+                    <h1 class="text-3xl font-bold">Portal da Transparência</h1>
+                    <h2 class="text-xl mt-2 text-gray-200">Universidade do Estado do Amapá</h2>
+                </div>
+                <img src="{{ asset('img/brasao_light.png') }}" alt="Portal da Transparência"
+                    class="mb-4 w-32 sm:w-40 md:w-48">
             </div>
-            <h1 class="text-3xl font-bold">Portal da Transparência</h1>
-            <h2 class="text-xl mt-2 text-gray-200">Universidade do Estado do Amapá</h2>
-            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-green-500 to-green-700"></div>
-        </div>
 
-        {{-- BARRA DE PESQUISA --}}
-        <div class="bg-white p-6 shadow-lg rounded-lg border border-gray-200">
-            <h3 class="text-lg font-bold mb-4">O que você procura?</h3>
-            @livewire(Filament\Livewire\GlobalSearch::class)
-            <div class="flex items-center space-x-4">
-                <input type="text" placeholder="Search..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                <button class="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Buscar</button>
-            </div>
+            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-green-500 to-green-700"></div>
         </div>
 
         {{-- SEÇÃO DE DESTAQUES --}}
@@ -28,27 +21,77 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-home" class="w-14 mx-auto text-blue-600" />
                 <h3 class="text-xl font-bold">Institucional</h3>
-                <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">
-                    <option value="">Selecione</option>
-                    <option value="1">Links Institucionais</option>
-                    <option value="2">Organograma da UEAP</option>
-                    <option value="2">Legislação</option>
-                </select>
+
+                <div x-data="{ open: false }" class="relative w-full">
+                    <button @click="open = !open" @click.away="open = false"
+                        class="w-full flex justify-between items-center py-2.5 px-5 text-sm border border-gray-400 text-gray-700 rounded-md cursor-pointer font-semibold text-left shadow-xs transition-all duration-300 hover:bg-gray-100">
+                        Selecione
+                        <svg :class="open ? 'rotate-180' : ''"
+                            class="w-3 h-3 text-gray-700 transition-transform duration-300" width="16"
+                            height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition
+                        class="absolute left-0 w-full bg-white rounded-md shadow-lg border border-gray-200 mt-2">
+                        <ul class="py-2 text-left">
+                            <li>
+                                <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium"
+                                    href="{{ route('filament.portalTransparencia.pages.legislacao') }}">Legislação</a>
+                            </li>
+                            <li>
+                                <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium"
+                                    href="/">Organograma </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-users" class="w-14 mx-auto text-yellow-500" />
                 <h3 class="text-xl font-bold">Pessoal</h3>
-                <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">
-                    <option value="">Selecione</option>
-                    <option value="1">Servidores</option>
-                    <option value="2">Cargos e Funções</option>
-                    <option value="2">Folha de Pagamento</option>
-                </select>
+          
+                <div x-data="{ open: false }" class="relative w-full">
+                    <button @click="open = !open" @click.away="open = false"
+                        class="w-full flex justify-between items-center py-2.5 px-5 text-sm border border-gray-400 text-gray-700 rounded-md cursor-pointer font-semibold text-left shadow-xs transition-all duration-300 hover:bg-gray-100">
+                        Selecione
+                        <svg :class="open ? 'rotate-180' : ''"
+                            class="w-3 h-3 text-gray-700 transition-transform duration-300" width="16"
+                            height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition
+                        class="absolute left-0 w-full bg-white rounded-md shadow-lg border border-gray-200 mt-2">
+                        <ul class="py-2 text-left">
+                            <li>
+                                <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium"
+                                    href="{{ route('filament.portalTransparencia.resources.servidores.index') }}">Servidores</a>
+                            </li>
+                            <li>
+                                <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium"
+                                    href="{{ route('filament.portalTransparencia.pages.cargos') }}">Cargos e Funções </a>
+                            </li>
+                            <li>
+                                <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium"
+                                    href="http://www.transparencia.ap.gov.br/consulta/2/21/despesa/detalhado" target="_blank">Folha de Pagamento</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-document-chart-bar" class="w-14 mx-auto text-green-600" />
                 <h3 class="text-xl font-bold">Relatórios</h3>
                 <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">
@@ -62,7 +105,8 @@
                     <option value="2">Relação de Pagamento</option>
                 </select>
             </div>
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-information-circle" class="w-14 mx-auto text-cyan-600" />
                 <h3 class="text-xl font-bold">Convênios e Parcerias</h3>
                 <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">
@@ -82,14 +126,18 @@
 
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-envelope" class="w-14 mx-auto text-gray-500" />
                 <h3 class="text-xl font-bold">Carta de Serviços</h3>
-                <a class="py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 text-gray-700" target="_blank" href="https://cartaservico.portal.ap.gov.br/carta-de-servico-publica/orgao/46/servicos">
+                <a class="py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 text-gray-700"
+                    target="_blank"
+                    href="https://cartaservico.portal.ap.gov.br/carta-de-servico-publica/orgao/46/servicos">
                     Acesse
                 </a>
             </div>
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-list-bullet" class="w-14 mx-auto text-gray-500" />
                 <h3 class="text-xl font-bold">Planejamento e Orçamento</h3>
                 <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">
@@ -102,7 +150,8 @@
                     <option value="2">Restos a pagar processados e não processados</option>
                 </select>
             </div>
-            <div class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
+            <div
+                class="bg-white p-6 text-center shadow-lg rounded-lg flex flex-col justify-between gap-2 border border-gray-200">
                 <x-filament::icon icon="heroicon-m-scale" class="w-14 mx-auto text-gray-500" />
                 <h3 class="text-xl font-bold">Licitações e Contratos</h3>
                 <select class="border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200">

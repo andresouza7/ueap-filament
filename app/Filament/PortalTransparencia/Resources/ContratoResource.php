@@ -16,14 +16,23 @@ use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContratoResource extends Resource
 {
     protected static ?string $model = TransparencyBid::class;
     protected static ?string $modelLabel = 'Contrato';
+    protected static ?string $slug = 'contratos';
     protected static ?string $navigationGroup = 'Contratos';
     protected static ?int $navigationSort = 1;
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Número' => $record->number,
+        ];
+    }
 
     // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

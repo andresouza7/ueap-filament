@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(5)->get();
+        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(6)->get();
         $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(3)->get();
         return view('novosite.pages.home', compact('posts', 'events'));
     }
@@ -48,7 +48,7 @@ class PageController extends Controller
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $extra_posts = WebPost::latest('id')->take(4)->get();
+        $extra_posts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
         if($post){
             $post->hits = $post->hits+1;

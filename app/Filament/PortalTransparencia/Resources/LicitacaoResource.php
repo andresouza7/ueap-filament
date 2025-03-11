@@ -16,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LicitacaoResource extends Resource
@@ -23,8 +24,17 @@ class LicitacaoResource extends Resource
     protected static ?string $model = TransparencyBid::class;
     protected static ?string $modelLabel = 'Licitação';
     protected static ?string $pluralModelLabel = 'Licitações';
+    protected static ?string $slug = 'licitacoes';
     protected static ?string $navigationGroup = 'Licitações';
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $recordTitleAttribute = 'description';
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Edital' => $record->number,
+        ];
+    }
 
     // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
