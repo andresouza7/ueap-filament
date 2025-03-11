@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources\SocialUserResource\RelationManagers;
 
+use App\Filament\App\Resources\SocialPostResource;
+use App\Filament\App\Resources\SocialUserResource;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -33,43 +35,53 @@ class PostsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('uuid')
+            ->recordTitleAttribute('login')
             ->columns([
                 Stack::make([
                     Split::make([
                         ImageColumn::make('user.profile_photo_url')
                             ->grow(false)
-                            ->size('40px')
+                            ->size('60px')
                             ->circular(),
-                        TextColumn::make('user.login')
-                            ->weight(FontWeight::Bold)
-                            ->grow(false),
-                        TextColumn::make('updated_at')
-                            ->badge()
-                            ->color('gray')
-                            ->dateTime('d M Y, H:i'),
+                        Stack::make([
+                            Split::make([
+                                TextColumn::make('user.login')
+                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => $record->user->id]))
+                                    ->weight(FontWeight::Bold)
+                                    ->grow(false),
+
+                                TextColumn::make('user.group.name')
+                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                                    ->formatStateUsing(fn($state) => strtoupper($state))
+                                    ->weight(FontWeight::Bold)
+                                    ->color('primary')
+                            ])->grow(false),
+
+                            TextColumn::make('updated_at')
+                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                // ->extraAttributes(['class' => 'italic'])
+                                ->color('gray')
+                                ->dateTime('d M Y, H:i'),
+                        ]),
                     ]),
 
                     TextColumn::make('text')
-                        ->label('Lotação')
                         ->html()
                         ->searchable()
-                ])->space(3)
+                ])->space(3)->extraAttributes(['class' => 'gap-2 p-2'])
             ])
             ->filters([
                 //
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\Action::make('Editar')
+                    ->visible(fn($record) => $record->user_id === auth()->id())
+                    ->url(fn($record) => SocialPostResource::getUrl('edit', ['record' => $record->id])),
             ]);
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }

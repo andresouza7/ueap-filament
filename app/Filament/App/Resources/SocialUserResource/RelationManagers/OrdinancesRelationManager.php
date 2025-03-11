@@ -29,30 +29,20 @@ class OrdinancesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('description')
+            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('year', 'DESC')->orderBy('number', 'DESC'))
             ->columns([
                 Tables\Columns\TextColumn::make('number')->label('Número')->searchable(),
                 Tables\Columns\TextColumn::make('year')->label('Ano')->searchable(),
                 Tables\Columns\TextColumn::make('subject')->label('Assunto')->searchable(),
                 Tables\Columns\TextColumn::make('description')->label('Descrição')->searchable(),
             ])
-            ->defaultSort(function (Builder $query): Builder {
-                return $query
-                    ->orderBy('year', 'DESC')->orderBy('number', 'DESC');
-            })
             ->filters([
                 //
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\Action::make('Abrir')
+                    ->url(fn($record) => $record->file_url)
+                    ->openUrlInNewTab()
             ]);
     }
 

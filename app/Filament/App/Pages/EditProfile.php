@@ -149,12 +149,6 @@ class EditProfile extends Page implements HasForms
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')
                     ->required(),
-                Forms\Components\TextInput::make('cpf_cnpj')
-                    ->label('CPF')
-                    ->disabled(fn() => Auth::user()->person !== null)
-                    ->required(),
-                Forms\Components\TextInput::make('enrollment')
-                    ->label('Matrícula'),
                 Forms\Components\TextInput::make('email'),
             ]);
     }

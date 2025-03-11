@@ -2,17 +2,19 @@
 
 namespace App\Livewire;
 
+use App\Filament\App\Resources\PontoResource;
 use App\Models\CalendarOccurrence;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -26,19 +28,33 @@ class FrequencyOccurrences extends Component implements HasForms, HasTable, HasA
     use InteractsWithTable;
     use InteractsWithActions;
 
-    public function isReadOnly(): bool
+    public $occurrences;
+
+    public function mount()
     {
-        return false;
+        $this->occurrences = CalendarOccurrence::query()->where('user_id', Auth::id())->where('type', 2)->get();
     }
 
-    public static function table(Table $table): Table
+    public function editAction()
+    {
+        return EditAction::make()
+            ->record(fn(array $arguments) => CalendarOccurrence::find($arguments['occurrence']))
+            ->form([
+                TextInput::make('description')
+                    ->required()
+                    ->maxLength(255),
+            ]);
+    }
+
+    public function table(Table $table): Table
     {
         return $table
             ->heading('Minhas Ocorrências de Ponto')
             ->description('Gerencie as alterações de expediente na sua folha de ponto.')
             ->recordTitleAttribute('description')
-            ->query(CalendarOccurrence::query()->where('user_id', Auth::id())->where('type', 2))
+            ->query(CalendarOccurrence::query()->where('user_id', Auth::id())->where('type', 3))
             ->defaultSort('start_date', 'desc')
+            ->recordUrl(fn($record) => PontoResource::getUrl('edit', ['record' => $record->id]))
             ->columns([
                 TextColumn::make('description')
                     ->searchable()
@@ -56,18 +72,8 @@ class FrequencyOccurrences extends Component implements HasForms, HasTable, HasA
                 'xl' => 1,
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->recordTitle('Ocorrência de Ponto')
-                    ->recordTitleAttribute('description')
-                // ->form($this->getActionFormSchema()),
-            ])
-            ->actions([
-                \Filament\Tables\Actions\EditAction::make(),
-                Action::make('delete')
-                    ->requiresConfirmation()
-                    ->action(fn($record) => $record->delete()),
-                // EditAction::make('dgdfg')->form($this->getActionFormSchema()),
-                // DeleteAction::make()
+                Action::make('Cadastrar Ocorrência')
+                    ->url(PontoResource::getUrl('create'))
             ]);
     }
 

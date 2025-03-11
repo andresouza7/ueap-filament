@@ -28,7 +28,7 @@ class AppPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         styleFilamentPanel($panel);
-        
+
         return $panel
             ->id('app')
             ->path('app')
@@ -45,7 +45,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 'panels::auth.login.form.after',
-                fn (): View => view('filament.app.pages.login')
+                fn(): View => view('filament.app.pages.login')
             )
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
@@ -57,6 +57,11 @@ class AppPanelProvider extends PanelProvider
                     ->url(fn() => route('filament.app.resources.servidor.view', [Auth::id(), 'activeRelationManager' => 1]))
                     ->icon('heroicon-o-document-text')
                     ->sort(2)
+                    ->group('Minha Área'),
+                NavigationItem::make('Alterar Senha')
+                    ->url(fn() => route('filament.app.auth.profile'))
+                    ->icon('heroicon-o-lock-closed')
+                    ->sort(5)
                     ->group('Minha Área'),
                 // ->visible(fn (): bool => auth()->user()?->user_type === 'admin'),
             ])

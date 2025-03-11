@@ -24,7 +24,6 @@ Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
 
-
 Route::name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
     Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');

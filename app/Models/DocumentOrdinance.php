@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\FileService;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentOrdinance extends Model
 {
@@ -27,6 +28,15 @@ class DocumentOrdinance extends Model
     protected $casts = [
         'number' => 'integer',
     ];
+
+    protected $appends = [
+        'file_url'
+    ];
+
+    public function getFileUrlAttribute()
+    {
+        return Storage::url("documents/ordinances/{$this->id}.pdf");
+    }
 
     public function persons()
     {
