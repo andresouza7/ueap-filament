@@ -33,17 +33,19 @@ class EditWebPage extends EditRecord
     {
 
         // se tiver um menu na pagina, atualiza ou cria um item de menu com a url para esta pagina
-        $lastMenuItem = WebMenuItem::latest('id')->first();
-        $menuItem = WebMenuItem::firstOrCreate([
-            'url' => 'pagina/' . $record->slug,
-        ], [
-            'uuid' => Str::uuid(),
-            'web_menu_id' => $data['web_menu_id'],
-            'name' => $record->title,
-            'description' => null,
-            'position' => $lastMenuItem ? $lastMenuItem->id + 1 : 1,
-            'status' => 'published'
-        ]);
+        if ($data['web_menu_id']) {
+            $lastMenuItem = WebMenuItem::latest('id')->first();
+            $menuItem = WebMenuItem::firstOrCreate([
+                'url' => 'pagina/' . $record->slug,
+            ], [
+                'uuid' => Str::uuid(),
+                'web_menu_id' => $data['web_menu_id'],
+                'name' => $record->title,
+                'description' => null,
+                'position' => $lastMenuItem ? $lastMenuItem->id + 1 : 1,
+                'status' => 'published'
+            ]);
+        }
         $record->update($data);
 
         return $record;

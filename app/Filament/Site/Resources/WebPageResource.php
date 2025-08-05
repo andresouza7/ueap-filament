@@ -12,6 +12,7 @@ use App\Models\WebMenuItem;
 use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Pages\SubNavigationPosition;
@@ -63,6 +64,11 @@ class WebPageResource extends Resource
                     ->required()
                     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
                     ->columnSpanFull(),
+                SpatieMediaLibraryFileUpload::make('file')
+                    ->columnSpanFull()
+                    ->label('Imagem')
+                    ->image()
+                    ->previewable(false),
                 Forms\Components\Select::make('web_menu_id')
                     ->hiddenOn('create')
                     ->label('Exibir menu nesta página?')
@@ -89,6 +95,7 @@ class WebPageResource extends Resource
                             ->maxLength(255),
                     ])
                     ->createOptionUsing(function (array $data): int {
+
                         $menu_place_pagina = WebMenuPlace::where('slug', 'pagina')->first();
                         $data['web_menu_place_id'] = $menu_place_pagina->id;
                         $data['status'] = 'published';
@@ -106,6 +113,7 @@ class WebPageResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')

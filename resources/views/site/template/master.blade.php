@@ -208,7 +208,7 @@
                             @foreach ($menu_lateral->where('status', 'published') as $menu)
                                 <div class='titulo'>Menu</div>
                                 <ul class="nav flex-column">
-                                    @foreach ($menu->itens->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
+                                    @foreach ($menu->items->where('menu_parent_id', null)->where('status', 'published')->sortBy('position') as $item)
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ $item->url }}">{{ $item->name }}</a>
                                         </li>
