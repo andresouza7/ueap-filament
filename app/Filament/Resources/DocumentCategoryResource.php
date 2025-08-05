@@ -31,24 +31,35 @@ class DocumentCategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
+                    ->label('Nome')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
+                // Forms\Components\TextInput::make('description')
+                //     ->maxLength(255),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'published' => 'Publicado',
+                        'unpublished' => 'Despublicado'
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('type')
+                    ->label('Tipo')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->maxLength(255)
+                    ->options([
+                        'general' => 'Geral',
+                        'transparency' => 'Transparência'
+                    ])
                     ->default('general'),
+                Forms\Components\Select::make('groups')
+                    ->label('Liberar acesso para')
+                    ->relationship('groups', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
@@ -57,9 +68,9 @@ class DocumentCategoryResource extends Resource
         return $table
             ->defaultSort('name')
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
@@ -69,6 +80,9 @@ class DocumentCategoryResource extends Resource
                     ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->label('Tipo')
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
                 // New column for displaying group names
                 Tables\Columns\TextColumn::make('groups.name')
@@ -114,7 +128,7 @@ class DocumentCategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            GroupsRelationManager::class
+            // GroupsRelationManager::class
         ];
     }
 

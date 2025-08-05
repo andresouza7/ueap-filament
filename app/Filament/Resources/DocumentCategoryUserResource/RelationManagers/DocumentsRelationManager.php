@@ -23,15 +23,21 @@ class DocumentsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
                 TextInput::make('title')
+                    ->label('Nome')
                     ->required(),
                 TextInput::make('description')
+                    ->label('Descrição')
                     ->required(),
                 TextInput::make('year')
+                    ->label('Ano')
+                    ->integer()
                     ->required(),
                 SpatieMediaLibraryFileUpload::make('arquivo')
-                    ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
+                    ->previewable(false),
+                    // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
 
                 Group::make()
                     ->schema(function (Get $get) {
@@ -69,15 +75,20 @@ class DocumentsRelationManager extends RelationManager
                     ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->color('gray')
                     ->label('Tipo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Data')
+                    ->dateTime('d/m/Y H:i'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
+                    ->label('Criar Documento')
                     ->mutateFormDataUsing(function (array $data) {
                         $data['user_created_id'] = auth()->id();
                         $data['uuid'] = Str::uuid();
@@ -93,9 +104,9 @@ class DocumentsRelationManager extends RelationManager
                 Tables\Actions\Action::make('download')
                     ->label('Download')
                     ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->getFirstMediaUrl($this->getOwnerRecord()->slug)) // document collection
+                    ->url(fn($record) => $record->getFirstMediaUrl())
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->getFirstMediaUrl($this->getOwnerRecord()->slug) !== '')
+                    ->visible(fn($record) => $record->hasMedia())
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
