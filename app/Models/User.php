@@ -37,7 +37,16 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         'commissioned_role_id',
         'group_id',
         'person_id',
-        'signature_url'
+        'signature_url',
+
+        // user records
+        'ordinance',
+        'ordinance_date',
+        'admission_date',
+        'category',
+        'class_id',
+        'level_id',
+        'title'
     ];
 
     /**

@@ -10,6 +10,4 @@ class Dashboard extends BaseDashboard
     protected static ?string $navigationIcon = 'heroicon-o-home';
     protected static ?string $title = 'Início';
     protected static string $view = 'filament.app.pages.dashboard';
-
- 
 }

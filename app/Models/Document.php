@@ -24,8 +24,14 @@ class Document extends Model implements HasMedia
         'title',
         'description',
         'status',
+        'metadata',
+        'old_id',
         'user_created_id',
         'user_updated_id'
+    ];
+
+    protected $casts = [
+        'metadata' => 'array', // or 'json'
     ];
 
     // generates file thumbnail on the fly

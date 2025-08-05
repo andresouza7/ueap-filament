@@ -19,6 +19,7 @@ class WebMenuPlaceResource extends Resource
     protected static ?string $model = WebMenuPlace::class;
     protected static ?string $modelLabel = 'Posição de Menu';
     protected static ?string $pluralModelLabel = 'Posições de Menu';
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

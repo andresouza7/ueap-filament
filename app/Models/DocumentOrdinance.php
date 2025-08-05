@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\FileService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class DocumentOrdinance extends Model
+class DocumentOrdinance extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $table = 'document_ordinances';
 
@@ -22,7 +24,8 @@ class DocumentOrdinance extends Model
         'year',
         'subject',
         'origin',
-        'created_at'
+        'created_at',
+        'file'
     ];
 
     protected $casts = [

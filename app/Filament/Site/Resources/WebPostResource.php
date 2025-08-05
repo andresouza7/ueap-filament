@@ -8,22 +8,27 @@ use App\Models\WebPost;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class WebPostResource extends Resource
 {
     protected static ?string $model = WebPost::class;
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
     protected static ?string $navigationGroup = 'Site';
+
+    public $filename;
 
     public static function form(Form $form): Form
     {
@@ -88,6 +93,7 @@ class WebPostResource extends Resource
                                 'published' => 'Publicado',
                                 'unpublished' => 'Despublicado'
                             ]),
+                        
                         Forms\Components\Toggle::make('featured')
                             ->label('Destaque')
                             ->required(),
@@ -100,9 +106,12 @@ class WebPostResource extends Resource
     {
         return Group::make()
             ->schema([
-                Forms\Components\FileUpload::make('image')
+
+                SpatieMediaLibraryFileUpload::make('file')
                     ->label('Arquivo (.jpg)')
+                    ->previewable(false)
                     ->image(),
+
                 Forms\Components\TextInput::make('image_subtitle')
                     ->label('Legenda')
                     ->maxLength(255),
@@ -115,7 +124,10 @@ class WebPostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->defaultSort('id', 'desc')
             ->columns([
+                Tables\Columns\TextColumn::make('id'),
+                SpatieMediaLibraryImageColumn::make('file'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
                     ->words(7)

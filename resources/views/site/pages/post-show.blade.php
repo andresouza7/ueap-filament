@@ -29,7 +29,8 @@
 
 
         <div id="texto" class='p-2'>
-
+            {{$post->file}}
+            <img src="{{ Storage::url($post->file) }}" class="img-fluid">
             @if (file_exists(public_path('storage/web/posts/' . $post->id . '.jpg')))
                 <img src="{{ asset('storage/web/posts/' . $post->id . '.jpg') }}" class="img-fluid" alt="{{ $post->image_subtitle }}">
 

@@ -7,6 +7,7 @@ use App\Filament\Rh\Resources\DocumentOrdinanceResource\RelationManagers;
 use App\Models\DocumentOrdinance;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -49,17 +50,15 @@ class DocumentOrdinanceResource extends Resource
                 Forms\Components\TextInput::make('origin')
                     ->label('Origem')
                     ->maxLength(255),
-                FileUpload::make('attachment')
-                    ->hiddenOn('create')
+                SpatieMediaLibraryFileUpload::make('file')
                     ->label('Arquivo')
-                    ->directory('documents/ordinances')
                     ->uploadingMessage('Fazendo upload...')
                     ->acceptedFileTypes(['application/pdf'])
                     ->maxSize(1024 * 10)
 
-                    ->getUploadedFileNameForStorageUsing(
-                        fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
-                    )
+                    // ->getUploadedFileNameForStorageUsing(
+                    //     fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
+                    // )
                     ->helperText('*É necessário salvar as alterações após o envio.')
                 // ->visibility('private')
             ]);
@@ -70,6 +69,7 @@ class DocumentOrdinanceResource extends Resource
         return $table
             ->defaultSort(fn($query) => $query->orderBy('year', 'desc')->orderBy('number', 'desc'))
             ->columns([
+                Tables\Columns\TextColumn::make('id')->searchable(),
                 Tables\Columns\TextColumn::make('number')
                     ->label('Nº')
                     ->numeric()
@@ -109,17 +109,9 @@ class DocumentOrdinanceResource extends Resource
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('download')
                     ->label('Baixar')
-                    ->action(function ($record) {
-                        // Assuming files are stored in 'test' directory with filename as {id}.pdf
-                        $filePath = "documents/ordinances/{$record->id}.pdf";
-
-                        if (Storage::exists($filePath)) {
-                            return Storage::download($filePath);
-                        }
-
-                        // If file not found, flash a message
-                    })
-                    ->visible(fn($record) => Storage::exists("documents/ordinances/{$record->id}.pdf"))
+                    ->url(fn($record) => $record->getFirstMediaUrl())
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->hasMedia())
                     ->icon('heroicon-m-arrow-down-tray'),
                 Tables\Actions\EditAction::make(),
             ])

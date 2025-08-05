@@ -12,6 +12,7 @@
         "bezhansalleh/filament-panel-switch": "^1.0",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
+        "flowframe/laravel-trend": "^0.4.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "^11.0",

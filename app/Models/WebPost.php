@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class WebPost extends Model
+class WebPost extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'uuid',
@@ -24,7 +26,8 @@ class WebPost extends Model
         'text_credits',
         'image_credits',
         'image_subtitle',
-        'status'
+        'status',
+        'file',
     ];
 
     protected $appends = ['image_url'];

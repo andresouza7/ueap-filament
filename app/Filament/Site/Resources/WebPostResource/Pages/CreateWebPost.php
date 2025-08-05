@@ -5,6 +5,7 @@ namespace App\Filament\Site\Resources\WebPostResource\Pages;
 use App\Filament\Site\Resources\WebPostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 

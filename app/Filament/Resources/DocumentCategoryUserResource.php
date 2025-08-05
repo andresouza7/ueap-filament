@@ -7,6 +7,7 @@ use App\Filament\Resources\DocumentCategoryUserResource\Pages;
 use App\Filament\Resources\DocumentCategoryUserResource\RelationManagers;
 use App\Models\DocumentCategory;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -36,7 +37,7 @@ class DocumentCategoryUserResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('name')->label('Nome Categoria')
+                TextInput::make('name')->label('Nome Categoria')->readOnly()
             ]);
     }
 
@@ -83,7 +84,7 @@ class DocumentCategoryUserResource extends Resource
         return [
             'index' => Pages\ListDocumentCategoryUsers::route('/'),
             // 'create' => Pages\CreateDocumentCategoryUser::route('/create'),
-            'view' => Pages\ViewDocumentCategoryUser::route('/{record}'),
+            // 'view' => Pages\ViewDocumentCategoryUser::route('/{record}'),
             'edit' => Pages\EditDocumentCategoryUser::route('/{record}/edit'),
         ];
     }

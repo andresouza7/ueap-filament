@@ -3,10 +3,16 @@
 namespace App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +24,31 @@ class DocumentsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                TextInput::make('title')
+                    ->required(),
+                TextInput::make('description')
+                    ->required(),
+                TextInput::make('year')
+                    ->required(),
+                SpatieMediaLibraryFileUpload::make('arquivo')
+                    ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
+
+                Group::make()
+                    ->schema(function (Get $get) {
+                        $category = $this->getOwnerRecord()->slug;
+
+                        return match ($category) {
+                            'consu-atas' => [
+                                TextInput::make('metadata.number')->label('Número')->numeric()->required(),
+                            ],
+                            'consu-resolucoes' => [
+                                TextInput::make('metadata.issuer')->label('Emissor'),
+                                DatePicker::make('metadata.issuance_date')->label('Data de Emissão'),
+                            ],
+                            // Add other cases here...
+                            default => [],
+                        };
+                    }),
             ]);
     }
 
@@ -49,15 +77,29 @@ class DocumentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->mutateFormDataUsing(function (array $data) {
+                        $data['user_created_id'] = auth()->id();
+                        $data['uuid'] = Str::uuid();
+                        $data['type'] = $this->getOwnerRecord()->slug;
+                        $data['status'] = 'published';
+
+                        return $data;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Download')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn($record) => $record->getFirstMediaUrl($this->getOwnerRecord()->slug)) // document collection
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->getFirstMediaUrl($this->getOwnerRecord()->slug) !== '')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

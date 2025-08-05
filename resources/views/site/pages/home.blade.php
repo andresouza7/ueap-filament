@@ -32,6 +32,8 @@ afterChange: function(){}
         $banners = \App\Models\WebBanner::where('web_banner_place_id', 1)->where('status', 'published')->orderByDesc('id')->limit(10)->get();
         $active = true;
         $cont = 1;
+
+        // dd($banners);
     @endphp
 
     {{--  <div class="carousel-indicators">
@@ -43,14 +45,14 @@ afterChange: function(){}
     <div class="carousel-inner">
         @foreach($banners as $banner)
             <a href='{{ $banner->url }}'>
-                <div class="carousel-item @php if($active == true){ echo 'active';}  @endphp">
-                    @if(file_exists(public_path("storage/web/banners/".$banner->id.".jpg")))
-                        <img src="{{asset("storage/web/banners/".$banner->id.".jpg")}}" class="d-block w-100" alt="{{$banner->title}}">
+                <div class="carousel-item @php if($active == true){ echo 'active';} @endphp">
+                    <img src="{{$banner->image_url}}" class="d-block w-100" alt="{{$banner->title}}">
+                    {{-- @if(file_exists(public_path("storage/web/banners/".$banner->id.".jpg"))) --}}
                         <div class="carousel-caption d-none d-md-block">
                             {{-- <h5>{{$banner->title}}</h5>
                             <p>{{$banner->description}}</p> --}}
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 </div>
             </a>
             @php
@@ -79,23 +81,26 @@ afterChange: function(){}
                 <br/>Calendário Acadêmico
             </a>
         </div>
-      {{-- <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/legislacao.html'>
+      <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/legislacao.html'>
         <img class='img-fluid' src='{{asset('site_antigo/img/icone_legislacao.png')}}'/><br/>Legislação <br/>Ueap</a></div>
       <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/instrucoes_normativas.html'>
         <img class='img-fluid' src='{{asset('site_antigo/img/icone_instrucao_normativa.png')}}'/><br/>Instruções Normativas</a></div>
       <div class='col-4 col-md-2 icon border  p-1'><a href='{{ route('site.document.resolution.list') }}'>
         <img class='img-fluid' src='{{asset('site_antigo/img/icone_resolucao.png')}}'/><br/>Resoluções CONSU</a></div>
-      <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/prestacao_de_contas.html'>
-        <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_transparencia.png')}}'/><br/>Prestação de Contas</a></div>
-      <div class='col-4 col-md-2 icon border'><a href='{{ route('transparency.bid.list') }}'>
+      {{-- <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/prestacao_de_contas.html'>
+        <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_transparencia.png')}}'/><br/>Prestação de Contas</a></div> --}}
+      {{-- <div class='col-4 col-md-2 icon border'><a href='{{ route('transparency.bid.list') }}'>
         <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_licitacoes.png')}}'/><br/>Licitações</a></div> --}}
+    <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/area-processos-seletivos.html'>
+        <img class='img-fluid' src='{{asset('site_antigo/img/icone_processo_seletivo.png')}}'/><br/>Processos Seletivos</a></div>
+    
 
 
     </div>
 <script type="text/javascript" src="{{asset('site_antigo/js/slideshow.js')}}"></script>
 
 {{-- provisório --}}
-<div id="lista_noticias">
+{{-- <div id="lista_noticias">
     <div class='titulo'>Resultado Editais 2024 (provisório) </div>
     <ul>
         <li><a href='{{route('site.page.show', "resultado-editais-2024-provisorio-.html")}}'>Editais PROEXT</a></li>
@@ -103,7 +108,7 @@ afterChange: function(){}
         <li><a href='{{route('site.page.show', "editais-prograd-2024.html")}}'>Editais PROGRAD </a></li>
         <li><a href='{{route('site.page.show', "processos-seletivos-ueap.html")}}'>Editais DIPS </a></li>
     </ul>
-</div>
+</div> --}}
 {{-- provisório --}}
 
 <div id="lista_noticias">
