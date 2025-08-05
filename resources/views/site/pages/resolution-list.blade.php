@@ -33,8 +33,8 @@
             <div class="titulo">TODAS AS <span>RESOLUÇÕES</span></div>
             <ul>
                 @forelse($resolutions as $resolution)
-                    @if(file_exists(public_path("storage/consu/resolutions/".$resolution->id.".pdf")))
-                        <li><a target='blank' title="{{$resolution->title}}" href="{{ asset("storage/consu/resolutions/".$resolution->id.".pdf") }}">
+                    @if($resolution->hasMedia())
+                        <li><a target='blank' title="{{$resolution->title}}" href="{{ $resolution->getFirstMediaUrl() }}">
                             <span>{{$resolution->number}}/{{$resolution->year}} - </span> {{$resolution->name}}</a>
                         </li>
                     @else
