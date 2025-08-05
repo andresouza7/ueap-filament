@@ -9,7 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/carousel.css',
                 'resources/js/carousel.js',
-                'resources/css/filament/portalTransparencia/theme.css'
+                'resources/css/filament/app/theme.css'
             ],
             refresh: [
                 ...refreshPaths,

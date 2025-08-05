@@ -47,6 +47,7 @@ class AppPanelProvider extends PanelProvider
                 'panels::auth.login.form.after',
                 fn(): View => view('filament.app.pages.login')
             )
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
                     ->url(fn() => route('filament.app.resources.servidor.view', Auth::id()))

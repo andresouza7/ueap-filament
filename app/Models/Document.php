@@ -35,13 +35,13 @@ class Document extends Model implements HasMedia
     ];
 
     // generates file thumbnail on the fly
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
-    }
+    // public function registerMediaConversions(?Media $media = null): void
+    // {
+    //     $this
+    //         ->addMediaConversion('preview')
+    //         ->fit(Fit::Contain, 300, 300)
+    //         ->nonQueued();
+    // }
 
     public function category()
     {

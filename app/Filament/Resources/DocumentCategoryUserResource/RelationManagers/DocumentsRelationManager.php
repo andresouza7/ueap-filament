@@ -37,7 +37,10 @@ class DocumentsRelationManager extends RelationManager
                     ->required(),
                 SpatieMediaLibraryFileUpload::make('arquivo')
                     ->previewable(false),
-                    // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
+                SpatieMediaLibraryFileUpload::make('thumbnail')
+                    ->collection('thumbnail')
+                    ->previewable(false),
+                // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
 
                 Group::make()
                     ->schema(function (Get $get) {
