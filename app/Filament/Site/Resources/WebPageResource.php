@@ -63,6 +63,7 @@ class WebPageResource extends Resource
                     ->label('Texto')
                     ->required()
                     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                    ->disableToolbarButtons(['attachFiles'])
                     ->columnSpanFull(),
                 SpatieMediaLibraryFileUpload::make('file')
                     ->columnSpanFull()

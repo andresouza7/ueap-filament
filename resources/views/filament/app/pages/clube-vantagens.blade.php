@@ -1,6 +1,6 @@
 <x-filament-panels::page>
     <div class="p-5 bg-cover bg-fixed bg-center relative rounded-md"
-        style="background-image: url('{{ asset('img/banner-clube.png') }}'); background-position: center 120px;">
+        style="background-image: url('{{ asset('img/banner-clube.png') }}'); background-position: center 60px;">
 
         {{-- Cabeçalho --}}
         <div class="flex flex-wrap items-center gap-3 mb-4">

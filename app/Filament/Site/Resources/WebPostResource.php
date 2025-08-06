@@ -62,6 +62,7 @@ class WebPostResource extends Resource
                             ->label('Conteúdo')
                             ->required()
                             ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 30vh; overflow-y: auto;'])
+                            ->disableToolbarButtons(['attachFiles'])
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('text_credits')
                             ->label('Fonte do Texto')
@@ -126,16 +127,12 @@ class WebPostResource extends Resource
         return $table
         ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                SpatieMediaLibraryImageColumn::make('file'),
+                SpatieMediaLibraryImageColumn::make('file')->label('#'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
                     ->words(7)
                     // ->description(fn(WebPost $record): string => Str::limit($record->slug, 60))
                     ->searchable(),
-                Tables\Columns\IconColumn::make('featured')
-                    ->label('Destaque')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->searchable(),

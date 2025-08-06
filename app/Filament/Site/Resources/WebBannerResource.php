@@ -59,8 +59,11 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                SpatieMediaLibraryImageColumn::make('file'),
+                SpatieMediaLibraryImageColumn::make('file')
+                    ->label('#')
+                    ->extraAttributes(['class' => 'w-8']),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
                     ->limit()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
