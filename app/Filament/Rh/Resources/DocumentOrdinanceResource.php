@@ -24,6 +24,7 @@ class DocumentOrdinanceResource extends Resource
     protected static ?string $modelLabel = 'Portaria';
     protected static ?string $navigationGroup = 'RH';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

@@ -24,23 +24,22 @@ class CalendarOccurrenceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('description')
+                    ->label('Descrição')
+                    ->columnSpanFull()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\DatePicker::make('start_date')
+                    ->label('Data Início')
                     ->required(),
-                Forms\Components\DatePicker::make('end_date'),
-                Forms\Components\TextInput::make('user_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('_delete_')
-                    ->maxLength(255),
+                Forms\Components\DatePicker::make('end_date')
+                    ->label('Data Fim'),
             ]);
     }
 
