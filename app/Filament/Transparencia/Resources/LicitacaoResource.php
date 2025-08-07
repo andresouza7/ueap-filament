@@ -42,7 +42,7 @@ class LicitacaoResource extends Resource
         return $infolist
             ->schema([
                 Section::make('Detalhes')
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         TextEntry::make('number')
                             ->label('Número'),
@@ -52,11 +52,15 @@ class LicitacaoResource extends Resource
                             ->date()
                             ->label('Data de Abertura'),
                         TextEntry::make('description')
+                            ->columnSpanFull()
                             ->label('Objeto'),
                         TextEntry::make('location')
                             ->label('Local da Publicação'),
                         TextEntry::make('link')
                             ->columnSpanFull()
+                            ->url(fn($state) => $state)
+                            ->color('info')
+                            ->openUrlInNewTab()
                             ->label('Link'),
                         TextEntry::make('observation')
                             ->columnSpanFull()

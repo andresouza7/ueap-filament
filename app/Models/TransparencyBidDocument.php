@@ -6,23 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class TransparencyBidDocument extends Model
+class TransparencyBidDocument extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'uuid',
         'number',
-        'year',
-        'type',
-        'location',
-        'link',
+        'transparency_bid_id',
         'description',
-        'observation',
-        'start_date',
-        'status',
-        'user_created_id'
+        'hits',
+        'user_created_id',
+        'user_updated_id'
     ];
 
     public function bid(): BelongsTo
