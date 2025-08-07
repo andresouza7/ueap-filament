@@ -3,8 +3,8 @@
   <head>
     <title>@yield('title')</title>
     <!-- Google font-->
-    @includeIf('manager.template.partials.meta')
-    @includeIf('manager.template.partials.css')
+    @include('transparency.template.partials.meta')
+    @include('transparency.template.partials.css')
   </head>
   <body>
     <!-- Loader starts-->
@@ -86,7 +86,7 @@
       </div>
     </div>
     <!-- latest jquery-->
-    @includeIf('manager.template.partials.js')
+    @include('transparency.template.partials.js')
   </body>
 </html>
 

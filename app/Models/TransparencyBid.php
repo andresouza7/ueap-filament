@@ -27,13 +27,13 @@ class TransparencyBid extends Model
         'user_updated_id'
     ];
 
-    protected $dates = [
-        'start_date',
-        'end_date'
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
-    public function documents(){
+    public function documents()
+    {
         return $this->hasMany(TransparencyBidDocument::class);
     }
-
 }

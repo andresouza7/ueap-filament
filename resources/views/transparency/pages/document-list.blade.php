@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header align-items-center">
                         <div class="d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">@yield('title')</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">{{ $category->name }}</h4>
                             <div class="flex-shrink-0">
                                 <div class="form-check form-switch form-switch-right form-switch-md">
                                     <a class="btn btn-sm btn-dark" href="{{ route('transparency.home') }}"><i
