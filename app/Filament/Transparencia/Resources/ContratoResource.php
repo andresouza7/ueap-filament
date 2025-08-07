@@ -3,9 +3,13 @@
 namespace App\Filament\Transparencia\Resources;
 
 use App\Filament\Transparencia\Resources\ContratoResource\Pages;
+use App\Filament\Transparencia\Resources\ContratoResource\Pages\EditContrato;
+use App\Filament\Transparencia\Resources\ContratoResource\Pages\ManageDocumentosContrato;
+use App\Filament\Transparencia\Resources\ContratoResource\Pages\ViewContrato;
 use App\Models\TransparencyBid;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,12 +24,27 @@ class ContratoResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-check';
     protected static ?int $navigationSort = 2;
 
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            ViewContrato::class,
+            EditContrato::class,
+            ManageDocumentosContrato::class,
+        ]);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->columns(1)
             ->schema([
                 Forms\Components\Split::make([
+                    Forms\Components\Select::make('person_type')
+                        ->label('Tipo de Pessoa')
+                        ->options([
+                            'juridica' => 'JURÍDICA',
+                            'fisica' => 'FÍSICA'
+                        ]),
                     Forms\Components\TextInput::make('number')
                         ->label('Número')
                         ->maxLength(255),
@@ -35,7 +54,10 @@ class ContratoResource extends Resource
                     Forms\Components\DatePicker::make('start_date')
                         ->label('Data de Abertura')
                         ->required(),
-                ]),
+                    Forms\Components\DatePicker::make('end_date')
+                        ->label('Data Final')
+                        ->required(),
+                    ]),
 
                 Forms\Components\Textarea::make('description')
                     ->label('Objeto')
@@ -46,8 +68,7 @@ class ContratoResource extends Resource
                 Forms\Components\TextInput::make('link')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('observation')
-                    ->label('Observação')
-                    ->required(),
+                    ->label('Observação'),
             ]);
     }
 
@@ -111,8 +132,9 @@ class ContratoResource extends Resource
         return [
             'index' => Pages\ListContrato::route('/'),
             'create' => Pages\CreateContrato::route('/create'),
-            // 'view' => Pages\ViewContrato::route('/{record}'),
+            'view' => Pages\ViewContrato::route('/{record}'),
             'edit' => Pages\EditContrato::route('/{record}/edit'),
+            'documentos' => Pages\ManageDocumentosContrato::route('/{record}/documentos'),
         ];
     }
 }

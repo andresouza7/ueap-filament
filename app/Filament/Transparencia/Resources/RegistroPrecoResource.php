@@ -4,6 +4,7 @@ namespace App\Filament\Transparencia\Resources;
 
 use App\Filament\Transparencia\Resources\RegistroPrecoResource\Pages;
 use App\Filament\Transparencia\Resources\RegistroPrecoResource\RelationManagers;
+use App\Models\TransparencyBid;
 use App\Models\TransparencyOrder;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,45 +16,56 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RegistroPrecoResource extends Resource
 {
-    protected static ?string $model = TransparencyOrder::class;
-    protected static ?string $modelLabel = 'Registro de Preço';
-    protected static ?string $pluralModelLabel = 'Registro de Preço';
+    protected static ?string $model = TransparencyBid::class;
+    protected static ?string $modelLabel = 'Ata de Registro de Preço';
+    protected static ?string $pluralModelLabel = 'Atas de Registro de Preço';
     protected static ?string $slug = 'registro-preco';
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(3)
             ->schema([
-                Forms\Components\TextInput::make('type')
+                Forms\Components\TextInput::make('number')
+                    ->label('Número')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('month')
-                    ->numeric(),
                 Forms\Components\TextInput::make('year')
+                    ->label('Ano')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\DatePicker::make('start_date')
+                    ->label('Data da Abertura')
+                    ->required(),
                 Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
+                    ->columnSpanFull()
+                    ->label('Objeto')
+                    ->required(),
+                Forms\Components\TextInput::make('location')
+                    ->columnSpanFull()
+                    ->label('Local da Publicação'),
+                Forms\Components\TextInput::make('link')
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('observation')
+                    ->columnSpanFull()
+                    ->label('Observação'),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'ata'))
             ->columns([
 
-                Tables\Columns\TextColumn::make('month')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('number')
+                    ->label('Número')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('year')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Descrição')
+                    ->limit()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->badge()

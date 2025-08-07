@@ -14,6 +14,18 @@ class TransparencyBidDocument extends Model implements HasMedia
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
+        // 'uuid',
+        // 'number',
+        // 'year',
+        // 'type',
+        // 'location',
+        // 'link',
+        // 'description',
+        // 'observation',
+        // 'start_date',
+        // 'status',
+        // 'user_created_id',
+
         'uuid',
         'number',
         'transparency_bid_id',
