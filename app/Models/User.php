@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -179,6 +180,12 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     public function posts()
     {
         return $this->hasMany(SocialPost::class, 'user_id');
+    }
+
+    public function hasDocumentCategory(): bool 
+    {
+        $userGroups = $this->groups->pluck('id');
+        return DB::table('document_category_group')->whereIn('group_id', $userGroups)->exists();
     }
 
     public function canManageDocument(Document $document): bool

@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Filament\App\Resources\PontoResource;
+use App\Filament\App\Resources\Social\PontoResource;
 use App\Models\CalendarOccurrence;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;

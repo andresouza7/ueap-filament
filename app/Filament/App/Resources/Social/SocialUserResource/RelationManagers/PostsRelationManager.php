@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Filament\App\Widgets;
+namespace App\Filament\App\Resources\Social\SocialUserResource\RelationManagers;
 
+use App\Filament\App\Resources\Social\SocialPostResource;
 use App\Filament\App\Resources\Social\SocialUserResource;
-use App\Models\SocialPost;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -11,19 +14,28 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class LatestPosts extends BaseWidget
+class PostsRelationManager extends RelationManager
 {
-    protected int | string | array $columnSpan = 'full';
+    protected static string $relationship = 'posts';
+    protected static ?string $title = 'Postagens';
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('uuid')
+                    ->required()
+                    ->maxLength(255),
+            ]);
+    }
 
     public function table(Table $table): Table
     {
         return $table
-            ->heading('Postagens')
-            ->description('Fique por dentro do que acontece na Universidade.')
-            ->query(SocialPost::query())
-            ->defaultSort('created_at', 'desc')
+            ->recordTitleAttribute('login')
             ->columns([
                 Stack::make([
                     Split::make([
@@ -36,9 +48,6 @@ class LatestPosts extends BaseWidget
                                 TextColumn::make('user.login')
                                     ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => $record->user->id]))
                                     ->weight(FontWeight::Bold)
-                                    ->formatStateUsing(fn($state) => collect(explode('.', $state))
-                                        ->map(fn($part) => ucfirst(trim($part)))
-                                        ->implode(' '))
                                     ->grow(false),
 
                                 TextColumn::make('user.group.name')
@@ -46,20 +55,33 @@ class LatestPosts extends BaseWidget
                                     ->formatStateUsing(fn($state) => strtoupper($state))
                                     ->weight(FontWeight::Bold)
                                     ->color('primary')
-                            ]),
+                            ])->grow(false),
 
                             TextColumn::make('updated_at')
                                 ->size(TextColumn\TextColumnSize::ExtraSmall)
                                 // ->extraAttributes(['class' => 'italic'])
                                 ->color('gray')
                                 ->dateTime('d M Y, H:i'),
-                        ])->grow(false),
+                        ]),
                     ]),
 
                     TextColumn::make('text')
                         ->html()
                         ->searchable()
                 ])->space(3)->extraAttributes(['class' => 'gap-2 p-2'])
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\Action::make('Editar')
+                    ->visible(fn($record) => $record->user_id === auth()->id())
+                    ->url(fn($record) => SocialPostResource::getUrl('edit', ['record' => $record->id])),
             ]);
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }

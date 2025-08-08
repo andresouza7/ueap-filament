@@ -38,7 +38,10 @@ class AppPanelProvider extends PanelProvider
             ->login(Login::class)
             ->profile(EditProfile::class)
             // ->passwordReset()
-            ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
+            ->discoverResources(in: app_path('Filament/App/Resources/Gestao'), for: 'App\\Filament\\App\\Resources\\Gestao')
+            ->discoverResources(in: app_path('Filament/App/Resources/Site'), for: 'App\\Filament\\App\\Resources\\Site')
+            ->discoverResources(in: app_path('Filament/App/Resources/Social'), for: 'App\\Filament\\App\\Resources\\Social')
+            ->discoverResources(in: app_path('Filament/App/Resources/Transparencia'), for: 'App\\Filament\\App\\Resources\\Transparencia')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
                 // Pages\Dashboard::class,
@@ -48,6 +51,12 @@ class AppPanelProvider extends PanelProvider
                 fn(): View => view('filament.app.pages.login')
             )
             ->viteTheme('resources/css/filament/app/theme.css')
+            ->navigationGroups([
+                'Minha Área',
+                'Social',
+                'Site',
+                'Gestão',
+            ])
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
                     ->url(fn() => route('filament.app.resources.servidor.view', Auth::id()))

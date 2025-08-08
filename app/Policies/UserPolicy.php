@@ -3,25 +3,25 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\WebMenu;
+use Filament\Facades\Filament;
 use Illuminate\Auth\Access\Response;
 
-class WebMenuPolicy
+class UserPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');
+        return $user->hasAnyRole('urh|dinfo');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, WebMenu $webMenu): bool
+    public function view(User $user, User $model): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');
+       return $user->hasAnyRole('urh|dinfo');
     }
 
     /**
@@ -29,21 +29,21 @@ class WebMenuPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');
+        return $user->hasAnyRole('urh|dinfo');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, WebMenu $webMenu): bool
+    public function update(User $user, User $model): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');
+        return $user->hasAnyRole('urh|dinfo');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, WebMenu $webMenu): bool
+    public function delete(User $user, User $model): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class WebMenuPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, WebMenu $webMenu): bool
+    public function restore(User $user, User $model): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class WebMenuPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, WebMenu $webMenu): bool
+    public function forceDelete(User $user, User $model): bool
     {
         return false;
     }

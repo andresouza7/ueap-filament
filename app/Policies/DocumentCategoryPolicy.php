@@ -14,7 +14,8 @@ class DocumentCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        // dd($user->hasDocumentCategory());
+        return $user->hasDocumentCategory();
     }
 
     /**
