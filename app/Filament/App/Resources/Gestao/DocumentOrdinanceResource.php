@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Rh\Resources;
+namespace App\Filament\App\Resources\Gestao;
 
-use App\Filament\Rh\Resources\DocumentOrdinanceResource\Pages;
-use App\Filament\Rh\Resources\DocumentOrdinanceResource\RelationManagers;
+use App\Filament\App\Resources\Gestao\DocumentOrdinanceResource\Pages;
+use App\Filament\App\Resources\Gestao\DocumentOrdinanceResource\RelationManagers;
 use App\Models\DocumentOrdinance;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -22,9 +22,9 @@ class DocumentOrdinanceResource extends Resource
 {
     protected static ?string $model = DocumentOrdinance::class;
     protected static ?string $modelLabel = 'Portaria';
-    protected static ?string $navigationGroup = 'RH';
+    protected static ?string $navigationGroup = 'Gestão';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

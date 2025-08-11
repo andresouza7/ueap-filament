@@ -24,7 +24,7 @@ class DocumentResource extends Resource
     protected static ?string $modelLabel = 'Documento';
     protected static ?string $pluralModelLabel = 'Documentos';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $slug = 'documentos-usuario';
 

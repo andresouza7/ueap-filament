@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Rh\Resources;
+namespace App\Filament\App\Resources\Gestao;
 
-use App\Filament\Rh\Resources\CalendarOccurrenceResource\Pages;
-use App\Filament\Rh\Resources\CalendarOccurrenceResource\RelationManagers;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -20,11 +20,11 @@ class CalendarOccurrenceResource extends Resource
     protected static ?string $modelLabel = 'Ocorrência de Ponto';
     protected static ?string $pluralModelLabel = 'Ocorrências de Ponto';
 
-    protected static ?string $navigationGroup = 'RH';
+    protected static ?string $navigationGroup = 'Gestão';
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

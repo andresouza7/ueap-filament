@@ -14,6 +14,7 @@ class CalendarOccurrencesRelationManager extends RelationManager
 {
     protected static string $relationship = 'calendar_occurrences';
     protected static ?string $title = 'Férias';
+    protected static bool $shouldSkipAuthorization = true;
 
     public function form(Form $form): Form
     {

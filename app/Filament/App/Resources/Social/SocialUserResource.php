@@ -183,6 +183,10 @@ class SocialUserResource extends Resource
                                 ->label('Cargo Comissionado')
                                 ->icon('heroicon-o-briefcase')
                                 ->columnSpanFull(),
+                            TextEntry::make('groups.name')
+                                ->label('Meus acessos')
+                                ->formatStateUsing(fn ($record) => $record->groups->pluck('name')->join(', '))
+                                ->visible(fn($record) => $record->id === auth()->id())
                         ])->columnStart([
                             'sm' => 2,
                         ])

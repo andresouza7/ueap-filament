@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Rh\Resources\CalendarOccurrenceResource\Pages;
+namespace App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages;
 
-use App\Filament\Rh\Resources\CalendarOccurrenceResource;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
