@@ -25,7 +25,7 @@ class HealthAppointmentResource extends Resource
     protected static ?string $modelLabel = 'Saúde e Bem-Estar';
     protected static ?string $pluralModelLabel = 'Saúde e Bem-Estar';
     protected static ?string $navigationGroup = 'Gestão';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     public static function infolist(Infolist $infolist): Infolist
     {

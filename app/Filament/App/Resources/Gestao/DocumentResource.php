@@ -95,7 +95,9 @@ class DocumentResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ])->whereHas('groups', function ($query) use ($userGroupIds) {
+            ])
+            // ->where('type', 'general')
+            ->whereHas('groups', function ($query) use ($userGroupIds) {
                 $query->whereIn('group_id', $userGroupIds);
             });
     }

@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CommissionedRole;
 use App\Models\ConsuAta;
 use App\Models\ConsuResolution;
-use App\Models\DocumentOrdinance;
 use App\Models\Group;
+use App\Models\Portaria;
 use App\Models\TransparencyBid;
 use App\Models\TransparencyOrder;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class ConsuController extends Controller
     #################################
     public function listOrdinance(Request $request)
     {
-        $query = DocumentOrdinance::where('origin','CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+        $query = Portaria::where('origin','CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
 
         if($request->name){
             $request->validate(['name' => 'string|max:255']);

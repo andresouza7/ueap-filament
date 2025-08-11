@@ -31,6 +31,6 @@ class Person extends Model
 
     public function ordinances()
     {
-        return $this->belongsToMany(DocumentOrdinance::class, 'document_ordinance_person');
+        return $this->belongsToMany(Portaria::class, 'document_ordinance_person');
     }
 }

@@ -10,7 +10,7 @@ class CreateCalendarOccurrence extends CreateRecord
 {
     protected static string $resource = CalendarOccurrenceResource::class;
 
-     protected function mutateFormDataBeforeCreate(array $data): array
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = null;
         $data['type'] = 1;

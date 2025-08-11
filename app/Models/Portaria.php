@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class DocumentOrdinance extends Model implements HasMedia
+class Portaria extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
 

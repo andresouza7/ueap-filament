@@ -2,9 +2,9 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
-use App\Filament\App\Resources\Gestao\DocumentOrdinanceResource\Pages;
-use App\Filament\App\Resources\Gestao\DocumentOrdinanceResource\RelationManagers;
-use App\Models\DocumentOrdinance;
+use App\Filament\App\Resources\Gestao\PortariaResource\Pages;
+use App\Filament\App\Resources\Gestao\PortariaResource\RelationManagers;
+use App\Models\Portaria;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -18,9 +18,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-class DocumentOrdinanceResource extends Resource
+class PortariaResource extends Resource
 {
-    protected static ?string $model = DocumentOrdinance::class;
+    protected static ?string $model = Portaria::class;
     protected static ?string $modelLabel = 'Portaria';
     protected static ?string $navigationGroup = 'Gestão';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -49,6 +49,7 @@ class DocumentOrdinanceResource extends Resource
                 Forms\Components\DatePicker::make('created_at')
                     ->label('Data'),
                 Forms\Components\TextInput::make('origin')
+                    ->hidden(fn() => auth()->user()->hasRole('consu'))
                     ->label('Origem')
                     ->maxLength(255),
                 SpatieMediaLibraryFileUpload::make('file')
@@ -69,6 +70,15 @@ class DocumentOrdinanceResource extends Resource
     {
         return $table
             ->defaultSort(fn($query) => $query->orderBy('year', 'desc')->orderBy('number', 'desc'))
+            ->modifyQueryUsing(function ($query) {
+                if (auth()->user()->hasRole('consu')) {
+                    $query->where('origin', 'CONSU');
+                } else {
+                    $query->whereNot('origin', 'CONSU');
+                }
+
+                return $query->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('id')->searchable(),
                 Tables\Columns\TextColumn::make('number')
@@ -133,10 +143,10 @@ class DocumentOrdinanceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDocumentOrdinances::route('/'),
-            'create' => Pages\CreateDocumentOrdinance::route('/create'),
+            'index' => Pages\ListPortarias::route('/'),
+            'create' => Pages\CreatePortaria::route('/create'),
             // 'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
-            'edit' => Pages\EditDocumentOrdinance::route('/{record}/edit'),
+            'edit' => Pages\EditPortaria::route('/{record}/edit'),
         ];
     }
 }
