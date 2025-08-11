@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources\RegistroPrecoResource\Pages;
+namespace App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages;
 
-use App\Filament\Transparencia\Resources\RegistroPrecoResource;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

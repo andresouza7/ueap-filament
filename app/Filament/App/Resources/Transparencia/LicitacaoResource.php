@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources;
+namespace App\Filament\App\Resources\Transparencia;
 
-use App\Filament\Transparencia\Resources\LicitacaoResource\Pages;
-use App\Filament\Transparencia\Resources\LicitacaoResource\Pages\EditLicitacao;
-use App\Filament\Transparencia\Resources\LicitacaoResource\Pages\ManageDocumentosLicitacao;
-use App\Filament\Transparencia\Resources\LicitacaoResource\Pages\ViewLicitacao;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\EditLicitacao;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ManageDocumentosLicitacao;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ViewLicitacao;
 use App\Models\TransparencyBid;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,7 +26,8 @@ class LicitacaoResource extends Resource
     protected static ?string $pluralModelLabel = 'Licitações';
     protected static ?string $slug = 'licitacoes';
     protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationGroup = 'Transparência';
+    protected static ?int $navigationSort = 1;
 
     public static function getRecordSubNavigation(Page $page): array
     {

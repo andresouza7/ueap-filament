@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources\ContratoResource\Pages;
+namespace App\Filament\App\Resources\Transparencia\ContratoResource\Pages;
 
-use App\Filament\Transparencia\Resources\ContratoResource;
-use App\Filament\Transparencia\Resources\LicitacaoResource;
+use App\Filament\App\Resources\Transparencia\ContratoResource;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;

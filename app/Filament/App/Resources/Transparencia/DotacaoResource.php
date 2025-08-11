@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources;
+namespace App\Filament\App\Resources\Transparencia;
 
-use App\Filament\Transparencia\Resources\DotacaoResource\Pages;
-use App\Filament\Transparencia\Resources\DotacaoResource\RelationManagers;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\RelationManagers;
 use App\Models\Orcamento;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -22,7 +22,8 @@ class DotacaoResource extends Resource
     protected static ?string $pluralModelLabel = 'Dotações Orçamentárias';
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
-    protected static ?int $navigationSort = 6;
+    protected static ?string $navigationGroup = 'Transparência';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

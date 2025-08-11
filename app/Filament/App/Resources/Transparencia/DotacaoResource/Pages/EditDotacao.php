@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources\DotacaoResource\Pages;
+namespace App\Filament\App\Resources\Transparencia\DotacaoResource\Pages;
 
-use App\Filament\Transparencia\Resources\DotacaoResource;
+use App\Filament\App\Resources\Transparencia\DotacaoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

@@ -56,6 +56,7 @@ class AppPanelProvider extends PanelProvider
                 'Social',
                 'Site',
                 'Gestão',
+                'Transparência',
             ])
             ->navigationItems([
                 NavigationItem::make('Meus Dados')
@@ -73,7 +74,6 @@ class AppPanelProvider extends PanelProvider
                     ->icon('heroicon-o-lock-closed')
                     ->sort(5)
                     ->group('Minha Área'),
-                // ->visible(fn (): bool => auth()->user()?->user_type === 'admin'),
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([

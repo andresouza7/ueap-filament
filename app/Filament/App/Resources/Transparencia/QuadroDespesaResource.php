@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources;
+namespace App\Filament\App\Resources\Transparencia;
 
-use App\Filament\Transparencia\Resources\QuadroDespesaResource\Pages;
-use App\Filament\Transparencia\Resources\QuadroDespesaResource\RelationManagers;
+use App\Filament\App\Resources\Transparencia\QuadroDespesaResource\Pages;
+use App\Filament\App\Resources\Transparencia\QuadroDespesaResource\RelationManagers;
 use App\Models\Orcamento;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -22,7 +22,8 @@ class QuadroDespesaResource extends Resource
     protected static ?string $pluralModelLabel = 'Quadros de Detalhamento de Despesa';
 
     protected static ?string $navigationIcon = 'heroicon-o-document-minus';
-    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationGroup = 'Transparência';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

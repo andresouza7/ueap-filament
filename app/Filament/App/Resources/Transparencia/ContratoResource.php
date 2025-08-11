@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources;
+namespace App\Filament\App\Resources\Transparencia;
 
-use App\Filament\Transparencia\Resources\ContratoResource\Pages;
-use App\Filament\Transparencia\Resources\ContratoResource\Pages\EditContrato;
-use App\Filament\Transparencia\Resources\ContratoResource\Pages\ManageDocumentosContrato;
-use App\Filament\Transparencia\Resources\ContratoResource\Pages\ViewContrato;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\EditContrato;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ManageDocumentosContrato;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ViewContrato;
 use App\Models\TransparencyBid;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -22,7 +22,8 @@ class ContratoResource extends Resource
     protected static ?string $modelLabel = 'Contrato';
     protected static ?string $slug = 'contratos';
     protected static ?string $navigationIcon = 'heroicon-o-document-check';
-    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationGroup = 'Transparência';
+    protected static ?int $navigationSort = 3;
 
     public static function getRecordSubNavigation(Page $page): array
     {

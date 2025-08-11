@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Transparencia\Resources;
+namespace App\Filament\App\Resources\Transparencia;
 
-use App\Filament\Transparencia\Resources\RegistroPrecoResource\Pages;
-use App\Filament\Transparencia\Resources\RegistroPrecoResource\RelationManagers;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\RelationManagers;
 use App\Models\TransparencyBid;
 use App\Models\TransparencyOrder;
 use Filament\Forms;
@@ -21,7 +21,8 @@ class RegistroPrecoResource extends Resource
     protected static ?string $pluralModelLabel = 'Atas de Registro de Preço';
     protected static ?string $slug = 'registro-preco';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationGroup = 'Transparência';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
