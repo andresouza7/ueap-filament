@@ -13,10 +13,7 @@ export default {
       }
     },
   },
-  plugins: [
-    // require('daisyui'),
-    require('flowbite/plugin')
-  ],
+  plugins: [],
   darkMode: 'class',
 }
 

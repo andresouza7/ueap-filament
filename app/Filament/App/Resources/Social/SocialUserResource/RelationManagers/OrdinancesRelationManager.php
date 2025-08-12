@@ -8,12 +8,18 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdinancesRelationManager extends RelationManager
 {
     protected static string $relationship = 'ordinances';
     protected static ?string $title = 'Portarias';
+
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
+    {
+        return $ownerRecord->id === auth()->id();
+    }
 
     public function form(Form $form): Form
     {

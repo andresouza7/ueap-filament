@@ -1,9 +1,9 @@
 <x-filament-panels::page>
     <div class="space-y-4">
         {{-- Account widget ocupando toda a largura --}}
-        <div class="w-full">
+        {{-- <div class="w-full">
             @livewire(\Filament\Widgets\AccountWidget::class)
-        </div>
+        </div> --}}
 
         {{-- Linha com duas colunas: LatestPosts e OcorrenciasPonto --}}
         <div class="grid gap-4 md:grid-cols-12">

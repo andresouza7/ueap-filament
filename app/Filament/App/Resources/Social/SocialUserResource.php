@@ -10,6 +10,7 @@ use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Actions;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
@@ -117,38 +118,15 @@ class SocialUserResource extends Resource
                     ->columns(3)
                     ->schema([
                         Group::make([
+
                             ImageEntry::make('profile_photo_url')
                                 ->grow(false)
                                 ->hiddenLabel()
                                 ->circular()
                                 ->alignCenter()
                                 ->columnSpan(1)
-                                ->size(200)
-                                ->action(
-                                    Action::make('alterar_foto')
-                                        ->icon('heroicon-m-clipboard')
-                                        ->disabled(fn($record) => $record->id !== Auth::id())
-                                        ->tooltip('Alterar Foto')
-                                        ->form([
-                                            FileUpload::make('attachment')
-                                                ->label('Arquivo')
-                                                ->directory('users')
-                                                ->uploadingMessage('Fazendo upload...')
-                                                ->image()
-                                                ->acceptedFileTypes(['image/jpg'])
-                                                ->avatar()
-                                                ->imageEditor()
-                                                // ->circleCropper()
-                                                ->maxSize(1024 * 10)
-                                                ->getUploadedFileNameForStorageUsing(
-                                                    fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
-                                                )
-                                                ->helperText('*É necessário salvar as alterações para concluir.')
-                                        ])
-                                        ->action(function (array $data, $record): void {
-                                            redirect()->route('filament.app.resources.servidor.view', $record->id);
-                                        })
-                                ),
+                                ->size(200),
+
                             TextEntry::make('login')
                                 ->size(TextEntry\TextEntrySize::Large)
                                 ->weight(FontWeight::Bold)
@@ -161,6 +139,35 @@ class SocialUserResource extends Resource
                                 ->copyable()
                                 ->badge()
                                 ->color('success'),
+
+                            Actions::make([
+                                Action::make('Alterar Foto')
+                                    ->size('xs')
+                                    // ->badge()
+                                    ->color('gray')
+                                    ->extraAttributes(['class' => 'px-2 py-1'])
+                                    ->icon('heroicon-m-pencil')
+                                    ->visible(fn($record) => $record->id === Auth::id())
+                                    ->form([
+                                        FileUpload::make('attachment')
+                                            ->label('Arquivo')
+                                            ->directory('users')
+                                            ->uploadingMessage('Fazendo upload...')
+                                            ->image()
+                                            ->acceptedFileTypes(['image/jpg'])
+                                            ->avatar()
+                                            ->imageEditor()
+                                            // ->circleCropper()
+                                            ->maxSize(1024 * 10)
+                                            ->getUploadedFileNameForStorageUsing(
+                                                fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
+                                            )
+                                            ->helperText('*É necessário salvar as alterações para concluir.')
+                                    ])
+                                    ->action(function (array $data, $record): void {
+                                        redirect()->route('filament.app.resources.servidor.view', $record->id);
+                                    })
+                            ])->alignCenter(),
                         ])->extraAttributes(['class' => 'h-full flex items-center justify-center']),
 
                         Group::make([
@@ -185,7 +192,7 @@ class SocialUserResource extends Resource
                                 ->columnSpanFull(),
                             TextEntry::make('groups.name')
                                 ->label('Meus acessos')
-                                ->formatStateUsing(fn ($record) => $record->groups->pluck('name')->join(', '))
+                                ->formatStateUsing(fn($record) => $record->groups->pluck('name')->join(', '))
                                 ->visible(fn($record) => $record->id === auth()->id())
                         ])->columnStart([
                             'sm' => 2,
