@@ -15,13 +15,12 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestPosts extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full';
+    // protected int | string | array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
             ->heading('Postagens')
-            ->description('Fique por dentro do que acontece na Universidade.')
             ->query(SocialPost::query())
             ->defaultSort('created_at', 'desc')
             ->columns([
