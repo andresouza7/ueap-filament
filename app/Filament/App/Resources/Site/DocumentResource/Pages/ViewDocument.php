@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\App\Resources\Gestao\DocumentResource\Pages;
+namespace App\Filament\App\Resources\Site\DocumentResource\Pages;
 
-use App\Filament\App\Resources\Gestao\DocumentResource;
+use App\Filament\App\Resources\Site\DocumentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 

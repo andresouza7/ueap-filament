@@ -182,10 +182,13 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $this->hasMany(SocialPost::class, 'user_id');
     }
 
-    public function hasDocumentCategory(): bool 
+    public function hasDocumentCategory(string $type): bool 
     {
         $userGroups = $this->groups->pluck('id');
-        return DB::table('document_category_group')->whereIn('group_id', $userGroups)->exists();
+        $documentCategoryIds = DB::table('document_category_group')->whereIn('group_id', $userGroups)->pluck('document_category_id');
+
+        return DocumentCategory::whereIn('id',$documentCategoryIds)->where('type', $type)->exists();
+        // return DB::table('document_category_group')->whereIn('group_id', $userGroups)->exists();
     }
 
     public function canManageDocument(Document $document): bool

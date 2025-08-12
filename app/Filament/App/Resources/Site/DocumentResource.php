@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\App\Resources\Gestao;
+namespace App\Filament\App\Resources\Site;
 
-use App\Filament\App\Resources\Gestao\DocumentResource\Pages;
+use App\Filament\App\Resources\Site\DocumentResource\Pages;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers\DocumentsRelationManager;
 use App\Models\DocumentCategory;
 use Filament\Forms;
@@ -26,10 +26,15 @@ class DocumentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
-    protected static ?string $slug = 'documentos-usuario';
+    protected static ?string $slug = 'documentos';
 
-    protected static ?string $navigationGroup = 'Gestão';
+    protected static ?string $navigationGroup = 'Site';
     // protected static ?int $navigationSort = 3;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasDocumentCategory('general');
+    }
 
     public static function form(Form $form): Form
     {
@@ -44,6 +49,7 @@ class DocumentResource extends Resource
     {
         return $table
             ->recordTitleAttribute('name')
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'general'))
             ->columns([
                 //
                 TextColumn::make('name')
