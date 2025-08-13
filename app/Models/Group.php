@@ -21,7 +21,7 @@ class Group extends Model
     ];
 
     public function getPhotoUrlAttribute() {
-        return asset('img/brasao_ueap_sem_nome.png');
+        return asset('img/brasao_ueap.png');
     }
 
     public function sub_groups()

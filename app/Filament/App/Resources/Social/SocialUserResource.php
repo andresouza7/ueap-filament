@@ -160,7 +160,7 @@ class SocialUserResource extends Resource
                                             // ->circleCropper()
                                             ->maxSize(1024 * 10)
                                             ->getUploadedFileNameForStorageUsing(
-                                                fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
+                                                fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.jpg"
                                             )
                                             ->helperText('*É necessário salvar as alterações para concluir.')
                                     ])

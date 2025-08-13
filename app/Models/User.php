@@ -94,15 +94,15 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
             return Storage::url($filePath);
         }
 
-        // Return a default image URL if the profile photo does not exist
-        return asset('img/user-default.png'); // Or any default image URL you prefer
+        return asset('img/user-default.png');
     }
 
     public function getSignatureUrlAttribute()
     {
-        // return $this->getFirstMediaUrl('signatures');
-        if (file_exists(public_path('storage/signatures/' . $this->uuid . '.jpg'))) {
-            return public_path('storage/signatures/' . $this->uuid . '.jpg');
+        $filePath = 'signatures/' . $this->uuid . '.jpg';
+     
+        if (Storage::exists($filePath)) {
+            return Storage::url($filePath);
         }
 
         return null;
@@ -119,19 +119,6 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
             return $this->hasRole('dinfo');
         }
 
-        if ($panel->getId() === 'rh') {
-            return $this->hasRole('dinfo|urh');
-        }
-
-        if ($panel->getId() === 'site') {
-            return $this->hasRole('dinfo|ascom');
-        }
-
-        if ($panel->getId() === 'transparencia') {
-            return $this->hasRole('dinfo|uc|cpl');
-        }
-
-        // return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
         return true;
     }
 
@@ -168,7 +155,6 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
 
     public function ordinances()
     {
-        // Access the ordinances through the related person
         return $this->person->ordinances();
     }
 

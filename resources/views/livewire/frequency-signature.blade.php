@@ -1,11 +1,14 @@
 <div>
-    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
-    <form wire:submit.prevent="create">
+    <form wire:submit.prevent="saveSignature">
         {{ $this->form }}
-        <br />
+        <br>
 
-        <x-filament::button type="submit" class="w-1/2">
-            Salvar Assinatura
-        </x-filament::button>
     </form>
+
+    <p class="text-sm font-medium">Minha assinatura:</p>
+    @if(auth()->user()->signature_url)
+        <img src="{{ auth()->user()->signature_url }}" alt="assinatura" width="350px" height="auto">
+    @else
+        <p>Assinatura não cadastrada</p>
+    @endif
 </div>
