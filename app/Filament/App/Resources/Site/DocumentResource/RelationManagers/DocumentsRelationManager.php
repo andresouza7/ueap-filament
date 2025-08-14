@@ -4,6 +4,7 @@ namespace App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -35,29 +36,36 @@ class DocumentsRelationManager extends RelationManager
                     ->label('Ano')
                     ->integer()
                     ->required(),
-                SpatieMediaLibraryFileUpload::make('arquivo')
-                    ->previewable(false),
-                SpatieMediaLibraryFileUpload::make('thumbnail')
-                    ->collection('thumbnail')
-                    ->previewable(false),
+                // SpatieMediaLibraryFileUpload::make('arquivo')
+                //     ->previewable(false),
+
+                FileUpload::make('file')
+                    ->directory('documents/general')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->previewable(false)
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
+
+                // SpatieMediaLibraryFileUpload::make('thumbnail')
+                //     ->collection('thumbnail')
+                //     ->previewable(false),
                 // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
 
-                Group::make()
-                    ->schema(function (Get $get) {
-                        $category = $this->getOwnerRecord()->slug;
+                // Group::make()
+                //     ->schema(function (Get $get) {
+                //         $category = $this->getOwnerRecord()->slug;
 
-                        return match ($category) {
-                            'consu-atas' => [
-                                TextInput::make('metadata.number')->label('Número')->numeric()->required(),
-                            ],
-                            'consu-resolucoes' => [
-                                TextInput::make('metadata.issuer')->label('Emissor'),
-                                DatePicker::make('metadata.issuance_date')->label('Data de Emissão'),
-                            ],
-                            // Add other cases here...
-                            default => [],
-                        };
-                    }),
+                //         return match ($category) {
+                //             'consu-atas' => [
+                //                 TextInput::make('metadata.number')->label('Número')->numeric()->required(),
+                //             ],
+                //             'consu-resolucoes' => [
+                //                 TextInput::make('metadata.issuer')->label('Emissor'),
+                //                 DatePicker::make('metadata.issuance_date')->label('Data de Emissão'),
+                //             ],
+                //             default => [],
+                //         };
+                //     }),
             ]);
     }
 
@@ -105,11 +113,16 @@ class DocumentsRelationManager extends RelationManager
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->label('Download')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->getFirstMediaUrl())
+                    ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->hasMedia())
+                    ->visible(fn($record) => $record->file_url)
+
+                // Tables\Actions\Action::make('download')
+                //     ->label('Download')
+                //     ->icon('heroicon-o-arrow-down-tray')
+                //     ->url(fn($record) => $record->getFirstMediaUrl())
+                //     ->openUrlInNewTab()
+                //     ->visible(fn($record) => $record->hasMedia())
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -34,14 +35,9 @@ class Document extends Model implements HasMedia
         'metadata' => 'array', // or 'json'
     ];
 
-    // generates file thumbnail on the fly
-    // public function registerMediaConversions(?Media $media = null): void
-    // {
-    //     $this
-    //         ->addMediaConversion('preview')
-    //         ->fit(Fit::Contain, 300, 300)
-    //         ->nonQueued();
-    // }
+    protected $appends = [
+        'file_url',
+    ];
 
     public function category()
     {
@@ -56,5 +52,11 @@ class Document extends Model implements HasMedia
     public function user_updated()
     {
         return $this->belongsTo(User::class, 'user_updated_id');
+    }
+
+    public function getFileUrlAttribute() {
+        $path = 'documents/general/' . $this->id . '.pdf';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
     }
 }
