@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Site\WebBannerResource\RelationManagers;
 use App\Models\WebBanner;
 use App\Models\WebBannerPlace;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,6 +16,8 @@ use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class WebBannerResource extends Resource
 {
@@ -47,10 +50,18 @@ class WebBannerResource extends Resource
                         'published' => 'Publicado',
                         'unpublished' => 'Despublicado',
                     ]),
-                SpatieMediaLibraryFileUpload::make('file')
-                    ->label('Arquivo (.jpg)')
+
+                FileUpload::make('file')
+                    ->directory('web/banners')
+                    ->acceptedFileTypes(['image/jpeg'])
                     ->previewable(false)
-                    ->image(),
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg')
+
+                // SpatieMediaLibraryFileUpload::make('file')
+                //     ->label('Arquivo (.jpg)')
+                //     ->previewable(false)
+                //     ->image(),
             ]);
     }
 
@@ -59,9 +70,8 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                SpatieMediaLibraryImageColumn::make('file')
-                    ->label('#')
-                    ->extraAttributes(['class' => 'w-8']),
+                Tables\Columns\ImageColumn::make('image_url')
+                    ->label('#'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->limit()
@@ -90,6 +100,10 @@ class WebBannerResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->url(fn($record) => $record->image_url)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->image_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -6,6 +6,7 @@ use App\Filament\App\Resources\Site\WebPostResource\Pages;
 use App\Filament\App\Resources\Site\WebPostResource\RelationManagers;
 use App\Models\WebPost;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -108,10 +109,17 @@ class WebPostResource extends Resource
         return Group::make()
             ->schema([
 
-                SpatieMediaLibraryFileUpload::make('file')
-                    ->label('Arquivo (.jpg)')
+                // SpatieMediaLibraryFileUpload::make('file')
+                //     ->label('Arquivo (.jpg)')
+                //     ->previewable(false)
+                //     ->image(),
+
+                FileUpload::make('file')
+                    ->directory('web/posts')
+                    ->acceptedFileTypes(['image/jpeg'])
                     ->previewable(false)
-                    ->image(),
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
 
                 Forms\Components\TextInput::make('image_subtitle')
                     ->label('Legenda')
@@ -127,7 +135,8 @@ class WebPostResource extends Resource
         return $table
         ->defaultSort('id', 'desc')
             ->columns([
-                SpatieMediaLibraryImageColumn::make('file')->label('#'),
+                Tables\Columns\ImageColumn::make('image_url')
+                    ->label('#'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
                     ->words(7)
@@ -171,6 +180,10 @@ class WebPostResource extends Resource
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->url(fn($record) => $record->image_url)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->image_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

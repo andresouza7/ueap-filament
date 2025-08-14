@@ -27,7 +27,6 @@ class WebPost extends Model implements HasMedia
         'image_credits',
         'image_subtitle',
         'status',
-        'file',
     ];
 
     protected $appends = ['image_url'];
@@ -56,6 +55,8 @@ class WebPost extends Model implements HasMedia
 
     public function getImageUrlAttribute()
     {
-        return Storage::url('web/posts/' . $this->id . '.jpg');
+        $path = 'web/posts/' . $this->id . '.jpg';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
     }
 }

@@ -154,7 +154,7 @@ class SocialUserResource extends Resource
                                             ->directory('users')
                                             ->uploadingMessage('Fazendo upload...')
                                             ->image()
-                                            ->acceptedFileTypes(['image/jpg'])
+                                            ->acceptedFileTypes(['image/jpeg'])
                                             ->avatar()
                                             ->imageEditor()
                                             // ->circleCropper()

@@ -100,7 +100,7 @@ class SocialGroupResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Informações funcionais')
+                Section::make('Dados do setor')
                     ->columns(1)
                     ->schema([
                         ComponentsSplit::make([

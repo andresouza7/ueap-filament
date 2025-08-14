@@ -43,6 +43,8 @@ class WebBanner extends Model implements HasMedia
 
     public function getImageUrlAttribute()
     {
-        return Storage::url('web/banners/' . $this->id . '.jpg');
+        $path = 'web/banners/' . $this->id . '.jpg';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
     }
 }

@@ -89,8 +89,8 @@ afterChange: function(){}
         <img class='img-fluid' src='{{asset('site_antigo/img/icone_resolucao.png')}}'/><br/>Resoluções CONSU</a></div>
       {{-- <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/prestacao_de_contas.html'>
         <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_transparencia.png')}}'/><br/>Prestação de Contas</a></div> --}}
-      {{-- <div class='col-4 col-md-2 icon border'><a href='{{ route('transparency.bid.list') }}'>
-        <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_licitacoes.png')}}'/><br/>Licitações</a></div> --}}
+      <div class='col-4 col-md-2 icon border'><a href='{{ route('transparency.bid.list') }}'>
+        <img class='img-fluid  p-1' src='{{asset('site_antigo/img/icone_licitacoes.png')}}'/><br/>Licitações</a></div>
     <div class='col-4 col-md-2 icon border  p-1'><a href='pagina/area-processos-seletivos.html'>
         <img class='img-fluid' src='{{asset('site_antigo/img/icone_processo_seletivo.png')}}'/><br/>Processos Seletivos</a></div>
     

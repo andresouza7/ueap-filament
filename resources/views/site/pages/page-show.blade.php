@@ -13,7 +13,7 @@ Ueap | Página
 @if($page->category)
 @role('dinfo|ascom')
 <div class="titulo_noticia">
-    <span><a target='_blank' href="{{ route('manager.web.page.update', [$page->category->section->web->slug, $page->uuid]) }}"><i class='fa fa-edit'></i>EDITAR</a></span>
+    {{-- <span><a target='_blank' href="{{ route('manager.web.page.update', [$page->category->section->web->slug, $page->uuid]) }}"><i class='fa fa-edit'></i>EDITAR</a></span> --}}
 </div>
 @endif
 @endif
