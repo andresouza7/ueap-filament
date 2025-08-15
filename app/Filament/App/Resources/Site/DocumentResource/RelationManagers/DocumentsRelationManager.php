@@ -38,11 +38,20 @@ class DocumentsRelationManager extends RelationManager
                     ->integer()
                     ->required(),
                 FileUpload::make('file')
+                    ->label('Arquivo')
                     ->directory('documents/general')
                     ->acceptedFileTypes(['application/pdf'])
                     ->previewable(false)
                     ->maxFiles(1)
                     ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
+                FileUpload::make('thumb')
+                    ->visible(fn() => $this->getOwnerRecord()->slug === 'clube-vantagens')
+                    ->label('Imagem')
+                    ->directory('clube')
+                    ->acceptedFileTypes(['image/jpeg'])
+                    ->previewable(false)
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
             ]);
     }
 

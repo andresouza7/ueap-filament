@@ -6,14 +6,17 @@ use App\Filament\App\Resources\Gestao\HealthAppointmentResource\Pages;
 use App\Filament\App\Resources\Gestao\HealthAppointmentResource\RelationManagers;
 use App\Models\HealthAppointment;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class HealthAppointmentResource extends Resource
@@ -119,6 +122,30 @@ class HealthAppointmentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('update')
+                    ->label('Atualizar Orientações')
+                    ->modalDescription('Atualize aqui o arquivo com as orientações')
+                    ->form([
+                        FileUpload::make('file')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->previewable(false)
+                            ->maxFiles(1)
+                    ])
+                    ->action(function (array $data) {
+                        if (!empty($data['file'])) {
+                            $filePath = $data['file'];
+                            $storagePath = 'politica-saude.pdf';
+
+                            \Illuminate\Support\Facades\Storage::move($filePath, $storagePath);
+                        }
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Arquivo salvo com sucesso!')
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

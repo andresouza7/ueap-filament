@@ -56,13 +56,16 @@
                     @endphp
                     @forelse ($documents as $document)
                         <div>
-                            <a href="{{ $document->getFirstMediaUrl() }}" target="_blank" class="block">
+                            <a href="{{ $document->file_url }}" target="_blank" class="block">
                                 <div
                                     class="relative rounded overflow-hidden shadow-md aspect-square w-full hover:scale-[1.01] transition">
-                                    {{-- <img src="{{ $document->getFirstMediaUrl('thumbnail') }}"
+                                    @php
+                                        $imgUrl = asset('storage/clube/' . $document->id . '.jpg');
+                                    @endphp
+                                    <img src="{{ $imgUrl }}" alt="Logo {{ $document->title }}"
+                                        class="w-full h-full object-cover">
+                                    {{-- <img src="https://picsum.photos/seed/{{ $document->id }}/300"
                                         alt="Logo {{ $document->title }}" class="w-full h-full object-cover"> --}}
-                                    <img src="https://picsum.photos/seed/{{ $document->id }}/300"
-                                        alt="Logo {{ $document->title }}" class="w-full h-full object-cover">
 
                                     <div class="absolute bottom-0 w-full bg-yellow-500/90 text-white text-center text-xs truncate py-1"
                                         title="{{ $document->title }}">

@@ -16,7 +16,9 @@
                 <p class="text-sm">
                     Para garantir um agendamento adequado, leia atentamente as instruções fornecidas pela equipe de
                     Saúde.
-                    <span class="underline font-bold">Acesse aqui.</span>
+                    <a href="{{ asset('storage/politica-saude.pdf') }}" target="_blank">
+                        <span class="underline font-bold">Acesse aqui.</span>
+                    </a>
                 </p>
             </div>
 
