@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Facades\Storage;
 
-class TransparencyBidDocument extends Model implements HasMedia
+class TransparencyBidDocument extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, HandlesFileUpload;
 
     protected $fillable = [
         // 'uuid',
@@ -35,11 +35,24 @@ class TransparencyBidDocument extends Model implements HasMedia
         'user_updated_id'
     ];
 
+    protected $appends = ['file_url'];
+
+    public function getFileUrlAttribute()
+    {
+        $path = 'documents/bids/' . $this->id . '.pdf';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
+    }
+
+    protected static function booted()
+    {
+        static::deleting(fn($model) => Storage::delete('documents/bids/' . $model->id . '.pdf'));
+    }
+
     public function bid(): BelongsTo
     {
         return $this->belongsTo(TransparencyBid::class, 'transparency_bid_id');
     }
-
 
     public function user_created()
     {

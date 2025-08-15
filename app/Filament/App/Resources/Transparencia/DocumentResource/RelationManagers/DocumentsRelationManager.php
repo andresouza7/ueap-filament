@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Transparencia\DocumentResource\RelationManagers;
 
+use App\Actions\HandlesFileUpload;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -14,10 +16,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DocumentsRelationManager extends RelationManager
 {
+    use HandlesFileUpload;
+
     protected static string $relationship = 'documents';
 
     public function form(Form $form): Form
@@ -35,29 +40,12 @@ class DocumentsRelationManager extends RelationManager
                     ->label('Ano')
                     ->integer()
                     ->required(),
-                SpatieMediaLibraryFileUpload::make('arquivo')
-                    ->previewable(false),
-                SpatieMediaLibraryFileUpload::make('thumbnail')
-                    ->collection('thumbnail')
-                    ->previewable(false),
-                // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
-
-                Group::make()
-                    ->schema(function (Get $get) {
-                        $category = $this->getOwnerRecord()->slug;
-
-                        return match ($category) {
-                            'consu-atas' => [
-                                TextInput::make('metadata.number')->label('Número')->numeric()->required(),
-                            ],
-                            'consu-resolucoes' => [
-                                TextInput::make('metadata.issuer')->label('Emissor'),
-                                DatePicker::make('metadata.issuance_date')->label('Data de Emissão'),
-                            ],
-                            // Add other cases here...
-                            default => [],
-                        };
-                    }),
+                FileUpload::make('file')
+                    ->directory('documents/general')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->previewable(false)
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
             ]);
     }
 
@@ -99,17 +87,18 @@ class DocumentsRelationManager extends RelationManager
                         $data['status'] = 'published';
 
                         return $data;
-                    }),
+                    })
+                    ->after(fn (Model $record, array $data) =>
+                        $record->storeFileWithModelId($record, $data['file'], 'documents/general')
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->label('Download')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->getFirstMediaUrl())
+                    ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->hasMedia())
+                    ->visible(fn($record) => $record->file_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

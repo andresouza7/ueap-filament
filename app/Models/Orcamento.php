@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Facades\Storage;
 
-class Orcamento extends Model implements HasMedia
+class Orcamento extends Model
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, HandlesFileUpload;
 
     protected $fillable = [
         'uuid',
@@ -20,4 +20,20 @@ class Orcamento extends Model implements HasMedia
         'description',
         'observation',
     ];
+
+    protected $appends = [
+        'file_url',
+    ];
+
+    public function getFileUrlAttribute()
+    {
+        $path = 'documents/orcamento/' . $this->id . '.pdf';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
+    }
+
+    protected static function booted()
+    {
+        static::deleting(fn($model) => Storage::delete('documents/orcamento/' . $model->id . '.pdf'));
+    }
 }

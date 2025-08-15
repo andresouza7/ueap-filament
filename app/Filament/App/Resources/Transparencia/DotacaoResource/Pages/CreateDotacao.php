@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Transparencia\DotacaoResource\Pages;
 use App\Filament\App\Resources\Transparencia\DotacaoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class CreateDotacao extends CreateRecord
@@ -17,5 +18,19 @@ class CreateDotacao extends CreateRecord
         $data['type'] = 'dotacao';
 
         return $data;
+    }
+
+    protected function handleRecordCreation(array $data): Model
+    {
+        $record = static::getModel()::create($data);
+
+        $record->storeFileWithModelId($record, $data['file'], 'documents/orcamento');
+
+        return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

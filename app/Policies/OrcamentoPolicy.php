@@ -45,7 +45,7 @@ class OrcamentoPolicy
      */
     public function delete(User $user, Orcamento $orcamento): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 
     /**
