@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DocumentsRelationManager extends RelationManager
@@ -107,6 +108,9 @@ class DocumentsRelationManager extends RelationManager
                         $data['status'] = 'published';
 
                         return $data;
+                    })
+                    ->after(function (Model $record, array $data) {
+                        $record->storeFileWithModelId($record, $data['file'], 'documents/general');
                     }),
             ])
             ->actions([
@@ -116,13 +120,6 @@ class DocumentsRelationManager extends RelationManager
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
-
-                // Tables\Actions\Action::make('download')
-                //     ->label('Download')
-                //     ->icon('heroicon-o-arrow-down-tray')
-                //     ->url(fn($record) => $record->getFirstMediaUrl())
-                //     ->openUrlInNewTab()
-                //     ->visible(fn($record) => $record->hasMedia())
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

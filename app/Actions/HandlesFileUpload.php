@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HandlesFileUpload
 {
-    public function storeFileWithModelId(Model $record, string $file, string $destination): void
+    public function storeFileWithModelId(Model $record, string $file, string $directory): void
     {
-        if (empty($file)) {
+        if (empty($file) || !$record->id) {
             return;
         }
 
         $extension = pathinfo($file, PATHINFO_EXTENSION);
         $newFileName = $record->id . '.' . $extension;
-        $newPath = $destination . '/' . $newFileName;
+        $newPath = $directory . '/' . $newFileName;
 
         Storage::disk('public')->move($file, $newPath);
     }

@@ -4,11 +4,8 @@ namespace App\Filament\App\Resources\Site\WebBannerResource\Pages;
 
 use App\Actions\HandlesFileUpload;
 use App\Filament\App\Resources\Site\WebBannerResource;
-use App\Models\WebBanner;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CreateWebBanner extends CreateRecord
@@ -34,5 +31,10 @@ class CreateWebBanner extends CreateRecord
         $this->storeFileWithModelId($record, $data['file'], 'web/banners');
 
         return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

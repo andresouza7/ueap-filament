@@ -108,12 +108,6 @@ class WebPostResource extends Resource
     {
         return Group::make()
             ->schema([
-
-                // SpatieMediaLibraryFileUpload::make('file')
-                //     ->label('Arquivo (.jpg)')
-                //     ->previewable(false)
-                //     ->image(),
-
                 FileUpload::make('file')
                     ->directory('web/posts')
                     ->acceptedFileTypes(['image/jpeg'])
