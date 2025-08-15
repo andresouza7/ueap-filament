@@ -6,6 +6,7 @@ use App\Filament\App\Resources\Transparencia\QuadroDespesaResource\Pages;
 use App\Filament\App\Resources\Transparencia\QuadroDespesaResource\RelationManagers;
 use App\Models\Orcamento;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Form;
@@ -47,11 +48,12 @@ class QuadroDespesaResource extends Resource
                 Forms\Components\Textarea::make('observation')
                     ->label('Observação'),
 
-                SpatieMediaLibraryFileUpload::make('file')
-                    ->label('Arquivo em PDF')
-                    ->previewable(false)
+                FileUpload::make('file')
+                    ->directory('documents/orcamento')
                     ->acceptedFileTypes(['application/pdf'])
+                    ->previewable(false)
                     ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
             ]);
     }
 
@@ -84,10 +86,10 @@ class QuadroDespesaResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Abrir')
-                ->url(fn($record) => $record->getFirstMediaUrl())
-                ->openUrlInNewTab()
-                ->visible(fn($record) => $record->hasMedia()),
+                Tables\Actions\Action::make('download')
+                    ->url(fn($record) => $record->file_url)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->file_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

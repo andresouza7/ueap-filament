@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages;
 use App\Filament\App\Resources\Transparencia\LicitacaoResource;
 use Filament\Actions;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -13,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ManageDocumentosLicitacao extends ManageRelatedRecords
@@ -64,12 +66,12 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                         TextInput::make('description')
                             ->label('Descrição')
                             ->required(),
-                        SpatieMediaLibraryFileUpload::make('file')
-                            ->label('Arquivo')
-                            ->previewable(false)
+                        FileUpload::make('file')
+                            ->directory('documents/bids')
                             ->acceptedFileTypes(['application/pdf'])
+                            ->previewable(false)
                             ->maxFiles(1)
-                            ->helperText('Formato pdf')
+                            ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
                     ])
                     ->mutateFormDataUsing(function (array $data) {
                         $data['uuid'] = Str::uuid();
@@ -78,15 +80,19 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                         $data['transparency_bid_id'] = $this->getOwnerRecord()->id;
 
                         return $data;
+                    })
+                    ->after(function (Model $record, array $data) {
+                        $record->storeFileWithModelId($record, $data['file'], 'documents/bids');
                     }),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('Abrir')
-                    ->url(fn($record) => $record->getFirstMediaUrl())
-                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('download')
+                    ->url(fn($record) => $record->file_url)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->file_url)
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

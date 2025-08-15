@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Transparencia\QuadroDespesaResource\Pages;
 use App\Filament\App\Resources\Transparencia\QuadroDespesaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class CreateQuadroDespesa extends CreateRecord
@@ -17,5 +18,19 @@ class CreateQuadroDespesa extends CreateRecord
         $data['type'] = 'qdd';
 
         return $data;
+    }
+
+     protected function handleRecordCreation(array $data): Model
+    {
+        $record = static::getModel()::create($data);
+
+        $record->storeFileWithModelId($record, $data['file'], 'documents/orcamento');
+
+        return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
