@@ -11,6 +11,7 @@ use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -51,6 +52,9 @@ class AppPanelProvider extends PanelProvider
                 fn(): View => view('filament.app.pages.login')
             )
             ->viteTheme('resources/css/filament/app/theme.css')
+            ->assets([
+                Css::make('filament-stylesheet', resource_path('css/custom.css'))
+            ])
             ->navigationGroups([
                 'Minha Área',
                 'Social',
