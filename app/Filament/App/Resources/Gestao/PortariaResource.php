@@ -52,17 +52,12 @@ class PortariaResource extends Resource
                     ->hidden(fn() => auth()->user()->hasRole('consu'))
                     ->label('Origem')
                     ->maxLength(255),
-                SpatieMediaLibraryFileUpload::make('file')
-                    ->label('Arquivo')
-                    ->uploadingMessage('Fazendo upload...')
+                FileUpload::make('file')
+                    ->directory('documents/ordinances')
                     ->acceptedFileTypes(['application/pdf'])
-                    ->maxSize(1024 * 10)
-
-                    // ->getUploadedFileNameForStorageUsing(
-                    //     fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.{$file->getClientOriginalExtension()}"
-                    // )
-                    ->helperText('*É necessário salvar as alterações após o envio.')
-                // ->visibility('private')
+                    ->previewable(false)
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
             ]);
     }
 
@@ -118,13 +113,12 @@ class PortariaResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('download')
-                    ->label('Baixar')
-                    ->url(fn($record) => $record->getFirstMediaUrl())
-                    ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->hasMedia())
-                    ->icon('heroicon-m-arrow-down-tray'),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->url(fn($record) => $record->file_url)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->file_url)
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

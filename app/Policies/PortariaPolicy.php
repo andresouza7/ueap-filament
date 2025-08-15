@@ -45,7 +45,7 @@ class PortariaPolicy
      */
     public function delete(User $user, Portaria $portaria): bool
     {
-        return true;
+        return $user->hasRole('dinfo');
     }
 
     /**

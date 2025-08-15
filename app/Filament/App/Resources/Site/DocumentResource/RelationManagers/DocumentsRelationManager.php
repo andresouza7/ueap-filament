@@ -37,36 +37,12 @@ class DocumentsRelationManager extends RelationManager
                     ->label('Ano')
                     ->integer()
                     ->required(),
-                // SpatieMediaLibraryFileUpload::make('arquivo')
-                //     ->previewable(false),
-
                 FileUpload::make('file')
                     ->directory('documents/general')
                     ->acceptedFileTypes(['application/pdf'])
                     ->previewable(false)
                     ->maxFiles(1)
                     ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
-
-                // SpatieMediaLibraryFileUpload::make('thumbnail')
-                //     ->collection('thumbnail')
-                //     ->previewable(false),
-                // ->collection(fn() => $this->getOwnerRecord()->slug)->openable(),
-
-                // Group::make()
-                //     ->schema(function (Get $get) {
-                //         $category = $this->getOwnerRecord()->slug;
-
-                //         return match ($category) {
-                //             'consu-atas' => [
-                //                 TextInput::make('metadata.number')->label('Número')->numeric()->required(),
-                //             ],
-                //             'consu-resolucoes' => [
-                //                 TextInput::make('metadata.issuer')->label('Emissor'),
-                //                 DatePicker::make('metadata.issuance_date')->label('Data de Emissão'),
-                //             ],
-                //             default => [],
-                //         };
-                //     }),
             ]);
     }
 

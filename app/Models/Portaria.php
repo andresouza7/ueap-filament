@@ -8,12 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\FileService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Portaria extends Model implements HasMedia
+class Portaria extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'document_ordinances';
 
@@ -25,7 +23,6 @@ class Portaria extends Model implements HasMedia
         'subject',
         'origin',
         'created_at',
-        'file'
     ];
 
     protected $casts = [
@@ -38,7 +35,9 @@ class Portaria extends Model implements HasMedia
 
     public function getFileUrlAttribute()
     {
-        return Storage::url("documents/ordinances/{$this->id}.pdf");
+        $path = 'documents/ordinances/' . $this->id . '.pdf';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
     }
 
     public function persons()
