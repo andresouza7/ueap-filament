@@ -70,8 +70,10 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_url')
-                    ->label('#'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('#')
+                    ->getStateUsing(fn($record) => $record->getFileUrl())
+                    ->size(50),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->limit()
@@ -101,9 +103,9 @@ class WebBannerResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->url(fn($record) => $record->image_url)
+                    ->url(fn($record) => $record->getFileUrl())
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->image_url)
+                    ->visible(fn($record) => $record->hasFile())
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
