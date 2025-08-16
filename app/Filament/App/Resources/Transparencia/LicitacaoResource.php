@@ -9,7 +9,6 @@ use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ViewLicitac
 use App\Models\TransparencyBid;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\Page;
@@ -42,7 +41,7 @@ class LicitacaoResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Detalhes')
+                \Filament\Infolists\Components\Section::make('Detalhes')
                     ->columns(3)
                     ->schema([
                         TextEntry::make('number')
@@ -75,29 +74,33 @@ class LicitacaoResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                Forms\Components\Split::make([
-                    Forms\Components\TextInput::make('number')
-                        ->label('Número')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('year')
-                        ->label('Ano')
-                        ->maxLength(255),
-                    Forms\Components\DatePicker::make('start_date')
-                        ->label('Data de Abertura')
-                        ->required(),
-                ]),
+                Forms\Components\Section::make([
 
-                Forms\Components\Textarea::make('description')
-                    ->label('Objeto')
-                    ->required(),
-                Forms\Components\TextInput::make('location')
-                    ->label('Local da Publicação')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('link')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('observation')
-                    ->label('Observação')
-                    ->required(),
+
+                    Forms\Components\Split::make([
+                        Forms\Components\TextInput::make('number')
+                            ->label('Número')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('year')
+                            ->label('Ano')
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('start_date')
+                            ->label('Data de Abertura')
+                            ->required(),
+                    ]),
+
+                    Forms\Components\Textarea::make('description')
+                        ->label('Objeto')
+                        ->required(),
+                    Forms\Components\TextInput::make('location')
+                        ->label('Local da Publicação')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('link')
+                        ->maxLength(255),
+                    Forms\Components\Textarea::make('observation')
+                        ->label('Observação')
+                        ->required(),
+                ])
             ]);
     }
 

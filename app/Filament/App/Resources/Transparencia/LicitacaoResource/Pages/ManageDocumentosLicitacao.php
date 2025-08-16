@@ -32,11 +32,7 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+            ->schema($this->getFormSection());
     }
 
     public function table(Table $table): Table
@@ -47,6 +43,7 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
             ->description('Gerencie os documentos desta licitação')
             ->defaultSort('id', 'desc')
             ->columns([
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição'),
                 Tables\Columns\TextColumn::make('created_at')
@@ -62,17 +59,7 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                 Tables\Actions\CreateAction::make()->label('Publicar Anexo')
                     ->modalHeading('Publicar Anexo')
                     ->modalDescription('Forneça uma descrição e faça o upload do arquivo')
-                    ->form([
-                        TextInput::make('description')
-                            ->label('Descrição')
-                            ->required(),
-                        FileUpload::make('file')
-                            ->directory('documents/bids')
-                            ->acceptedFileTypes(['application/pdf'])
-                            ->previewable(false)
-                            ->maxFiles(1)
-                            ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
-                    ])
+                    ->form($this->getFormSection())
                     ->mutateFormDataUsing(function (array $data) {
                         $data['uuid'] = Str::uuid();
                         $data['user_created_id'] = auth()->id();
@@ -100,5 +87,23 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
             ]);
+    }
+
+    private function getFormSection()
+    {
+        return  [
+            TextInput::make('description')
+                ->label('Descrição')
+                ->columnSpanFull()
+                ->required(),
+            FileUpload::make('file')
+                ->columnSpanFull()
+                ->label('Arquivo')
+                ->directory('documents/bids')
+                ->acceptedFileTypes(['application/pdf'])
+                ->previewable(false)
+                ->maxFiles(1)
+                ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
+        ];
     }
 }

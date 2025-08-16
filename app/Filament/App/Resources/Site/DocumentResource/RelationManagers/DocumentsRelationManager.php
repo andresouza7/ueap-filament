@@ -59,7 +59,6 @@ class DocumentsRelationManager extends RelationManager
     {
         return $table
             ->heading('Gerenciar documetos')
-            // ->description('kjlklj')
             ->recordTitleAttribute('title')
             ->defaultSort('id', 'desc')
             ->columns([

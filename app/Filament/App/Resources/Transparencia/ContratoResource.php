@@ -8,6 +8,7 @@ use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ManageDocume
 use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ViewContrato;
 use App\Models\TransparencyBid;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
@@ -39,37 +40,41 @@ class ContratoResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                Forms\Components\Split::make([
-                    Forms\Components\Select::make('person_type')
-                        ->label('Tipo de Pessoa')
-                        ->options([
-                            'juridica' => 'JURÍDICA',
-                            'fisica' => 'FÍSICA'
-                        ]),
-                    Forms\Components\TextInput::make('number')
-                        ->label('Número')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('year')
-                        ->label('Ano')
-                        ->maxLength(255),
-                    Forms\Components\DatePicker::make('start_date')
-                        ->label('Data de Abertura')
-                        ->required(),
-                    Forms\Components\DatePicker::make('end_date')
-                        ->label('Data Final')
-                        ->required(),
+                Section::make([
+
+
+                    Forms\Components\Split::make([
+                        Forms\Components\Select::make('person_type')
+                            ->label('Tipo de Pessoa')
+                            ->options([
+                                'juridica' => 'JURÍDICA',
+                                'fisica' => 'FÍSICA'
+                            ]),
+                        Forms\Components\TextInput::make('number')
+                            ->label('Número')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('year')
+                            ->label('Ano')
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('start_date')
+                            ->label('Data de Abertura')
+                            ->required(),
+                        Forms\Components\DatePicker::make('end_date')
+                            ->label('Data Final')
+                            ->required(),
                     ]),
 
-                Forms\Components\Textarea::make('description')
-                    ->label('Objeto')
-                    ->required(),
-                Forms\Components\TextInput::make('location')
-                    ->label('Local da Publicação')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('link')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('observation')
-                    ->label('Observação'),
+                    Forms\Components\Textarea::make('description')
+                        ->label('Objeto')
+                        ->required(),
+                    Forms\Components\TextInput::make('location')
+                        ->label('Local da Publicação')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('link')
+                        ->maxLength(255),
+                    Forms\Components\Textarea::make('observation')
+                        ->label('Observação'),
+                ])
             ]);
     }
 

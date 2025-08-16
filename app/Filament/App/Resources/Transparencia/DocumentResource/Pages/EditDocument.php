@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Transparencia\DocumentResource\Pages;
 use App\Filament\App\Resources\Transparencia\DocumentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditDocument extends EditRecord
 {
@@ -16,5 +17,16 @@ class EditDocument extends EditRecord
             // Actions\ViewAction::make(),
             // Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [];
+    }
+
+
+    public function getTitle(): string | Htmlable
+    {
+        return $this->getRecord()->name;
     }
 }

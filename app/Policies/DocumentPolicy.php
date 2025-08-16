@@ -46,7 +46,7 @@ class DocumentPolicy
      */
     public function delete(User $user, Document $document): bool
     {
-        return false;
+        return true;
     }
 
     /**

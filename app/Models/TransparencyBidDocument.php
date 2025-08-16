@@ -40,7 +40,7 @@ class TransparencyBidDocument extends Model
     public function getFileUrlAttribute()
     {
         $path = 'documents/bids/' . $this->id . '.pdf';
-
+        
         return Storage::exists($path) ? Storage::url($path) : null;
     }
 

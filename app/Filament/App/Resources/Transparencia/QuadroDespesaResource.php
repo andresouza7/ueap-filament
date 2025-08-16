@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Transparencia\QuadroDespesaResource\RelationManag
 use App\Models\Orcamento;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Form;
@@ -29,31 +30,34 @@ class QuadroDespesaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->columns(1)
             ->schema([
-                Split::make([
+                Section::make([
 
-                    Forms\Components\TextInput::make('month')
-                        ->label('Mês')
-                        ->required()
-                        ->numeric(),
-                    Forms\Components\TextInput::make('year')
-                        ->label('Ano')
-                        ->required()
-                        ->numeric(),
-                ]),
-                Forms\Components\Textarea::make('description')
-                    ->label('Descrição')
-                    ->required(),
-                Forms\Components\Textarea::make('observation')
-                    ->label('Observação'),
 
-                FileUpload::make('file')
-                    ->directory('documents/orcamento')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->previewable(false)
-                    ->maxFiles(1)
-                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
+                    Split::make([
+
+                        Forms\Components\TextInput::make('month')
+                            ->label('Mês')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('year')
+                            ->label('Ano')
+                            ->required()
+                            ->numeric(),
+                    ]),
+                    Forms\Components\Textarea::make('description')
+                        ->label('Descrição')
+                        ->required(),
+                    Forms\Components\Textarea::make('observation')
+                        ->label('Observação'),
+
+                    FileUpload::make('file')
+                        ->directory('documents/orcamento')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->previewable(false)
+                        ->maxFiles(1)
+                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
+                ])->columns(1)
             ]);
     }
 

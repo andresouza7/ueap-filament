@@ -39,16 +39,15 @@ class DocumentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                //
-                TextInput::make('name')->label('Nome Categoria')->readOnly()
-            ]);
+            ->schema([]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->recordTitleAttribute('name')
+            ->heading('Categorias de Documentos')
+            ->description('Você tem acesso às categorias abaixo. Selecione uma delas para visualizar e gerenciar os documentos.')
             ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'transparency'))
             ->columns([
                 //
@@ -57,16 +56,16 @@ class DocumentResource extends Resource
                     ->searchable(),
                 TextColumn::make('slug')
                     ->badge(),
-                TextColumn::make('type')
-                    ->label('Tipo')
-                    ->badge()
-                    ->color(Color::Slate),
+                // TextColumn::make('type')
+                //     ->label('Tipo')
+                //     ->badge()
+                //     ->color(Color::Slate),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
