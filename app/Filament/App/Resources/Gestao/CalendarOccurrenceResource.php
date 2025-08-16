@@ -6,6 +6,7 @@ use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages;
 use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -30,16 +31,18 @@ class CalendarOccurrenceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('description')
-                    ->label('Descrição')
-                    ->columnSpanFull()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('start_date')
-                    ->label('Data Início')
-                    ->required(),
-                Forms\Components\DatePicker::make('end_date')
-                    ->label('Data Fim'),
+                Section::make([
+                    Forms\Components\TextInput::make('description')
+                        ->label('Descrição')
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\DatePicker::make('start_date')
+                        ->label('Data Início')
+                        ->required(),
+                    Forms\Components\DatePicker::make('end_date')
+                        ->label('Data Fim'),
+                ])
             ]);
     }
 

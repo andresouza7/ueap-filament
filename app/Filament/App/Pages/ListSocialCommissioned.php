@@ -34,20 +34,17 @@ class ListSocialCommissioned extends Page implements HasTable
             ->query(CommissionedRole::query())
             ->defaultSort('description')
             ->columns([
-                Split::make([
                     TextColumn::make('description')
-                        ->description('Cargo', 'above')
+                        ->label('Cargo')
                         ->weight(FontWeight::SemiBold)
-                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        // ->size(TextColumn\TextColumnSize::ExtraSmall)
                         ->searchable(),
                     TextColumn::make('occupant.person.name')
-                        ->description('Responsável', 'above')
-                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->label('Responsável')
+                        // ->size(TextColumn\TextColumnSize::ExtraSmall)
                         ->formatStateUsing(fn($state) => $state ?? '-') // Display '-' if null
                         ->url(fn($record) => $record->occupant ? SocialUserResource::getUrl('view', ['record' => $record->occupant->id]) : null) // Generate URL only if occupant exists
                         ->searchable()
-                ])->from('md')
-
             ])
             ->filters([
                 Filter::make('without_occupant')

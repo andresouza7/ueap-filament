@@ -13,6 +13,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -21,6 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\View\View;
 
@@ -51,10 +53,11 @@ class AppPanelProvider extends PanelProvider
                 'panels::auth.login.form.after',
                 fn(): View => view('filament.app.pages.login')
             )
+            ->renderHook(
+                PanelsRenderHook::TOPBAR_START,
+                fn(): string => Blade::render('<x-filament-panels::logo />')
+            )
             ->viteTheme('resources/css/filament/app/theme.css')
-            ->assets([
-                Css::make('filament-stylesheet', resource_path('css/custom.css'))
-            ])
             ->navigationGroups([
                 'Minha Área',
                 'Social',

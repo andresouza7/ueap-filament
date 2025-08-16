@@ -1,7 +1,7 @@
 <x-filament-panels::page>
 
     <div x-data="{ tab: 'tab1' }">
-        <x-filament::tabs label="Content tabs" class="mb-2">
+        <x-filament::tabs label="Content tabs" class="mb-2 tabs-header">
             <x-filament::tabs.item @click="tab = 'tab1'" :alpine-active="'tab === \'tab1\''">
                 Emitir Ponto
             </x-filament::tabs.item>

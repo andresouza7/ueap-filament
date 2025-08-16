@@ -25,6 +25,7 @@ class PontoResource extends Resource
     protected static ?string $modelLabel = 'Ocorrência do Ponto';
     protected static ?string $pluralModelLabel = 'Ocorrências do Ponto';
     protected static bool $shouldRegisterNavigation = false;
+    protected static bool $shouldSkipAuthorization = true;
 
     public static function form(Form $form): Form
     {

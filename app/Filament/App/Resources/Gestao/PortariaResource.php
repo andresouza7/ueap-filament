@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Gestao\PortariaResource\RelationManagers;
 use App\Models\Portaria;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,7 @@ class PortariaResource extends Resource
 {
     protected static ?string $model = Portaria::class;
     protected static ?string $modelLabel = 'Portaria';
+    protected static ?string $pluralModelLabel = 'Portarias';
     protected static ?string $navigationGroup = 'Gestão';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?int $navigationSort = 5;
@@ -30,34 +32,37 @@ class PortariaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('number')
-                    ->label('Número')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('year')
-                    ->label('Ano')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject')
-                    ->label('Assunto')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->label('Descrição')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('created_at')
-                    ->label('Data'),
-                Forms\Components\TextInput::make('origin')
-                    ->hidden(fn() => auth()->user()->hasRole('consu'))
-                    ->label('Origem')
-                    ->maxLength(255),
-                FileUpload::make('file')
-                    ->directory('documents/ordinances')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->previewable(false)
-                    ->maxFiles(1)
-                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
+                Section::make([
+                    Forms\Components\TextInput::make('number')
+                        ->label('Número')
+                        ->required()
+                        ->numeric(),
+                    Forms\Components\TextInput::make('year')
+                        ->label('Ano')
+                        ->required()
+                        ->numeric(),
+                    Forms\Components\TextInput::make('subject')
+                        ->label('Assunto')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('description')
+                        ->label('Descrição')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\DatePicker::make('created_at')
+                        ->label('Data'),
+                    Forms\Components\TextInput::make('origin')
+                        ->hidden(fn() => auth()->user()->hasRole('consu'))
+                        ->label('Origem')
+                        ->maxLength(255),
+                    FileUpload::make('file')
+                        ->label('Arquivo')
+                        ->directory('documents/ordinances')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->previewable(false)
+                        ->maxFiles(1)
+                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
+                ])->columns(2)
             ]);
     }
 

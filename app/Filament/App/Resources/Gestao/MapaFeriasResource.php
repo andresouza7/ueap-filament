@@ -6,10 +6,12 @@ use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -30,32 +32,39 @@ class MapaFeriasResource extends Resource
     {
         return $form
             ->schema([
-                //
-                Forms\Components\Select::make('user_id')
-                    ->disabledOn('edit')
-                    ->label('Usuário')
-                    ->columnSpanFull()
-                    ->required()
-                    ->relationship('user', 'login')
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\TextInput::make('description')
-                    ->label('Descrição')
-                    ->columnSpanFull()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('start_date')
-                    ->label('Data Início')
-                    ->required(),
-                Forms\Components\DatePicker::make('end_date')
-                    ->label('Data Fim')
-                    ->required(),
+                Section::make([
+                    Forms\Components\Select::make('user_id')
+                        ->disabledOn('edit')
+                        ->label('Usuário')
+                        ->columnSpanFull()
+                        ->required()
+                        ->relationship(
+                            name: 'user.person',
+                            titleAttribute: 'name',
+                            modifyQueryUsing: fn($query) => $query->whereHas('user', fn($q) => $q->whereNotNull('enrollment'))
+                        )
+                        ->searchable()
+                        ->preload(),
+
+                    Forms\Components\TextInput::make('description')
+                        ->label('Descrição')
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\DatePicker::make('start_date')
+                        ->label('Data Início')
+                        ->required(),
+                    Forms\Components\DatePicker::make('end_date')
+                        ->label('Data Fim')
+                        ->required(),
+                ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->description('Pesquise por palavra-chave ou filtre por período.')
             ->columns([
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
@@ -86,7 +95,22 @@ class MapaFeriasResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('date_range')
+                    ->form([
+                        Forms\Components\DatePicker::make('from')->label('Data início'),
+                        Forms\Components\DatePicker::make('until')->label('Data fim'),
+                    ])
+                    ->query(function ($query, array $data): void {
+                        $query
+                            ->when(
+                                $data['from'],
+                                fn($q, $date) => $q->whereDate('start_date', '>=', $date)
+                            )
+                            ->when(
+                                $data['until'],
+                                fn($q, $date) => $q->whereDate('end_date', '<=', $date)
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

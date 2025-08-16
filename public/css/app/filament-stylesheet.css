@@ -1,12 +1,80 @@
-/* .fi-sidebar {
-    background: #017840 !important;
-} */
+@import '../../vendor/filament/filament/resources/css/app.css';
 
-/* .fi-icon-btn-icon {
-    stroke: white;
-    stroke-width: 2;
-} */
+/* === Custom theme overrides === */
 
-html {
-    scroll-behavior: smooth;
+
+/* Sidebar gradient */
+.fi-sidebar {
+    background: linear-gradient(180deg, var(--green-dark), var(--green-light));
+    color: #fff;
+}
+
+.fi-sidebar-nav-item {
+    border-radius: 0.5rem;
+    margin: 0.2rem 0;
+}
+
+.fi-sidebar-nav-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.fi-sidebar-nav-item-active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Topbar */
+.fi-topbar {
+    background: linear-gradient(90deg, var(--green-light), var(--green-dark));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.fi-table {
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.fi-table thead {
+    background-color: var(--green-light);
+    color: white;
+    font-weight: 600;
+}
+
+.fi-table th,
+.fi-table td {
+    padding: 1rem;
+}
+
+.fi-table tr:hover {
+    background-color: rgba(67, 160, 71, 0.08);
+}
+
+
+
+.fi-input, .fi-select, .fi-textarea {
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.fi-input:focus, .fi-select:focus, .fi-textarea:focus {
+    border-color: var(--green-light);
+    box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.25);
+}
+
+.fi-button {
+    background-color: var(--green-light);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.fi-button:hover {
+    background-color: var(--green-dark);
 }
