@@ -28,7 +28,7 @@ class CreateWebBanner extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $this->storeFileWithModelId($record, $data['file'], 'web/banners');
+        $record->storeFileWithModelId($record, $data['file'], 'web/banners');
 
         return $record;
     }

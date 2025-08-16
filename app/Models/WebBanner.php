@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class WebBanner extends Model implements HasMedia
+class WebBanner extends MediaModel
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes;
+
+    protected string $directory = 'web/banners';
+
+    protected string $extension = 'jpg';
 
     protected $fillable = [
         'uuid',
@@ -25,8 +27,6 @@ class WebBanner extends Model implements HasMedia
         'user_updated_id'
     ];
 
-    protected $appends = ['image_url'];
-
     public function banner_place()
     {
         return $this->belongsTo(WebBannerPlace::class, 'web_banner_place_id', 'id');
@@ -39,12 +39,5 @@ class WebBanner extends Model implements HasMedia
     public function user_updated()
     {
         return $this->belongsTo(User::class, 'user_updated_id', 'id', 'users');
-    }
-
-    public function getImageUrlAttribute()
-    {
-        $path = 'web/banners/' . $this->id . '.jpg';
-
-        return Storage::exists($path) ? Storage::url($path) : null;
     }
 }

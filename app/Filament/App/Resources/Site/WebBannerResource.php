@@ -9,11 +9,9 @@ use App\Models\WebBannerPlace;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -70,7 +68,7 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_url')
+                Tables\Columns\ImageColumn::make('file_url')
                     ->label('#'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
@@ -101,9 +99,9 @@ class WebBannerResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->url(fn($record) => $record->image_url)
+                    ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->image_url)
+                    ->visible(fn($record) => $record->file_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
