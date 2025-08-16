@@ -67,7 +67,7 @@ class SocialPostResource extends Resource
                                     ->grow(false),
 
                                 TextColumn::make('user.group.name')
-                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                                    ->url(fn($record) => SocialGroupResource::getUrl('view', ['record' => optional($record->user->group)->id]))
                                     ->formatStateUsing(fn($state) => strtoupper($state))
                                     ->weight(FontWeight::Bold)
                                     ->color(Color::Teal)

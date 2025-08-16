@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Social\SocialUserResource\RelationManagers;
 
+use App\Filament\App\Resources\Social\SocialGroupResource;
 use App\Filament\App\Resources\Social\SocialPostResource;
 use App\Filament\App\Resources\Social\SocialUserResource;
 use Filament\Forms;
@@ -51,7 +52,7 @@ class PostsRelationManager extends RelationManager
                                     ->grow(false),
 
                                 TextColumn::make('user.group.name')
-                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                                    ->url(fn($record) => SocialGroupResource::getUrl('view', ['record' => optional($record->user->group)->id]))
                                     ->formatStateUsing(fn($state) => strtoupper($state))
                                     ->weight(FontWeight::Bold)
                                     ->color('primary')

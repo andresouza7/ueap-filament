@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Social\PontoResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -31,20 +32,22 @@ class PontoResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('description')
-                    ->label('Tipo')
-                    ->columnSpanFull()
-                    ->options([
-                        'FACULTADO' => 'FACULTADO',
-                        'FALTA' => 'FALTA',
-                        'ATESTADO' => 'ATESTADO'
-                    ]),
-                DatePicker::make('start_date')
-                    ->label('Data Início')
-                    ->required(),
-                DatePicker::make('end_date')
-                    ->label('Data Fim')
-                    ->required()
+                Section::make([
+                    Select::make('description')
+                        ->label('Tipo')
+                        ->columnSpanFull()
+                        ->options([
+                            'FACULTADO' => 'FACULTADO',
+                            'FALTA' => 'FALTA',
+                            'ATESTADO' => 'ATESTADO'
+                        ]),
+                    DatePicker::make('start_date')
+                        ->label('Data Início')
+                        ->required(),
+                    DatePicker::make('end_date')
+                        ->label('Data Fim')
+                        ->required()
+                ])
             ]);
     }
 

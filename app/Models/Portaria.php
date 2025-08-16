@@ -42,7 +42,12 @@ class Portaria extends Model
 
     public function persons()
     {
-        return $this->belongsToMany(Person::class, 'document_ordinance_person');
+        return $this->belongsToMany(
+            Person::class,
+            'document_ordinance_person',
+            'document_ordinance_id',
+            'person_id'
+        );
     }
 
     protected static function boot()
@@ -52,5 +57,10 @@ class Portaria extends Model
         static::addGlobalScope('description', function (Builder $builder) {
             $builder->whereNotNull('description');
         });
+    }
+
+    protected static function booted()
+    {
+        static::deleting(fn($model) => Storage::delete('documents/ordinances/' . $model->id . '.pdf'));
     }
 }

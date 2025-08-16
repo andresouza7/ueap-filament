@@ -57,7 +57,7 @@
 .fi-simple-main {
     border-radius: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .fi-ta-record {

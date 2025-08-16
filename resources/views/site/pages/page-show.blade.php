@@ -29,7 +29,7 @@ Ueap | Página
 <div id="texto" class="p-2">
     @if($page->hasMedia())
     <div class="d-flex justify-content-center">
-        <img src="{{ $page->getFirstMediaUrl() }}" class="img-fluid"  alt="{{ $page->title }}">
+        <img src="{{ $page->image_url }}" class="img-fluid"  alt="{{ $page->title }}">
     </div>
     <hr />
     @endif

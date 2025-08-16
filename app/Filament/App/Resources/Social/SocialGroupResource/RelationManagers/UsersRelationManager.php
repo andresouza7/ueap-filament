@@ -20,6 +20,7 @@ class UsersRelationManager extends RelationManager
 {
     protected static string $relationship = 'users';
     protected static ?string $title = 'Servidores';
+    protected static bool $shouldSkipAuthorization = true;
 
     public function form(Form $form): Form
     {

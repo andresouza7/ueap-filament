@@ -34,7 +34,7 @@
             <ul>
                 @forelse($resolutions as $resolution)
                     @if($resolution->hasMedia())
-                        <li><a target='blank' title="{{$resolution->title}}" href="{{ $resolution->getFirstMediaUrl() }}">
+                        <li><a target='blank' title="{{$resolution->title}}" href="{{ $resolution->file_url }}">
                             <span>{{$resolution->number}}/{{$resolution->year}} - </span> {{$resolution->name}}</a>
                         </li>
                     @else

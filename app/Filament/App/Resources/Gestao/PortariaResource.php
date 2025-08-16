@@ -56,12 +56,25 @@ class PortariaResource extends Resource
                         ->label('Origem')
                         ->maxLength(255),
                     FileUpload::make('file')
+                        ->columnSpanFull()
                         ->label('Arquivo')
                         ->directory('documents/ordinances')
                         ->acceptedFileTypes(['application/pdf'])
                         ->previewable(false)
                         ->maxFiles(1)
-                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf')
+                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
+
+                    Forms\Components\Select::make('persons')
+                        ->columnSpanFull()
+                        ->label('Servidores')
+                        ->relationship(
+                            name: 'persons',
+                            titleAttribute: 'name',
+                            modifyQueryUsing: fn($query) => $query->whereHas('user', fn($q) => $q->whereNotNull('enrollment'))
+                        )
+                        ->multiple()
+                        ->searchable()
+                        ->preload(),
                 ])->columns(2)
             ]);
     }

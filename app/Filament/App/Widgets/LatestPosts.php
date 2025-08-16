@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use App\Filament\App\Resources\Social\SocialGroupResource;
 use App\Filament\App\Resources\Social\SocialUserResource;
 use App\Models\SocialPost;
 use Filament\Support\Enums\FontWeight;
@@ -41,7 +42,7 @@ class LatestPosts extends BaseWidget
                                     ->grow(false),
 
                                 TextColumn::make('user.group.name')
-                                    ->url(fn($record) => SocialUserResource::getUrl('view', ['record' => optional($record->user->group)->id]))
+                                    ->url(fn($record) => SocialGroupResource::getUrl('view', ['record' => optional($record->user->group)->id]))
                                     ->formatStateUsing(fn($state) => strtoupper($state))
                                     ->weight(FontWeight::Bold)
                                     ->color('primary')
