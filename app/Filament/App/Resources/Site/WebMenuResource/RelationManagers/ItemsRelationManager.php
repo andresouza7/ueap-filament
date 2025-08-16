@@ -63,7 +63,7 @@ class ItemsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('name')
-            ->heading('Itens de menu')
+            ->heading('Itens do menu')
             ->description('Visualize os itens vinculados a este menu e reordene a posição')
             ->defaultSort('position')
             ->reorderable('position')

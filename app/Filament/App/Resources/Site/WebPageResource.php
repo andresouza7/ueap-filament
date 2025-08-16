@@ -12,6 +12,7 @@ use App\Models\WebMenuItem;
 use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -36,77 +37,79 @@ class WebPageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('Título')
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->suffixIcon('heroicon-m-globe-alt')
-                    ->prefix('pagina/')
-                    ->maxLength(255),
-                Forms\Components\Select::make('web_category_id')
-                    ->relationship('category', 'name')
-                    ->preload()
-                    ->searchable()
-                    ->label('Categoria'),
-                Forms\Components\Select::make('status')
-                    ->required()
-                    ->options([
-                        'draft' => 'Rascunho',
-                        'published' => 'Publicado',
-                        'unpublished' => 'Despublicado'
-                    ]),
-                Forms\Components\RichEditor::make('text')
-                    ->label('Texto')
-                    ->required()
-                    ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
-                    ->disableToolbarButtons(['attachFiles'])
-                    ->columnSpanFull(),
-                SpatieMediaLibraryFileUpload::make('file')
-                    ->columnSpanFull()
-                    ->label('Imagem')
-                    ->image()
-                    ->previewable(false),
-                Forms\Components\Select::make('web_menu_id')
-                    ->hiddenOn('create')
-                    ->label('Exibir menu nesta página?')
-                    ->helperText('Escolha um menu lateral para esta página ou crie um novo.')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('web_menu', 'name', function ($query) {
-                        $query->whereHas('web_menu_place', function ($query) {
-                            $query->where('slug', 'pagina');
-                        });
-                    })
-                    // ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} xxx")
-                    ->createOptionModalHeading('Criar menu para esta página')
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->label('Nome')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('slug')
-                            ->unique('web_menus', 'slug')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->createOptionUsing(function (array $data): int {
+                Section::make([
+                    Forms\Components\TextInput::make('title')
+                        ->label('Título')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->suffixIcon('heroicon-m-globe-alt')
+                        ->prefix('pagina/')
+                        ->maxLength(255),
+                    Forms\Components\Select::make('web_category_id')
+                        ->relationship('category', 'name')
+                        ->preload()
+                        ->searchable()
+                        ->label('Categoria'),
+                    Forms\Components\Select::make('status')
+                        ->required()
+                        ->options([
+                            'draft' => 'Rascunho',
+                            'published' => 'Publicado',
+                            'unpublished' => 'Despublicado'
+                        ]),
+                    Forms\Components\RichEditor::make('text')
+                        ->label('Texto')
+                        ->required()
+                        ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                        ->disableToolbarButtons(['attachFiles'])
+                        ->columnSpanFull(),
+                    SpatieMediaLibraryFileUpload::make('file')
+                        ->columnSpanFull()
+                        ->label('Imagem')
+                        ->image()
+                        ->previewable(false),
+                    Forms\Components\Select::make('web_menu_id')
+                        ->hiddenOn('create')
+                        ->label('Exibir menu nesta página?')
+                        ->helperText('Escolha um menu lateral para esta página ou crie um novo.')
+                        ->searchable()
+                        ->preload()
+                        ->relationship('web_menu', 'name', function ($query) {
+                            $query->whereHas('web_menu_place', function ($query) {
+                                $query->where('slug', 'pagina');
+                            });
+                        })
+                        // ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} xxx")
+                        ->createOptionModalHeading('Criar menu para esta página')
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('name')
+                                ->label('Nome')
+                                ->required()
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('slug')
+                                ->unique('web_menus', 'slug')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->createOptionUsing(function (array $data): int {
 
-                        $menu_place_pagina = WebMenuPlace::where('slug', 'pagina')->first();
-                        $data['web_menu_place_id'] = $menu_place_pagina->id;
-                        $data['status'] = 'published';
+                            $menu_place_pagina = WebMenuPlace::where('slug', 'pagina')->first();
+                            $data['web_menu_place_id'] = $menu_place_pagina->id;
+                            $data['status'] = 'published';
 
-                        $last_menu = WebMenu::latest('id')->first();
-                        $data['position'] = $last_menu ? $last_menu->id : 1;
+                            $last_menu = WebMenu::latest('id')->first();
+                            $data['position'] = $last_menu ? $last_menu->id : 1;
 
-                        $data['uuid'] = Str::uuid();
-                        return WebMenu::create($data)->getKey();
-                    }),
+                            $data['uuid'] = Str::uuid();
+                            return WebMenu::create($data)->getKey();
+                        }),
+                ])
 
             ]);
     }

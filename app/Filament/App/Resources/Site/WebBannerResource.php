@@ -8,6 +8,7 @@ use App\Models\WebBanner;
 use App\Models\WebBannerPlace;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -32,36 +33,35 @@ class WebBannerResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                Forms\Components\Select::make('web_banner_place_id')
-                    ->label('Local do Banner')
-                    ->options(fn() => WebBannerPlace::all()->pluck('name', 'id'))
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->label('Nome')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('url')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('status')
-                    ->required()
-                    ->default('published')
-                    ->options([
-                        'published' => 'Publicado',
-                        'unpublished' => 'Despublicado',
-                    ]),
+                Section::make([
+                    Forms\Components\Select::make('web_banner_place_id')
+                        ->label('Local do Banner')
+                        ->options(fn() => WebBannerPlace::all()->pluck('name', 'id'))
+                        ->required(),
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nome')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('url')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Select::make('status')
+                        ->required()
+                        ->default('published')
+                        ->options([
+                            'published' => 'Publicado',
+                            'unpublished' => 'Despublicado',
+                        ]),
 
-                FileUpload::make('file')
-                    ->directory('web/banners')
-                    ->acceptedFileTypes(['image/jpeg'])
-                    ->previewable(false)
-                    ->maxFiles(1)
-                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg')
+                    FileUpload::make('file')
+                        ->label('Arquivo JPG')
+                        ->directory('web/banners')
+                        ->acceptedFileTypes(['image/jpeg'])
+                        ->previewable(false)
+                        ->maxFiles(1)
+                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg')
 
-                // SpatieMediaLibraryFileUpload::make('file')
-                //     ->label('Arquivo (.jpg)')
-                //     ->previewable(false)
-                //     ->image(),
+                ])
             ]);
     }
 

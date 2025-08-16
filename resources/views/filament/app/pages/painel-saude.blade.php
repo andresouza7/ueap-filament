@@ -1,6 +1,6 @@
 <x-filament-panels::page>
 
-    <div class="w-full py-12 text-white"
+    <div class="w-full py-12 text-white rounded-md shadow-md"
         style="background-image: url('{{ asset('img/bg-saude.png') }}'); background-size: cover; background-position: center; min-height: 60vh;">
         <div class="max-w-7xl mx-auto px-6">
 

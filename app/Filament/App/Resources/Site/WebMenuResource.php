@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Site\WebMenuResource\RelationManagers;
 use App\Filament\App\Resources\Site\WebMenuResource\RelationManagers\ItemsRelationManager;
 use App\Models\WebMenu;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,28 +29,30 @@ class WebMenuResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('web_menu_place_id')
-                    ->label('Local')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('web_menu_place', 'name'),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('name')
-                    ->label('Nome')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->label('Descrição')
-                    ->maxLength(255),
-                Select::make('status')
-                    ->default('published')
-                    ->options([
-                        'published' => 'Publicado',
-                        'unpublished' => 'Despublicado'
-                    ])
-                    ->required(),
+                Section::make([
+                    Forms\Components\Select::make('web_menu_place_id')
+                        ->label('Local')
+                        ->searchable()
+                        ->preload()
+                        ->relationship('web_menu_place', 'name'),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nome')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('description')
+                        ->label('Descrição')
+                        ->maxLength(255),
+                    Select::make('status')
+                        ->default('published')
+                        ->options([
+                            'published' => 'Publicado',
+                            'unpublished' => 'Despublicado'
+                        ])
+                        ->required(),
+                ])
             ]);
     }
 

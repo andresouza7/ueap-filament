@@ -58,6 +58,8 @@ class DocumentsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->heading('Gerenciar documetos')
+            // ->description('kjlklj')
             ->recordTitleAttribute('title')
             ->defaultSort('id', 'desc')
             ->columns([
