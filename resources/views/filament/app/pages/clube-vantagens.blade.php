@@ -47,7 +47,7 @@
             <div class="my-4 h-px bg-gradient-to-r from-white/20 to-transparent"></div>
 
             {{-- Grid de parceiros --}}
-            <div class="overflow-x-hidden max-h-[600px]">
+            <div class="overflow-hidden max-h-[600px]">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                     @php
                         $documents = \App\Models\Document::whereHas('category', function ($query) {
@@ -55,25 +55,31 @@
                         })->get();
                     @endphp
                     @forelse ($documents as $document)
-                        <div>
-                            <a href="{{ $document->file_url }}" target="_blank" class="block">
-                                <div
-                                    class="relative rounded overflow-hidden shadow-md aspect-square w-full hover:scale-[1.01] transition">
-                                    @php
-                                        $imgUrl = asset('storage/clube/' . $document->id . '.jpg');
-                                    @endphp
-                                    <img src="{{ $imgUrl }}" alt="Logo {{ $document->title }}"
-                                        class="w-full h-full object-cover">
-                                    {{-- <img src="https://picsum.photos/seed/{{ $document->id }}/300"
-                                        alt="Logo {{ $document->title }}" class="w-full h-full object-cover"> --}}
+                        @php
+                            $path = 'clube/' . $document->id . '.jpg';
+                            $hasImg = Storage::exists($path);
+                            $imgUrl = Storage::url($path);
+                        @endphp
 
-                                    <div class="absolute bottom-0 w-full bg-yellow-500/90 text-white text-center text-xs truncate py-1"
-                                        title="{{ $document->title }}">
-                                        {{ $document->title }}
+                        @if ($hasImg)
+                            <div>
+                                <a href="{{ $document->file_url }}" target="_blank" class="block">
+                                    <div
+                                        class="relative rounded overflow-hidden shadow-md aspect-square w-full hover:scale-[1.01] transition">
+
+                                        <img src="{{ $imgUrl }}" alt="Logo {{ $document->title }}"
+                                            class="w-full h-full object-cover">
+                                        {{-- <img src="https://picsum.photos/seed/{{ $document->id }}/300"
+                                alt="Logo {{ $document->title }}" class="w-full h-full object-cover"> --}}
+
+                                        <div class="absolute bottom-0 w-full bg-yellow-500/90 text-white text-center text-xs truncate py-1"
+                                            title="{{ $document->title }}">
+                                            {{ $document->title }}
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        @endif
                     @empty
                         <div class="col-span-full">
                             <div class="bg-blue-100 text-blue-900 p-4 rounded text-center shadow">
@@ -83,20 +89,21 @@
                     @endforelse
                 </div>
             </div>
-        </div>
 
-        {{-- Chamada Pública --}}
-        <div class="bg-white/95 text-black p-4 shadow-md mt-6 rounded">
-            <p class="font-bold mb-1">
-                <i class="fa fa-bullhorn mr-2 text-blue-600"></i>
-                Chamada Pública nº 025/2025 - PROPLAD/UEAP
-            </p>
-            <p class="text-sm">
-                <a href="{{ asset('storage/documents/general/1431.pdf') }}" target="_blank"
-                    class="font-semibold text-blue-600 underline">
-                    Compartilhe o edital e ajude a alcançar novas parcerias!
-                </a>
-            </p>
+            {{-- Chamada Pública --}}
+            <div class="bg-white/95 text-black p-4 shadow-md mt-4 rounded">
+                <p class="font-bold mb-1">
+                    📢
+                    Chamada Pública nº 025/2025 - PROPLAD/UEAP
+                </p>
+                <p class="text-sm">
+                    <a href="{{ asset('storage/documents/general/1431.pdf') }}" target="_blank"
+                        class="font-semibold text-blue-600 underline">
+                        Compartilhe o edital e ajude a alcançar novas parcerias!
+                    </a>
+                </p>
+            </div>
+
         </div>
 
     </div>

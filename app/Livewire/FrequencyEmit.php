@@ -13,6 +13,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -100,33 +101,39 @@ class FrequencyEmit extends Component implements HasForms
                             DateTimePicker::make('manha_start')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Entrada Manhã'),
+                                ->label('Entrada Manhã')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                             DateTimePicker::make('manha_end')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Saída Manhã'),
+                                ->label('Saída Manhã')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
                         Split::make([
                             DateTimePicker::make('tarde_start')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Entrada Tarde'),
+                                ->label('Entrada Tarde')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                             DateTimePicker::make('tarde_end')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Saída Tarde'),
+                                ->label('Saída Tarde')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
                         Split::make([
                             DateTimePicker::make('noite_start')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Entrada Noite'),
+                                ->label('Entrada Noite')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                             DateTimePicker::make('noite_end')
                                 ->date(false)
                                 ->seconds(false)
-                                ->label('Saída Noite'),
+                                ->label('Saída Noite')
+                                ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
-                        Toggle::make('preencher_horario'),
+                        Toggle::make('preencher_horario')->live(),
                     ]),
                 ])->from('md')
             ])->heading('Preencher folha de ponto')

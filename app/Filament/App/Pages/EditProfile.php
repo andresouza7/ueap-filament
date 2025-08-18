@@ -4,6 +4,8 @@ namespace App\Filament\App\Pages;
 
 use App\Models\Person;
 use Filament\Forms;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -112,29 +114,17 @@ class EditProfile extends Page implements HasForms
     public function form(Form $form): Form
     {
         return $form->schema([
-            // $this->getPersonalDataSection(),
-            // $this->getAcademicDataSection()
 
-            Wizard::make([
-                Wizard\Step::make('Dados Pessoais')
-                    ->description('Atualize seus dados pessoais.')
-                    ->schema([
-                        $this->getPersonalDataSection()
-                    ]),
-                Wizard\Step::make('Currículo')
-                    ->description('Informe seu perfil acadêmico.')
-                    ->schema([
-                        $this->getAcademicDataSection()
-                    ]),
-            ])
-                ->skippable()
-                ->submitAction(new HtmlString(Blade::render(<<<BLADE
-                    <x-filament::button
-                        type="submit"
-                    >
-                        Salvar
-                    </x-filament::button>
-                BLADE)))
+            Section::make([
+                $this->getPersonalDataSection(),
+                $this->getAcademicDataSection(),
+
+                Actions::make([
+                    Action::make('save')
+                        ->action('save')
+                        ->label('Salvar alterações')
+                ])
+            ])->heading('Dados Pessoais'),
         ])
             ->model($this->record)
             ->statePath('data')

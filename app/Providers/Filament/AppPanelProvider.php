@@ -7,6 +7,7 @@ use App\Filament\App\Pages\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
@@ -55,7 +56,11 @@ class AppPanelProvider extends PanelProvider
             )
             ->renderHook(
                 PanelsRenderHook::TOPBAR_START,
-                fn(): string => Blade::render('<x-filament-panels::logo />')
+                fn(): string => Blade::render(
+                    '<a href="' . route('filament.app.pages.dashboard') . '">
+                        <x-filament-panels::logo />
+                    </a>'
+                )
             )
             ->viteTheme('resources/css/filament/app/theme.css')
             ->navigationGroups([
@@ -81,6 +86,9 @@ class AppPanelProvider extends PanelProvider
                     ->icon('heroicon-o-lock-closed')
                     ->sort(5)
                     ->group('Minha Área'),
+            ])
+            ->userMenuItems([
+                'profile' => MenuItem::make()->label('Perfil')->url('/app/edit-profile'),
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([

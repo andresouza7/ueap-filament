@@ -200,12 +200,12 @@
             $retorno .=
                 "<div style='display: flex; justify-content: flex-end; font-weight: bold; font-size: 11px;'>Controle de Frequência</div>";
             $retorno .= "<div style='display: flex; gap: 4px; margin-top: 2px;'>
-                    <img height='60px' src='../../custom/manager/images/brasao_gea.png' />
+                    <img height='60px' src='img/brasao_gea.png' />
                     <div style='flex: 1; display: flex; flex-direction:column; align-items: flex-start; justify-content: center'>
                         <strong style='font-size: 12px; margin-bottom: 3px;'>UNIVERSIDADE DO ESTADO DO AMAPÁ | UEAP</strong>
 
                     </div>
-                    <img style='float:right'height='56px' src='../../custom/manager/images/brasao_ueap_sem_nome.png'>
+                    <img style='float:right'height='56px' src='img/brasao_ueap.png'>
                 </div>";
             $retorno .=
                 "<div style='display: flex; justify-content: flex-end;'>

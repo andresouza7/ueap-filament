@@ -11,7 +11,7 @@ class ViewSocialGroup extends ViewRecord
     protected static string $resource = SocialGroupResource::class;
 
     protected ?string $heading = 'Setor';
-    protected ?string $subheading = 'Encontre informações sobre este setor e consulte os servidores nele lotados.';
+    // protected ?string $subheading = 'Encontre informações sobre este setor e consulte os servidores nele lotados.';
 
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {

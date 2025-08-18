@@ -39,10 +39,12 @@ class MapaFeriasResource extends Resource
                         ->columnSpanFull()
                         ->required()
                         ->relationship(
-                            name: 'user.person',
-                            titleAttribute: 'name',
-                            modifyQueryUsing: fn($query) => $query->whereHas('user', fn($q) => $q->whereNotNull('enrollment'))
+                            name: 'user',
+                            titleAttribute: 'id', // doesn’t matter, we’ll override below
+                            modifyQueryUsing: fn($query) =>
+                            $query->whereNotNull('enrollment')
                         )
+                        ->getOptionLabelFromRecordUsing(fn($record) => $record->person?->name ?? 'Sem nome')
                         ->searchable()
                         ->preload(),
 
@@ -65,6 +67,7 @@ class MapaFeriasResource extends Resource
     {
         return $table
             ->description('Pesquise por palavra-chave ou filtre por período.')
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')

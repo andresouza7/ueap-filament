@@ -31,6 +31,8 @@ class CalendarOccurrencesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('description')
+            ->modifyQueryUsing(fn($query) => $query->where('type', 2))
+            ->defaultSort('start_date', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')

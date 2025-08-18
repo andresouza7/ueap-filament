@@ -162,7 +162,7 @@ class SocialUserResource extends Resource
                                             ->getUploadedFileNameForStorageUsing(
                                                 fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.jpg"
                                             )
-                                            ->helperText('*É necessário salvar as alterações para concluir.')
+                                            ->helperText('*Salve as alterações para concluir.')
                                     ])
                                     ->action(function (array $data, $record): void {
                                         redirect()->route('filament.app.resources.servidor.view', $record->id);

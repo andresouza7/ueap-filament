@@ -47,7 +47,7 @@ class CalendarOccurrencePolicy
      */
     public function delete(User $user, CalendarOccurrence $calendarOccurrence): bool
     {
-        return false;
+        return $user->hasRole('urh|dinfo');
     }
 
     /**
