@@ -41,6 +41,7 @@ class SocialPostResource extends Resource
                         RichEditor::make('text')
                             ->label('Texto')
                             ->required()
+                            ->disableToolbarButtons(['attachFiles'])
                             ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
                     ])
 

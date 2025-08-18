@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
-                // ->visible(fn(): bool => Auth::user()?->hasRole('dinfo'))
+                ->visible(fn(): bool => Auth::user()?->hasRole('dinfo'))
                 ->slideOver()
                 ->modalHeading('Alterar Painel')
                 ->modalWidth('sm')

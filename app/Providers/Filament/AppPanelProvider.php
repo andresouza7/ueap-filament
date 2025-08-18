@@ -36,6 +36,7 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->id('app')
             ->path('app')
+            ->databaseNotifications()
             ->brandLogo(asset('img/logo.png'))
             ->darkModeBrandLogo(asset('img/logo-white.png'))
             ->brandLogoHeight('36px')
