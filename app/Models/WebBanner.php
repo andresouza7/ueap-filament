@@ -7,13 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
-class WebBanner extends MediaModel
+class WebBanner extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected string $directory = 'web/banners';
-
-    protected string $extension = 'jpg';
 
     protected $fillable = [
         'uuid',
@@ -26,6 +22,20 @@ class WebBanner extends MediaModel
         'user_created_id',
         'user_updated_id'
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        $path = 'web/banners/' . $this->id . '.jpg';
+        
+        return Storage::exists($path) ? Storage::url($path) : null;
+    }
+
+    protected static function booted()
+    {
+        static::deleting(fn($model) => Storage::delete('web/banners/' . $model->id . '.jpg'));
+    }
 
     public function banner_place()
     {

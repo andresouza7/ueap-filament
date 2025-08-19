@@ -19,15 +19,17 @@ class ItemsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nome')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Checkbox::make('use_internal')
-                    ->label('Usar página interna')
+                    ->label('Direcionar para página do site')
                     ->reactive(),
                 Forms\Components\Select::make('url')
-                    ->label('URL Interna')
+                    ->label('Página do site')
                     ->searchable()
                     ->preload()
                     ->getSearchResultsUsing(function (string $query) {
@@ -44,11 +46,12 @@ class ItemsRelationManager extends RelationManager
                     ->required()
                     ->hidden(fn($get) => !$get('use_internal')),
                 Forms\Components\TextInput::make('url')
-                    ->label('URL Externa')
+                    ->label('URL')
                     ->required()
                     ->maxLength(255)
                     ->hidden(fn($get) => $get('use_internal')),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\TextInput::make('description')
+                    ->label('Descrição')
                     ->maxLength(65535),
                 Forms\Components\Select::make('status')
                     ->options([

@@ -68,7 +68,7 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\ImageColumn::make('file_url')
+                Tables\Columns\ImageColumn::make('image_url')
                     ->label('#'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
@@ -99,9 +99,9 @@ class WebBannerResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('download')
-                    ->url(fn($record) => $record->file_url)
+                    ->url(fn($record) => $record->image_url)
                     ->openUrlInNewTab()
-                    ->visible(fn($record) => $record->file_url)
+                    ->visible(fn($record) => $record->image_url)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
