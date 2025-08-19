@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Manager\DocumentController;
+use App\Http\Controllers\DocumentController;
 use App\Models\Document;
 use App\Models\NormativeInstruction;
 use App\Models\WebPage;

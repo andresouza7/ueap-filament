@@ -5,22 +5,9 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\TransparencyController;
-use App\Models\Document;
-use App\Models\WebPost;
-use App\Services\TransparenciaSearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/debug', function () {
-    $documents = Document::with('category')->first();
-    dd($documents);
-    // return view('home');
-});
-
-Route::get('/tailwind', function () {
-    return view('tailwind');
-});
 
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
@@ -58,18 +45,6 @@ Route::name('novosite.')->prefix('/novo')->group(function () {
         //     Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
         //     Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
     });
-});
-
-Route::get('/search', function (Request $request) {
-    $query = $request->input('q');
-
-    if (!$query) {
-        return response()->json(['error' => 'No search query provided.'], 400);
-    }
-
-    $service = new TransparenciaSearchService();
-    $results = $service->search($query);
-    return response()->json($results);
 });
 
 Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
