@@ -40,8 +40,6 @@ Route::name('site.')->group(function () {
         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-        //     Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
-        //     Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
     });
 });
 
