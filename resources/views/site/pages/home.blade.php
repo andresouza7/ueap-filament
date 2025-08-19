@@ -46,7 +46,7 @@ afterChange: function(){}
         @foreach($banners as $banner)
             <a href='{{ $banner->url }}'>
                 <div class="carousel-item @php if($active == true){ echo 'active';} @endphp">
-                    <img src="{{$banner->file_url}}" class="d-block w-100" alt="{{$banner->title}}">
+                    <img src="{{$banner->image_url}}" class="d-block w-100" alt="{{$banner->title}}">
                     {{-- @if(file_exists(public_path("storage/web/banners/".$banner->id.".jpg"))) --}}
                         <div class="carousel-caption d-none d-md-block">
                             {{-- <h5>{{$banner->title}}</h5>
