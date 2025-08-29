@@ -3,6 +3,7 @@
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
+use App\Http\Controllers\FolhaController;
 use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
@@ -14,6 +15,11 @@ Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('fr
 Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
+
+Route::post('/folhas/store', [FolhaController::class, 'store'])->name('folhas.store');
+Route::get('/folhas/create', [FolhaController::class, 'create'])->name('folhas.create');
+Route::get('/folhas/index', [FolhaController::class, 'index'])->name('folhas.index');
+Route::delete('/folhas/{id}', [FolhaController::class, 'destroy'])->name('folhas.destroy');
 
 Route::name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');

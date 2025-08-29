@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "12.2.0",
         "spatie/laravel-medialibrary": "^11.8",
-        "spatie/laravel-permission": "^6.9"
+        "spatie/laravel-permission": "^6.9",
+        "google/apiclient": "^2.18"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -43,6 +44,7 @@
         }
     },
     "scripts": {
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
@@ -63,7 +65,11 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "google/apiclient-services": [
+            "Drive",
+            "YouTube"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
