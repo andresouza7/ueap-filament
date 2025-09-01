@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\FolhaController;
 use App\Http\Controllers\OldPageController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -18,8 +19,13 @@ Route::get('/login', function () {
 
 Route::post('/folhas/store', [FolhaController::class, 'enviar'])->name('folhas.store');
 Route::get('/folhas/create', [FolhaController::class, 'create'])->name('folhas.create');
-Route::get('/folhas/index', [FolhaController::class, 'index'])->name('folhas.index');
+Route::get('/folhas', [FolhaController::class, 'index'])->name('folhas.index');
 Route::delete('/folhas/{id}', [FolhaController::class, 'destroy'])->name('folhas.destroy');
+
+Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+Route::post('/tickets/{ticket}/avaliar', [TicketController::class, 'avaliar'])->name('tickets.avaliar');
+
 
 Route::name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');

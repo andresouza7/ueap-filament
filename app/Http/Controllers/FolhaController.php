@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Folha;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\File;
 use App\Services\GoogleDriveService;
@@ -84,8 +85,25 @@ class FolhaController extends Controller
 
         $user = User::where('id', $request->user_id)->first();
         // $user = auth()->user();
+        // $uploaded = $this->drive->uploadAttendanceFile($uploadedFile, $year, $monthName, $user);
 
-        $uploaded = $this->drive->uploadAttendanceFile($uploadedFile, $year, $monthName, $user);
+       
+
+        // Criar ticket
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'year' => $year,
+            'month' => $monthName,
+            'file_path' => '',
+            'status' => 'pendente',
+            'evaluador_id' => null,
+        ]);
+
+         // Salvar temporariamente no storage public/tickets/YYYY/username/
+        $path = $uploadedFile->storeAs(
+            "documents/tickets/",
+            "{$ticket->id}.{$uploadedFile->getClientOriginalExtension()}"
+        );
 
         // Exemplo: salvar link do arquivo
         // Inscricao::create([... 'arquivo_link' => $uploaded->webViewLink ]);

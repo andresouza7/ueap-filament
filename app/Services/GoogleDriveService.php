@@ -121,7 +121,8 @@ class GoogleDriveService
         $userFolderId = $this->getOrCreateFolder($userName, $yearFolderId);
 
         // 3️⃣ Define o nome do arquivo como o nome do mês em português + extensão
-        $extension = $file->getClientOriginalExtension();
+        // $extension = $file->getClientOriginalExtension();
+        $extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
         $newFileName = $monthName . ($extension ? '.' . $extension : '');
 
         // 4️⃣ Faz upload do arquivo com o novo nome
