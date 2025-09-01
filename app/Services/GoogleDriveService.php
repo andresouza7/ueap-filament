@@ -46,13 +46,14 @@ class GoogleDriveService
     {
         $response = $this->drive->files->listFiles([
             'q' => "'$folderId' in parents and trashed = false",
-            'fields' => 'files(id,name,webViewLink,webContentLink)',
+            'fields' => 'files(id,name,mimeType,webViewLink,webContentLink,parents)',
             'supportsAllDrives' => true,
             'includeItemsFromAllDrives' => true,
         ]);
 
         return $response->files;
     }
+
 
     public function deleteFile(string $fileId): bool
     {

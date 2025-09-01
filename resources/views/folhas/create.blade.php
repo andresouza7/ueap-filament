@@ -13,12 +13,12 @@
         style="display: flex; flex-direction:column; gap: 4px; max-width: 400px">
         @csrf
 
+        <label for="user_id">Servidor</label>
         <select name="user_id" id="user_id">
             @foreach ($users as $user)
-                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                <option value="{{ $user->id }}">{{ $user->person->name }}</option>
             @endforeach
         </select>
-
 
         <label for="month">Mês</label>
         <select name="month" id="month">

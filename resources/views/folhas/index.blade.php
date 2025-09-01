@@ -1,50 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Folhas no Drive</title>
 </head>
-
 <body>
-    <h2>Arquivos no Google Drive</h2>
+    <h1>📂 Folhas de Frequência</h1>
 
-    @if (session('success'))
-        <div style="background: #d1fae5; color: #065f46; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-            {{ session('success') }}
-        </div>
+    <a href="{{route('folhas.create')}}">+ Enviar folha de ponto</a>
+
+    <h4>Folhas de ponto registradas:</h4>
+
+    {{-- Botão para voltar um nível, se não estiver na raiz --}}
+    @if($currentFolderId !== env('GOOGLE_DRIVE_FOLDER_ID'))
+        <p><a href="{{ route('folhas.index') }}">⬅️ Voltar para Raiz</a></p>
     @endif
-
-    @if (session('error'))
-        <div style="background: #fee2e2; color: #991b1b; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-            {{ session('error') }}
-        </div>
-    @endif
-
 
     <ul>
-        @forelse ($folhas as $file)
-            <li>
-                {{ $file->name }}
-                - {{$file->id}}
-                - <a href="{{ $file->webViewLink }}" target="_blank">Abrir</a>
-                - <a href="{{ $file->webContentLink }}">Baixar</a>
-
-                <form action="{{ route('folhas.destroy', $file->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?')">
-                        Excluir
-                    </button>
-                </form>
-            </li>
-        @empty
-            <li>Nenhum arquivo encontrado.</li>
-        @endforelse
+        @foreach($items as $item)
+            @if($item->mimeType === 'application/vnd.google-apps.folder')
+                {{-- É pasta (ano ou usuário) --}}
+                <li>
+                    📁 <a href="{{ route('folhas.index', ['folderId' => $item->id]) }}">
+                        {{ $item->name }}
+                    </a>
+                </li>
+            @else
+                {{-- É arquivo (mês) --}}
+                <li>
+                    📄 <a href="{{ $item->webViewLink }}" target="_blank">
+                        {{ $item->name }}
+                    </a>
+                </li>
+            @endif
+        @endforeach
     </ul>
-
 </body>
-
 </html>

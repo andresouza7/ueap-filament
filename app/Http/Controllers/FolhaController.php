@@ -20,9 +20,16 @@ class FolhaController extends Controller
 
     public function index()
     {
-        $folderId = request()->query('folderId');
-        $folhas = $this->drive->listFiles($folderId ?? env('GOOGLE_DRIVE_FOLDER_ID'));
-        return view('folhas.index', compact('folhas'));
+        // Se não passar nada, pega a pasta root (Shared Drive root definida no .env)
+        $folderId = request()->query('folderId', env('GOOGLE_DRIVE_FOLDER_ID'));
+
+        // Lista o conteúdo da pasta (pastas ou arquivos)
+        $items = $this->drive->listFiles($folderId);
+
+        // Pegamos também o "pai" (pra permitir voltar para a pasta anterior)
+        $currentFolderId = $folderId;
+
+        return view('folhas.index', compact('items', 'currentFolderId'));
     }
 
     public function create()
