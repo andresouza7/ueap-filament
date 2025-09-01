@@ -16,7 +16,7 @@ Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
 
-Route::post('/folhas/store', [FolhaController::class, 'store'])->name('folhas.store');
+Route::post('/folhas/store', [FolhaController::class, 'enviar'])->name('folhas.store');
 Route::get('/folhas/create', [FolhaController::class, 'create'])->name('folhas.create');
 Route::get('/folhas/index', [FolhaController::class, 'index'])->name('folhas.index');
 Route::delete('/folhas/{id}', [FolhaController::class, 'destroy'])->name('folhas.destroy');

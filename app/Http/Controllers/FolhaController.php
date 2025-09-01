@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Folha;
+use App\Models\User;
 use Illuminate\Http\File;
 use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
@@ -14,41 +15,36 @@ class FolhaController extends Controller
 
     public function __construct(GoogleDriveService $drive)
     {
-        // $this->middleware('auth');
         $this->drive = $drive;
     }
 
     public function index()
     {
-
-
-        $folhas = $this->drive->listFiles(env('GOOGLE_DRIVE_FOLDER_ID'));
-        // dd($folhas);
-        // $folhas = Folha::with('user')->latest()->get();
+        $folderId = request()->query('folderId');
+        $folhas = $this->drive->listFiles($folderId ?? env('GOOGLE_DRIVE_FOLDER_ID'));
         return view('folhas.index', compact('folhas'));
     }
 
     public function create()
     {
-        return view('folhas.create');
+        $users = User::orderBy('login')->with('person')->get();
+        return view('folhas.create', compact('users'));
     }
 
     public function store(Request $request)
     {
+        dd($request);
         $request->validate([
-            'arquivo' => 'required',
+            'user_id' => 'required',
+            'year' => 'required',
+            'month' => 'required',
+            'file' => 'required',
         ]);
 
-        // return dd($request->arquivo);
-
-        //$file = $this->drive->uploadPdf($request->file('arquivo'), env('GOOGLE_DRIVE_FOLDER_ID'));
-
-
-        $uploadedFile = $request->file('arquivo'); // UploadedFile
+        $uploadedFile = $request->file('file'); // UploadedFile
         $pdfFile = new File($uploadedFile->getRealPath()); // converte para Illuminate\Http\File
 
         $file = $this->drive->upload($pdfFile, env('GOOGLE_DRIVE_FOLDER_ID'));
-
 
         // Folha::create([
         //     'user_id' => Auth::id(),
@@ -68,5 +64,24 @@ class FolhaController extends Controller
         }
 
         return redirect()->back()->with('error', 'Erro ao remover arquivo.');
+    }
+
+    public function enviar(Request $request)
+    {
+        // dd($request);
+        $uploadedFile = $request->file('file'); // UploadedFile
+        $pdfFile = new File($uploadedFile->getRealPath());
+
+        $year = $request->year;           // Ex: "2025"
+        $monthName = $request->month;     // Ex: "Agosto"
+
+        $user = User::where('id', $request->user_id)->first();
+        // $user = auth()->user();
+
+        $uploaded = $this->drive->uploadAttendanceFile($uploadedFile, $year, $monthName, $user);
+
+        // Exemplo: salvar link do arquivo
+        // Inscricao::create([... 'arquivo_link' => $uploaded->webViewLink ]);
+        return redirect()->route('folhas.index')->with('success', 'Folha enviada com sucesso!');
     }
 }
