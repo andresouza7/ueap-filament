@@ -7,10 +7,14 @@
             </x-filament::tabs.item>
 
             <x-filament::tabs.item @click="tab = 'tab2'" :alpine-active="'tab === \'tab2\''">
-                Ocorrências do Ponto
+                Enviar Ponto
             </x-filament::tabs.item>
 
             <x-filament::tabs.item @click="tab = 'tab3'" :alpine-active="'tab === \'tab3\''">
+                Ocorrências do Ponto
+            </x-filament::tabs.item>
+
+            <x-filament::tabs.item @click="tab = 'tab4'" :alpine-active="'tab === \'tab4\''">
                 Upload Assinatura
             </x-filament::tabs.item>
 
@@ -22,10 +26,14 @@
             </div>
 
             <div x-show="tab === 'tab2'">
-                @livewire('frequency-occurrences')
+                @livewire('frequency-submit')
             </div>
 
             <div x-show="tab === 'tab3'">
+                @livewire('frequency-occurrences')
+            </div>
+
+            <div x-show="tab === 'tab4'">
                 @livewire('frequency-signature')
             </div>
         </div>
