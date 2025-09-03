@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Ticket;
 use App\Models\User;
 use App\Services\FolhaPontoService;
 use Filament\Forms\Components\Actions;
@@ -14,20 +15,24 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
+use Filament\Tables\Actions\Action as TableAction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\File;
 use Livewire\Component;
 
-class FrequencySubmit extends Component implements HasForms
+class FrequencySubmit extends Component implements HasForms, HasTable
 {
-    use InteractsWithForms;
+    use InteractsWithForms, InteractsWithTable;
 
     public ?array $data = [];
 
     public function mount(): void
     {
         $this->form->fill([
-            'type' => 0,
             'month' => date('m') - 1,
             'year' => date('Y')
         ]);
@@ -40,13 +45,20 @@ class FrequencySubmit extends Component implements HasForms
         $filePath = storage_path('app/public/' . $formData['anexo']);
         $file = new File($filePath);
 
+        $user = User::where('id', $formData['user_id'])->first();
+
         try {
             $ponto->submitSheet(
-                Auth::user(),
+                $user,
                 $formData['year'],
                 $formData['month'],
                 $file
             );
+
+            // Delete the temporary local file
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
 
             Notification::make()
                 ->title('Folha de ponto encaminhada.')
@@ -56,7 +68,11 @@ class FrequencySubmit extends Component implements HasForms
 
             return redirect()->route('filament.app.pages.print-frequency');
         } catch (\Exception $e) {
-            // $this->notify('danger', $e->getMessage());
+            Notification::make()
+                ->title('Erro ao enviar folha')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
         }
     }
 
@@ -114,6 +130,44 @@ class FrequencySubmit extends Component implements HasForms
                     ])
                 ])
         ]);
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->heading('Minhas solicitações')
+            ->description('Acompanhe aqui as suas folhas encaminhadas')
+            ->query(Ticket::query()->latest('id')->where('user_id', auth()->id()))
+            ->columns([
+                TextColumn::make('user.person.name')
+                    ->label('Servidor')
+                    ->searchable(),
+                TextColumn::make('month')
+                    ->label('Mês')
+                    ->searchable(),
+                TextColumn::make('year')
+                    ->label('Ano')
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label('Enviado em')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('evaluador.person.name')
+                    ->label('Avaliador'),
+                TextColumn::make('evaluated_at')
+                    ->label('Avaliado em')
+                    ->date()
+                    ->sortable(),
+            ])
+            ->actions([
+                TableAction::make('anexo')
+                    ->url(fn($record) => $record->file_path)
+                    ->openUrlInNewTab()
+                    ->visible(fn($record) => $record->file_path)
+            ]);
     }
 
     public function render()
