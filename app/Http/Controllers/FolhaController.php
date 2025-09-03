@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Folha;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\FolhaPontoService;
 use Illuminate\Http\File;
 use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
@@ -74,39 +75,22 @@ class FolhaController extends Controller
         return redirect()->back()->with('error', 'Erro ao remover arquivo.');
     }
 
-    public function enviar(Request $request)
+    public function enviar(Request $request, FolhaPontoService $ponto)
     {
-        // dd($request);
-        $uploadedFile = $request->file('file'); // UploadedFile
-        $pdfFile = new File($uploadedFile->getRealPath());
+        $file = $request->file('file');
 
         $year = $request->year;           // Ex: "2025"
-        $monthName = $request->month;     // Ex: "Agosto"
+        $month = $request->month;     // Ex: "Agosto"
 
         $user = User::where('id', $request->user_id)->first();
-        // $user = auth()->user();
-        // $uploaded = $this->drive->uploadAttendanceFile($uploadedFile, $year, $monthName, $user);
 
-       
+        try {
+            $ponto->submitSheet($user, $year, $month, $file);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', $e->getMessage());
+        }
 
-        // Criar ticket
-        $ticket = Ticket::create([
-            'user_id' => $user->id,
-            'year' => $year,
-            'month' => $monthName,
-            'file_path' => '',
-            'status' => 'pendente',
-            'evaluador_id' => null,
-        ]);
-
-         // Salvar temporariamente no storage public/tickets/YYYY/username/
-        $path = $uploadedFile->storeAs(
-            "documents/tickets/",
-            "{$ticket->id}.{$uploadedFile->getClientOriginalExtension()}"
-        );
-
-        // Exemplo: salvar link do arquivo
-        // Inscricao::create([... 'arquivo_link' => $uploaded->webViewLink ]);
         return redirect()->route('folhas.index')->with('success', 'Folha enviada com sucesso!');
     }
 }

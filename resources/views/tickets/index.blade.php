@@ -92,14 +92,10 @@
                     <td>{{ ucfirst($ticket->status) }}</td>
                     <td>{{ $ticket->created_at->format('d/m/Y H:i') }}</td>
                     <td>
-                        @if ($ticket->status === 'aprovado' && str_contains($ticket->file_path, 'http'))
-                            <a href="{{ $ticket->file_path }}" target="_blank">Abrir no Drive</a>
-                        @else
-                            <a href="{{ asset('storage/documents/tickets/' . $ticket->id . '.pdf') }}" target="_blank">Download</a>
-                        @endif
+                        <a href="{{ $ticket->file_path }}" target="_blank">Abrir no Drive</a>
                     </td>
                     <td>{{ $ticket->evaluador ? $ticket->evaluador->person->name : '-' }}</td>
-                    <td>{{ $ticket->evaluated_at?->format('d/m/Y H:i') ?? '-' }}</td>
+                    <td>{{ $ticket->evaluated_at ?? '-' }}</td>
                     <td>
                         @if ($ticket->status === 'pendente')
                             <a href="{{ route('tickets.show', $ticket) }}">Avaliar</a>

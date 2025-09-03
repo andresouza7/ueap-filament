@@ -10,7 +10,7 @@
     <p><strong>Usuário:</strong> {{ $ticket->user->person->name }}</p>
     <p><strong>Status atual:</strong> {{ ucfirst($ticket->status) }}</p>
     <p><strong>Arquivo enviado:</strong>
-        <a href="{{ asset('storage/documents/tickets/' . $ticket->id . '.pdf') }}" target="_blank">Download</a>
+        <a href="{{ $ticket->file_path }}" target="_blank">Download</a>
     </p>
 
     <form action="{{ route('tickets.avaliar', $ticket) }}" method="post">

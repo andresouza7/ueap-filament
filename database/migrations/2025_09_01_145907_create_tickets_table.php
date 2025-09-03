@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // usuário que enviou
+            $table->string('file_id')->nullable();
             $table->string('file_path')->nullable(); // arquivo temporário
             $table->string('month');
             $table->string('year');

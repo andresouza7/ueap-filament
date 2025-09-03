@@ -6,6 +6,7 @@ use Google\Client as GoogleClient;
 use Google\Service\Drive as GoogleDrive;
 use Google\Service\Drive\DriveFile;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 
 class GoogleDriveService
@@ -23,7 +24,7 @@ class GoogleDriveService
         $this->drive = new GoogleDrive($client);
     }
 
-    public function upload(File $file, string $folderId): DriveFile
+    public function upload(File|UploadedFile $file, string $folderId): DriveFile
     {
         $fileMetadata = new DriveFile([
             'name' => $file->getFilename(),
@@ -71,12 +72,10 @@ class GoogleDriveService
     /**
      * Cria (ou recupera) uma pasta pelo nome dentro de um parentId
      */
-    protected function getOrCreateFolder(string $folderName, ?string $parentId = null): string
+    public function getOrCreateFolder(string $folderName, ?string $parentId = null): string
     {
         $query = "mimeType='application/vnd.google-apps.folder' and name='$folderName' and trashed=false";
-        if ($parentId) {
-            $query .= " and '$parentId' in parents";
-        }
+        if ($parentId) $query .= " and '$parentId' in parents";
 
         $response = $this->drive->files->listFiles([
             'q' => $query,
@@ -107,39 +106,33 @@ class GoogleDriveService
         return $folder->id;
     }
 
-    /**
-     * Upload do arquivo de frequência dentro da estrutura Ano -> Usuário
-     */
-    public function uploadAttendanceFile($file, string $year, string $monthName, \App\Models\User $user): DriveFile
+    public function moveFileById(string $fileId, string $newParentId, string $name): DriveFile
     {
-        $userName = $user->person->name;
-
-        // 1️⃣ Cria ou obtém a pasta do ano
-        $yearFolderId = $this->getOrCreateFolder($year, env('GOOGLE_DRIVE_FOLDER_ID'));
-
-        // 2️⃣ Cria ou obtém a pasta do usuário dentro do ano
-        $userFolderId = $this->getOrCreateFolder($userName, $yearFolderId);
-
-        // 3️⃣ Define o nome do arquivo como o nome do mês em português + extensão
-        // $extension = $file->getClientOriginalExtension();
-        $extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
-        $newFileName = $monthName . ($extension ? '.' . $extension : '');
-
-        // 4️⃣ Faz upload do arquivo com o novo nome
-        $fileMetadata = new DriveFile([
-            'name' => $newFileName,
-            'parents' => [$userFolderId],
-        ]);
-
-        $content = file_get_contents($file->getRealPath());
-        $mimeType = mime_content_type($file->getRealPath());
-
-        return $this->drive->files->create($fileMetadata, [
-            'data' => $content,
-            'mimeType' => $mimeType,
-            'uploadType' => 'multipart',
-            'fields' => 'id,name,webViewLink,webContentLink,capabilities',
+        // Pega os pais atuais do arquivo
+        $file = $this->drive->files->get($fileId, [
+            'fields' => 'parents',
             'supportsAllDrives' => true,
         ]);
+
+        $previousParents = $file->parents ? implode(',', $file->parents) : null;
+
+        // Prepare metadata with new name
+        $fileMetadata = new DriveFile([
+            'name' => $name
+        ]);
+
+        // Move o arquivo para a nova pasta
+        $updatedFile = $this->drive->files->update(
+            $fileId,
+            $fileMetadata,
+            [
+                'addParents' => $newParentId,
+                'removeParents' => $previousParents,
+                'fields' => 'id,name,webViewLink,webContentLink,parents',
+                'supportsAllDrives' => true,
+            ]
+        );
+
+        return $updatedFile;
     }
 }

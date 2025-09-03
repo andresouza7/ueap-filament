@@ -3,18 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
-use App\Services\GoogleDriveService;
+use App\Services\FolhaPontoService;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    protected GoogleDriveService $drive;
-
-    public function __construct(GoogleDriveService $drive)
-    {
-        $this->drive = $drive;
-    }
-
     // Lista todos os tickets
     public function index()
     {
@@ -33,30 +26,15 @@ class TicketController extends Controller
     }
 
     // Avaliar um ticket
-    public function avaliar(Request $request, Ticket $ticket)
+    public function avaliar(Request $request, Ticket $ticket, FolhaPontoService $ponto)
     {
         $request->validate([
             'status' => 'required|in:aprovado,rejeitado',
         ]);
 
-        $ticket->status = $request->status;
-        $ticket->evaluador_id = auth()->id();
-        $ticket->save();
+        $status = $request->status;
 
-        // Se aprovado, envia para o Drive
-        if ($request->status === 'aprovado') {
-            $file = new \Illuminate\Http\File(storage_path("app/public/documents/tickets/{$ticket->id}.pdf"));
-            
-            $uploaded = $this->drive->uploadAttendanceFile(
-                $file,
-                $ticket->year, // ou usar ano do ticket se tiver
-                $ticket->month,
-                $ticket->user
-            );
-
-            $ticket->file_path = $uploaded->webViewLink; // opcional: salvar link
-            $ticket->save();
-        }
+        $ponto->evaluateTicket($ticket, $status);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket avaliado com sucesso!');
     }
