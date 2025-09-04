@@ -137,7 +137,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable
         return $table
             ->heading('Minhas solicitações')
             ->description('Acompanhe aqui as suas folhas encaminhadas')
-            ->query(Ticket::query()->latest('id')->where('user_id', auth()->id()))
+            ->query(Ticket::query()->latest('id')->where('user_id', Auth::id()))
             ->columns([
                 TextColumn::make('user.person.name')
                     ->label('Servidor')

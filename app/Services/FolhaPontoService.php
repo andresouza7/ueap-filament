@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 
@@ -124,6 +125,8 @@ class FolhaPontoService
         $ticket->evaluated_at = Date::now();
         $ticket->save();
 
+        $user = User::where('id', $ticket->user_id)->first();
+
         // Se aprovado, move o arquivo no Google Drive para a pasta correta
         if ($status === 'aprovado') {
             // Pega o link do arquivo 
@@ -141,6 +144,11 @@ class FolhaPontoService
             $userFolderId = $this->drive->getOrCreateFolder($ticket->user->person->name, $yearFolderId);
 
             $this->drive->moveFileById($fileId, $userFolderId, $ticket->month);
+
+            Notification::make()
+                ->title('Folha de ponto aprovada')
+                ->body("Seu ponto de {$ticket->month}/{$ticket->year} está ok!")
+                ->sendToDatabase($user);
         }
 
         return $ticket;
