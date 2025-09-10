@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // usuário que enviou
-            $table->string('file_id')->nullable();
-            $table->string('file_path')->nullable(); // arquivo temporário
-            $table->string('month');
-            $table->string('year');
+            $table->text('file_id')->nullable();
+            $table->text('file_path')->nullable(); // arquivo temporário
+            $table->integer('month');
+            $table->integer('year');
             $table->enum('status', ['pendente', 'aprovado', 'rejeitado'])->default('pendente');
             $table->foreignId('evaluador_id')->nullable()->constrained('users'); // avaliador RH
             $table->date('evaluated_at')->nullable();
+            $table->text('user_notes')->nullable();
+            $table->text('evaluator_notes')->nullable();
             $table->timestamps();
         });
     }

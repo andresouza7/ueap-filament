@@ -10,6 +10,7 @@ use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -52,6 +53,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable
                 $user,
                 $formData['year'],
                 $formData['month'],
+                $formData['user_notes'],
                 $file
             );
 
@@ -93,41 +95,30 @@ class FrequencySubmit extends Component implements HasForms, HasTable
                         ->native(false)
                         ->label('Mês')
                         ->options([
-                            'janeiro' => 'Janeiro',
-                            'fevereiro' => 'Fevereiro',
-                            'março' => 'Março',
-                            'abril' => 'Abril',
-                            'maio' => 'Maio',
-                            'junho' => 'Junho',
-                            'julho' => 'Julho',
-                            'agosto' => 'Agosto',
-                            'setembro' => 'Setembro',
-                            'outubro' => 'Outubro',
-                            'novembro' => 'Novembro',
-                            'dezembro' => 'Dezembro',
+                            1 => 'Janeiro',
+                            2 => 'Fevereiro',
+                            3 => 'Março',
+                            4 => 'Abril',
+                            5 => 'Maio',
+                            6 => 'Junho',
+                            7 => 'Julho',
+                            8 => 'Agosto',
+                            9 => 'Setembro',
+                            10 => 'Outubro',
+                            11 => 'Novembro',
+                            12 => 'Dezembro',
                         ]),
-                    // ->options([
-                    //     1 => 'Janeiro',
-                    //     2 => 'Fevereiro',
-                    //     3 => 'Março',
-                    //     4 => 'Abril',
-                    //     5 => 'Maio',
-                    //     6 => 'Junho',
-                    //     7 => 'Julho',
-                    //     8 => 'Agosto',
-                    //     9 => 'Setembro',
-                    //     10 => 'Outubro',
-                    //     11 => 'Novembro',
-                    //     12 => 'Dezembro',
-                    // ]),
                     TextInput::make('year')
                         ->required()
                         ->label('Ano'),
                     FileUpload::make('anexo'),
+
+                    Textarea::make('user_notes')
+                        ->label('Observações (opcional)'),
                     Actions::make([
                         Action::make('Enviar')
                             ->action('submit')
-                    ])
+                    ]),
                 ])
         ]);
     }
@@ -139,9 +130,6 @@ class FrequencySubmit extends Component implements HasForms, HasTable
             ->description('Acompanhe aqui as suas folhas encaminhadas')
             ->query(Ticket::query()->latest('id')->where('user_id', Auth::id()))
             ->columns([
-                TextColumn::make('user.person.name')
-                    ->label('Servidor')
-                    ->searchable(),
                 TextColumn::make('month')
                     ->label('Mês')
                     ->searchable(),
@@ -155,12 +143,14 @@ class FrequencySubmit extends Component implements HasForms, HasTable
                     ->label('Enviado em')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('evaluador.person.name')
+                TextColumn::make('evaluador.login')
                     ->label('Avaliador'),
                 TextColumn::make('evaluated_at')
                     ->label('Avaliado em')
                     ->date()
                     ->sortable(),
+                TextColumn::make('evaluator_notes')
+                    ->label('Justificativa'),
             ])
             ->actions([
                 TableAction::make('anexo')

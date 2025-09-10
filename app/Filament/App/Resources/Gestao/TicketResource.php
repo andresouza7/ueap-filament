@@ -8,10 +8,12 @@ use App\Models\Ticket;
 use App\Services\FolhaPontoService;
 use Filament\Forms;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -32,6 +34,7 @@ class TicketResource extends Resource
                 TextEntry::make('user.person.name'),
                 TextEntry::make('month'),
                 TextEntry::make('year'),
+                TextEntry::make('user_notes'),
             ]);
     }
 
@@ -93,7 +96,14 @@ class TicketResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pendente'   => 'Pendente',
+                        'aprovado'   => 'Aprovado',
+                        'rejeitado'  => 'Rejeitado',
+                    ])
+                    ->default('pendente') // exibe por padrão apenas os pendentes
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
@@ -104,10 +114,27 @@ class TicketResource extends Resource
                                 'aprovado' => 'Aprovado',
                                 'rejeitado' => 'Rejeitado',
                             ])
+                            ->live()
                             ->required(),
+                        Textarea::make('evaluator_notes')
+                            ->label('Justificativa')
+                            ->required(fn(Get $get) => $get('status') === 'rejeitado')
                     ])
                     ->action(function (array $data, $record, FolhaPontoService $ponto) {
-                        $ponto->evaluateTicket($record, $data['status']);
+                        try {
+                            $ponto->evaluateTicket($record, $data['status'], $data['evaluator_notes']);
+                            Notification::make()
+                                ->title('Folha de ponto aprovada')
+                                ->body("Seu ponto de {$record->month}/{$record->year} está ok!")
+                                ->sendToDatabase($record->user);
+                        } catch (\Throwable $th) {
+                            Notification::make()
+                                ->title('Erro ao avaliar')
+                                // ->body('Arquivo do Google Drive não encontrado.')
+                                ->body($th->getMessage())
+                                ->danger()
+                                ->send();
+                        }
                     })
                     ->visible(fn($record) => $record->status == 'pendente'),
                 // Tables\Actions\EditAction::make(),

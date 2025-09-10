@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['user_id', 'file_id','file_path', 'status', 'evaluador_id', 'evaluated_at', 'month', 'year'];
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'file_id','file_path', 'status', 'evaluador_id', 'evaluated_at', 'month', 'year', 'user_notes', 'evaluator_notes'];
 
     public function user()
     {
