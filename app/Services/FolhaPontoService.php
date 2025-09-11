@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 
 class FolhaPontoService
 {
@@ -162,7 +163,11 @@ class FolhaPontoService
         $ticket->evaluated_at = Date::now();
         $ticket->save();
 
-        $ticket->user->notify(new TicketEvaluatedNotification($ticket));
+        try {
+            $ticket->user->notify(new TicketEvaluatedNotification($ticket));
+        } catch (\Throwable $th) {
+            Log::warning("Falha ao notificar usuário {$ticket->user_id} sobre avaliação do ticket {$ticket->id}: " . $th->getMessage());
+        }
 
         return $ticket;
     }
