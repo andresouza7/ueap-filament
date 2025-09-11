@@ -46,7 +46,8 @@ class FrequencySubmit extends Component implements HasForms, HasTable
         $filePath = storage_path('app/public/' . $formData['anexo']);
         $file = new File($filePath);
 
-        $user = User::where('id', $formData['user_id'])->first();
+        // $user = User::where('id', $formData['user_id'])->first();
+        $user = Auth::user();
 
         try {
             $ponto->submitSheet(
@@ -86,10 +87,10 @@ class FrequencySubmit extends Component implements HasForms, HasTable
                 ->description('Preencha os dados, selecione o arquivo e envie. Após o envio, o RH irá avaliar a sua folha.')
                 ->statePath('data')
                 ->schema([
-                    Select::make('user_id')
-                        ->label('Usuário')
-                        ->options(fn() => User::orderBy('login')->pluck('login', 'id')->toArray())
-                        ->searchable(),
+                    // Select::make('user_id')
+                    //     ->label('Usuário')
+                    //     ->options(fn() => User::orderBy('login')->pluck('login', 'id')->toArray())
+                    //     ->searchable(),
                     Select::make('month')
                         ->required()
                         ->native(false)
