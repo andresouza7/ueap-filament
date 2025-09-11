@@ -25,6 +25,9 @@ class ControlePonto extends Page implements HasForms
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.app.pages.controle-ponto';
+    protected static ?string $title = 'Controle de Frequência';
+    protected static ?string $navigationGroup = 'Gestão';
+    protected static ?int $navigationSort = 9;
 
     public $year;
     public $search;
@@ -71,34 +74,34 @@ class ControlePonto extends Page implements HasForms
                         ->placeholder('Todos')
                         ->reactive(),
 
-                    Select::make('month')
-                        ->label('Mês')
-                        ->options([
-                            1 => 'Janeiro',
-                            2 => 'Fevereiro',
-                            3 => 'Março',
-                            4 => 'Abril',
-                            5 => 'Maio',
-                            6 => 'Junho',
-                            7 => 'Julho',
-                            8 => 'Agosto',
-                            9 => 'Setembro',
-                            10 => 'Outubro',
-                            11 => 'Novembro',
-                            12 => 'Dezembro',
-                        ])
-                        ->placeholder('Todos')
-                        ->reactive(),
+                    // Select::make('month')
+                    //     ->label('Mês')
+                    //     ->options([
+                    //         1 => 'Janeiro',
+                    //         2 => 'Fevereiro',
+                    //         3 => 'Março',
+                    //         4 => 'Abril',
+                    //         5 => 'Maio',
+                    //         6 => 'Junho',
+                    //         7 => 'Julho',
+                    //         8 => 'Agosto',
+                    //         9 => 'Setembro',
+                    //         10 => 'Outubro',
+                    //         11 => 'Novembro',
+                    //         12 => 'Dezembro',
+                    //     ])
+                    //     ->placeholder('Todos')
+                    //     ->reactive(),
 
-                    Select::make('status')
-                        ->label('Status da folha')
-                        ->options([
-                            'aprovado' => 'Aprovado',
-                            'pendente' => 'Pendente',
-                            'rejeitado' => 'Rejeitado',
-                        ])
-                        ->placeholder('Todos')
-                        ->reactive(),
+                    // Select::make('status')
+                    //     ->label('Status da folha')
+                    //     ->options([
+                    //         'aprovado' => 'Aprovado',
+                    //         'pendente' => 'Pendente',
+                    //         'rejeitado' => 'Rejeitado',
+                    //     ])
+                    //     ->placeholder('Todos')
+                    //     ->reactive(),
                 ]),
             ])
             ->statePath('');

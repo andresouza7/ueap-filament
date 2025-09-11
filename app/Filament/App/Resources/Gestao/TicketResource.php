@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
+    protected static ?string $modelLabel = 'Pontos Enviados';
     protected static ?string $navigationGroup = 'Gestão';
     protected static ?int $navigationSort = 8;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
