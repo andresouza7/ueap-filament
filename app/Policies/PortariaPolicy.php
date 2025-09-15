@@ -53,7 +53,7 @@ class PortariaPolicy
      */
     public function restore(User $user, Portaria $portaria): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class PortariaPolicy
      */
     public function forceDelete(User $user, Portaria $portaria): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 }

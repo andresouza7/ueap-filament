@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -52,7 +53,7 @@ class PortariaResource extends Resource
                     Forms\Components\DatePicker::make('created_at')
                         ->label('Data'),
                     Forms\Components\TextInput::make('origin')
-                        ->hidden(fn() => auth()->user()->hasRole('consu'))
+                        ->hidden(fn() => Auth::user()->hasRole('consu'))
                         ->label('Origem')
                         ->maxLength(255),
                     FileUpload::make('file')
@@ -127,12 +128,14 @@ class PortariaResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
@@ -160,5 +163,13 @@ class PortariaResource extends Resource
             // 'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
             'edit' => Pages\EditPortaria::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

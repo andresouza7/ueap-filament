@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Portaria extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HandlesFileUpload;
 
     protected $table = 'document_ordinances';
 
@@ -57,10 +58,5 @@ class Portaria extends Model
         static::addGlobalScope('description', function (Builder $builder) {
             $builder->whereNotNull('description');
         });
-    }
-
-    protected static function booted()
-    {
-        static::deleting(fn($model) => Storage::delete('documents/ordinances/' . $model->id . '.pdf'));
     }
 }

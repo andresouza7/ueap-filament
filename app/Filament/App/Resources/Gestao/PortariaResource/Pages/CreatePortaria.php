@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreatePortaria extends CreateRecord
 {
-    use HandlesFileUpload;
-    
     protected static string $resource = PortariaResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
@@ -27,7 +25,7 @@ class CreatePortaria extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $this->storeFileWithModelId($record, $data['file'], 'documents/ordinances');
+        $record->storeFileWithModelId($data['file'], 'documents/ordinances');
 
         return $record;
     }
