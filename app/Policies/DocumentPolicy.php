@@ -54,7 +54,7 @@ class DocumentPolicy
      */
     public function restore(User $user, Document $document): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 
     /**
@@ -62,6 +62,6 @@ class DocumentPolicy
      */
     public function forceDelete(User $user, Document $document): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 }

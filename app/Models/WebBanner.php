@@ -33,10 +33,10 @@ class WebBanner extends Model
         return Storage::exists($path) ? Storage::url($path) : null;
     }
 
-    protected static function booted()
-    {
-        static::deleting(fn($model) => Storage::delete('web/banners/' . $model->id . '.jpg'));
-    }
+    // protected static function booted()
+    // {
+    //     static::deleting(fn($model) => Storage::delete('web/banners/' . $model->id . '.jpg'));
+    // }
 
     public function banner_place()
     {

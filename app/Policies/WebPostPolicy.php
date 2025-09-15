@@ -53,7 +53,7 @@ class WebPostPolicy
      */
     public function restore(User $user, WebPost $webPost): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class WebPostPolicy
      */
     public function forceDelete(User $user, WebPost $webPost): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 }

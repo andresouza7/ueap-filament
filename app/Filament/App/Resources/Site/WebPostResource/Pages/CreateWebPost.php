@@ -12,8 +12,6 @@ use Illuminate\Support\Str;
 
 class CreateWebPost extends CreateRecord
 {
-    use HandlesFileUpload;
-
     protected static string $resource = WebPostResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
@@ -28,7 +26,7 @@ class CreateWebPost extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $this->storeFileWithModelId($record, $data['file'], 'web/posts');
+        $record->storeFileWithModelId($data['file'], 'web/posts');
 
         return $record;
     }

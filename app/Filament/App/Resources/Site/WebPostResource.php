@@ -95,7 +95,7 @@ class WebPostResource extends Resource
                                 'published' => 'Publicado',
                                 'unpublished' => 'Despublicado'
                             ]),
-                        
+
                         Forms\Components\Toggle::make('featured')
                             ->label('Destaque')
                             ->required(),
@@ -127,7 +127,7 @@ class WebPostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->defaultSort('id', 'desc')
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('image_url')
                     ->label('#'),
@@ -174,6 +174,8 @@ class WebPostResource extends Resource
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->image_url)
                     ->openUrlInNewTab()

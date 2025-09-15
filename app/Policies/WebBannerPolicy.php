@@ -53,7 +53,7 @@ class WebBannerPolicy
      */
     public function restore(User $user, WebBanner $webBanner): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class WebBannerPolicy
      */
     public function forceDelete(User $user, WebBanner $webBanner): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 }

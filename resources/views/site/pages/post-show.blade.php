@@ -29,8 +29,8 @@
 
 
         <div id="texto" class='p-2'>
-            @if (file_exists(public_path('storage/web/posts/' . $post->id . '.jpg')))
-                <img src="{{ asset('storage/web/posts/' . $post->id . '.jpg') }}" class="img-fluid" alt="{{ $post->image_subtitle }}">
+            @if ($post->image_url)
+                <img src="{{ $post->image_url }}" class="img-fluid" alt="{{ $post->image_subtitle }}">
 
                 @if ($post->image_subtitle)
                     <div id="data_noticia">{{ $post->image_subtitle }} </div>

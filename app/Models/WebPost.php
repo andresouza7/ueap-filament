@@ -30,6 +30,13 @@ class WebPost extends Model
 
     protected $appends = ['image_url'];
 
+    public function getImageUrlAttribute()
+    {
+        $path = 'web/posts/' . $this->id . '.jpg';
+
+        return Storage::exists($path) ? Storage::url($path) : null;
+    }
+
     public function category()
     {
         return $this->belongsTo(WebCategory::class, 'web_category_id');
@@ -50,12 +57,5 @@ class WebPost extends Model
         $query
             ->where('title', 'ilike', "%$value%")
             ->orWhere('text', 'ilike', "%$value%");
-    }
-
-    public function getImageUrlAttribute()
-    {
-        $path = 'web/posts/' . $this->id . '.jpg';
-
-        return Storage::exists($path) ? Storage::url($path) : null;
     }
 }

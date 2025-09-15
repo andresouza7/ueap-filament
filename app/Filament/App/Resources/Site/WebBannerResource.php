@@ -94,10 +94,12 @@ class WebBannerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->image_url)
                     ->openUrlInNewTab()
@@ -124,5 +126,13 @@ class WebBannerResource extends Resource
             'create' => Pages\CreateWebBanner::route('/create'),
             'edit' => Pages\EditWebBanner::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
