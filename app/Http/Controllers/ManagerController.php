@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CalendarOccurrence;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManagerController extends Controller
 {
@@ -52,5 +53,12 @@ class ManagerController extends Controller
         $filename = "fp_" . $month . "_{$year}_{$firstName}_{$lastName}";
 
         return view('manager.frequency-print', compact('user', 'month', 'year', 'type', 'occurrences', 'occurrences_user', 'filename'));
+    }
+
+    public function completeTutorial(Request $request) {
+        $user = $request->user();
+
+        $user->skip_tutorial = true;
+        $user->save();
     }
 }

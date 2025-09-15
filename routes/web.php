@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
+Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
+
 Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
@@ -54,7 +56,7 @@ Route::domain(env('INTRANET_URL'))->group(function () {
 });
 
 Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function () {
-//Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
+    //Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
     Route::get('/',                     [TransparencyController::class, 'home'])->name('home');
     Route::get('/navigation/{type}',    [TransparencyController::class, 'navigation'])->name('navigation');
 

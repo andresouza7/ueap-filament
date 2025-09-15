@@ -3,8 +3,12 @@
 namespace App\Providers;
 
 use BezhanSalleh\PanelSwitch\PanelSwitch;
+use Filament\Facades\Filament;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +27,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-        
+
+        Filament::serving(function () {
+            $user = Auth::user();
+
+            if ($user && ! $user->skip_tutorial && request()->routeIs('filament.app.pages.dashboard')) {
+                FilamentAsset::register([
+                    Js::make('tutorial-script', Vite::asset('resources/js/tutorial.js'))->module(),
+                ]);
+            }
+        });
+
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
                 ->visible(fn(): bool => Auth::user()?->hasRole('dinfo'))

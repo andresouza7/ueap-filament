@@ -14,7 +14,7 @@
 
             {{-- Direita (1/3) --}}
             <div class="md:col-span-3">
-                @livewire(\App\Filament\App\Widgets\OcorrenciasPonto::class)
+                <div id="ocorrencia-ponto">@livewire(\App\Filament\App\Widgets\OcorrenciasPonto::class)</div>
             </div>
         </div>
     </div>
