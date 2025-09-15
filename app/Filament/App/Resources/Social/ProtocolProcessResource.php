@@ -53,8 +53,8 @@ class ProtocolProcessResource extends Resource
                 ->schema([
                     TextEntry::make('person.name')
                         ->label('Nome'),
-                    TextEntry::make('person.cpf_cnpj')
-                        ->label('CPF')
+                    // TextEntry::make('person.cpf_cnpj')
+                    //     ->label('CPF')
                 ]),
 
         ]);

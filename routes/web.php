@@ -47,7 +47,12 @@ Route::name('novosite.')->prefix('/novo')->group(function () {
     });
 });
 
-Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
+Route::domain(env('INTRANET_URL'))->group(function () {
+    return redirect()->route('filament.app.pages.dashboard');
+});
+
+Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function () {
+// Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
     Route::get('/',                     [TransparencyController::class, 'home'])->name('home');
     Route::get('/navigation/{type}',    [TransparencyController::class, 'navigation'])->name('navigation');
 
