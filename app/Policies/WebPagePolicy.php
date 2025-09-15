@@ -21,7 +21,7 @@ class WebPagePolicy
      */
     public function view(User $user, WebPage $webPage): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');;
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
@@ -29,7 +29,7 @@ class WebPagePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');;
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
@@ -37,7 +37,7 @@ class WebPagePolicy
      */
     public function update(User $user, WebPage $webPage): bool
     {
-        return $user->hasAnyRole('ascom|dinfo');;
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
@@ -45,7 +45,7 @@ class WebPagePolicy
      */
     public function delete(User $user, WebPage $webPage): bool
     {
-        return $user->hasAnyRole('dinfo');;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**
@@ -53,7 +53,7 @@ class WebPagePolicy
      */
     public function restore(User $user, WebPage $webPage): bool
     {
-        return $user->hasAnyRole('dinfo');;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class WebPagePolicy
      */
     public function forceDelete(User $user, WebPage $webPage): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 }

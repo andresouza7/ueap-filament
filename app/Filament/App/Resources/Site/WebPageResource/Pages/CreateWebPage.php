@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Site\WebPageResource\Pages;
 use App\Filament\App\Resources\Site\WebPageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,15 @@ class CreateWebPage extends CreateRecord
         $data['uuid'] = Str::uuid();
 
         return $data;
+    }
+
+    protected function handleRecordCreation(array $data): Model
+    {
+        $record = static::getModel()::create($data);
+
+        $record->storeFileWithModelId($data['file'], 'web/pages');
+
+        return $record;
     }
 
     protected function getRedirectUrl(): string

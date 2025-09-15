@@ -12,6 +12,7 @@ use App\Models\WebMenuItem;
 use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
@@ -67,11 +68,13 @@ class WebPageResource extends Resource
                         ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
                         ->disableToolbarButtons(['attachFiles'])
                         ->columnSpanFull(),
-                    SpatieMediaLibraryFileUpload::make('file')
-                        ->columnSpanFull()
-                        ->label('Imagem')
-                        ->image()
-                        ->previewable(false),
+                    FileUpload::make('file')
+                        ->label('Arquivo JPG')
+                        ->directory('web/pages')
+                        ->acceptedFileTypes(['image/jpeg'])
+                        ->previewable(false)
+                        ->maxFiles(1)
+                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
                     Forms\Components\Select::make('web_menu_id')
                         ->hiddenOn('create')
                         ->label('Exibir menu nesta página?')
@@ -176,6 +179,8 @@ class WebPageResource extends Resource
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
+use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class WebPost extends Model implements HasMedia
+class WebPost extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, HandlesFileUpload;
 
     protected $fillable = [
         'uuid',

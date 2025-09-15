@@ -6,6 +6,7 @@ use App\Actions\HandlesFileUpload;
 use App\Filament\App\Resources\Site\WebBannerResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CreateWebBanner extends CreateRecord
@@ -19,7 +20,7 @@ class CreateWebBanner extends CreateRecord
         $data['uuid'] = Str::uuid();
         $data['description'] = '';
         $data['hits'] = 0;
-        $data['user_created_id'] = auth()->id();
+        $data['user_created_id'] = Auth::id();
 
         return $data;
     }
@@ -28,7 +29,7 @@ class CreateWebBanner extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($record, $data['file'], 'web/banners');
+        $record->storeFileWithModelId($data['file'], 'web/banners');
 
         return $record;
     }
