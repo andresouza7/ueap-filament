@@ -32,10 +32,7 @@ class QuadroDespesaResource extends Resource
         return $form
             ->schema([
                 Section::make([
-
-
                     Split::make([
-
                         Forms\Components\TextInput::make('month')
                             ->label('Mês')
                             ->required()

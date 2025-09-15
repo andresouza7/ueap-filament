@@ -31,9 +31,4 @@ class Orcamento extends Model
 
         return Storage::exists($path) ? Storage::url($path) : null;
     }
-
-    protected static function booted()
-    {
-        static::deleting(fn($model) => Storage::delete('documents/orcamento/' . $model->id . '.pdf'));
-    }
 }

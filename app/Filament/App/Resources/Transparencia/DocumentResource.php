@@ -5,12 +5,8 @@ namespace App\Filament\App\Resources\Transparencia;
 use App\Filament\App\Resources\Transparencia\DocumentResource\Pages;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers\DocumentsRelationManager;
 use App\Models\DocumentCategory;
-use Filament\Forms;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -33,7 +29,7 @@ class DocumentResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasDocumentCategory('transparency');
+        return Auth::user()->hasDocumentCategory('transparency');
     }
 
     public static function form(Form $form): Form

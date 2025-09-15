@@ -24,7 +24,7 @@ class CreateQuadroDespesa extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($record, $data['file'], 'documents/orcamento');
+        $record->storeFileWithModelId($data['file'], 'documents/orcamento');
 
         return $record;
     }

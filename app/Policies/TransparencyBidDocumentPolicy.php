@@ -53,7 +53,7 @@ class TransparencyBidDocumentPolicy
      */
     public function restore(User $user, TransparencyBidDocument $transparencyBidDocument): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class TransparencyBidDocumentPolicy
      */
     public function forceDelete(User $user, TransparencyBidDocument $transparencyBidDocument): bool
     {
-        return false;
+        return $user->hasAnyRole('dinfo');
     }
 }

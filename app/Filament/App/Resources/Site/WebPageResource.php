@@ -3,28 +3,20 @@
 namespace App\Filament\App\Resources\Site;
 
 use App\Filament\App\Resources\Site\WebPageResource\Pages;
-use App\Filament\App\Resources\Site\WebPageResource\Pages\EditWebPage;
-use App\Filament\App\Resources\Site\WebPageResource\Pages\ViewWebPage;
-use App\Filament\App\Resources\Site\WebPageResource\RelationManagers;
 use App\Filament\App\Resources\Site\WebPageResource\RelationManagers\MenuItemsRelationManager;
 use App\Models\WebMenu;
-use App\Models\WebMenuItem;
 use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
-use Filament\Pages\SubNavigationPosition;
-use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 

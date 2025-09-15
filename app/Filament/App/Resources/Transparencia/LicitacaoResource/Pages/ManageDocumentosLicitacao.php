@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ManageDocumentosLicitacao extends ManageRelatedRecords
 {
@@ -53,7 +54,7 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                     ->label('Autor'),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->label('Publicar Anexo')
@@ -62,20 +63,22 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                     ->form($this->getFormSection())
                     ->mutateFormDataUsing(function (array $data) {
                         $data['uuid'] = Str::uuid();
-                        $data['user_created_id'] = auth()->id();
+                        $data['user_created_id'] = Auth::id();
                         $data['hits'] = 0;
                         $data['transparency_bid_id'] = $this->getOwnerRecord()->id;
 
                         return $data;
                     })
                     ->after(function (Model $record, array $data) {
-                        $record->storeFileWithModelId($record, $data['file'], 'documents/bids');
+                        $record->storeFileWithModelId($data['file'], 'documents/bids');
                     }),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
@@ -105,5 +108,13 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
                 ->maxFiles(1)
                 ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

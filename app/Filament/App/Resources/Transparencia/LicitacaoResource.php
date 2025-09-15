@@ -75,8 +75,6 @@ class LicitacaoResource extends Resource
             ->columns(1)
             ->schema([
                 Forms\Components\Section::make([
-
-
                     Forms\Components\Split::make([
                         Forms\Components\TextInput::make('number')
                             ->label('Número')

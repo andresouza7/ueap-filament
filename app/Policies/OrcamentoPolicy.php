@@ -53,7 +53,7 @@ class OrcamentoPolicy
      */
     public function restore(User $user, Orcamento $orcamento): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 
     /**
@@ -61,6 +61,6 @@ class OrcamentoPolicy
      */
     public function forceDelete(User $user, Orcamento $orcamento): bool
     {
-        return false;
+        return $user->hasRole('dinfo');
     }
 }

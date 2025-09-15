@@ -18,11 +18,10 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentsRelationManager extends RelationManager
 {
-    use HandlesFileUpload;
-
     protected static string $relationship = 'documents';
 
     public function form(Form $form): Form
@@ -75,26 +74,29 @@ class DocumentsRelationManager extends RelationManager
                     ->dateTime('d/m/Y H:i'),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->label('Criar Documento')
                     ->mutateFormDataUsing(function (array $data) {
-                        $data['user_created_id'] = auth()->id();
+                        $data['user_created_id'] = Auth::id();
                         $data['uuid'] = Str::uuid();
                         $data['type'] = $this->getOwnerRecord()->slug;
                         $data['status'] = 'published';
 
                         return $data;
                     })
-                    ->after(fn (Model $record, array $data) =>
-                        $record->storeFileWithModelId($record, $data['file'], 'documents/general')
+                    ->after(
+                        fn(Model $record, array $data) =>
+                        $record->storeFileWithModelId($data['file'], 'documents/general')
                     ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
@@ -104,6 +106,14 @@ class DocumentsRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 }

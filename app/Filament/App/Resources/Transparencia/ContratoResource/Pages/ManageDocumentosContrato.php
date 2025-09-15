@@ -53,7 +53,7 @@ class ManageDocumentosContrato extends ManageRelatedRecords
                     ->label('Autor'),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->label('Publicar Anexo')
@@ -69,13 +69,15 @@ class ManageDocumentosContrato extends ManageRelatedRecords
                         return $data;
                     })
                     ->after(function (Model $record, array $data) {
-                        $record->storeFileWithModelId($record, $data['file'], 'documents/bids');
+                        $record->storeFileWithModelId($data['file'], 'documents/bids');
                     }),
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
                 Tables\Actions\Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
@@ -105,5 +107,13 @@ class ManageDocumentosContrato extends ManageRelatedRecords
                 ->maxFiles(1)
                 ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

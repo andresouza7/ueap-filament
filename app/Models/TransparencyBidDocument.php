@@ -44,11 +44,6 @@ class TransparencyBidDocument extends Model
         return Storage::exists($path) ? Storage::url($path) : null;
     }
 
-    protected static function booted()
-    {
-        static::deleting(fn($model) => Storage::delete('documents/bids/' . $model->id . '.pdf'));
-    }
-
     public function bid(): BelongsTo
     {
         return $this->belongsTo(TransparencyBid::class, 'transparency_bid_id');

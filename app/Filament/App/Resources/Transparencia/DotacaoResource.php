@@ -3,12 +3,10 @@
 namespace App\Filament\App\Resources\Transparencia;
 
 use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages;
-use App\Filament\App\Resources\Transparencia\DotacaoResource\RelationManagers;
 use App\Models\Orcamento;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -32,10 +30,7 @@ class DotacaoResource extends Resource
         return $form
             ->schema([
                 Section::make([
-
-
                     Split::make([
-
                         Forms\Components\TextInput::make('month')
                             ->label('Mês')
                             ->required()
@@ -68,7 +63,7 @@ class DotacaoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'dotacao'))
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'dotacao')->orderBy('year', 'desc')->orderBy('month', 'desc'))
             ->columns([
                 Tables\Columns\TextColumn::make('year')
                     ->label('Ano')

@@ -6,6 +6,7 @@ use App\Filament\App\Resources\Transparencia\DotacaoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CreateDotacao extends CreateRecord
@@ -16,6 +17,9 @@ class CreateDotacao extends CreateRecord
     {
         $data['uuid'] = Str::uuid();
         $data['type'] = 'dotacao';
+        $data['status'] = 'active';
+        $data['hits'] = 0;
+        $data['user_created_id'] = Auth::id();
 
         return $data;
     }
@@ -24,7 +28,7 @@ class CreateDotacao extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($record, $data['file'], 'documents/orcamento');
+        $record->storeFileWithModelId($data['file'], 'documents/orcamento');
 
         return $record;
     }
