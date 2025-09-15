@@ -15,7 +15,7 @@ Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
 
-Route::name('site.')->group(function () {
+Route::domain(env('SITE_URL'))->name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
     Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
     Route::get('/postagem/{slug}',          [OldPageController::class, 'postShow'])->name('post.show');
@@ -48,11 +48,13 @@ Route::name('novosite.')->prefix('/novo')->group(function () {
 });
 
 Route::domain(env('INTRANET_URL'))->group(function () {
-    return redirect()->route('filament.app.pages.dashboard');
+    Route::get('/', function () {
+        return redirect()->route('filament.app.pages.dashboard');
+    });
 });
 
 Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function () {
-// Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
+//Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
     Route::get('/',                     [TransparencyController::class, 'home'])->name('home');
     Route::get('/navigation/{type}',    [TransparencyController::class, 'navigation'])->name('navigation');
 
