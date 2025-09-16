@@ -21,7 +21,7 @@ class CreateUser extends CreateRecord
     {
         return DB::transaction(function () use ($data) {
             // create new person
-            $new_person_id = Person::latest('id')->first()->id + 1;
+            $new_person_id = Person::withTrashed()->latest('id')->first()->id + 1;
 
             $person_data = $this->data['person'];
             $person_data['id'] = $new_person_id;
@@ -29,7 +29,7 @@ class CreateUser extends CreateRecord
             $person = Person::create($person_data);
 
             // create user and attach person
-            $new_user_id = User::latest('id')->first()->id + 1;
+            $new_user_id = User::withTrashed()->latest('id')->first()->id + 1;
             $data['id'] = $new_user_id;
             $data['uuid'] = Str::uuid();
             $data['person_id'] = $person->id;

@@ -94,7 +94,7 @@ class PortariaResource extends Resource
                 return $query->orderBy('year', 'DESC')->orderBy('number', 'DESC');
             })
             ->columns([
-                Tables\Columns\TextColumn::make('id')->searchable(),
+                // Tables\Columns\TextColumn::make('id')->searchable(),
                 Tables\Columns\TextColumn::make('number')
                     ->label('Nº')
                     ->numeric()

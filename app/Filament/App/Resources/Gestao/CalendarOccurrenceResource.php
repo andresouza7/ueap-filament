@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Carbon;
 
+// TIPOS DE OCORRENCIA:
+// type 1 = ocorrencia geral cadastrada pela urh
+// type 2 = afastamento de usuario cadastrado pela urh (ferias, licenca, ect)
+// type 3 = ocorrencia geral cadastrada pelo usuario
+
 class CalendarOccurrenceResource extends Resource
 {
     protected static ?string $model = CalendarOccurrence::class;

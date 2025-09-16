@@ -15,7 +15,7 @@ class CreateSocialPost extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $new_id = SocialPost::latest('id')->first()->id + 2;
+        $new_id = SocialPost::withTrashed()->latest('id')->first()->id + 1;
 
         $data['id'] = $new_id;
         $data['uuid'] = Str::uuid();

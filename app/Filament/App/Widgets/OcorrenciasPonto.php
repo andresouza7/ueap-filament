@@ -14,7 +14,7 @@ class OcorrenciasPonto extends BaseWidget
 
     public function table(Table $table): Table
     {
-        $today = now()->toDateString();
+        $today = now();
 
         return $table
             ->heading('Ocorrências de ponto')
@@ -22,8 +22,8 @@ class OcorrenciasPonto extends BaseWidget
             ->query(
                 CalendarOccurrence::query()
                     ->where('type', 1)
-                    ->whereDate('start_date', '<=', $today)
-                    ->whereDate('end_date', '>=', $today)
+                    ->whereMonth('start_date', date('m'))
+                    ->whereYear('start_date', date('Y'))
             )
             ->columns([
                 Split::make([
