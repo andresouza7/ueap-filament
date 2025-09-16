@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Illuminate\Validation\ValidationException;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use Filament\Forms\Components\Component;
 use Filament\Forms\Form;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -32,6 +33,16 @@ class Login extends BaseLogin
                 $this->getPasswordFormComponent(),
                 $this->getRememberFormComponent()
             ]);
+    }
+
+    public function getPasswordFormComponent(): Component
+    {
+        return TextInput::make('password')
+            ->label('Senha')
+            ->password()
+            ->revealable(filament()->arePasswordsRevealable())
+            ->required()
+            ->extraInputAttributes(['tabindex' => 2]);
     }
 
     public function authenticate(): ?LoginResponse
