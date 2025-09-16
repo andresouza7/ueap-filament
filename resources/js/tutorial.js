@@ -26,12 +26,24 @@ document.addEventListener("DOMContentLoaded", () => {
             {
                 popover: {
                     title: 'Olá Servidor(a)!',
-                    description: 'A Intranet foi atualizada para oferecer melhor usabilidade e maior segurança, utilizando tecnologias mais modernas. Muitas funcionalidades e o layout permanecem familiares, facilitando sua adaptação. Acompanhe este tour se precisar de orientação.'
+                    description: `
+                    A Intranet mudou. A nova versão oferece mais usabilidade, segurança e compatibilidade com tecnologias modernas, mantendo o layout familiar para facilitar sua adaptação. 
+                    <br><br>
+                    Novidades:
+                    <ul>
+                        <li>✅ Framework atualizado com foco em desempenho e segurança.</li>
+                        <li>✅ Layout mais intuitivo, com ordenação e filtros aprimorados.</li>
+                        <li>✅ Novo tema escuro, ajudando a reduzir o cansaço visual.</li>
+                        <li>✅ Melhor responsividade em dispositivos móveis.</li>
+                        <li>✅ Maior aderência a boas práticas, facilitando futuras melhorias.</li>
+                    </ul>
+                    Acompanhe este tour para explorar e conhecer as principais seções.
+                `
                 }
             },
             {
                 element: ".fi-sidebar",
-                popover: { title: "Sidebar", description: "Aqui está a barra lateral do painel, que permite acessar as seções principais." }
+                popover: { title: "Menu Lateral", description: "Aqui está a barra lateral do painel, que permite acessar as seções principais." }
             },
             {
                 element: ".fi-sidebar-group:nth-child(2)",
@@ -40,6 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
             {
                 element: ".fi-sidebar-group:nth-child(3)",
                 popover: { title: "Social", description: "Consulte dados institucionais, informativos, benefícios, saúde e bem-estar." }
+            },
+            {
+                element: ".fi-sidebar-group:nth-last-child(1)",
+                popover: {
+                    title: "Protocolo Digital",
+                    description: "Consulte aqui o histórico de processos físicos anteriores ao PRODOC."
+                }
+            },
+            {
+                element: ".fi-sidebar",
+                popover: {
+                    title: "Gestão e Transparência",
+                    description: "Usuários com permissão também tem acesso neste menu a gestão de documentos, recursos, transparência e site institucional."
+                }
             },
             {
                 element: ".fi-ta-record",
@@ -55,16 +81,24 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 element: ".fi-avatar",
-                popover: { title: "Perfil", description: "Acesse opções de alteração de perfil, tema claro e escuro ou efetue logout." }
+                popover: { title: "Perfil", description: "Acesse opções de alteração de perfil, troca de tema ou efetue logout." }
             },
             {
-                popover: { title: "Suporte e Sugestões", description: "Para dúvidas, relato de erros ou sugestões de melhoria, abra um chamado no Service Desk da UEAP." }
+                popover: {
+                    title: "Suporte e Sugestões",
+                    description: `
+                        Para dúvidas sobre o uso do sistema ou procedimentos institucionais, entre em contato com a DINFO pelo e-mail 
+                        <a href="mailto:dinfo@ueap.edu.br" class="text-blue-600 underline">dinfo@ueap.edu.br</a>.<br><br>
+                        Para suporte, sugestões de melhorias ou novas funcionalidades, faça um chamado pelo Service Desk: 
+                        <a href="servicedesk@ueap.edu.br" class="text-blue-600 underline">servicedesk@ueap.edu.br</a>.<br><br>
+                        Estamos à disposição para atendê-los!
+                    `
+                }
             }
+
         ]
     });
 
     window.driver = driverObj;
-
-    // Inicia o tour apenas na dashboard
-    if (window.location.pathname === '/app') driverObj.drive();
+    driverObj.drive();
 });
