@@ -72,10 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 popover: { title: "Postagens", description: "Seção destinada à comunicação institucional. Clique no link de postagens na seção social para criar uma publicação." }
             },
             {
-                element: ".fi-input",
-                popover: { title: "Caixa de Pesquisa", description: "Use esta caixa para filtrar publicações." }
-            },
-            {
                 element: "#ocorrencia-ponto",
                 popover: { title: "Ocorrências de Ponto", description: "Visualize feriados, alterações e registros de ponto." }
             },
