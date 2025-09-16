@@ -32,22 +32,22 @@ Route::domain(env('SITE_URL'))->name('site.')->group(function () {
     });
 });
 
-Route::name('novosite.')->prefix('/novo')->group(function () {
-    Route::get('/',                         [PageController::class, 'home'])->name('home');
-    Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
-    Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
-    Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
-    Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
-    Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
+// Route::name('novosite.')->prefix('/novo')->group(function () {
+//     Route::get('/',                         [PageController::class, 'home'])->name('home');
+//     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
+//     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
+//     Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
+//     Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
+//     Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
 
-    Route::name('document.')->group(function () {
-        Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
-        Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
-        Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-        //     Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
-        //     Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
-    });
-});
+//     Route::name('document.')->group(function () {
+//         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
+//         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
+//         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
+//             Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
+//             Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
+//     });
+// });
 
 Route::domain(env('INTRANET_URL'))->group(function () {
     Route::get('/', function () {
