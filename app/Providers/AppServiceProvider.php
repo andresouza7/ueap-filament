@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Facades\Filament;
+use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Pagination\Paginator;
@@ -33,7 +34,9 @@ class AppServiceProvider extends ServiceProvider
 
             if ($user && ! $user->skip_tutorial && request()->routeIs('filament.app.pages.dashboard')) {
                 FilamentAsset::register([
-                    Js::make('tutorial-script', Vite::asset('resources/js/tutorial.js'))->module(),
+                    // Js::make('tutorial-script', Vite::asset('resources/js/tutorial.js'))->module(),
+                    Js::make('tutorial-script', asset('build/assets/tutorial-BlB2ZsHc.js'))->module(),
+                    Css::make('tutorial-script', asset('build/assets/tutorial-BmhU-YmB.css')),
                 ]);
             }
         });
