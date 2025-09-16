@@ -1,6 +1,12 @@
-<x-filament::button style="margin-top: -12px;" color="gray">
+<x-filament::button 
+    tag="a" 
+    href="{{ url('auth/google') }}" 
+    style="margin-top: -12px;" 
+    color="gray"
+>
     Entrar com Email Institucional
 </x-filament::button>
+
 
 <div class="relative my-1">
     <div class="flex justify-start text-sm text-gray-100">

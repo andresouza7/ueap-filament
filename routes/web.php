@@ -3,23 +3,25 @@
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 
+// Intercepta o subdominio intranet.ueap.edu.br e roteia para o painel /app do filament
 Route::domain(env('INTRANET_URL'))->group(function () {
     Route::get('/', function () {
         return redirect()->route('filament.app.pages.dashboard');
     });
 });
 
+// Intercepta o subdominio transparencia.ueap.edu.br e roteia para as rotas a seguir
 Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function () {
     //Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
     Route::get('/',                     [TransparencyController::class, 'home'])->name('home');
     Route::get('/navigation/{type}',    [TransparencyController::class, 'navigation'])->name('navigation');
-
 
     Route::get('/documentos/{slug}',    [TransparencyController::class, 'documentList'])->name('document.list');
 
@@ -55,17 +57,20 @@ Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function ()
     Route::get('/auditoria',        [TransparencyController::class, 'audit'])->name('audit.list');
 });
 
+// ===== Daqui para baixo Intercepta todas as requisições que não caírem nos subdomínios =====
 
+// Rota para impressão da folha de ponto na view blade, não renderizado pelo filament
 Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
 
+// Marca o tutorial de boas vindas da intranet como completo
 Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
 
+// Redirecionamento para login no painel app do filament. necesário definir essa rota pois há mais de um painel
 Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');
 })->name('login');
 
-Route::get('/teste')->name('site.home');
-
+// Rotas do site institucional
 Route::name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
     Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
@@ -80,6 +85,10 @@ Route::name('site.')->group(function () {
         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
     });
 });
+
+// Rotas de call back da autenticação OAuth2
+Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
+Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
 
 // Route::name('novosite.')->prefix('/novo')->group(function () {
 //     Route::get('/',                         [PageController::class, 'home'])->name('home');
