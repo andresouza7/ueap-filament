@@ -50,7 +50,7 @@
                                             <td>
                                                 @if (file_exists(public_path('storage/documents/orcamento/' . $order->id . '.pdf')))
                                                     <a target='blank'
-                                                        href='{{ env('SITE_URL') }}/storage/documents/orcamento/{{ $order->id }}.pdf'><i
+                                                        href='{{ env('TRANSPARENCY_URL') }}/storage/documents/orcamento/{{ $order->id }}.pdf'><i
                                                             class='fa fa-download'></i> Baixar</a>
                                                 @else
                                                     <span> - </span>
