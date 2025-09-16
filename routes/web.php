@@ -9,46 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
-
-Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
-
-Route::get('/login', function () {
-    return redirect()->route('filament.app.auth.login');
-})->name('login');
-
-Route::name('site.')->group(function () {
-    Route::get('/',                         [OldPageController::class, 'home'])->name('home');
-    Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
-    Route::get('/postagem/{slug}',          [OldPageController::class, 'postShow'])->name('post.show');
-    Route::get('/pagina/{slug}',            [OldPageController::class, 'pageShow'])->name('page.show');
-    Route::get('/documentos/{slug}',        [OldPageController::class, 'documentList'])->name('document.list');
-    Route::get('/instrucoes_normativas/{slug?}', [OldPageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
-
-    Route::name('document.')->group(function () {
-        Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
-        Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
-        Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-    });
-});
-
-// Route::name('novosite.')->prefix('/novo')->group(function () {
-//     Route::get('/',                         [PageController::class, 'home'])->name('home');
-//     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
-//     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
-//     Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
-//     Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
-//     Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
-
-//     Route::name('document.')->group(function () {
-//         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
-//         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
-//         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-//             Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
-//             Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
-//     });
-// });
-
 Route::domain(env('INTRANET_URL'))->group(function () {
     Route::get('/', function () {
         return redirect()->route('filament.app.pages.dashboard');
@@ -94,3 +54,47 @@ Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function ()
 
     Route::get('/auditoria',        [TransparencyController::class, 'audit'])->name('audit.list');
 });
+
+
+Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
+
+Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
+
+Route::get('/login', function () {
+    return redirect()->route('filament.app.auth.login');
+})->name('login');
+
+Route::get('/teste')->name('site.home');
+
+Route::name('site.')->group(function () {
+    Route::get('/',                         [OldPageController::class, 'home'])->name('home');
+    Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
+    Route::get('/postagem/{slug}',          [OldPageController::class, 'postShow'])->name('post.show');
+    Route::get('/pagina/{slug}',            [OldPageController::class, 'pageShow'])->name('page.show');
+    Route::get('/documentos/{slug}',        [OldPageController::class, 'documentList'])->name('document.list');
+    Route::get('/instrucoes_normativas/{slug?}', [OldPageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
+
+    Route::name('document.')->group(function () {
+        Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
+        Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
+        Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
+    });
+});
+
+// Route::name('novosite.')->prefix('/novo')->group(function () {
+//     Route::get('/',                         [PageController::class, 'home'])->name('home');
+//     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
+//     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
+//     Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
+//     Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
+//     Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
+
+//     Route::name('document.')->group(function () {
+//         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
+//         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
+//         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
+//             Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
+//             Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
+//     });
+// });
+
