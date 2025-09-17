@@ -1,6 +1,7 @@
 <?php
 
 use Filament\Panel;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
 
 function clean_text($text)
@@ -20,6 +21,9 @@ function styleFilamentPanel(Panel $panel): Panel
     return $panel->font('Karla')
         ->colors([
             'primary' => Color::Teal,
+        ])
+        ->assets([
+            Css::make('filament-stylesheet', resource_path('css/filament.css'))
         ]);
 }
 

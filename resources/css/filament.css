@@ -1,0 +1,30 @@
+.fi-icon-btn-icon {
+    /* stroke: white; */
+    stroke-width: 2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.dark .fi-sidebar-header,
+.dark .fi-topbar nav {
+    background-color: #23293c !important;
+}
+
+.dark .fi-sidebar-nav {
+    background-color: #161d31 !important;
+}
+
+.dark .fi-ta-ctn,
+.dark .fi-tabs:not(.fi-fo-tabs .fi-tabs),
+.dark .fi-fo-tabs,
+.dark .fi-section,
+.dark .fi-simple-main,
+.dark .fi-ta-record:not([class*="rounded-xl"]) {
+    background-color: #161d31 !important;
+}
+
+:is(.dark .fi-body) {
+    background-color: #20263a !important;
+}
