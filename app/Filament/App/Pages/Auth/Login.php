@@ -21,6 +21,11 @@ class Login extends BaseLogin
         return 'Login Intranet';
     }
 
+     public function hasLogo(): bool
+    {
+        return false;
+    }
+
     public function form(Form $form): Form
     {
         return $form

@@ -7,7 +7,6 @@
     Entrar com Email Institucional
 </x-filament::button>
 
-
 <div class="relative my-1">
     <div class="flex justify-start text-sm text-gray-100">
         Precisa de ajuda?

@@ -57,6 +57,11 @@ class AppPanelProvider extends PanelProvider
                 // Pages\Dashboard::class,
             ])
             ->renderHook(
+                'panels::auth.login.form.before',
+                fn(): string => Blade::render('<div class="flex justify-center mb-6"><img src="{{ asset("img/logo-white.png") }}" class="h-16 w-auto" /></div>')
+            )
+
+            ->renderHook(
                 'panels::auth.login.form.after',
                 fn(): View => view('filament.app.pages.login')
             )
