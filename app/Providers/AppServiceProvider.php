@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             if ($user && ! $user->skip_tutorial && request()->routeIs('filament.app.pages.dashboard')) {
                 FilamentAsset::register([
                     // Js::make('tutorial-script', Vite::asset('resources/js/tutorial.js'))->module(),
-                    Js::make('tutorial-script', asset('build/assets/tutorial-DWK70cGC.js'))->module(),
+                    Js::make('tutorial-script', asset('build/assets/tutorial-BXecf3-O.js'))->module(),
                     Css::make('tutorial-script', asset('build/assets/tutorial-BmhU-YmB.css')),
                 ]);
             }

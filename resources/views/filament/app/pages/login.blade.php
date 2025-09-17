@@ -25,7 +25,7 @@
         padding: 0;
         min-height: 100vh;
         min-height: 100dvh;
-        background: url('/img/bg-login.jpg') no-repeat center center fixed;
+        background: url('/img/bg-login2.jpg') no-repeat center center fixed;
         background-size: cover;
         position: relative;
     }

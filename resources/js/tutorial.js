@@ -14,6 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
         showProgress: true,
         allowClose: false,
 
+        onNextClick: function (e) {
+            const step = driverObj.getActiveIndex();
+
+            if (window.Alpine && Alpine.store('sidebar')) {
+                const sidebar = Alpine.store('sidebar');
+
+                // Example logic: open sidebar at step 0, close at step 5
+                sidebar.isOpen = (step === 0) ? true : (step === 5 ? false : sidebar.isOpen);
+            }
+
+            driverObj.moveNext();
+        },
+
+        onPrevClick: function (e) {
+            const step = driverObj.getActiveIndex();
+
+            if (window.Alpine && Alpine.store('sidebar')) {
+                const sidebar = Alpine.store('sidebar');
+
+                // Example logic: open sidebar at step 0, close at step 5
+                sidebar.isOpen = (step >= 0 && step <= 6) ? true : false;
+            }
+
+            driverObj.movePrevious()
+        },
+
         onDestroyed: () => {
             fetch('/tutorial/complete', { method: 'GET', credentials: 'same-origin' })
                 .then(response => response.json())
