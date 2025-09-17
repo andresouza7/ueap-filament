@@ -37,10 +37,15 @@ class PontoResource extends Resource
                         ->label('Tipo')
                         ->columnSpanFull()
                         ->options([
-                            'FACULTADO' => 'FACULTADO',
+                            'PONTO FACULTATIVO' => 'PONTO FACULTATIVO',
+                            'RECESSO' => 'RECESSO',
+                            'ATESTADO MÉDICO' => 'ATESTADO MÉDICO',
+                            'FÉRIAS DOCENTE' => 'FÉRIAS DOCENTE',
+                            'LUTO OFICIAL' => 'LUTO OFICIAL',
                             'FALTA' => 'FALTA',
-                            'ATESTADO' => 'ATESTADO'
-                        ]),
+                            'SEM VINCULO ATIVO' => 'SEM VINCULO ATIVO',
+                        ])
+                        ->required(),
                     DatePicker::make('start_date')
                         ->label('Data Início')
                         ->required(),
