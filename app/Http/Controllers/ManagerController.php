@@ -9,6 +9,27 @@ use Illuminate\Support\Facades\Auth;
 
 class ManagerController extends Controller
 {
+    private function getMonthName($monthNumber)
+    {
+        $months = array(
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        );
+        return $monthNumber > 0 && $monthNumber <= 12
+            ? $months[$monthNumber - 1]
+            : null;
+    }
+
     public function frequencyPrint(Request $request)
     {
         // dd($request->all());
@@ -50,12 +71,13 @@ class ManagerController extends Controller
         $lastName = $parts[1];
 
         // Formatando o nome do arquivo
-        $filename = "fp_" . $month . "_{$year}_{$firstName}_{$lastName}";
+        $filename = "fp_" . strtolower($this->getMonthName($month)) . "_{$year}_{$firstName}_{$lastName}";
 
         return view('manager.frequency-print', compact('user', 'month', 'year', 'type', 'occurrences', 'occurrences_user', 'filename'));
     }
 
-    public function completeTutorial(Request $request) {
+    public function completeTutorial(Request $request)
+    {
         $user = $request->user();
 
         $user->skip_tutorial = true;
