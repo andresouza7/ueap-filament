@@ -1,27 +1,25 @@
 <?php
 
-namespace App\Filament\App\Resources\Site\WebPostResource\Pages;
+namespace App\Filament\App\Resources\Site\PortariaConsuResource\Pages;
 
-use App\Actions\HandlesFileUpload;
-use App\Filament\App\Resources\Site\WebPostResource;
-use App\Models\WebPost;
+use App\Filament\App\Resources\Site\PortariaConsuResource;
+use App\Models\Portaria;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class CreateWebPost extends CreateRecord
+class CreatePortaria extends CreateRecord
 {
-    protected static string $resource = WebPostResource::class;
+    protected static string $resource = PortariaConsuResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $last = WebPost::withTrashed()->latest('id')->first();
+        $last = Portaria::withTrashed()->latest('id')->first();
 
         $data['id'] = $last ? $last->id + 1 : 1;
-        $data['user_created_id'] = Auth::user()->id;
-        $data['uuid'] = Str::uuid();
+        $data['origin'] = 'CONSU';
 
         return $data;
     }
@@ -30,7 +28,7 @@ class CreateWebPost extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($data['file'], 'web/posts');
+        $record->storeFileWithModelId($data['file'], 'documents/ordinances');
 
         return $record;
     }

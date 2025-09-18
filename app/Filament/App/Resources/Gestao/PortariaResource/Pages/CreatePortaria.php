@@ -12,15 +12,6 @@ class CreatePortaria extends CreateRecord
 {
     protected static string $resource = PortariaResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        if (auth()->user()->hasRole('consu')) {
-            $data['origin'] = 'CONSU';
-        }
-
-        return $data;
-    }
-
     protected function handleRecordCreation(array $data): Model
     {
         $record = static::getModel()::create($data);

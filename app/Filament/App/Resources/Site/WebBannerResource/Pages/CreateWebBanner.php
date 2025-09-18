@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources\Site\WebBannerResource\Pages;
 
 use App\Actions\HandlesFileUpload;
 use App\Filament\App\Resources\Site\WebBannerResource;
+use App\Models\WebBanner;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,9 @@ class CreateWebBanner extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $last = WebBanner::withTrashed()->latest('id')->first();
+
+        $data['id'] = $last ? $last->id + 1 : 1;
         $data['uuid'] = Str::uuid();
         $data['description'] = '';
         $data['hits'] = 0;

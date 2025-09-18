@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Facades\Storage;
 
-class ConsuResolution extends Model implements HasMedia
+class ConsuResolution extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, HandlesFileUpload;
 
     protected $fillable = [
         'id',
@@ -25,6 +25,25 @@ class ConsuResolution extends Model implements HasMedia
     protected $appends = [
         "file_url"
     ];
+
+    public function getFileUrlAttribute()
+    {
+        $newPath = 'consu/resolutions/' . $this->id . '.pdf';
+        $oldFile = $this->get_old_file;
+        $oldPath = $oldFile
+            ? "consu/resolutions/{$this->year}/{$oldFile->codname}.pdf"
+            : null;
+
+        if (Storage::exists($newPath)) {
+            return Storage::url($newPath);
+        }
+
+        if ($oldPath && Storage::exists($oldPath)) {
+            return Storage::url($oldPath);
+        }
+
+        return null;
+    }
 
     public function get_old_file()
     {
