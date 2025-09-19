@@ -29,7 +29,7 @@ class CreateWebPage extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($data['file'], 'web/pages');
+        if ($data['file']) $record->storeFileWithModelId($data['file'], 'web/pages');
 
         return $record;
     }

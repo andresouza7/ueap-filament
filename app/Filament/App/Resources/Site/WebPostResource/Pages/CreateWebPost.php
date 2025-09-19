@@ -30,7 +30,7 @@ class CreateWebPost extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($data['file'], 'web/posts');
+        if ($data['file']) $record->storeFileWithModelId($data['file'], 'web/posts');
 
         return $record;
     }
