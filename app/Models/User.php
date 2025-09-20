@@ -122,6 +122,10 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return true;
     }
 
+    public function types() {
+        return $this->belongsToMany(Type::class);
+    }
+
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');

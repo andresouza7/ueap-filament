@@ -74,6 +74,12 @@ class UserResource extends Resource
                                             ->multiple()
                                             ->searchable()
                                             ->preload(),
+                                        Forms\Components\Select::make('types')
+                                            ->label('Cat. de Documentos')
+                                            ->relationship('types', 'name')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload(),
                                     ]),
                                 Tabs\Tab::make('Dados Pessoais')
                                     ->schema([
