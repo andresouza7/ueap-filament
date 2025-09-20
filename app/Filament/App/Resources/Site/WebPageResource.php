@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPageResource\Pages;
 use App\Filament\App\Resources\Site\WebPageResource\RelationManagers\MenuItemsRelationManager;
 use App\Models\WebMenu;
@@ -54,12 +55,17 @@ class WebPageResource extends Resource
                             'published' => 'Publicado',
                             'unpublished' => 'Despublicado'
                         ]),
-                    Forms\Components\RichEditor::make('text')
+
+                    TinyEditor::make('text')
                         ->label('Texto')
-                        ->required()
-                        ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
-                        ->disableToolbarButtons(['attachFiles'])
-                        ->columnSpanFull(),
+                        ->profile('custom')
+                        ->required(),
+                    // Forms\Components\RichEditor::make('text')
+                    //     ->label('Texto')
+                    //     ->required()
+                    //     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                    //     ->disableToolbarButtons(['attachFiles'])
+                    //     ->columnSpanFull(),
                     FileUpload::make('file')
                         ->label('Arquivo JPG')
                         ->directory('web/pages')

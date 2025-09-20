@@ -65,7 +65,7 @@ class ConsuAtaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('issuance_date', 'desc')
+            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('issuance_date', 'desc')->orderBy('id', 'desc'))
             ->columns([
                 TextColumn::make('id')
                     ->label('#')

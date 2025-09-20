@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 
 class DocumentsRelationManager extends RelationManager
 {
@@ -62,22 +63,27 @@ class DocumentsRelationManager extends RelationManager
             ->heading('Gerenciar documetos')
             ->recordTitleAttribute('title')
             ->defaultSort('id', 'desc')
+            ->recordAction(null)
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->limit(60)
                     ->label('Título')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn($state, $record) => new HtmlString("
+                        <div>{$state}</div>
+                        <div class='text-xs text-gray-500'>{$record->file_url}</div>
+                    ")),
                 Tables\Columns\TextColumn::make('year')
                     ->label('Ano')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->badge()
-                    ->color('gray')
-                    ->label('Tipo')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('type')
+                //     ->badge()
+                //     ->color('gray')
+                //     ->label('Tipo')
+                //     ->searchable(),
+                Tables\Columns\TextColumn::make('user_created.login')->label('Publicado por'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Data')
                     ->dateTime('d/m/Y H:i'),

@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\Portaria;
+use App\Models\ConsuResolution;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class PortariaPolicy
+class ConsuResolutionPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole('urh|gab|consu|ascom|dinfo');
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Portaria $portaria): bool
+    public function view(User $user, ConsuResolution $consuResolution): bool
     {
-        return $user->hasAnyRole('urh|gab|consu|ascom|dinfo');
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
@@ -29,21 +29,21 @@ class PortariaPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasAnyRole('urh|gab|consu|ascom|dinfo');
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Portaria $portaria): bool
+    public function update(User $user, ConsuResolution $consuResolution): bool
     {
-        return $user->hasAnyRole('urh|gab|consu|ascom|dinfo');
+        return $user->hasAnyRole('ascom|dinfo');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Portaria $portaria): bool
+    public function delete(User $user, ConsuResolution $consuResolution): bool
     {
         return $user->hasRole('dinfo');
     }
@@ -51,7 +51,7 @@ class PortariaPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Portaria $portaria): bool
+    public function restore(User $user, ConsuResolution $consuResolution): bool
     {
         return $user->hasRole('dinfo');
     }
@@ -59,7 +59,7 @@ class PortariaPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Portaria $portaria): bool
+    public function forceDelete(User $user, ConsuResolution $consuResolution): bool
     {
         return $user->hasRole('dinfo');
     }

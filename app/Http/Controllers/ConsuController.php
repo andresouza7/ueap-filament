@@ -69,7 +69,7 @@ class ConsuController extends Controller
 
     public function listAta(Request $request)
     {
-        $query = ConsuAta::orderBy('issuance_date', 'DESC');
+        $query = ConsuAta::orderBy('issuance_date', 'DESC')->orderBy('id', 'DESC');
 
         if($request->name){
             $query->where('title', 'ilike', "%$request->name%");

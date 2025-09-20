@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPostResource\Pages;
 use App\Models\WebPost;
 use Filament\Forms;
@@ -51,51 +52,54 @@ class WebPostResource extends Resource
 
     public static function getTextFormSection()
     {
-        return Group::make()
+        return Group::make()->columns(3)
             ->schema([
-                Split::make([
-                    Group::make([
-                        Forms\Components\RichEditor::make('text')
-                            ->label('Conteúdo')
-                            ->required()
-                            ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 30vh; overflow-y: auto;'])
-                            ->disableToolbarButtons(['attachFiles'])
-                            ->columnSpanFull(),
-                        Forms\Components\TextInput::make('text_credits')
-                            ->label('Fonte do Texto')
-                            ->default('Ascom/UEAP')
-                            ->maxLength(255),
-                    ]),
-                    Group::make([
-                        Forms\Components\Select::make('web_category_id')
-                            ->label('Categoria')
-                            ->preload()
-                            ->relationship('category', 'name')
-                            ->searchable()
-                            ->required(),
-                        Forms\Components\TextInput::make('title')
-                            ->label('Título')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('slug')
-                            ->required()
-                            ->helperText('Preenchimento automático')
-                            ->suffixIcon('heroicon-m-globe-alt')
-                            ->maxLength(255),
-                        Forms\Components\Select::make('status')
-                            ->required()
-                            ->options([
-                                'draft' => 'Rascunho',
-                                'published' => 'Publicado',
-                                'unpublished' => 'Despublicado'
-                            ]),
 
-                        Forms\Components\Toggle::make('featured')
-                            ->label('Destaque')
-                            ->required(),
-                    ])
+                Group::make([
+                    // Forms\Components\RichEditor::make('text')
+                    //     ->label('Conteúdo')
+                    //     ->required()
+                    //     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 30vh; overflow-y: auto;'])
+                    //     ->disableToolbarButtons(['attachFiles'])
+                    //     ->columnSpanFull(),
+                    TinyEditor::make('text')
+                        ->label('Conteúdo')
+                        ->profile('custom')
+                        ->required(),
+                ])->columnSpan(2),
+                Group::make([
+                    Forms\Components\Select::make('web_category_id')
+                        ->label('Categoria')
+                        ->preload()
+                        ->relationship('category', 'name')
+                        ->searchable()
+                        ->required(),
+                    Forms\Components\TextInput::make('title')
+                        ->label('Título')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->helperText('Preenchimento automático')
+                        ->suffixIcon('heroicon-m-globe-alt')
+                        ->maxLength(255),
+                    Forms\Components\Select::make('status')
+                        ->required()
+                        ->options([
+                            'draft' => 'Rascunho',
+                            'published' => 'Publicado',
+                            'unpublished' => 'Despublicado'
+                        ]),
+
+                    Forms\Components\Toggle::make('featured')
+                        ->label('Destaque')
+                        ->required(),
+                    Forms\Components\TextInput::make('text_credits')
+                        ->label('Fonte do Texto')
+                        ->default('Ascom/UEAP')
+                        ->maxLength(255),
                 ])
             ]);
     }
@@ -105,6 +109,7 @@ class WebPostResource extends Resource
         return Group::make()
             ->schema([
                 FileUpload::make('file')
+                    ->label('Arquivo')
                     ->directory('web/posts')
                     ->acceptedFileTypes(['image/jpeg'])
                     ->previewable(false)

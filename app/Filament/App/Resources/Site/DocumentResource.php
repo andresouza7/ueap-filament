@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Auth;
 class DocumentResource extends Resource
 {
     protected static ?string $model = DocumentCategory::class;
+
     protected static ?string $modelLabel = 'Documento';
+
     protected static ?string $pluralModelLabel = 'Documentos';
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
@@ -25,7 +27,8 @@ class DocumentResource extends Resource
     protected static ?string $slug = 'documentos';
 
     protected static ?string $navigationGroup = 'Site';
-    // protected static ?int $navigationSort = 3;
+    
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {

@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources\Site\ConsuAtaResource\Pages;
 
 use App\Filament\App\Resources\Site\ConsuAtaResource;
+use App\Models\ConsuAta;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,9 @@ class CreateConsuAta extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $last = ConsuAta::withTrashed()->latest('id')->first();
+
+        $data['id'] = $last ? $last->id + 1 : 1;
         $data['uuid'] = Str::uuid();
         $data['hits'] = 0;
         $data['user_created_id'] = Auth::id();

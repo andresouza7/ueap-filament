@@ -29,70 +29,75 @@ class PortariaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?int $navigationSort = 5;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->whereNot('origin', 'CONSU');
+    }
+
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Section::make([
-                    Forms\Components\TextInput::make('number')
-                        ->label('Número')
-                        ->required()
-                        ->numeric(),
-                    Forms\Components\TextInput::make('year')
-                        ->label('Ano')
-                        ->required()
-                        ->numeric(),
-                    Forms\Components\TextInput::make('subject')
-                        ->label('Assunto')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('description')
-                        ->label('Descrição')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\DatePicker::make('created_at')
-                        ->label('Data'),
-                    Forms\Components\TextInput::make('origin')
-                        ->hidden(fn() => Auth::user()->hasRole('consu'))
-                        ->label('Origem')
-                        ->maxLength(255),
-                    FileUpload::make('file')
-                        ->columnSpanFull()
-                        ->label('Arquivo')
-                        ->directory('documents/ordinances')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->previewable(false)
-                        ->maxFiles(1)
-                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
-
-                    Forms\Components\Select::make('persons')
-                        ->columnSpanFull()
-                        ->label('Servidores')
-                        ->relationship(
-                            name: 'persons',
-                            titleAttribute: 'name',
-                            modifyQueryUsing: fn($query) => $query->whereHas('user', fn($q) => $q->whereNotNull('enrollment'))
-                        )
-                        ->multiple()
-                        ->searchable()
-                        ->preload(),
-                ])->columns(2)
-            ]);
+        return $form->schema(self::getPortariaForm());
     }
 
     public static function table(Table $table): Table
     {
+        return self::getPortariaTable($table);
+    }
+
+    public static function getPortariaForm()
+    {
+        return [
+            Section::make([
+                Forms\Components\TextInput::make('number')
+                    ->label('Número')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('year')
+                    ->label('Ano')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('subject')
+                    ->label('Assunto')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('description')
+                    ->label('Descrição')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('created_at')
+                    ->label('Data'),
+                Forms\Components\TextInput::make('origin')
+                    ->hidden(fn() => Auth::user()->hasRole('consu'))
+                    ->label('Origem')
+                    ->maxLength(255),
+                FileUpload::make('file')
+                    ->columnSpanFull()
+                    ->label('Arquivo')
+                    ->directory('documents/ordinances')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->previewable(false)
+                    ->maxFiles(1)
+                    ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
+
+                Forms\Components\Select::make('persons')
+                    ->columnSpanFull()
+                    ->label('Servidores')
+                    ->relationship(
+                        name: 'persons',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn($query) => $query->whereHas('user', fn($q) => $q->whereNotNull('enrollment'))
+                    )
+                    ->multiple()
+                    ->searchable()
+                    ->preload(),
+            ])->columns(2)
+        ];
+    }
+
+    public static function getPortariaTable(Table $table)
+    {
         return $table
             ->defaultSort(fn($query) => $query->orderBy('year', 'desc')->orderBy('number', 'desc'))
-            ->modifyQueryUsing(function ($query) {
-                if (auth()->user()->hasRole('consu')) {
-                    $query->where('origin', 'CONSU');
-                } else {
-                    $query->whereNot('origin', 'CONSU');
-                }
-
-                return $query->orderBy('year', 'DESC')->orderBy('number', 'DESC');
-            })
             ->columns([
                 // Tables\Columns\TextColumn::make('id')->searchable(),
                 Tables\Columns\TextColumn::make('number')
@@ -163,13 +168,5 @@ class PortariaResource extends Resource
             // 'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
             'edit' => Pages\EditPortaria::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

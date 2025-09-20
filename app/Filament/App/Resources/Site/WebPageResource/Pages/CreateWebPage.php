@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources\Site\WebPageResource\Pages;
 
 use App\Filament\App\Resources\Site\WebPageResource;
+use App\Models\WebPage;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,9 @@ class CreateWebPage extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $last = WebPage::withTrashed()->latest('id')->first();
+
+        $data['id'] = $last ? $last->id + 1 : 1;
         $data['user_created_id'] = Auth::id();
         $data['uuid'] = Str::uuid();
 
@@ -25,7 +29,7 @@ class CreateWebPage extends CreateRecord
     {
         $record = static::getModel()::create($data);
 
-        $record->storeFileWithModelId($data['file'], 'web/pages');
+        if ($data['file']) $record->storeFileWithModelId($data['file'], 'web/pages');
 
         return $record;
     }
