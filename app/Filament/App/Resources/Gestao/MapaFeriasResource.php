@@ -67,13 +67,10 @@ class MapaFeriasResource extends Resource
                             ->numeric()
                             ->minValue(1)
                             ->reactive()
-                            ->lazy()
+                            ->debounce(1000)
                             ->afterStateUpdated(function ($state, callable $set, $get) {
-                                if ($start = $get('start_date')) {
-                                    $set('end_date', \Carbon\Carbon::parse($start)
-                                        ->addDays(max((int)$state - 1, 0))
-                                        ->format('Y-m-d'));
-                                }
+                                $endDate = self::calculateEndDate($get('start_date'), $state);
+                                $set('end_date', $endDate);
                             })
                             ->required(),
 
@@ -83,6 +80,17 @@ class MapaFeriasResource extends Resource
                     ])->columns(3)
                 ])
             ]);
+    }
+
+    private static function calculateEndDate($start, $days)
+    {
+        try {
+            return \Carbon\Carbon::parse($start)
+                ->addDays(max((int)$days - 1, 0))
+                ->format('Y-m-d');
+        } catch (\Throwable $th) {
+            log($th->getMessage());
+        }
     }
 
     public static function table(Table $table): Table
