@@ -67,7 +67,7 @@ class MapaFeriasResource extends Resource
                             ->numeric()
                             ->minValue(1)
                             ->live()
-                            ->lazy()
+                            ->debounce()
                             ->afterStateUpdated(function ($state, callable $set, $get) {
                                 $endDate = self::calculateEndDate($get('start_date'), $state);
                                 $set('end_date', $endDate);
