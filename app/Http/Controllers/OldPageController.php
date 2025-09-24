@@ -27,11 +27,13 @@ class OldPageController extends Controller
 
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
 
-        if($page){
-            WebPage::where('id', $page->id)->increment('hits', 1); // bypasses timestamp update
+        if ($page) {
+            WebPage::withoutTimestamps(function () use ($page) {
+                $page->increment('hits', 1);
+            });
 
             return view('site.pages.page-show', compact('page'));
-        }else{
+        } else {
             return redirect()->route('site.home');
         }
     }
@@ -42,7 +44,7 @@ class OldPageController extends Controller
         $posts = null;
         if (empty($searchString)) {
             $posts = WebPost::where('status', 'published')->orderByDesc('id')->paginate(25)->withQueryString();
-        }else {
+        } else {
             $posts = WebPost::where('status', 'published')->search($searchString)->orderByDesc('id')->paginate(25)->withQueryString();
         }
         return view('site.pages.post-list', compact('posts', 'searchString'));
@@ -52,21 +54,22 @@ class OldPageController extends Controller
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
 
-        if($post){
-            WebPost::where('id', $post->id)->increment('hits', 1); // bypasses timestamp update
+        if ($post) {
+            WebPost::withoutTimestamps(function () use ($post) {
+                $post->increment('hits', 1);
+            });
 
             return view('site.pages.post-show', compact('post'));
-        }else{
+        } else {
             return redirect()->route('site.home');
         }
-
     }
 
     public function documentList($type)
     {
         $check = new DocumentController();
 
-        if($check->checkType($type)){
+        if ($check->checkType($type)) {
             $documents = Document::where('type', $type)->orderByDesc('year')->orderByDesc('title')->paginate(25)->withQueryString();
             return view('site.pages.document-list', compact('documents'));
         }
@@ -74,16 +77,12 @@ class OldPageController extends Controller
     }
 
 
-    public function normativeInstructionList($type=false)
+    public function normativeInstructionList($type = false)
     {
         $instructions = NormativeInstruction::orderBy('year', 'DESC')
-        ->orderBy('number', 'DESC')
-        ->paginate(25)
-        ->withQueryString();
+            ->orderBy('number', 'DESC')
+            ->paginate(25)
+            ->withQueryString();
         return view('site.pages.document-normative-instruction-list', compact('instructions'));
-
-
     }
-
-
 }
