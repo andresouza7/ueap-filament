@@ -62,6 +62,27 @@
             background: #017840;
             color: white;
         }
+
+        table {
+            border-collapse: collapse;
+            width: auto !important;        /* permite expandir além do container */
+            min-width: 100% !important;    /* nunca menor que o container */
+            table-layout: auto !important; /* deixa o browser calcular as larguras */
+            display: block;                /* permite scroll horizontal */
+            overflow-x: auto;              /* ativa o scroll */
+            max-width: 100%;               /* não ultrapassa o container */
+        }
+
+        /* células */
+        table th,
+        table td {
+            min-width: 120px;        /* impede colunas minúsculas */
+            padding: 6px 8px;
+            white-space: normal;     /* quebra linha normal */
+            word-break: break-word;  /* quebra palavras grandes */
+            overflow: visible;       /* não esconder conteúdo */
+            box-sizing: border-box;
+        }
     </style>
 </head>
 

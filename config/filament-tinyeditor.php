@@ -29,7 +29,7 @@ return [
     'profiles' => [
         'custom' => [
             'plugins' => 'accordion autoresize codesample directionality advlist link lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime media table emoticons',
-            'toolbar' => 'undo redo removeformat | fontsize bold italic underline | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | forecolor backcolor | link table toc hr | blockquote codesample emoticons | wordcount fullscreen',
+            'toolbar' => 'undo redo removeformat code | fontsize bold italic underline | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | forecolor backcolor | link table toc hr | blockquote codesample emoticons | wordcount fullscreen',
             'upload_directory' => null,
         ],
         'default' => [

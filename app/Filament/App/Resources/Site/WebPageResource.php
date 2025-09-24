@@ -58,7 +58,7 @@ class WebPageResource extends Resource
 
                     TinyEditor::make('text')
                         ->label('Texto')
-                        ->profile('custom')
+                        ->profile('full')
                         ->required(),
                     // Forms\Components\RichEditor::make('text')
                     //     ->label('Texto')
