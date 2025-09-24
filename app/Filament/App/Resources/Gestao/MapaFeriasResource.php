@@ -6,6 +6,7 @@ use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,6 +21,7 @@ use Illuminate\Support\Carbon;
 class MapaFeriasResource extends Resource
 {
     protected static ?string $model = CalendarOccurrence::class;
+
     protected static ?string $modelLabel = 'Mapa de Férias';
 
     protected static ?string $navigationGroup = 'Gestão';
@@ -48,17 +50,36 @@ class MapaFeriasResource extends Resource
                         ->searchable()
                         ->preload(),
 
-                    Forms\Components\TextInput::make('description')
-                        ->label('Descrição')
-                        ->columnSpanFull()
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\DatePicker::make('start_date')
-                        ->label('Data Início')
-                        ->required(),
-                    Forms\Components\DatePicker::make('end_date')
-                        ->label('Data Fim')
-                        ->required(),
+                    Group::make([
+
+                        Forms\Components\TextInput::make('description')
+                            ->label('Descrição')
+                            ->columnSpanFull()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('start_date')
+                            ->label('Data Início')
+                            ->live()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('days_count')
+                            ->label('Quantidade de Dias')
+                            ->numeric()
+                            ->minValue(1)
+                            ->live()
+                            ->afterStateUpdated(function ($state, callable $set, $get) {
+                                if ($start = $get('start_date')) {
+                                    $set('end_date', \Carbon\Carbon::parse($start)
+                                        ->addDays(max((int)$state - 1, 0))
+                                        ->format('Y-m-d'));
+                                }
+                            })
+                            ->required(),
+
+                        Forms\Components\DatePicker::make('end_date')
+                            ->label('Data Fim')
+                            ->required()
+                    ])->columns(3)
                 ])
             ]);
     }
