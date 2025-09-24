@@ -67,6 +67,7 @@ class MapaFeriasResource extends Resource
                             ->numeric()
                             ->minValue(1)
                             ->live()
+                            ->debounce(1000)
                             ->afterStateUpdated(function ($state, callable $set, $get) {
                                 if ($start = $get('start_date')) {
                                     $set('end_date', \Carbon\Carbon::parse($start)
