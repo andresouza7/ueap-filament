@@ -67,7 +67,7 @@ class MapaFeriasResource extends Resource
                             ->numeric()
                             ->minValue(1)
                             ->live()
-                            ->debounce(300)
+                            ->lazy()
                             ->afterStateUpdated(function ($state, callable $set, $get) {
                                 $endDate = self::calculateEndDate($get('start_date'), $state);
                                 $set('end_date', $endDate);
@@ -76,6 +76,7 @@ class MapaFeriasResource extends Resource
 
                         Forms\Components\DatePicker::make('end_date')
                             ->label('Data Fim')
+                            ->live()
                             ->required()
                     ])->columns(3)
                 ])
