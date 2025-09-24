@@ -39,33 +39,4 @@ Ueap | Página
 <hr />
 <div id="data_noticia">Última Modificação em : @if($page->updated_at) {{$page->updated_at->format('d/m/Y H:i:s')}} @else {{$page->created_at->format('d/m/Y H:i:s')}} @endif</div>
 
-<style>
-table {
-  border-collapse: collapse;
-  width: auto !important;        /* permite expandir além do container */
-  min-width: 100% !important;    /* nunca menor que o container */
-  table-layout: auto !important; /* deixa o browser calcular as larguras */
-  display: block;                /* permite scroll horizontal */
-  overflow-x: auto;              /* ativa o scroll */
-  max-width: 100%;               /* não ultrapassa o container */
-  border: none;
-}
-
-/* células */
-table th,
-table td {
-  min-width: 120px;        /* impede colunas minúsculas */
-  padding: 6px 8px;
-  white-space: normal;     /* quebra linha normal */
-  word-break: break-word;  /* quebra palavras grandes */
-  overflow: visible;       /* não esconder conteúdo */
-  box-sizing: border-box;
-}
-
-table th {
-  background: #f5f5f5;      /* opcional: cabeçalho destacado */
-}
-</style>
-
-
 @endsection
