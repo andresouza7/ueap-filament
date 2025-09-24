@@ -28,8 +28,7 @@ class OldPageController extends Controller
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
 
         if($page){
-            $page->hits = $page->hits+1;
-            $page->save();
+            WebPage::where('id', $page->id)->increment('hits', 1); // bypasses timestamp update
 
             return view('site.pages.page-show', compact('page'));
         }else{
@@ -54,8 +53,8 @@ class OldPageController extends Controller
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
 
         if($post){
-            $post->hits = $post->hits+1;
-            $post->save();
+            WebPost::where('id', $post->id)->increment('hits', 1); // bypasses timestamp update
+
             return view('site.pages.post-show', compact('post'));
         }else{
             return redirect()->route('site.home');
