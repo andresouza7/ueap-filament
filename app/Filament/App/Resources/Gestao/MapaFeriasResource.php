@@ -66,8 +66,8 @@ class MapaFeriasResource extends Resource
                             ->label('Quantidade de Dias')
                             ->numeric()
                             ->minValue(1)
-                            ->live()
-                            ->debounce(1000)
+                            ->reactive()
+                            ->lazy()
                             ->afterStateUpdated(function ($state, callable $set, $get) {
                                 if ($start = $get('start_date')) {
                                     $set('end_date', \Carbon\Carbon::parse($start)
