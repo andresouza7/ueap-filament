@@ -66,8 +66,8 @@ class MapaFeriasResource extends Resource
                             ->label('Quantidade de Dias')
                             ->numeric()
                             ->minValue(1)
-                            ->reactive()
-                            ->debounce(1000)
+                            ->live()
+                            ->debounce(300)
                             ->afterStateUpdated(function ($state, callable $set, $get) {
                                 $endDate = self::calculateEndDate($get('start_date'), $state);
                                 $set('end_date', $endDate);
