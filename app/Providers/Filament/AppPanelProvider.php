@@ -60,7 +60,22 @@ class AppPanelProvider extends PanelProvider
                 'panels::auth.login.form.before',
                 fn(): string => Blade::render('<div class="flex justify-center mb-6"><img src="{{ asset("img/logo-white.png") }}" class="h-16 w-auto" /></div>')
             )
-
+            ->renderHook(
+                PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+                fn(): string => Blade::render(
+                    '<x-filament::button  
+                        color="danger" 
+                        size="sm"
+                        tag="a"
+                        href="https://servicedesk.ueap.edu.br/" 
+                        target="_blank"
+                        class="flex items-center gap-1"
+                    >
+                        <span class="hidden md:flex md:items-center"><x-heroicon-o-lifebuoy class="inline w-4 h-4" /> Service Desk</span>
+                        <span class="text-xs md:hidden">Suporte</span>
+                    </x-filament::button>'
+                )
+            )
             ->renderHook(
                 'panels::auth.login.form.after',
                 fn(): View => view('filament.app.pages.login')
