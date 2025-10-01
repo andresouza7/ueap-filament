@@ -32,14 +32,11 @@ class ManagerController extends Controller
 
     public function frequencyPrint(Request $request)
     {
-        // dd($request->all());
-
         if ($request->uuid) {
             $user = User::where('uuid', $request->uuid)->first();
         } else {
             $user = auth()->user();
         }
-
 
         if (isset($request->type) and ($request->type == 'effective_role' or $request->type == 'commissioned_role')) {
             $type = $request->type;

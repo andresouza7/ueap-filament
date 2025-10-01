@@ -65,12 +65,12 @@ class FrequencyEmit extends Component implements HasForms
                 Split::make([
                     Group::make([
                         Select::make('type')
-                            ->required()
                             ->label('Ponto')
+                            ->required()
                             ->options([
-                                'Efetivo',
-                                'Comissionado',
-                                'Sem Preenchimento'
+                                'effective_role' => 'Efetivo',
+                                'commissioned_role' => 'Comissionado',
+                                'none' => 'Sem Preenchimento',
                             ]),
                         Select::make('month')
                             ->required()

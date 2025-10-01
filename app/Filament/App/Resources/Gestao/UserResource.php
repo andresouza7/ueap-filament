@@ -122,6 +122,22 @@ class UserResource extends Resource
                                                         'docente' => 'Docente',
                                                         'técnico' => 'Técnico'
                                                     ]),
+                                                Forms\Components\Select::make('local')
+                                                    ->label('Local')
+                                                    ->options([
+                                                        'MACAPÁ - AP' => 'MACAPÁ - AP',
+                                                        'AMAPÁ - AP' => 'AMAPÁ - AP'
+                                                    ]),
+                                                Forms\Components\Select::make('title')
+                                                    ->label('Titulação')
+                                                    ->options([
+                                                        'ensino médio' => 'ensino médio',
+                                                        'técnico' => 'técnico',
+                                                        'graduado' => 'graduado',
+                                                        'especialista' => 'especialista',
+                                                        'mestre' => 'mestre',
+                                                        'doutor' => 'doutor',
+                                                    ]),
                                             ])
                                     ]),
                             ]),

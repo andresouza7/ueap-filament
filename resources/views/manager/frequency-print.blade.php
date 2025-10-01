@@ -65,9 +65,12 @@
                 max-width: 600px;
                 letter-spacing: 3px;
                 text-align: left;
-                white-space: nowrap; /* Prevent text from wrapping */
-                overflow: hidden; /* Hide overflow */
-                text-overflow: ellipsis; /* Add ellipsis (...) for overflow text */
+                white-space: nowrap;
+                /* Prevent text from wrapping */
+                overflow: hidden;
+                /* Hide overflow */
+                text-overflow: ellipsis;
+                /* Add ellipsis (...) for overflow text */
             }
 
 
@@ -218,19 +221,25 @@
 
             //montagem do calendario
 
-            if (request('type') == 'blank') {
+            if (request('type') == 'none') {
                 $enrollment = '<br/>';
+                $name = '<br/>';
+                $group = '<br/>';
+                $local = '<br/>';
+                $cpf = '<br/>';
             } else {
                 $enrollment = $user->enrollment;
+                $name = $user->person->name;
+                $group = $user->group->description;
+                $local = $user->record?->local;
+                $cpf = $user->person->cpf_cnpj;
             }
-
-            $local = $user->records?->local ?? "<br/>";
 
             $retorno .= "<table class='tabela' style='margin-top: 6px;'>";
             $retorno .=
                 '<tr>' .
                 "<td colspan='2'><span class='cell-label'>Unidade Organizacional</span><br/>" .
-                $user->group->description .
+                $group .
                 '</td>' .
                 '</tr>' .
                 '<tr>' .
@@ -247,13 +256,13 @@
             $retorno .=
                 "<tr style='vertical-align: top;'>" .
                 "<td width='48%'><span class='cell-label'>Nome</span><br/>" .
-                $user->person->name .
+                $name .
                 '</td>' .
                 "<td width='12%'><span class='cell-label'>Matrícula</span><br/>" .
-                $user->enrollment .
+                $enrollment .
                 '</td>' .
                 "<td width='12%' colspan='2'><span class='cell-label'>CPF</span><br/>" .
-                $user->person->cpf_cnpj .
+                $cpf .
                 '</td>' .
                 "<td width='12%' colspan='2'><span class='cell-label'>Carga horária</span><br/><br/></td>" .
                 "<td><span class='cell-label'>Jornada</span><br/><br/></td>" .
@@ -262,14 +271,14 @@
             $retorno .=
                 "<tr style='vertical-align: top;'>" . "<td width='48%'<span class='cell-label'>Cargo</span><br/>";
 
-            if ($type == 'commissioned_role' and $user->commissioned_role_id > 0 and request('type') != 'blank') {
+            if ($type == 'commissioned_role' and $user->commissioned_role_id > 0 and request('type') != 'none') {
                 if ($user->effective_role) {
                     $retorno .= $user->effective_role->description . ' | ' . $user->commissioned_role->description;
                 } else {
                     $retorno .= $user->commissioned_role->description;
                 }
             } else {
-                if ($user->effective_role and request('type') != 'blank') {
+                if ($user->effective_role and request('type') != 'none') {
                     $retorno .= $user->effective_role->description;
                 } else {
                     $retorno .= '<br/>';
@@ -346,10 +355,12 @@
                                         // $request->use_signature == 'yes' and
                                         // file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
                                         $request->use_signature &&
-                                    auth()->user()->signature_url
+                                        auth()->user()->signature_url
                                     ) {
                                         $retorno .=
-                                    "<td align='center'> <img style='height:15px;'  src='".auth()->user()->signature_url."''></td>";
+                                            "<td align='center'> <img style='height:15px;'  src='" .
+                                            auth()->user()->signature_url .
+                                            "''></td>";
                                         // $retorno .=
                                         //     "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
                                         //     $user->uuid .
@@ -423,15 +434,17 @@
                                 }
 
                                 if (
-                                    $request->use_signature && 
+                                    $request->use_signature &&
                                     auth()->user()->signature_url
                                     // file_exists(public_path('storage/signatures/' . $user->uuid . '.jpg'))
                                 ) {
                                     $retorno .=
-                                    "<td align='center'> <img style='height:15px;'  src='".auth()->user()->signature_url."''></td>";
-                                        // "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
-                                        // $user->uuid .
-                                        // ".jpg'></td>";
+                                        "<td align='center'> <img style='height:15px;'  src='" .
+                                        auth()->user()->signature_url .
+                                        "''></td>";
+                                    // "<td align='center'> <img style='height:15px;'  src='/storage/signatures/" .
+                                    // $user->uuid .
+                                    // ".jpg'></td>";
                                 } else {
                                     $retorno .= "<td align='center'></td>";
                                 }
@@ -459,7 +472,7 @@
 
             $retorno .= '</table>';
 
-            $retorno .= "<div style='display: flex; gap: 4px; margin-top: 50px; margin-bottom: 200px;'>
+            $retorno .= "<div style='display: flex; gap: 4px; margin-top: 15px; margin-bottom: 200px;'>
                 <div style='flex: 2'>
                     <table class='tabela' style='margin-top: 12px;'>
                         <tr height='28px'>
