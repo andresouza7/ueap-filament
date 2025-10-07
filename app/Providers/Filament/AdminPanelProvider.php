@@ -41,6 +41,12 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 'Gerência'
             ])
+            ->navigationItems([
+                NavigationItem::make('Logs')
+                    ->url('/admin/log')
+                    ->icon('heroicon-o-clipboard-document-list') // opcional
+                    ->group('Gerência'), // mantém organizado no grupo
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
