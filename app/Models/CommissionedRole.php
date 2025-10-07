@@ -13,7 +13,6 @@ class CommissionedRole extends Model
     protected $fillable = [
         'uuid',
         'description',
-        'group_id'
     ];
 
     public function users()
@@ -24,10 +23,5 @@ class CommissionedRole extends Model
     public function occupant()
     {
         return $this->hasOne(User::class, 'commissioned_role_id');
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(Group::class);
     }
 }

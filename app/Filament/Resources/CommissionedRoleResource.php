@@ -34,10 +34,6 @@ class CommissionedRoleResource extends Resource
                 Forms\Components\TextInput::make('position')
                     ->label('Ordem')
                     ->numeric(),
-                Forms\Components\Select::make('group_id')
-                    ->label('Vinculado a')
-                    ->relationship('group', 'description')
-                    ->preload()
             ]);
     }
 
@@ -51,8 +47,6 @@ class CommissionedRoleResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('group.name')
-                    ->label('Vinculado a'),
                 Tables\Columns\TextColumn::make('occupant.name')
                     ->label('Ocupante'),
                 Tables\Columns\TextColumn::make('position')
