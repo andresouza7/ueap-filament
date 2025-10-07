@@ -6,6 +6,9 @@ use App\Filament\Resources\GroupResource\Pages;
 use App\Filament\Resources\GroupResource\RelationManagers;
 use App\Models\Group;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -18,26 +21,27 @@ class GroupResource extends Resource
     protected static ?string $model = Group::class;
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
-
     protected static ?string $navigationGroup = 'Gerência';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ramal')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('group_parent_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
+                Section::make([
+                    TextInput::make('name')
+                        ->label('Nome')
+                        ->maxLength(255),
+                    TextInput::make('description')
+                        ->label('Descrição')
+                        ->maxLength(255),
+                    Select::make('group_parent_id')
+                        ->label('Pertence a')
+                        ->relationship('parent', 'description')
+                        ->searchable()
+                        ->preload(),
+                ])
             ]);
     }
 

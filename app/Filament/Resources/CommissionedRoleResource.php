@@ -18,13 +18,10 @@ class CommissionedRoleResource extends Resource
     protected static ?string $model = CommissionedRole::class;
     protected static ?string $modelLabel = 'Cargo Comissionado';
     protected static ?string $pluralModelLabel = 'Cargos Comissionados';
-
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-
     protected static ?string $slug = 'cargo-comissionado';
-
     protected static ?string $navigationGroup = 'Gerência';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

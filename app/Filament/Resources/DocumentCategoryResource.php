@@ -19,13 +19,10 @@ class DocumentCategoryResource extends Resource
     protected static ?string $model = DocumentCategory::class;
     protected static ?string $modelLabel = 'Categoria de Documento';
     protected static ?string $pluralModelLabel = 'Categorias de Documentos';
-
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
-
+    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
     protected static ?string $slug = 'categoria-documento';
-
     protected static ?string $navigationGroup = 'Gerência';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -68,9 +65,9 @@ class DocumentCategoryResource extends Resource
         return $table
             ->defaultSort('name')
             ->columns([
-                // Tables\Columns\TextColumn::make('id')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
