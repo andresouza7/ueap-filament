@@ -20,17 +20,40 @@ class EditUser extends EditRecord
             // Actions\DeleteAction::make(),
             // Actions\ForceDeleteAction::make(),
             // Actions\RestoreAction::make(),
+            Actions\Action::make('activateUser')
+                ->visible(fn($record) => $record->isActive())
+                ->label('Habilitar Usuário')
+                ->requiresConfirmation()
+                ->action(function () {
+                    $this->record->resetPassword();
+
+                    Notification::make()
+                        ->title('Operação concluída')
+                        ->body('Usuário habilitado com sucesso!')
+                        ->success()
+                        ->send();
+                })
+                ->icon('heroicon-s-check')
+                ->color('success'),
+            Actions\Action::make('deactivateUser')
+                ->hidden(fn($record) => $record->isActive())
+                ->label('Desativar Usuário')
+                ->requiresConfirmation()
+                ->action(function () {
+                    $this->record->setInactive();
+
+                    Notification::make()
+                        ->title('Operação concluída')
+                        ->body('Usuário inativado com sucesso!')
+                        ->success()
+                        ->send();
+                })
+                ->icon('heroicon-s-no-symbol')
+                ->color('danger'),
             Actions\Action::make('resetPassword')
                 ->label('Resetar Senha')
-                ->action(function (User $record) {
-                    // Get the related person's cpf_cnpj value
-                    $cpfCnpj = $record->person->cpf_cnpj;
-
-                    // Generate a new hashed password
-                    $newPassword = Hash::make($cpfCnpj);
-
-                    // Update the user's password
-                    $record->update(['password' => $newPassword]);
+                ->action(function () {
+                    $this->record->resetPassword();
 
                     // Notify the user of the password reset
                     Notification::make()
@@ -43,7 +66,7 @@ class EditUser extends EditRecord
                 ->icon('heroicon-s-key')
                 ->modalHeading('Confirmar redefinição da senha')
                 ->modalDescription('O usuário será deslogado de qualquer sessão ativa e sua senha padrão será redefinida para o seu CPF.')
-                ->color('danger'),
+                ->color('warning'),
         ];
     }
 }
