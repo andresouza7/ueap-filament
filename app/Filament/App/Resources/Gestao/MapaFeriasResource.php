@@ -179,6 +179,6 @@ class MapaFeriasResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('type', 2)->whereYear('start_date', Carbon::now()->year);
+            ->where('type', 2)->whereYear('start_date', '>=', Carbon::now()->year);
     }
 }

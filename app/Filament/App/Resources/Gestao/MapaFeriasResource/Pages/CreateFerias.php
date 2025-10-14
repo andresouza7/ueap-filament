@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class CreateFerias extends CreateRecord
 {
@@ -20,5 +21,10 @@ class CreateFerias extends CreateRecord
         $data['type'] = 2;
 
         return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
