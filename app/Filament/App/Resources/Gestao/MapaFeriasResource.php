@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Gestao;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\RelationManagers;
 use App\Models\CalendarOccurrence;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -40,13 +41,16 @@ class MapaFeriasResource extends Resource
                         ->label('Usuário')
                         ->columnSpanFull()
                         ->required()
-                        ->relationship(
-                            name: 'user',
-                            titleAttribute: 'id', // doesn’t matter, we’ll override below
-                            modifyQueryUsing: fn($query) =>
-                            $query->whereNotNull('enrollment')
+                        ->options(
+                            fn() =>
+                            User::active()
+                                ->with('person')
+                                ->orderBy('login')
+                                ->get()
+                                ->mapWithKeys(fn($user) => [
+                                    $user->id => $user->person?->name ?? 'Sem nome',
+                                ])
                         )
-                        ->getOptionLabelFromRecordUsing(fn($record) => $record->person?->name ?? 'Sem nome')
                         ->searchable()
                         ->preload(),
 

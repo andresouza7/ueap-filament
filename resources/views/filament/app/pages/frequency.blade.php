@@ -6,19 +6,23 @@
                 Emitir Ponto
             </x-filament::tabs.item>
 
-            <x-filament::tabs.item @click="tab = 'tab2'" :alpine-active="'tab === \'tab2\''">
-                Ocorrências do Ponto
-            </x-filament::tabs.item>
+            @if ($canFillFields)
+                <x-filament::tabs.item @click="tab = 'tab2'" :alpine-active="'tab === \'tab2\''">
+                    Ocorrências do Ponto
+                </x-filament::tabs.item>
 
-            <x-filament::tabs.item @click="tab = 'tab3'" :alpine-active="'tab === \'tab3\''">
-                Upload Assinatura
-            </x-filament::tabs.item>
-
+                <x-filament::tabs.item @click="tab = 'tab3'" :alpine-active="'tab === \'tab3\''">
+                    Upload Assinatura
+                </x-filament::tabs.item>
+            @endif
         </x-filament::tabs>
 
         <div>
             <div x-show="tab === 'tab1'">
-                @livewire('frequency-emit')
+                @livewire('frequency-emit', [
+                    'record' => $requestedUser,
+                    'canFillFields' => $canFillFields,
+                ])
             </div>
 
             <div x-show="tab === 'tab2'">

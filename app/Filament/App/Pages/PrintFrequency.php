@@ -3,6 +3,7 @@
 namespace App\Filament\App\Pages;
 
 use App\Models\CalendarOccurrence;
+use App\Models\User;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Group;
@@ -36,6 +37,29 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
     protected static ?string $title = 'Folha de Ponto';
     protected static ?string $navigationGroup = 'Minha Área';
     protected static ?int $navigationSort = 3;
+
+    public User $requestedUser;
+    // Usuário pode preencher campos do formulário
+    public bool $canFillFields = false;
+
+    public function mount()
+    {
+        $signedUser = Auth::user();
+        $this->requestedUser = User::findOrFail(request('user') ?? $signedUser->id);
+
+        $isSameUser = $this->requestedUser->id === $signedUser->id;
+        $hasPermission = $signedUser->hasAnyRole(['dinfo', 'urh']);
+
+        // Permite acesso apenas se for o próprio usuário ou tiver role especial
+        abort_unless(
+            $isSameUser || $hasPermission,
+            403
+        );
+
+        // Pode preencher campos: é o próprio usuário ou usuário especial acessando ele mesmo
+        $this->canFillFields = $isSameUser;
+    }
+
 
     public function table(Table $table): Table
     {

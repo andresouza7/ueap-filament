@@ -100,7 +100,7 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     public function getSignatureUrlAttribute()
     {
         $filePath = 'signatures/' . $this->uuid . '.jpg';
-     
+
         if (Storage::exists($filePath)) {
             return Storage::url($filePath);
         }
@@ -168,12 +168,12 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $this->hasMany(SocialPost::class, 'user_id');
     }
 
-    public function hasDocumentCategory(string $type): bool 
+    public function hasDocumentCategory(string $type): bool
     {
         $userGroups = $this->groups->pluck('id');
         $documentCategoryIds = DB::table('document_category_group')->whereIn('group_id', $userGroups)->pluck('document_category_id');
 
-        return DocumentCategory::whereIn('id',$documentCategoryIds)->where('type', $type)->exists();
+        return DocumentCategory::whereIn('id', $documentCategoryIds)->where('type', $type)->exists();
         // return DB::table('document_category_group')->whereIn('group_id', $userGroups)->exists();
     }
 
@@ -181,5 +181,24 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     {
         $categoryGroups = $document->category->groups->pluck('name');
         return $this->hasAnyRole($categoryGroups->toArray());
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('password', '<>', 'X');
+    }
+
+    public function isActive() {
+        return $this->password === 'X';
+    }
+
+    public function resetPassword() {
+        $this->password = $this->person->cpf_cnpj;
+        $this->save();
+    }
+
+    public function setInactive()
+    {
+        DB::table('users')->where('id', $this->id)->update(['password' => 'X']);
     }
 }
