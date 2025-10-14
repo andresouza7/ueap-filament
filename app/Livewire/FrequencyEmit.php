@@ -3,8 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\CalendarOccurrence;
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
@@ -23,8 +25,14 @@ class FrequencyEmit extends Component implements HasForms
 
     public ?array $data = [];
 
-    public function mount(): void
+    public ?User $record = null;
+    public bool $canFillFields = false;
+
+    public function mount(User $record, bool $canFillFields): void
     {
+        $this->record = $record;
+        $this->canFillFields = $canFillFields;
+
         $this->form->fill([
             'type' => 0,
             'month' => date('m') - 1,
@@ -36,7 +44,7 @@ class FrequencyEmit extends Component implements HasForms
     {
         $formData = $this->form->getState();
 
-        $user = Auth::user();
+        $user = $this->record;
 
         $occurrences = CalendarOccurrence::where('type', 3)->where('user_id', $user->id)->orWhere('type', 1)->get();
         $occurrences_user = CalendarOccurrence::where('type', 2)->where('user_id', $user->id)->get();
@@ -52,7 +60,10 @@ class FrequencyEmit extends Component implements HasForms
         // return redirect()->route('frequency.print', $data);
 
         // Generate the URL where the data should be submitted
-        $url = route('frequency.print', $data); // Assuming the route exists
+        $url = route('frequency.print', [
+            'data' => $data,
+            'uuid' => $user->uuid
+        ]); // Assuming the route exists
 
         // Dispatch a browser event to open a new tab
         return $this->dispatch('open-new-tab', $url);
@@ -64,6 +75,11 @@ class FrequencyEmit extends Component implements HasForms
             Section::make([
                 Split::make([
                     Group::make([
+                        TextInput::make('person_name')
+                            ->label('Nome')
+                            ->disabled()
+                            ->formatStateUsing(fn() => $this->record->person?->name ?? 'Sem nome')
+                            ->hidden(fn() => $this->canFillFields),
                         Select::make('type')
                             ->label('Ponto')
                             ->required()
@@ -94,7 +110,8 @@ class FrequencyEmit extends Component implements HasForms
                             ->required()
                             ->label('Ano'),
                         Toggle::make('use_signature')
-                            ->label('Usar assinatura'),
+                            ->label('Usar assinatura')
+                            ->visible($this->canFillFields),
                     ]),
                     Group::make([
                         Split::make([
@@ -134,7 +151,7 @@ class FrequencyEmit extends Component implements HasForms
                                 ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
                         Toggle::make('preencher_horario')->live(),
-                    ]),
+                    ])->visible($this->canFillFields),
                 ])->from('md')
             ])->heading('Preencher folha de ponto')
                 ->description('Selecione o tipo do ponto e o período desejado. Você também pode optar por utilizar sua assinatura cadastrada e preencher o horário do expediente.')

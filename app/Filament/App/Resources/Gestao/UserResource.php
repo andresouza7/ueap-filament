@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\Gestao;
 use App\Filament\App\Resources\Gestao\UserResource\Pages;
 use App\Filament\App\Resources\Gestao\UserResource\RelationManagers\GroupsRelationManager;
 use App\Filament\App\Resources\Gestao\UserResource\RelationManagers\PersonRelationManager;
+use App\Livewire\FrequencyEmit;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
@@ -183,6 +184,11 @@ class UserResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('imprimirPonto')
+                    ->label('Ponto')
+                    ->icon('heroicon-o-document')
+                    ->url(fn($record) => route('filament.app.pages.print-frequency', ['user' => $record->id]))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
