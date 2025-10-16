@@ -46,24 +46,13 @@ class FrequencyEmit extends Component implements HasForms
 
         $user = $this->record;
 
-        $occurrences = CalendarOccurrence::where('type', 3)->where('user_id', $user->id)->orWhere('type', 1)->get();
-        $occurrences_user = CalendarOccurrence::where('type', 2)->where('user_id', $user->id)->get();
-
         $data = array_merge(
             $formData,
-            [
-                'user' => $user,
-                'occurrences' => $occurrences,
-                'occurrences_user' => $occurrences_user,
-            ]
+            ['uuid' => $user->uuid]
         );
-        // return redirect()->route('frequency.print', $data);
 
         // Generate the URL where the data should be submitted
-        $url = route('frequency.print', [
-            'data' => $data,
-            'uuid' => $user->uuid
-        ]); // Assuming the route exists
+        $url = route('frequency.print', $data); // Assuming the route exists
 
         // Dispatch a browser event to open a new tab
         return $this->dispatch('open-new-tab', $url);
