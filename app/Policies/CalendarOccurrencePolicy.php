@@ -13,7 +13,7 @@ class CalendarOccurrencePolicy
      */
     public function viewAny(User $user): bool
     {
-        
+
 
         return $user->hasAnyRole('urh|dinfo');
     }
@@ -47,6 +47,10 @@ class CalendarOccurrencePolicy
      */
     public function delete(User $user, CalendarOccurrence $calendarOccurrence): bool
     {
+        if ($calendarOccurrence->type === 3) {
+            return true;
+        }
+
         return $user->hasRole('urh|dinfo');
     }
 
