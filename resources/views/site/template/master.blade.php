@@ -156,11 +156,11 @@
                             @endif
                         </ul>
             
-                        {{-- <form class="d-flex" action="{{ route('site.search') }}" method="GET">
+                        <form class="d-flex" action="{{ route('site.search') }}" method="GET">
                             <input class="form-control me-2" type="text" name="query" placeholder="O que você procura?"
                                 aria-label="Search" value="{{ request('query') }}" />
                             <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form> --}}
+                        </form>
                     </div>
                 </div>
             </nav>

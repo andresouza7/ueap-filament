@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\OldPageController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -84,6 +85,8 @@ Route::name('site.')->group(function () {
         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
     });
+
+    Route::get('/busca', [SearchController::class, 'index'])->name('search');
 });
 
 // Rotas de call back da autenticação OAuth2
