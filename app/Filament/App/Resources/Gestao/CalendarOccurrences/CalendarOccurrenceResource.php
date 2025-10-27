@@ -3,21 +3,13 @@
 namespace App\Filament\App\Resources\Gestao\CalendarOccurrences;
 
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\ListCalendarOccurrences;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\CreateCalendarOccurrence;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\EditCalendarOccurrence;
-use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages;
-use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\RelationManagers;
+use App\Filament\Resources\Gestao\CalendarOccurrences\Schemas\CalendarOccurenceForm;
+use App\Filament\Resources\Gestao\CalendarOccurrences\Tables\CalendarOccurrencesTable;
 use App\Models\CalendarOccurrence;
-use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -42,63 +34,12 @@ class CalendarOccurrenceResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make([
-                    TextInput::make('description')
-                        ->label('Descrição')
-                        ->columnSpanFull()
-                        ->required()
-                        ->maxLength(255),
-                    DatePicker::make('start_date')
-                        ->label('Data Início')
-                        ->required(),
-                    DatePicker::make('end_date')
-                        ->label('Data Fim'),
-                ])
-            ]);
+        return CalendarOccurenceForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->defaultSort('id', 'desc')
-            ->columns([
-                TextColumn::make('description')
-                    ->label('Descrição')
-                    ->searchable(),
-                TextColumn::make('start_date')
-                    ->label('Data Início')
-                    ->date('d/m/Y')
-                    ->sortable(),
-                TextColumn::make('end_date')
-                    ->label('Data Fim')
-                    ->date('d/m/Y')
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return CalendarOccurrencesTable::configure($table);
     }
 
     public static function getRelations(): array

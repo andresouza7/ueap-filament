@@ -11,6 +11,7 @@ use App\Filament\App\Resources\Social\SocialUsers\RelationManagers\PostsRelation
 use App\Filament\Resources\Social\SocialUsers\Schemas\SocialUserInfolist;
 use App\Filament\Resources\Social\SocialUsers\Tables\SocialUsersTable;
 use App\Models\User;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
