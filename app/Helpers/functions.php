@@ -21,7 +21,20 @@ function styleFilamentPanel(Panel $panel): Panel
     return $panel->font('Karla')
         ->colors([
             // 'primary' => '#017840'
-            'primary' => '#14b8a6',
+            'primary' => [
+                50 => 'oklch(0.95 0.02 182)',
+                100 => 'oklch(0.89 0.03 182)',
+                200 => 'oklch(0.80 0.05 182)',
+                300 => 'oklch(0.70 0.07 182)',
+                400 => 'oklch(0.60 0.10 182)',
+                500 => 'oklch(0.52 0.12 182)',
+                600 => 'oklch(0.46 0.13 182)',
+                700 => 'oklch(0.40 0.12 182)', // slightly lighter teal ~#12807b
+                800 => 'oklch(0.34 0.10 182)',
+                900 => 'oklch(0.29 0.08 182)',
+                950 => 'oklch(0.23 0.06 182)',
+            ],
+
             'secondary' => Color::Zinc,
         ])
         ->assets([
