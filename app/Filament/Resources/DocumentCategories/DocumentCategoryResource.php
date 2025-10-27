@@ -16,6 +16,8 @@ use App\Filament\Resources\DocumentCategories\Pages\EditDocumentCategory;
 use App\Filament\Resources\DocumentCategoryResource\Pages;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 use App\Filament\Resources\DocumentCategories\RelationManagers\GroupsRelationManager;
+use App\Filament\Resources\DocumentCategories\Schemas\DocumentCategoryForm;
+use App\Filament\Resources\DocumentCategories\Tables\DocumentCategoriesTable;
 use App\Models\DocumentCategory;
 use Filament\Forms;
 use Filament\Resources\Resource;
@@ -36,100 +38,12 @@ class DocumentCategoryResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label('Nome')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                // Forms\Components\TextInput::make('description')
-                //     ->maxLength(255),
-                Select::make('status')
-                    ->options([
-                        'published' => 'Publicado',
-                        'unpublished' => 'Despublicado'
-                    ])
-                    ->required(),
-                Select::make('type')
-                    ->label('Tipo')
-                    ->required()
-                    ->options([
-                        'general' => 'Geral',
-                        'transparency' => 'Transparência'
-                    ])
-                    ->default('general'),
-                Select::make('groups')
-                    ->label('Liberar acesso para')
-                    ->relationship('groups', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable(),
-            ]);
+        return DocumentCategoryForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->defaultSort('name')
-            ->columns([
-                TextColumn::make('id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->label('Nome')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->badge()
-                    ->searchable(),
-                TextColumn::make('type')
-                    ->label('Tipo')
-                    ->badge()
-                    ->color('gray')
-                    ->searchable(),
-                // New column for displaying group names
-                TextColumn::make('groups.name')
-                    ->label('Acesso liberado para')
-                    ->wrap()
-                    ->formatStateUsing(function ($state, $record) {
-                        return $record->groups->pluck('name')->join(', ');
-                    })
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                TrashedFilter::make(),
-                SelectFilter::make('type')
-                    ->options([
-                        'transparency' => 'Transparência',
-                        'general' => 'Geral'
-                    ])
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                    // Tables\Actions\ForceDeleteBulkAction::make(),
-                    // Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+        return DocumentCategoriesTable::configure($table);
     }
 
     public static function getRelations(): array

@@ -9,7 +9,7 @@ use App\Filament\Resources\CommissionedRoles\Pages\EditCommissionedRole;
 use App\Filament\Resources\CommissionedRoleResource\Pages;
 use App\Filament\Resources\CommissionedRoleResource\RelationManagers;
 use App\Filament\Resources\CommissionedRoles\Schemas\CommissionedRoleForm;
-use App\Filament\Resources\CommissionedRoles\Tables\CommissionedRoleTable;
+use App\Filament\Resources\CommissionedRoles\Tables\CommissionedRolesTable;
 use App\Models\CommissionedRole;
 use Filament\Forms;
 use Filament\Resources\Resource;
@@ -35,7 +35,7 @@ class CommissionedRoleResource extends Resource
 
      public static function table(Table $table): Table
     {
-        return CommissionedRoleTable::configure($table);
+        return CommissionedRolesTable::configure($table);
     }
 
     public static function getRelations(): array

@@ -13,6 +13,8 @@ use App\Filament\Resources\EffectiveRoles\Pages\CreateEffectiveRole;
 use App\Filament\Resources\EffectiveRoles\Pages\EditEffectiveRole;
 use App\Filament\Resources\EffectiveRoleResource\Pages;
 use App\Filament\Resources\EffectiveRoleResource\RelationManagers;
+use App\Filament\Resources\EffectiveRoles\Schemas\EffectiveRoleForm;
+use App\Filament\Resources\EffectiveRoles\Tables\EffectiveRolesTable;
 use App\Models\EffectiveRole;
 use Filament\Forms;
 use Filament\Resources\Resource;
@@ -33,51 +35,12 @@ class EffectiveRoleResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('description')
-                    ->label('Descrição')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+        return EffectiveRoleForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->defaultSort('description')
-            ->columns([
-                TextColumn::make('id')
-                    ->sortable(),
-                TextColumn::make('description')
-                    ->label('Descrição')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                    // Tables\Actions\ForceDeleteBulkAction::make(),
-                    // Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+        return EffectiveRolesTable::configure($table);
     }
 
     public static function getRelations(): array

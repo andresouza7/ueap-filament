@@ -12,6 +12,8 @@ use App\Filament\Resources\Groups\Pages\CreateGroup;
 use App\Filament\Resources\Groups\Pages\EditGroup;
 use App\Filament\Resources\GroupResource\Pages;
 use App\Filament\Resources\GroupResource\RelationManagers;
+use App\Filament\Resources\Groups\Schemas\GroupForm;
+use App\Filament\Resources\Groups\Tables\GroupsTable;
 use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -33,67 +35,12 @@ class GroupResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make([
-                    TextInput::make('name')
-                        ->label('Nome')
-                        ->maxLength(255),
-                    TextInput::make('description')
-                        ->label('Descrição')
-                        ->maxLength(255),
-                    Select::make('group_parent_id')
-                        ->label('Pertence a')
-                        ->relationship('parent', 'description')
-                        ->searchable()
-                        ->preload(),
-                ])
-            ]);
+        return GroupForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->defaultSort('name')
-            ->columns([
-                TextColumn::make('id')
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->label('Nome')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('description')
-                    ->label('Descrição')
-                    ->searchable(),
-                TextColumn::make('parent.name')
-                    ->label('Pertence a')
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                //     Tables\Actions\ForceDeleteBulkAction::make(),
-                //     Tables\Actions\RestoreBulkAction::make(),
-                // ]),
-            ]);
+        return GroupsTable::configure($table);
     }
 
     public static function getRelations(): array
