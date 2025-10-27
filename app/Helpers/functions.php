@@ -20,7 +20,7 @@ function styleFilamentPanel(Panel $panel): Panel
 {
     return $panel->font('Karla')
         ->colors([
-            'primary' => Color::Teal,
+            'primary' => '#017840',
         ])
         ->assets([
             Css::make('filament-stylesheet', resource_path('css/filament.css'))

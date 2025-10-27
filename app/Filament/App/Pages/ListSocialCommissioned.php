@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Filament\App\Resources\Social\SocialUserResource;
+use App\Filament\App\Resources\Social\SocialUsers\SocialUserResource;
 use App\Models\CommissionedRole;
 use Filament\Pages\Page;
 use Filament\Support\Enums\FontWeight;

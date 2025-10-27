@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Filament\Actions\Action;
-use App\Filament\App\Resources\Social\PontoResource;
+use App\Filament\App\Resources\Social\Pontos\PontoResource;
 use App\Models\CalendarOccurrence;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;

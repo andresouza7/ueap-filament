@@ -3,8 +3,8 @@
 namespace App\Filament\App\Widgets;
 
 use Filament\Support\Enums\TextSize;
-use App\Filament\App\Resources\Social\SocialGroupResource;
-use App\Filament\App\Resources\Social\SocialUserResource;
+use App\Filament\App\Resources\Social\SocialGroups\SocialGroupResource;
+use App\Filament\App\Resources\Social\SocialUsers\SocialUserResource;
 use App\Models\SocialPost;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
