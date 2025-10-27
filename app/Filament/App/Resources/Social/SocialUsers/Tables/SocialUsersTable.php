@@ -29,7 +29,7 @@ class SocialUsersTable
                 Split::make([
                     ImageColumn::make('profile_photo_url')
                         ->grow(false)
-                        ->size('70px')
+                        ->imageSize('70px')
                         ->circular(),
                     Stack::make([
                         TextColumn::make('login')

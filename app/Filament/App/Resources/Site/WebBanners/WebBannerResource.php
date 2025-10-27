@@ -83,7 +83,7 @@ class WebBannerResource extends Resource
                     ->label('#'),
                 TextColumn::make('name')
                     ->label('Nome')
-                    ->limit()
+                    ->limit(50)
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()

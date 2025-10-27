@@ -43,16 +43,16 @@ class UsersRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('login')
+            ->recordUrl(fn($record) => $record->id ? SocialUserResource::getUrl('view', ['record' => $record->id]) : null)
             ->columns([
                 Split::make([
                     ImageColumn::make('profile_photo_url')
                         ->grow(false)
-                        ->size('70px')
+                        ->imageSize('70px')
                         ->circular(),
                     Stack::make([
                         TextColumn::make('login')
                             ->size('100px')
-                            ->url(fn($record) => $record->id ? SocialUserResource::getUrl('view', ['record' => $record->id]) : null)
                             ->weight(FontWeight::SemiBold)
                             ->formatStateUsing(fn($state) => collect(explode('.', $state))
                                 ->map(fn($part) => ucfirst(trim($part)))
@@ -107,15 +107,15 @@ class UsersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                CreateAction::make(),
+                // CreateAction::make(),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                // EditAction::make(),
+                // DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    // DeleteBulkAction::make(),
                 ]),
             ]);
     }

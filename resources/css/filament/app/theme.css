@@ -4,3 +4,4 @@
 @source '../../../../app/Providers/Filament/**/*';
 @source '../../../../resources/views/filament/app/**/*';
 @source './vendor/filament/**/*.blade.php';
+
