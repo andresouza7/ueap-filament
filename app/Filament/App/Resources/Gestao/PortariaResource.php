@@ -2,14 +2,26 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\Action;
+use App\Filament\App\Resources\Gestao\PortariaResource\Pages\ListPortarias;
+use App\Filament\App\Resources\Gestao\PortariaResource\Pages\CreatePortaria;
+use App\Filament\App\Resources\Gestao\PortariaResource\Pages\EditPortaria;
 use App\Filament\App\Resources\Gestao\PortariaResource\Pages;
 use App\Filament\App\Resources\Gestao\PortariaResource\RelationManagers;
 use App\Models\Portaria;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -25,8 +37,8 @@ class PortariaResource extends Resource
     protected static ?string $model = Portaria::class;
     protected static ?string $modelLabel = 'Portaria';
     protected static ?string $pluralModelLabel = 'Portarias';
-    protected static ?string $navigationGroup = 'Gestão';
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
     protected static ?int $navigationSort = 5;
 
     public static function getEloquentQuery(): Builder
@@ -34,9 +46,9 @@ class PortariaResource extends Resource
         return parent::getEloquentQuery()->whereNot('origin', 'CONSU');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema(self::getPortariaForm());
+        return $schema->components(self::getPortariaForm());
     }
 
     public static function table(Table $table): Table
@@ -48,25 +60,25 @@ class PortariaResource extends Resource
     {
         return [
             Section::make([
-                Forms\Components\TextInput::make('number')
+                TextInput::make('number')
                     ->label('Número')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('year')
+                TextInput::make('year')
                     ->label('Ano')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('subject')
+                TextInput::make('subject')
                     ->label('Assunto')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->label('Descrição')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('created_at')
+                DatePicker::make('created_at')
                     ->label('Data'),
-                Forms\Components\TextInput::make('origin')
+                TextInput::make('origin')
                     ->hidden(fn() => Auth::user()->hasRole('consu'))
                     ->label('Origem')
                     ->maxLength(255),
@@ -79,7 +91,7 @@ class PortariaResource extends Resource
                     ->maxFiles(1)
                     ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.pdf'),
 
-                Forms\Components\Select::make('persons')
+                Select::make('persons')
                     ->columnSpanFull()
                     ->label('Servidores')
                     ->relationship(
@@ -100,53 +112,53 @@ class PortariaResource extends Resource
             ->defaultSort(fn($query) => $query->orderBy('year', 'desc')->orderBy('number', 'desc'))
             ->columns([
                 // Tables\Columns\TextColumn::make('id')->searchable(),
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('Nº')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Assunto/Descrição')
                     ->limit(70)
                     ->formatStateUsing(function ($state, $record) {
                         return sprintf("%s - %s", $record->subject, $state);
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('origin')
+                TextColumn::make('origin')
                     ->label('Origem')
                     ->limit(30)
                     ->searchable(),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\Action::make('download')
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
@@ -163,10 +175,10 @@ class PortariaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPortarias::route('/'),
-            'create' => Pages\CreatePortaria::route('/create'),
+            'index' => ListPortarias::route('/'),
+            'create' => CreatePortaria::route('/create'),
             // 'view' => Pages\ViewDocumentOrdinance::route('/{record}'),
-            'edit' => Pages\EditPortaria::route('/{record}/edit'),
+            'edit' => EditPortaria::route('/{record}/edit'),
         ];
     }
 }

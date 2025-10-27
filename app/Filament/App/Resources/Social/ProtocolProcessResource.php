@@ -2,15 +2,19 @@
 
 namespace App\Filament\App\Resources\Social;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Social\ProtocolProcessResource\Pages\ListProtocolProcesses;
+use App\Filament\App\Resources\Social\ProtocolProcessResource\Pages\ViewProtocolProcess;
 use App\Filament\App\Resources\Social\ProtocolProcessResource\Pages;
 use App\Filament\App\Resources\Social\ProtocolProcessResource\RelationManagers;
 use App\Filament\App\Resources\Social\ProtocolProcessResource\RelationManagers\HistoriesRelationManager;
 use App\Models\ProtocolProcess;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,12 +26,12 @@ class ProtocolProcessResource extends Resource
     protected static ?string $model = ProtocolProcess::class;
     protected static ?string $modelLabel = 'Consultar Processo';
     protected static ?string $pluralModelLabel = 'Consultar Processos';
-    protected static ?string $navigationGroup = 'Protocolo Digital';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \UnitEnum | null $navigationGroup = 'Protocolo Digital';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist->schema([
+        return $schema->components([
             Section::make('Dados do Processo')
                 ->columns(3)
                 ->schema([
@@ -60,10 +64,10 @@ class ProtocolProcessResource extends Resource
         ]);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([]);
+        return $schema
+            ->components([]);
     }
 
     public static function table(Table $table): Table
@@ -71,45 +75,45 @@ class ProtocolProcessResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('Processo')
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('subject.description')
+                TextColumn::make('subject.description')
                     ->label('Serviço')
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-xs break-words',
                     ])
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-xs break-words',
                     ])
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('person.name')
+                TextColumn::make('person.name')
                     ->label('Interessado')
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-xs break-words',
                     ])
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('group_received.description')
+                TextColumn::make('group_received.description')
                     ->label('Último Trâmite')
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-xs break-words',
                     ])
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -117,12 +121,12 @@ class ProtocolProcessResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
+            ->recordActions([
+                ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -138,9 +142,9 @@ class ProtocolProcessResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProtocolProcesses::route('/'),
+            'index' => ListProtocolProcesses::route('/'),
             // 'create' => Pages\CreateProtocolProcess::route('/create'),
-            'view' => Pages\ViewProtocolProcess::route('/{record}'),
+            'view' => ViewProtocolProcess::route('/{record}'),
             // 'edit' => Pages\EditProtocolProcess::route('/{record}/edit'),
         ];
     }

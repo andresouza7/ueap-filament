@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources\Social\SocialUserResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Support\Enums\TextSize;
+use Filament\Actions\Action;
 use App\Filament\App\Resources\Social\SocialGroupResource;
 use App\Filament\App\Resources\Social\SocialPostResource;
 use App\Filament\App\Resources\Social\SocialUserResource;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -23,11 +26,11 @@ class PostsRelationManager extends RelationManager
     protected static string $relationship = 'posts';
     protected static ?string $title = 'Postagens';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('uuid')
+        return $schema
+            ->components([
+                TextInput::make('uuid')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -59,7 +62,7 @@ class PostsRelationManager extends RelationManager
                             ])->grow(false),
 
                             TextColumn::make('updated_at')
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 // ->extraAttributes(['class' => 'italic'])
                                 ->color('gray')
                                 ->dateTime('d M Y, H:i'),
@@ -74,8 +77,8 @@ class PostsRelationManager extends RelationManager
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\Action::make('Editar')
+            ->recordActions([
+                Action::make('Editar')
                     ->visible(fn($record) => $record->user_id === auth()->id())
                     ->url(fn($record) => SocialPostResource::getUrl('edit', ['record' => $record->id])),
             ]);

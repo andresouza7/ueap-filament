@@ -2,6 +2,16 @@
 
 namespace App\Filament\App\Resources\Social;
 
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\TextSize;
+use Filament\Actions\BulkActionGroup;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Actions;
+use Filament\Actions\Action;
+use Filament\Schemas\Components\Flex;
+use App\Filament\App\Resources\Social\SocialUserResource\Pages\ListSocialUser;
+use App\Filament\App\Resources\Social\SocialUserResource\Pages\ViewSocialUser;
 use App\Filament\App\Resources\Social\SocialUserResource\Pages;
 use App\Filament\App\Resources\Social\SocialUserResource\RelationManagers\CalendarOccurrencesRelationManager;
 use App\Filament\App\Resources\Social\SocialUserResource\RelationManagers\OrdinancesRelationManager;
@@ -9,14 +19,8 @@ use App\Filament\App\Resources\Social\SocialUserResource\RelationManagers\PostsR
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\Actions;
-use Filament\Infolists\Components\Actions\Action;
-use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
@@ -36,16 +40,16 @@ class SocialUserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
     protected static ?string $slug = 'servidor';
-    protected static ?string $navigationGroup = 'Social';
+    protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 2;
     protected static bool $shouldSkipAuthorization = true;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 //
                 TextInput::make('name')
             ]);
@@ -75,7 +79,7 @@ class SocialUserResource extends Resource
                         Stack::make([
                             TextColumn::make('effective_role.description')
                                 ->tooltip(fn($state) => $state)
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 ->color('gray')
                                 ->weight(FontWeight::SemiBold)
                                 ->words(5)
@@ -85,7 +89,7 @@ class SocialUserResource extends Resource
                             TextColumn::make('group.name')
                                 ->color('primary')
                                 ->formatStateUsing(fn($state) => strtoupper($state))
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 ->weight(FontWeight::SemiBold),
                         ])
                     ])->space(2)
@@ -99,21 +103,21 @@ class SocialUserResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Dados Funcionais')
                     ->columns(3)
                     ->schema([
@@ -128,7 +132,7 @@ class SocialUserResource extends Resource
                                 ->size(200),
 
                             TextEntry::make('login')
-                                ->size(TextEntry\TextEntrySize::Large)
+                                ->size(TextSize::Large)
                                 ->weight(FontWeight::Bold)
                                 ->alignCenter()
                                 ->hiddenLabel(),
@@ -148,7 +152,7 @@ class SocialUserResource extends Resource
                                     ->extraAttributes(['class' => 'px-2 py-1'])
                                     ->icon('heroicon-m-pencil')
                                     ->visible(fn($record) => $record->id === Auth::id())
-                                    ->form([
+                                    ->schema([
                                         FileUpload::make('attachment')
                                             ->label('Arquivo')
                                             ->directory('users')
@@ -171,7 +175,7 @@ class SocialUserResource extends Resource
                         ])->extraAttributes(['class' => 'h-full flex items-center justify-center']),
 
                         Group::make([
-                            \Filament\Infolists\Components\Split::make([
+                            Flex::make([
                                 TextEntry::make('person.name')
                                     ->label('Nome')
                             ]),
@@ -214,8 +218,8 @@ class SocialUserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSocialUser::route('/'),
-            'view' => Pages\ViewSocialUser::route('/{record}'),
+            'index' => ListSocialUser::route('/'),
+            'view' => ViewSocialUser::route('/{record}'),
         ];
     }
 }

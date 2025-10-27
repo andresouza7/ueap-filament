@@ -2,12 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\Resources\DocumentCategoryResource\Pages\ListDocumentCategories;
+use App\Filament\Resources\DocumentCategoryResource\Pages\CreateDocumentCategory;
+use App\Filament\Resources\DocumentCategoryResource\Pages\EditDocumentCategory;
 use App\Filament\Resources\DocumentCategoryResource\Pages;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers\GroupsRelationManager;
 use App\Models\DocumentCategory;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,31 +29,31 @@ class DocumentCategoryResource extends Resource
     protected static ?string $model = DocumentCategory::class;
     protected static ?string $modelLabel = 'Categoria de Documento';
     protected static ?string $pluralModelLabel = 'Categorias de Documentos';
-    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
     protected static ?string $slug = 'categoria-documento';
-    protected static ?string $navigationGroup = 'Gerência';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->label('Nome')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
+                TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
                 // Forms\Components\TextInput::make('description')
                 //     ->maxLength(255),
-                Forms\Components\Select::make('status')
+                Select::make('status')
                     ->options([
                         'published' => 'Publicado',
                         'unpublished' => 'Despublicado'
                     ])
                     ->required(),
-                Forms\Components\Select::make('type')
+                Select::make('type')
                     ->label('Tipo')
                     ->required()
                     ->options([
@@ -51,7 +61,7 @@ class DocumentCategoryResource extends Resource
                         'transparency' => 'Transparência'
                     ])
                     ->default('general'),
-                Forms\Components\Select::make('groups')
+                Select::make('groups')
                     ->label('Liberar acesso para')
                     ->relationship('groups', 'name')
                     ->multiple()
@@ -65,56 +75,56 @@ class DocumentCategoryResource extends Resource
         return $table
             ->defaultSort('name')
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
                     ->color('gray')
                     ->searchable(),
                 // New column for displaying group names
-                Tables\Columns\TextColumn::make('groups.name')
+                TextColumn::make('groups.name')
                     ->label('Acesso liberado para')
                     ->wrap()
                     ->formatStateUsing(function ($state, $record) {
                         return $record->groups->pluck('name')->join(', ');
                     })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
-                Tables\Filters\SelectFilter::make('type')
+                TrashedFilter::make(),
+                SelectFilter::make('type')
                     ->options([
                         'transparency' => 'Transparência',
                         'general' => 'Geral'
                     ])
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -132,9 +142,9 @@ class DocumentCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDocumentCategories::route('/'),
-            'create' => Pages\CreateDocumentCategory::route('/create'),
-            'edit' => Pages\EditDocumentCategory::route('/{record}/edit'),
+            'index' => ListDocumentCategories::route('/'),
+            'create' => CreateDocumentCategory::route('/create'),
+            'edit' => EditDocumentCategory::route('/{record}/edit'),
         ];
     }
 

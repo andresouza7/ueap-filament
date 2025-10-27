@@ -2,12 +2,20 @@
 
 namespace App\Filament\App\Resources\Social;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Grid;
+use Filament\Support\Enums\TextSize;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Social\SocialPostResource\Pages\ListSocialPosts;
+use App\Filament\App\Resources\Social\SocialPostResource\Pages\CreateSocialPost;
+use App\Filament\App\Resources\Social\SocialPostResource\Pages\EditSocialPost;
 use App\Filament\App\Resources\Social\SocialPostResource\Pages;
 use App\Models\SocialPost;
 use Filament\Forms;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -26,15 +34,15 @@ class SocialPostResource extends Resource
     protected static ?string $model = SocialPost::class;
     protected static ?string $modelLabel = 'Postagem';
     protected static ?string $pluralModelLabel = 'Postagens';
-    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil-square';
     protected static ?string $slug = 'postagens';
-    protected static ?string $navigationGroup = 'Social';
+    protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Grid::make()
                     ->columns(1)
                     ->schema([
@@ -75,7 +83,7 @@ class SocialPostResource extends Resource
                             ]),
 
                             TextColumn::make('updated_at')
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 // ->extraAttributes(['class' => 'italic'])
                                 ->color('gray')
                                 ->dateTime('d M Y, H:i'),
@@ -88,15 +96,15 @@ class SocialPostResource extends Resource
                 ])->space(3)->extraAttributes(['class' => 'gap-2 p-2'])
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -114,10 +122,10 @@ class SocialPostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSocialPosts::route('/'),
-            'create' => Pages\CreateSocialPost::route('/create'),
+            'index' => ListSocialPosts::route('/'),
+            'create' => CreateSocialPost::route('/create'),
             // 'view' => Pages\ViewSocialPost::route('/{record}'),
-            'edit' => Pages\EditSocialPost::route('/{record}/edit'),
+            'edit' => EditSocialPost::route('/{record}/edit'),
         ];
     }
 

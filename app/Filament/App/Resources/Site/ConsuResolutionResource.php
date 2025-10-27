@@ -2,14 +2,20 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\ConsuResolutionResource\Pages\ListConsuResolutions;
+use App\Filament\App\Resources\Site\ConsuResolutionResource\Pages\CreateConsuResolution;
+use App\Filament\App\Resources\Site\ConsuResolutionResource\Pages\EditConsuResolution;
 use App\Filament\App\Resources\Site\ConsuResolutionResource\Pages;
 use App\Filament\App\Resources\Site\ConsuResolutionResource\RelationManagers;
 use App\Models\ConsuResolution;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -25,14 +31,14 @@ class ConsuResolutionResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Resoluções Consu';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
                     TextInput::make('name')
                         ->required()
@@ -83,15 +89,15 @@ class ConsuResolutionResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('download')
+            ->recordActions([
+                EditAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -107,9 +113,9 @@ class ConsuResolutionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListConsuResolutions::route('/'),
-            'create' => Pages\CreateConsuResolution::route('/create'),
-            'edit' => Pages\EditConsuResolution::route('/{record}/edit'),
+            'index' => ListConsuResolutions::route('/'),
+            'create' => CreateConsuResolution::route('/create'),
+            'edit' => EditConsuResolution::route('/{record}/edit'),
         ];
     }
 }

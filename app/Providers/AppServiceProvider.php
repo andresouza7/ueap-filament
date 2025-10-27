@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Facades\Filament;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
@@ -41,21 +40,5 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
-            $panelSwitch
-                ->visible(fn(): bool => Auth::user()?->hasRole('dinfo'))
-                ->slideOver()
-                ->modalHeading('Alterar Painel')
-                ->modalWidth('sm')
-                ->panels(['app', 'admin'])
-                ->icons([
-                    'app' => 'heroicon-o-user',
-                    'admin' => 'heroicon-o-key',
-                ], $asImage = false)
-                ->labels([
-                    'app' => 'Social',
-                    'admin' => 'Admin',
-                ], $asImage = false);
-        });
     }
 }

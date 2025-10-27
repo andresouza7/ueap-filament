@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Social\SocialPostResource\Pages;
 
+use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\Social\SocialPostResource;
 use Closure;
 use Filament\Actions;
@@ -16,7 +17,7 @@ class ListSocialPosts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

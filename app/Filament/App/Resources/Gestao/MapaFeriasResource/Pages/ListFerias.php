@@ -2,10 +2,11 @@
 
 namespace App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages;
 
+use Filament\Actions\CreateAction;
+use Filament\Support\Enums\Width;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListFerias extends ListRecords
 {
@@ -14,12 +15,12 @@ class ListFerias extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Cadastrar Férias'),
+            CreateAction::make()->label('Cadastrar Férias'),
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): Width
     {
-        return MaxWidth::Full;
+        return Width::Full;
     }
 }

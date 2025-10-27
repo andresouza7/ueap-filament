@@ -2,11 +2,19 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\Resources\EffectiveRoleResource\Pages\ListEffectiveRoles;
+use App\Filament\Resources\EffectiveRoleResource\Pages\CreateEffectiveRole;
+use App\Filament\Resources\EffectiveRoleResource\Pages\EditEffectiveRole;
 use App\Filament\Resources\EffectiveRoleResource\Pages;
 use App\Filament\Resources\EffectiveRoleResource\RelationManagers;
 use App\Models\EffectiveRole;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,16 +26,16 @@ class EffectiveRoleResource extends Resource
     protected static ?string $model = EffectiveRole::class;
     protected static ?string $modelLabel = 'Cargo Efetivo';
     protected static ?string $pluralModelLabel = 'Cargos Efetivos';
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
     protected static ?string $slug = 'cargo-efetivo';
-    protected static ?string $navigationGroup = 'Gerência';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('description')
+        return $schema
+            ->components([
+                TextInput::make('description')
                     ->label('Descrição')
                     ->required()
                     ->maxLength(255),
@@ -39,32 +47,32 @@ class EffectiveRoleResource extends Resource
         return $table
             ->defaultSort('description')
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -82,9 +90,9 @@ class EffectiveRoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEffectiveRoles::route('/'),
-            'create' => Pages\CreateEffectiveRole::route('/create'),
-            'edit' => Pages\EditEffectiveRole::route('/{record}/edit'),
+            'index' => ListEffectiveRoles::route('/'),
+            'create' => CreateEffectiveRole::route('/create'),
+            'edit' => EditEffectiveRole::route('/{record}/edit'),
         ];
     }
 

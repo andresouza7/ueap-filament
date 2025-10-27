@@ -2,8 +2,10 @@
 
 namespace App\Filament\App\Resources\Social\SocialUserResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,11 +18,11 @@ class CalendarOccurrencesRelationManager extends RelationManager
     protected static ?string $title = 'Férias';
     protected static bool $shouldSkipAuthorization = true;
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('description')
+        return $schema
+            ->components([
+                TextInput::make('description')
                     ->label('Descrição')
                     ->required()
                     ->maxLength(255),
@@ -34,13 +36,13 @@ class CalendarOccurrencesRelationManager extends RelationManager
             ->modifyQueryUsing(fn($query) => $query->where('type', 2))
             ->defaultSort('start_date', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('start_date')
+                TextColumn::make('start_date')
                     ->dateTime('d/m/Y')
                     ->label('Data Início'),
-                Tables\Columns\TextColumn::make('end_date')
+                TextColumn::make('end_date')
                     ->dateTime('d/m/Y')
                     ->label('Data Fim'),
             ])
@@ -48,7 +50,7 @@ class CalendarOccurrencesRelationManager extends RelationManager
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\EditAction::make(),
             ]);
     }

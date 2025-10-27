@@ -2,14 +2,19 @@
 
 namespace App\Filament\App\Resources\Social;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use App\Filament\App\Resources\Social\PontoResource\Pages\ListPonto;
+use App\Filament\App\Resources\Social\PontoResource\Pages\CreatePonto;
+use App\Filament\App\Resources\Social\PontoResource\Pages\EditPonto;
 use App\Filament\App\Resources\Social\PontoResource\Pages;
 use App\Filament\App\Resources\Social\PontoResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -22,16 +27,16 @@ class PontoResource extends Resource
 {
     // o unico recurso gerenciavel será o das ocorrencias de ponto
     protected static ?string $model = CalendarOccurrence::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $modelLabel = 'Ocorrência do Ponto';
     protected static ?string $pluralModelLabel = 'Ocorrências do Ponto';
     protected static bool $shouldRegisterNavigation = false;
     protected static bool $shouldSkipAuthorization = true;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
                     Select::make('description')
                         ->label('Tipo')
@@ -80,9 +85,9 @@ class PontoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ]);
     }
 
@@ -96,9 +101,9 @@ class PontoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPonto::route('/'),
-            'create' => Pages\CreatePonto::route('/create'),
-            'edit' => Pages\EditPonto::route('/{record}/edit'),
+            'index' => ListPonto::route('/'),
+            'create' => CreatePonto::route('/create'),
+            'edit' => EditPonto::route('/{record}/edit'),
         ];
     }
 }

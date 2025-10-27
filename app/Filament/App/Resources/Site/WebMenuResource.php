@@ -2,14 +2,22 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\WebMenuResource\Pages\ListWebMenus;
+use App\Filament\App\Resources\Site\WebMenuResource\Pages\CreateWebMenu;
+use App\Filament\App\Resources\Site\WebMenuResource\Pages\ViewWebMenu;
+use App\Filament\App\Resources\Site\WebMenuResource\Pages\EditWebMenu;
 use App\Filament\App\Resources\Site\WebMenuResource\Pages;
 use App\Filament\App\Resources\Site\WebMenuResource\RelationManagers;
 use App\Filament\App\Resources\Site\WebMenuResource\RelationManagers\ItemsRelationManager;
 use App\Models\WebMenu;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -21,28 +29,28 @@ class WebMenuResource extends Resource
 {
     protected static ?string $model = WebMenu::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
-                    Forms\Components\Select::make('web_menu_place_id')
+                    Select::make('web_menu_place_id')
                         ->label('Local')
                         ->searchable()
                         ->preload()
                         ->relationship('web_menu_place', 'name'),
-                    Forms\Components\TextInput::make('slug')
+                    TextInput::make('slug')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('name')
+                    TextInput::make('name')
                         ->label('Nome')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('description')
+                    TextInput::make('description')
                         ->label('Descrição')
                         ->maxLength(255),
                     Select::make('status')
@@ -60,30 +68,30 @@ class WebMenuResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('web_menu_place.name')
+                TextColumn::make('web_menu_place.name')
                     ->label('Local')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('items_count')
+                TextColumn::make('items_count')
                     ->label('Itens')
                     ->counts('items')
                     ->numeric(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -94,12 +102,12 @@ class WebMenuResource extends Resource
                     ->label('Local')
                     ->relationship('menu_place', 'name')
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -116,10 +124,10 @@ class WebMenuResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebMenus::route('/'),
-            'create' => Pages\CreateWebMenu::route('/create'),
-            'view' => Pages\ViewWebMenu::route('/{record}'),
-            'edit' => Pages\EditWebMenu::route('/{record}/edit'),
+            'index' => ListWebMenus::route('/'),
+            'create' => CreateWebMenu::route('/create'),
+            'view' => ViewWebMenu::route('/{record}'),
+            'edit' => EditWebMenu::route('/{record}/edit'),
         ];
     }
 }

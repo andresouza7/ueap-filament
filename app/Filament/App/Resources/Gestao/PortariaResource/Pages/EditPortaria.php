@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Gestao\PortariaResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Gestao\PortariaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -14,7 +15,7 @@ class EditPortaria extends EditRecord
     {
         return [
             // Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

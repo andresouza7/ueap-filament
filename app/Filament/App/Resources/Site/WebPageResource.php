@@ -2,6 +2,20 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\WebPageResource\Pages\ListWebPages;
+use App\Filament\App\Resources\Site\WebPageResource\Pages\CreateWebPage;
+use App\Filament\App\Resources\Site\WebPageResource\Pages\EditWebPage;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPageResource\Pages;
 use App\Filament\App\Resources\Site\WebPageResource\RelationManagers\MenuItemsRelationManager;
@@ -10,9 +24,6 @@ use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -24,31 +35,31 @@ use Illuminate\Support\Str;
 class WebPageResource extends Resource
 {
     protected static ?string $model = WebPage::class;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
-                    Forms\Components\TextInput::make('title')
+                    TextInput::make('title')
                         ->label('Título')
                         ->required()
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('slug')
+                    TextInput::make('slug')
                         ->required()
                         ->suffixIcon('heroicon-m-globe-alt')
                         ->prefix('pagina/')
                         ->maxLength(255),
-                    Forms\Components\Select::make('web_category_id')
+                    Select::make('web_category_id')
                         ->relationship('category', 'name')
                         ->preload()
                         ->searchable()
                         ->label('Categoria'),
-                    Forms\Components\Select::make('status')
+                    Select::make('status')
                         ->required()
                         ->options([
                             'draft' => 'Rascunho',
@@ -73,7 +84,7 @@ class WebPageResource extends Resource
                         ->previewable(false)
                         ->maxFiles(1)
                         ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
-                    Forms\Components\Select::make('web_menu_id')
+                    Select::make('web_menu_id')
                         ->hiddenOn('create')
                         ->label('Exibir menu nesta página?')
                         ->helperText('Escolha um menu lateral para esta página ou crie um novo.')
@@ -87,13 +98,13 @@ class WebPageResource extends Resource
                         // ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} xxx")
                         ->createOptionModalHeading('Criar menu para esta página')
                         ->createOptionForm([
-                            Forms\Components\TextInput::make('name')
+                            TextInput::make('name')
                                 ->label('Nome')
                                 ->required()
                                 ->live(onBlur: true)
                                 ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
                                 ->maxLength(255),
-                            Forms\Components\TextInput::make('slug')
+                            TextInput::make('slug')
                                 ->unique('web_menus', 'slug')
                                 ->required()
                                 ->maxLength(255),
@@ -120,45 +131,45 @@ class WebPageResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Título')
                     ->words(7)
                     // ->description(fn(WebPage $record): string => Str::limit($record->slug, 20))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('hits')
+                TextColumn::make('hits')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_created.login')
+                TextColumn::make('user_created.login')
                     ->label('Autor'),
-                Tables\Columns\TextColumn::make('user_updated.login')
+                TextColumn::make('user_updated.login')
                     ->label('Editado Por'),
-                Tables\Columns\TextColumn::make('web_category_id')
+                TextColumn::make('web_category_id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('web_menu_id')
+                TextColumn::make('web_menu_id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label('Última Edição')
                     ->dateTime('d/m/y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
                 SelectFilter::make('user_created_id')
                     ->relationship('user_created', 'login')
                     ->searchable()
@@ -174,14 +185,14 @@ class WebPageResource extends Resource
                         'unpublished' => 'Despublicado'
                     ])
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                EditAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -201,10 +212,10 @@ class WebPageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebPages::route('/'),
-            'create' => Pages\CreateWebPage::route('/create'),
+            'index' => ListWebPages::route('/'),
+            'create' => CreateWebPage::route('/create'),
             // 'view' => Pages\ViewWebPage::route('/{record}'),
-            'edit' => Pages\EditWebPage::route('/{record}/edit'),
+            'edit' => EditWebPage::route('/{record}/edit'),
         ];
     }
 

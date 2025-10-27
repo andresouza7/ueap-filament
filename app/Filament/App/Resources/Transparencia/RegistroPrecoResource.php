@@ -2,12 +2,22 @@
 
 namespace App\Filament\App\Resources\Transparencia;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages\ListRegistroPreco;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages\CreateRegistroPreco;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages\ViewRegistroPreco;
+use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages\EditRegistroPreco;
 use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\Pages;
 use App\Filament\App\Resources\Transparencia\RegistroPrecoResource\RelationManagers;
 use App\Models\TransparencyBid;
 use App\Models\TransparencyOrder;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,36 +30,36 @@ class RegistroPrecoResource extends Resource
     protected static ?string $modelLabel = 'Ata de Registro de Preço';
     protected static ?string $pluralModelLabel = 'Atas de Registro de Preço';
     protected static ?string $slug = 'registro-preco';
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Transparência';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(3)
-            ->schema([
-                Forms\Components\TextInput::make('number')
+            ->components([
+                TextInput::make('number')
                     ->label('Número')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('year')
+                TextInput::make('year')
                     ->label('Ano')
                     ->required()
                     ->numeric(),
-                Forms\Components\DatePicker::make('start_date')
+                DatePicker::make('start_date')
                     ->label('Data da Abertura')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->columnSpanFull()
                     ->label('Objeto')
                     ->required(),
-                Forms\Components\TextInput::make('location')
+                TextInput::make('location')
                     ->columnSpanFull()
                     ->label('Local da Publicação'),
-                Forms\Components\TextInput::make('link')
+                TextInput::make('link')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('observation')
+                Textarea::make('observation')
                     ->columnSpanFull()
                     ->label('Observação'),
             ]);
@@ -61,25 +71,25 @@ class RegistroPrecoResource extends Resource
             ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'ata'))
             ->columns([
 
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('Número')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->limit()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -87,11 +97,11 @@ class RegistroPrecoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
@@ -108,10 +118,10 @@ class RegistroPrecoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRegistroPreco::route('/'),
-            'create' => Pages\CreateRegistroPreco::route('/create'),
-            'view' => Pages\ViewRegistroPreco::route('/{record}'),
-            'edit' => Pages\EditRegistroPreco::route('/{record}/edit'),
+            'index' => ListRegistroPreco::route('/'),
+            'create' => CreateRegistroPreco::route('/create'),
+            'view' => ViewRegistroPreco::route('/{record}'),
+            'edit' => EditRegistroPreco::route('/{record}/edit'),
         ];
     }
 }

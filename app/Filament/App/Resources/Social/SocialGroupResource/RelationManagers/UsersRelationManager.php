@@ -2,9 +2,16 @@
 
 namespace App\Filament\App\Resources\Social\SocialGroupResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Support\Enums\TextSize;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use App\Filament\App\Resources\Social\SocialUserResource;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -22,11 +29,11 @@ class UsersRelationManager extends RelationManager
     protected static ?string $title = 'Servidores';
     protected static bool $shouldSkipAuthorization = true;
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('login')
+        return $schema
+            ->components([
+                TextInput::make('login')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -53,7 +60,7 @@ class UsersRelationManager extends RelationManager
                             ->searchable(),
 
                         TextColumn::make('effective_role.description')
-                            ->size(TextColumn\TextColumnSize::ExtraSmall)
+                            ->size(TextSize::ExtraSmall)
                             ->color('gray')
                             ->weight(FontWeight::SemiBold)
                             ->columnSpanFull()
@@ -100,15 +107,15 @@ class UsersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

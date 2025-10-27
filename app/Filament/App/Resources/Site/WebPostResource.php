@@ -2,17 +2,32 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Group;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\WebPostResource\Pages\ListWebPosts;
+use App\Filament\App\Resources\Site\WebPostResource\Pages\CreateWebPost;
+use App\Filament\App\Resources\Site\WebPostResource\Pages\EditWebPost;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPostResource\Pages;
 use App\Models\WebPost;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Split;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,24 +38,24 @@ use Illuminate\Support\Str;
 class WebPostResource extends Resource
 {
     protected static ?string $model = WebPost::class;
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
     public $filename;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Grid::make(1)
                     ->schema([
                         Tabs::make('Tabs')
                             ->tabs([
-                                Tabs\Tab::make('Texto')
+                                Tab::make('Texto')
                                     ->schema([
                                         static::getTextFormSection()
                                     ]),
-                                Tabs\Tab::make('Imagem')
+                                Tab::make('Imagem')
                                     ->schema([
                                         static::getImageFormSection()
                                     ]),
@@ -68,24 +83,24 @@ class WebPostResource extends Resource
                         ->required(),
                 ])->columnSpan(2),
                 Group::make([
-                    Forms\Components\Select::make('web_category_id')
+                    Select::make('web_category_id')
                         ->label('Categoria')
                         ->preload()
                         ->relationship('category', 'name')
                         ->searchable()
                         ->required(),
-                    Forms\Components\TextInput::make('title')
+                    TextInput::make('title')
                         ->label('Título')
                         ->required()
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state) . '.html'))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('slug')
+                    TextInput::make('slug')
                         ->required()
                         ->helperText('Preenchimento automático')
                         ->suffixIcon('heroicon-m-globe-alt')
                         ->maxLength(255),
-                    Forms\Components\Select::make('status')
+                    Select::make('status')
                         ->required()
                         ->options([
                             'draft' => 'Rascunho',
@@ -93,10 +108,10 @@ class WebPostResource extends Resource
                             'unpublished' => 'Despublicado'
                         ]),
 
-                    Forms\Components\Toggle::make('featured')
+                    Toggle::make('featured')
                         ->label('Destaque')
                         ->required(),
-                    Forms\Components\TextInput::make('text_credits')
+                    TextInput::make('text_credits')
                         ->label('Fonte do Texto')
                         ->default('Ascom/UEAP')
                         ->maxLength(255),
@@ -116,10 +131,10 @@ class WebPostResource extends Resource
                     ->maxFiles(1)
                     ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
 
-                Forms\Components\TextInput::make('image_subtitle')
+                TextInput::make('image_subtitle')
                     ->label('Legenda')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('image_credits')
+                TextInput::make('image_credits')
                     ->label('Fonte da Imagem')
                     ->maxLength(255),
             ]);
@@ -130,33 +145,33 @@ class WebPostResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_url')
+                ImageColumn::make('image_url')
                     ->label('#'),
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Título')
                     ->words(7)
                     // ->description(fn(WebPost $record): string => Str::limit($record->slug, 60))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('hits')
+                TextColumn::make('hits')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label('Data Publicação')
                     ->sortable()
                     ->dateTime('d/m/Y'),
-                Tables\Columns\TextColumn::make('user_created.login')
+                TextColumn::make('user_created.login')
                     ->label('Autor')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_updated.login')
+                TextColumn::make('user_updated.login')
                     ->label('Editado Por')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('web_category_id')
+                TextColumn::make('web_category_id')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -164,26 +179,26 @@ class WebPostResource extends Resource
                 //     ->dateTime()
                 //     ->sortable()
                 //     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\Action::make('download')
+                EditAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->image_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->image_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -201,10 +216,10 @@ class WebPostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebPosts::route('/'),
-            'create' => Pages\CreateWebPost::route('/create'),
+            'index' => ListWebPosts::route('/'),
+            'create' => CreateWebPost::route('/create'),
             // 'view' => Pages\ViewWebPost::route('/{record}'),
-            'edit' => Pages\EditWebPost::route('/{record}/edit'),
+            'edit' => EditWebPost::route('/{record}/edit'),
         ];
     }
 

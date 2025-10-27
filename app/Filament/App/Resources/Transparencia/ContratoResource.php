@@ -2,14 +2,23 @@
 
 namespace App\Filament\App\Resources\Transparencia;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ListContrato;
+use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\CreateContrato;
 use App\Filament\App\Resources\Transparencia\ContratoResource\Pages;
 use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\EditContrato;
 use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ManageDocumentosContrato;
 use App\Filament\App\Resources\Transparencia\ContratoResource\Pages\ViewContrato;
 use App\Models\TransparencyBid;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -22,8 +31,8 @@ class ContratoResource extends Resource
     protected static ?string $model = TransparencyBid::class;
     protected static ?string $modelLabel = 'Contrato';
     protected static ?string $slug = 'contratos';
-    protected static ?string $navigationIcon = 'heroicon-o-document-check';
-    protected static ?string $navigationGroup = 'Transparência';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-check';
+    protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 3;
 
     public static function getRecordSubNavigation(Page $page): array
@@ -35,44 +44,44 @@ class ContratoResource extends Resource
         ]);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
+            ->components([
                 Section::make([
 
 
-                    Forms\Components\Split::make([
-                        Forms\Components\Select::make('person_type')
+                    Flex::make([
+                        Select::make('person_type')
                             ->label('Tipo de Pessoa')
                             ->options([
                                 'juridica' => 'JURÍDICA',
                                 'fisica' => 'FÍSICA'
                             ]),
-                        Forms\Components\TextInput::make('number')
+                        TextInput::make('number')
                             ->label('Número')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('year')
+                        TextInput::make('year')
                             ->label('Ano')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('start_date')
+                        DatePicker::make('start_date')
                             ->label('Data de Abertura')
                             ->required(),
-                        Forms\Components\DatePicker::make('end_date')
+                        DatePicker::make('end_date')
                             ->label('Data Final')
                             ->required(),
                     ]),
 
-                    Forms\Components\Textarea::make('description')
+                    Textarea::make('description')
                         ->label('Objeto')
                         ->required(),
-                    Forms\Components\TextInput::make('location')
+                    TextInput::make('location')
                         ->label('Local da Publicação')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('link')
+                    TextInput::make('link')
                         ->maxLength(255),
-                    Forms\Components\Textarea::make('observation')
+                    Textarea::make('observation')
                         ->label('Observação'),
                 ])
             ]);
@@ -84,30 +93,30 @@ class ContratoResource extends Resource
             ->defaultSort('year', 'desc')
             ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'contrato'))
             ->columns([
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('Número')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->words(20)->wrap(),
-                Tables\Columns\TextColumn::make('hits')
+                TextColumn::make('hits')
                     ->label('Acessos')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -115,11 +124,11 @@ class ContratoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
@@ -136,11 +145,11 @@ class ContratoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListContrato::route('/'),
-            'create' => Pages\CreateContrato::route('/create'),
-            'view' => Pages\ViewContrato::route('/{record}'),
-            'edit' => Pages\EditContrato::route('/{record}/edit'),
-            'documentos' => Pages\ManageDocumentosContrato::route('/{record}/documentos'),
+            'index' => ListContrato::route('/'),
+            'create' => CreateContrato::route('/create'),
+            'view' => ViewContrato::route('/{record}'),
+            'edit' => EditContrato::route('/{record}/edit'),
+            'documentos' => ManageDocumentosContrato::route('/{record}/documentos'),
         ];
     }
 }

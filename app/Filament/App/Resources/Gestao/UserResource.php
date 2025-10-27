@@ -2,16 +2,27 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Group;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\Action;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Gestao\UserResource\Pages\ListUsers;
+use App\Filament\App\Resources\Gestao\UserResource\Pages\CreateUser;
+use App\Filament\App\Resources\Gestao\UserResource\Pages\EditUser;
 use App\Filament\App\Resources\Gestao\UserResource\Pages;
 use App\Filament\App\Resources\Gestao\UserResource\RelationManagers\GroupsRelationManager;
 use App\Filament\App\Resources\Gestao\UserResource\RelationManagers\PersonRelationManager;
 use App\Livewire\FrequencyEmit;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,81 +35,81 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
-    protected static ?string $navigationGroup = 'Gestão';
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Grid::make()
                     ->columns(1)
                     ->schema([
                         Tabs::make('Tabs')
                             ->tabs([
-                                Tabs\Tab::make('Usuário')
+                                Tab::make('Usuário')
                                     ->columns(2)
                                     ->schema([
                                         // ...
-                                        Forms\Components\TextInput::make('email')
+                                        TextInput::make('email')
                                             ->email()
                                             ->maxLength(255),
-                                        Forms\Components\TextInput::make('login')
+                                        TextInput::make('login')
                                             ->unique(ignoreRecord: true)
                                             ->required()
                                             ->maxLength(255),
-                                        Forms\Components\TextInput::make('enrollment')
+                                        TextInput::make('enrollment')
                                             ->hiddenOn('create')
                                             ->label('Matrícula')
                                             ->maxLength(255),
-                                        Forms\Components\Select::make('group_id')
+                                        Select::make('group_id')
                                             ->label('Setor')
                                             ->required()
                                             ->relationship('group', 'description')
                                             ->searchable()
                                             ->preload(),
-                                        Forms\Components\Select::make('effective_role_id')
+                                        Select::make('effective_role_id')
                                             ->required()
                                             ->label('Cargo Efetivo')
                                             ->relationship('effective_role', 'description')
                                             ->searchable()
                                             ->preload(),
-                                        Forms\Components\Select::make('commissioned_role_id')
+                                        Select::make('commissioned_role_id')
                                             ->label('Cargo Comissionado')
                                             ->relationship('commissioned_role', 'description')
                                             ->searchable()
                                             ->preload(),
-                                        Forms\Components\Select::make('roles')
+                                        Select::make('roles')
                                             ->label('Permissões')
                                             ->relationship('roles', 'name')
                                             ->multiple()
                                             ->searchable()
                                             ->preload(),
                                     ]),
-                                Tabs\Tab::make('Dados Pessoais')
+                                Tab::make('Dados Pessoais')
                                     ->schema([
                                         // ...
                                         Group::make()
                                             ->relationship('person')
                                             ->schema([
-                                                Forms\Components\TextInput::make('name')
+                                                TextInput::make('name')
                                                     ->label('Nome')
                                                     ->required()
                                                     ->maxLength(255),
-                                                Forms\Components\TextInput::make('cpf_cnpj')
+                                                TextInput::make('cpf_cnpj')
                                                     ->rules('cpf')
                                                     ->unique(ignoreRecord: true)
                                                     ->label('CPF')
                                                     ->required()
                                                     ->maxLength(255),
-                                                Forms\Components\DatePicker::make('birthdate')
+                                                DatePicker::make('birthdate')
                                                     ->hiddenOn('create')
                                                     ->label('Data de Nascimento')
                                             ])
 
                                     ]),
-                                Tabs\Tab::make('Registros Funcionais')
+                                Tab::make('Registros Funcionais')
                                     ->hiddenOn('create')
                                     ->schema([
                                         // ...
@@ -106,30 +117,30 @@ class UserResource extends Resource
                                             ->relationship('record')
                                             ->columns(2)
                                             ->schema([
-                                                Forms\Components\TextInput::make('ordinance')
+                                                TextInput::make('ordinance')
                                                     ->label('Doc. de Admissão')
                                                     ->helperText('Decreto ou Contrato')
                                                     ->required()
                                                     ->maxLength(255),
-                                                Forms\Components\DatePicker::make('ordinance_date')
+                                                DatePicker::make('ordinance_date')
                                                     ->label('Data do Documento')
                                                     ->helperText('Da publicação ou assinatura'),
-                                                Forms\Components\DatePicker::make('admission_date')
+                                                DatePicker::make('admission_date')
                                                     ->label('Data de Admissão')
                                                     ->helperText('Entrada em exercício'),
-                                                Forms\Components\Select::make('category')
+                                                Select::make('category')
                                                     ->label('Categoria')
                                                     ->options([
                                                         'docente' => 'Docente',
                                                         'técnico' => 'Técnico'
                                                     ]),
-                                                Forms\Components\Select::make('local')
+                                                Select::make('local')
                                                     ->label('Local')
                                                     ->options([
                                                         'MACAPÁ - AP' => 'MACAPÁ - AP',
                                                         'AMAPÁ - AP' => 'AMAPÁ - AP'
                                                     ]),
-                                                Forms\Components\Select::make('title')
+                                                Select::make('title')
                                                     ->label('Titulação')
                                                     ->options([
                                                         'ensino médio' => 'ensino médio',
@@ -152,29 +163,29 @@ class UserResource extends Resource
         return $table
             ->defaultSort('login')
             ->columns([
-                Tables\Columns\TextColumn::make('person.name')
+                TextColumn::make('person.name')
                     ->label('Nome')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('group.name')
+                TextColumn::make('group.name')
                     ->label('Lotação')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('effective_role.description')
+                TextColumn::make('effective_role.description')
                     ->label('Cargo Efetivo')
                     ->limit(30)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('commissioned_role.description')
+                TextColumn::make('commissioned_role.description')
                     ->label('Cargo Comissionado')
                     ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -182,17 +193,17 @@ class UserResource extends Resource
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('imprimirPonto')
+                Action::make('imprimirPonto')
                     ->label('Ponto')
                     ->icon('heroicon-o-document')
                     ->url(fn($record) => route('filament.app.pages.print-frequency', ['user' => $record->id]))
                     ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                     // Tables\Actions\ForceDeleteBulkAction::make(),
                     // Tables\Actions\RestoreBulkAction::make(),
@@ -210,10 +221,10 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
+            'index' => ListUsers::route('/'),
+            'create' => CreateUser::route('/create'),
             // 'view' => Pages\ViewUser::route('/{record}'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 

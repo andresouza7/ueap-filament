@@ -2,10 +2,13 @@
 
 namespace App\Filament\App\Resources\Transparencia;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Transparencia\DocumentResource\Pages\ListDocuments;
+use App\Filament\App\Resources\Transparencia\DocumentResource\Pages\EditDocument;
 use App\Filament\App\Resources\Transparencia\DocumentResource\Pages;
 use App\Filament\Resources\DocumentCategoryResource\RelationManagers\DocumentsRelationManager;
 use App\Models\DocumentCategory;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -20,11 +23,11 @@ class DocumentResource extends Resource
     protected static ?string $modelLabel = 'Documento';
     protected static ?string $pluralModelLabel = 'Documentos';
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $slug = 'documentos-transparencia';
 
-    protected static ?string $navigationGroup = 'Transparência';
+    protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 0;
 
     public static function canAccess(): bool
@@ -32,10 +35,10 @@ class DocumentResource extends Resource
         return Auth::user()->hasDocumentCategory('transparency');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([]);
+        return $schema
+            ->components([]);
     }
 
     public static function table(Table $table): Table
@@ -60,12 +63,12 @@ class DocumentResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -82,10 +85,10 @@ class DocumentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDocuments::route('/'),
+            'index' => ListDocuments::route('/'),
             // 'create' => Pages\CreateDocumentCategoryUser::route('/create'),
             // 'view' => Pages\ViewDocumentCategoryUser::route('/{record}'),
-            'edit' => Pages\EditDocument::route('/{record}/edit'),
+            'edit' => EditDocument::route('/{record}/edit'),
         ];
     }
 

@@ -2,16 +2,22 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\ConsuAtaResource\Pages\ListConsuAtas;
+use App\Filament\App\Resources\Site\ConsuAtaResource\Pages\CreateConsuAta;
+use App\Filament\App\Resources\Site\ConsuAtaResource\Pages\EditConsuAta;
 use App\Filament\App\Resources\Site\ConsuAtaResource\Pages;
 use App\Filament\App\Resources\Site\ConsuAtaResource\RelationManagers;
 use App\Models\ConsuAta;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -27,15 +33,15 @@ class ConsuAtaResource extends Resource
 
     protected static ?string $slug = 'atas';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
+            ->components([
                 Section::make([
 
                     TextInput::make('issuer')
@@ -87,15 +93,15 @@ class ConsuAtaResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('download')
+            ->recordActions([
+                EditAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -111,9 +117,9 @@ class ConsuAtaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListConsuAtas::route('/'),
-            'create' => Pages\CreateConsuAta::route('/create'),
-            'edit' => Pages\EditConsuAta::route('/{record}/edit'),
+            'index' => ListConsuAtas::route('/'),
+            'create' => CreateConsuAta::route('/create'),
+            'edit' => EditConsuAta::route('/{record}/edit'),
         ];
     }
 }

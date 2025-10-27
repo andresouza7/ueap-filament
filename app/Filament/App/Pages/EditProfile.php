@@ -2,19 +2,19 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Actions;
+use Filament\Actions\Action;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Group;
 use App\Models\Person;
 use Filament\Forms;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
@@ -27,10 +27,10 @@ class EditProfile extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil';
-    protected static string $view = 'filament.app.pages.profile';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil';
+    protected string $view = 'filament.app.pages.profile';
     protected static ?string $title = 'Alterar Perfil';
-    protected static ?string $navigationGroup = 'Minha Área';
+    protected static string | \UnitEnum | null $navigationGroup = 'Minha Área';
     protected static ?int $navigationSort = 4;
 
     // Form Data
@@ -111,9 +111,9 @@ class EditProfile extends Page implements HasForms
     }
 
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->components([
 
             Section::make([
                 $this->getPersonalDataSection(),
@@ -136,10 +136,10 @@ class EditProfile extends Page implements HasForms
         return Group::make()
             ->columns(2)
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->label('Nome')
                     ->required(),
-                Forms\Components\TextInput::make('email'),
+                TextInput::make('email'),
             ]);
     }
 

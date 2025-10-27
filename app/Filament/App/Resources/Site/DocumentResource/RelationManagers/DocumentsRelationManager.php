@@ -2,13 +2,22 @@
 
 namespace App\Filament\Resources\DocumentCategoryResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -24,11 +33,11 @@ class DocumentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'documents';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
+            ->components([
                 TextInput::make('title')
                     ->label('Nome')
                     ->required(),
@@ -65,17 +74,17 @@ class DocumentsRelationManager extends RelationManager
             ->defaultSort('id', 'desc')
             ->recordAction(null)
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Título')
                     ->searchable()
                     ->formatStateUsing(fn($state, $record) => new HtmlString("
                         <div>{$state}</div>
                         <div class='text-xs text-gray-500'>{$record->file_url}</div>
                     ")),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('type')
@@ -83,18 +92,18 @@ class DocumentsRelationManager extends RelationManager
                 //     ->color('gray')
                 //     ->label('Tipo')
                 //     ->searchable(),
-                Tables\Columns\TextColumn::make('user_created.login')->label('Publicado por'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('user_created.login')->label('Publicado por'),
+                TextColumn::make('created_at')
                     ->label('Data')
                     ->dateTime('d/m/Y H:i'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->label('Criar Documento')
-                    ->mutateFormDataUsing(function (array $data) {
+                    ->mutateDataUsing(function (array $data) {
                         $data['user_created_id'] = Auth::id();
                         $data['uuid'] = Str::uuid();
                         $data['type'] = $this->getOwnerRecord()->slug;
@@ -106,18 +115,18 @@ class DocumentsRelationManager extends RelationManager
                         $record->storeFileWithModelId($data['file'], 'documents/general');
                     }),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\Action::make('download')
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

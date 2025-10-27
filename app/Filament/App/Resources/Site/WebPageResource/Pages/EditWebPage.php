@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Site\WebPageResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Site\WebPageResource;
 use App\Models\WebMenuItem;
 use Filament\Actions;
@@ -18,7 +19,7 @@ class EditWebPage extends EditRecord
     {
         return [
             // Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 

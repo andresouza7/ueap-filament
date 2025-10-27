@@ -2,13 +2,24 @@
 
 namespace App\Filament\App\Resources\Transparencia;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages\ListDotacao;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages\CreateDotacao;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages\ViewDotacao;
+use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages\EditDotacao;
 use App\Filament\App\Resources\Transparencia\DotacaoResource\Pages;
 use App\Models\Orcamento;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Split;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,33 +32,33 @@ class DotacaoResource extends Resource
     protected static ?string $modelLabel = 'Dotação Orcamentária';
     protected static ?string $pluralModelLabel = 'Dotações Orçamentárias';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
-    protected static ?string $navigationGroup = 'Transparência';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-currency-dollar';
+    protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 5;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
-                    Split::make([
-                        Forms\Components\TextInput::make('month')
+                    Flex::make([
+                        TextInput::make('month')
                             ->label('Mês')
                             ->required()
                             ->numeric(),
-                        Forms\Components\TextInput::make('year')
+                        TextInput::make('year')
                             ->label('Ano')
                             ->required()
                             ->numeric(),
-                        Forms\Components\TextInput::make('value')
+                        TextInput::make('value')
                             ->label('Valor Executado')
                             ->required()
                             ->numeric(),
                     ]),
-                    Forms\Components\Textarea::make('description')
+                    Textarea::make('description')
                         ->label('Descrição')
                         ->required(),
-                    Forms\Components\Textarea::make('observation')
+                    Textarea::make('observation')
                         ->label('Observação'),
 
                     FileUpload::make('file')
@@ -65,24 +76,24 @@ class DotacaoResource extends Resource
         return $table
             ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'dotacao')->orderBy('year', 'desc')->orderBy('month', 'desc'))
             ->columns([
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('month')
+                TextColumn::make('month')
                     ->label('Mês'),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('value')
+                TextColumn::make('value')
                     ->label('Valor Executado')
                     ->money('BRL')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -90,16 +101,16 @@ class DotacaoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('download')
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -115,10 +126,10 @@ class DotacaoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDotacao::route('/'),
-            'create' => Pages\CreateDotacao::route('/create'),
-            'view' => Pages\ViewDotacao::route('/{record}'),
-            'edit' => Pages\EditDotacao::route('/{record}/edit'),
+            'index' => ListDotacao::route('/'),
+            'create' => CreateDotacao::route('/create'),
+            'view' => ViewDotacao::route('/{record}'),
+            'edit' => EditDotacao::route('/{record}/edit'),
         ];
     }
 }

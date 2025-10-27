@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use Filament\Support\Enums\TextSize;
 use App\Filament\App\Resources\Social\SocialGroupResource;
 use App\Filament\App\Resources\Social\SocialUserResource;
 use App\Models\SocialPost;
@@ -49,7 +50,7 @@ class LatestPosts extends BaseWidget
                             ]),
 
                             TextColumn::make('updated_at')
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 // ->extraAttributes(['class' => 'italic'])
                                 ->color('gray')
                                 ->dateTime('d M Y, H:i'),

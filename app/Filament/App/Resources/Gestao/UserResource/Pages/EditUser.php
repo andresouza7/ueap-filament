@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Gestao\UserResource\Pages;
 
+use Filament\Actions\Action;
 use App\Filament\App\Resources\Gestao\UserResource;
 use App\Models\User;
 use Filament\Actions;
@@ -20,7 +21,7 @@ class EditUser extends EditRecord
             // Actions\DeleteAction::make(),
             // Actions\ForceDeleteAction::make(),
             // Actions\RestoreAction::make(),
-            Actions\Action::make('activateUser')
+            Action::make('activateUser')
                 ->visible(fn($record) => $record->isActive())
                 ->label('Habilitar Usuário')
                 ->requiresConfirmation()
@@ -35,7 +36,7 @@ class EditUser extends EditRecord
                 })
                 ->icon('heroicon-s-check')
                 ->color('success'),
-            Actions\Action::make('deactivateUser')
+            Action::make('deactivateUser')
                 ->hidden(fn($record) => $record->isActive())
                 ->label('Desativar Usuário')
                 ->requiresConfirmation()
@@ -50,7 +51,7 @@ class EditUser extends EditRecord
                 })
                 ->icon('heroicon-s-no-symbol')
                 ->color('danger'),
-            Actions\Action::make('resetPassword')
+            Action::make('resetPassword')
                 ->label('Resetar Senha')
                 ->action(function () {
                     $this->record->resetPassword();

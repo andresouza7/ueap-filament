@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Actions;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Actions;
+use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -47,11 +47,11 @@ class FrequencySignature extends Component implements HasForms
         }
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->model($this->model)
-            ->schema([
+            ->components([
                 Section::make([
                     FileUpload::make('attachment')
                         ->label('Arquivo')

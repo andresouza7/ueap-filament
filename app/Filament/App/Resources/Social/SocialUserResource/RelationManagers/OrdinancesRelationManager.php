@@ -2,8 +2,11 @@
 
 namespace App\Filament\App\Resources\Social\SocialUserResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,11 +24,11 @@ class OrdinancesRelationManager extends RelationManager
         return $ownerRecord->id === auth()->id();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('description')
+        return $schema
+            ->components([
+                TextInput::make('description')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -37,16 +40,16 @@ class OrdinancesRelationManager extends RelationManager
             ->recordTitleAttribute('description')
             ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('year', 'DESC')->orderBy('number', 'DESC'))
             ->columns([
-                Tables\Columns\TextColumn::make('number')->label('Número')->searchable(),
-                Tables\Columns\TextColumn::make('year')->label('Ano')->searchable(),
-                Tables\Columns\TextColumn::make('subject')->label('Assunto')->searchable(),
-                Tables\Columns\TextColumn::make('description')->label('Descrição')->searchable(),
+                TextColumn::make('number')->label('Número')->searchable(),
+                TextColumn::make('year')->label('Ano')->searchable(),
+                TextColumn::make('subject')->label('Assunto')->searchable(),
+                TextColumn::make('description')->label('Descrição')->searchable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\Action::make('Abrir')
+            ->recordActions([
+                Action::make('Abrir')
                     ->url(fn($record) => $record->file_url)
                     ->openUrlInNewTab()
             ]);

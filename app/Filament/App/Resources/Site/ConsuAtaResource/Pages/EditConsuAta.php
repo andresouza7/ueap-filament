@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Site\ConsuAtaResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Site\ConsuAtaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,7 @@ class EditConsuAta extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

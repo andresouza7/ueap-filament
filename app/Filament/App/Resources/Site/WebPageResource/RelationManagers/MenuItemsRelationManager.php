@@ -2,8 +2,12 @@
 
 namespace App\Filament\App\Resources\Site\WebPageResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Split;
@@ -15,14 +19,14 @@ class MenuItemsRelationManager extends RelationManager
 {
     protected static string $relationship = 'menu_items';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('url')
+                TextInput::make('url')
                     ->required()
             ]);
     }
@@ -38,10 +42,10 @@ class MenuItemsRelationManager extends RelationManager
             ->paginated(false)
             ->columns([
                 Split::make([
-                    Tables\Columns\TextColumn::make('position')
+                    TextColumn::make('position')
                         ->grow(false)
                         ->label('Posição'),
-                    Tables\Columns\TextColumn::make('name')
+                    TextColumn::make('name')
                         ->label('Nome'),
                 ])
             ])
@@ -51,11 +55,11 @@ class MenuItemsRelationManager extends RelationManager
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),

@@ -2,15 +2,26 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Carbon\Carbon;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
+use Illuminate\Support\Facades\Storage;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Gestao\HealthAppointmentResource\Pages\ListHealthAppointments;
+use App\Filament\App\Resources\Gestao\HealthAppointmentResource\Pages\CreateHealthAppointment;
+use App\Filament\App\Resources\Gestao\HealthAppointmentResource\Pages\ViewHealthAppointment;
 use App\Filament\App\Resources\Gestao\HealthAppointmentResource\Pages;
 use App\Filament\App\Resources\Gestao\HealthAppointmentResource\RelationManagers;
 use App\Models\HealthAppointment;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,17 +34,17 @@ class HealthAppointmentResource extends Resource
 {
     protected static ?string $model = HealthAppointment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-heart';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-heart';
 
     protected static ?string $modelLabel = 'Saúde e Bem-Estar';
     protected static ?string $pluralModelLabel = 'Saúde e Bem-Estar';
-    protected static ?string $navigationGroup = 'Gestão';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
     protected static ?int $navigationSort = 7;
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make()
                     ->columns(2)
                     ->heading('Dados do Agendamento')
@@ -43,7 +54,7 @@ class HealthAppointmentResource extends Resource
                             ->label('Nome'),
                         TextEntry::make('user.person.birthdate')
                             ->label('Idade')
-                            ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->age),
+                            ->formatStateUsing(fn($state) => Carbon::parse($state)->age),
                         TextEntry::make('user.group.name')
                             ->label('Setor'),
                         TextEntry::make('user.person.email')
@@ -63,26 +74,26 @@ class HealthAppointmentResource extends Resource
             ]);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('uuid')
+        return $schema
+            ->components([
+                TextInput::make('uuid')
                     ->label('UUID')
                     ->required(),
-                Forms\Components\TextInput::make('user_id')
+                TextInput::make('user_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('agent_role')
+                TextInput::make('agent_role')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('requested_date')
+                DatePicker::make('requested_date')
                     ->required(),
-                Forms\Components\Textarea::make('patient_note')
+                Textarea::make('patient_note')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('cancellation_note')
+                Textarea::make('cancellation_note')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
+                TextInput::make('status')
                     ->required()
                     ->maxLength(255)
                     ->default('Novo'),
@@ -94,24 +105,24 @@ class HealthAppointmentResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('user.person.name')
+                TextColumn::make('user.person.name')
                     ->label('Servidor')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('agent_role')
+                TextColumn::make('agent_role')
                     ->label('Especialidade')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('requested_date')
+                TextColumn::make('requested_date')
                     ->label('Data Atendimento')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -119,15 +130,15 @@ class HealthAppointmentResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
+            ->recordActions([
+                ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('update')
+                Action::make('update')
                     ->label('Atualizar Orientações')
                     ->modalDescription('Atualize aqui o arquivo com as orientações')
-                    ->form([
+                    ->schema([
                         FileUpload::make('file')
                             ->acceptedFileTypes(['application/pdf'])
                             ->previewable(false)
@@ -138,17 +149,17 @@ class HealthAppointmentResource extends Resource
                             $filePath = $data['file'];
                             $storagePath = 'politica-saude.pdf';
 
-                            \Illuminate\Support\Facades\Storage::move($filePath, $storagePath);
+                            Storage::move($filePath, $storagePath);
                         }
 
-                        \Filament\Notifications\Notification::make()
+                        Notification::make()
                             ->title('Arquivo salvo com sucesso!')
                             ->success()
                             ->send();
                     }),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -164,9 +175,9 @@ class HealthAppointmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHealthAppointments::route('/'),
-            'create' => Pages\CreateHealthAppointment::route('/create'),
-            'view' => Pages\ViewHealthAppointment::route('/{record}'),
+            'index' => ListHealthAppointments::route('/'),
+            'create' => CreateHealthAppointment::route('/create'),
+            'view' => ViewHealthAppointment::route('/{record}'),
             // 'edit' => Pages\EditHealthAppointment::route('/{record}/edit'),
         ];
     }

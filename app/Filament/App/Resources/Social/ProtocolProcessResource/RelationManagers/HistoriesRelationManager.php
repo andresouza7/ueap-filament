@@ -2,8 +2,15 @@
 
 namespace App\Filament\App\Resources\Social\ProtocolProcessResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -14,11 +21,11 @@ class HistoriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'histories';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('id')
+        return $schema
+            ->components([
+                TextInput::make('id')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -31,13 +38,13 @@ class HistoriesRelationManager extends RelationManager
             ->heading('Movimentação')
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('group_sent.name')
+                TextColumn::make('group_sent.name')
                     ->label('Origem')
                     ->weight('medium'),
-                Tables\Columns\TextColumn::make('group_received.name')
+                TextColumn::make('group_received.name')
                     ->label('Destino')
                     ->weight('medium'),
-                Tables\Columns\TextColumn::make('user_sent.person.name')
+                TextColumn::make('user_sent.person.name')
                     ->label('Tramitado por')
                     ->html()
                     ->formatStateUsing(fn($record) => '
@@ -53,7 +60,7 @@ class HistoriesRelationManager extends RelationManager
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-md break-words',
                     ]),
-                Tables\Columns\TextColumn::make('parecer')
+                TextColumn::make('parecer')
                     ->label('Despacho')
                     ->extraAttributes([
                         'class' => 'whitespace-normal max-w-xs break-words',
@@ -63,15 +70,15 @@ class HistoriesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

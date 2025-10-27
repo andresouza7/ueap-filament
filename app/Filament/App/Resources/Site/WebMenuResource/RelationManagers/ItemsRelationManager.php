@@ -2,9 +2,16 @@
 
 namespace App\Filament\App\Resources\Site\WebMenuResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use App\Models\WebPage;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,19 +23,19 @@ class ItemsRelationManager extends RelationManager
     protected static ?string $modelLabel = 'Item de Menu';
     protected static ?string $pluralModelLabel = 'Itens de Menu';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
-                Forms\Components\TextInput::make('name')
+            ->components([
+                TextInput::make('name')
                     ->label('Nome')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Checkbox::make('use_internal')
+                Checkbox::make('use_internal')
                     ->label('Direcionar para página do site')
                     ->reactive(),
-                Forms\Components\Select::make('url')
+                Select::make('url')
                     ->label('Página do site')
                     ->searchable()
                     ->preload()
@@ -45,15 +52,15 @@ class ItemsRelationManager extends RelationManager
                     })
                     ->required()
                     ->hidden(fn($get) => !$get('use_internal')),
-                Forms\Components\TextInput::make('url')
+                TextInput::make('url')
                     ->label('URL')
                     ->required()
                     ->maxLength(255)
                     ->hidden(fn($get) => $get('use_internal')),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->label('Descrição')
                     ->maxLength(65535),
-                Forms\Components\Select::make('status')
+                Select::make('status')
                     ->options([
                         'published' => 'Publicado',
                         'unpublished' => 'Não Publicado',
@@ -71,18 +78,18 @@ class ItemsRelationManager extends RelationManager
             ->defaultSort('position')
             ->reorderable('position')
             ->columns([
-                Tables\Columns\TextColumn::make('position')
+                TextColumn::make('position')
                     ->sortable()
                     ->label('Posição'),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Nome'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
-                    ->mutateFormDataUsing(function (array $data): array {
+                CreateAction::make()
+                    ->mutateDataUsing(function (array $data): array {
                         $data['uuid'] = Str::uuid()->toString();
                         $data['web_menu_id'] = $this->ownerRecord->id;
                         $data['position'] = $this->ownerRecord->items()->count() + 1;
@@ -90,11 +97,11 @@ class ItemsRelationManager extends RelationManager
                         return $data;
                     }),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),

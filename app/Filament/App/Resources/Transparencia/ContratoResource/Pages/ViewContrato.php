@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Transparencia\ContratoResource\Pages;
 
+use Filament\Actions\EditAction;
 use App\Filament\App\Resources\Transparencia\ContratoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -13,7 +14,7 @@ class ViewContrato extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }

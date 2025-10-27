@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources\Gestao\UserResource\Pages;
 
+use Filament\Actions\ExportAction;
+use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\Gestao\UserResource;
 use App\Filament\Exports\UserExporter;
 use Filament\Actions;
@@ -14,10 +16,10 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ExportAction::make()
+            ExportAction::make()
                 ->label('Exportar Planilha')
                 ->exporter(UserExporter::class),
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

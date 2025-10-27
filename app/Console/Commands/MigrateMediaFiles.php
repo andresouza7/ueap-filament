@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,7 @@ class MigrateMediaFiles extends Command
             return 1;
         }
 
-        if (!is_subclass_of($modelClass, \Illuminate\Database\Eloquent\Model::class)) {
+        if (!is_subclass_of($modelClass, Model::class)) {
             $this->error("Model class '{$modelClass}' is not a subclass of Eloquent Model.");
             return 1;
         }

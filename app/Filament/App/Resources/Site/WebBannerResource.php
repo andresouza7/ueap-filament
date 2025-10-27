@@ -2,14 +2,27 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Site\WebBannerResource\Pages\ListWebBanners;
+use App\Filament\App\Resources\Site\WebBannerResource\Pages\CreateWebBanner;
+use App\Filament\App\Resources\Site\WebBannerResource\Pages\EditWebBanner;
 use App\Filament\App\Resources\Site\WebBannerResource\Pages;
 use App\Filament\App\Resources\Site\WebBannerResource\RelationManagers;
 use App\Models\WebBanner;
 use App\Models\WebBannerPlace;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,28 +33,28 @@ class WebBannerResource extends Resource
 {
     protected static ?string $model = WebBanner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
+            ->components([
                 Section::make([
-                    Forms\Components\Select::make('web_banner_place_id')
+                    Select::make('web_banner_place_id')
                         ->label('Local do Banner')
                         ->options(fn() => WebBannerPlace::all()->pluck('name', 'id'))
                         ->required(),
-                    Forms\Components\TextInput::make('name')
+                    TextInput::make('name')
                         ->label('Nome')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('url')
+                    TextInput::make('url')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\Select::make('status')
+                    Select::make('status')
                         ->required()
                         ->default('published')
                         ->options([
@@ -66,45 +79,45 @@ class WebBannerResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_url')
+                ImageColumn::make('image_url')
                     ->label('#'),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Nome')
                     ->limit()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_created.login')
+                TextColumn::make('user_created.login')
                     ->label('Autor')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\Action::make('download')
+            ->recordActions([
+                EditAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
+                Action::make('download')
                     ->url(fn($record) => $record->image_url)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->image_url)
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -120,9 +133,9 @@ class WebBannerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebBanners::route('/'),
-            'create' => Pages\CreateWebBanner::route('/create'),
-            'edit' => Pages\EditWebBanner::route('/{record}/edit'),
+            'index' => ListWebBanners::route('/'),
+            'create' => CreateWebBanner::route('/create'),
+            'edit' => EditWebBanner::route('/{record}/edit'),
         ];
     }
 

@@ -2,12 +2,20 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages\ListCalendarOccurrences;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages\CreateCalendarOccurrence;
+use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages\EditCalendarOccurrence;
 use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\Pages;
 use App\Filament\App\Resources\Gestao\CalendarOccurrenceResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,26 +34,26 @@ class CalendarOccurrenceResource extends Resource
     protected static ?string $modelLabel = 'Ocorrência de Ponto';
     protected static ?string $pluralModelLabel = 'Ocorrências de Ponto';
 
-    protected static ?string $navigationGroup = 'Gestão';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
 
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
-                    Forms\Components\TextInput::make('description')
+                    TextInput::make('description')
                         ->label('Descrição')
                         ->columnSpanFull()
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\DatePicker::make('start_date')
+                    DatePicker::make('start_date')
                         ->label('Data Início')
                         ->required(),
-                    Forms\Components\DatePicker::make('end_date')
+                    DatePicker::make('end_date')
                         ->label('Data Fim'),
                 ])
             ]);
@@ -56,26 +64,26 @@ class CalendarOccurrenceResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('start_date')
+                TextColumn::make('start_date')
                     ->label('Data Início')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
+                TextColumn::make('end_date')
                     ->label('Data Fim')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -83,11 +91,11 @@ class CalendarOccurrenceResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -103,9 +111,9 @@ class CalendarOccurrenceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCalendarOccurrences::route('/'),
-            'create' => Pages\CreateCalendarOccurrence::route('/create'),
-            'edit' => Pages\EditCalendarOccurrence::route('/{record}/edit'),
+            'index' => ListCalendarOccurrences::route('/'),
+            'create' => CreateCalendarOccurrence::route('/create'),
+            'edit' => EditCalendarOccurrence::route('/{record}/edit'),
         ];
     }
 

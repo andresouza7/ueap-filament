@@ -2,15 +2,24 @@
 
 namespace App\Filament\App\Resources\Transparencia;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ListLicitacao;
+use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\CreateLicitacao;
 use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages;
 use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\EditLicitacao;
 use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ManageDocumentosLicitacao;
 use App\Filament\App\Resources\Transparencia\LicitacaoResource\Pages\ViewLicitacao;
 use App\Models\TransparencyBid;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -24,8 +33,8 @@ class LicitacaoResource extends Resource
     protected static ?string $modelLabel = 'Licitação';
     protected static ?string $pluralModelLabel = 'Licitações';
     protected static ?string $slug = 'licitacoes';
-    protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
-    protected static ?string $navigationGroup = 'Transparência';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-magnifying-glass';
+    protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 1;
 
     public static function getRecordSubNavigation(Page $page): array
@@ -37,11 +46,11 @@ class LicitacaoResource extends Resource
         ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
-                \Filament\Infolists\Components\Section::make('Detalhes')
+        return $schema
+            ->components([
+                Section::make('Detalhes')
                     ->columns(3)
                     ->schema([
                         TextEntry::make('number')
@@ -69,33 +78,33 @@ class LicitacaoResource extends Resource
             ]);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
-                Forms\Components\Section::make([
-                    Forms\Components\Split::make([
-                        Forms\Components\TextInput::make('number')
+            ->components([
+                Section::make([
+                    Flex::make([
+                        TextInput::make('number')
                             ->label('Número')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('year')
+                        TextInput::make('year')
                             ->label('Ano')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('start_date')
+                        DatePicker::make('start_date')
                             ->label('Data de Abertura')
                             ->required(),
                     ]),
 
-                    Forms\Components\Textarea::make('description')
+                    Textarea::make('description')
                         ->label('Objeto')
                         ->required(),
-                    Forms\Components\TextInput::make('location')
+                    TextInput::make('location')
                         ->label('Local da Publicação')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('link')
+                    TextInput::make('link')
                         ->maxLength(255),
-                    Forms\Components\Textarea::make('observation')
+                    Textarea::make('observation')
                         ->label('Observação')
                         ->required(),
                 ])
@@ -108,30 +117,30 @@ class LicitacaoResource extends Resource
             ->defaultSort('year', 'desc')
             ->modifyQueryUsing(fn(Builder $query) => $query->where('type', 'licitacao'))
             ->columns([
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('Número')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->words(20)->wrap(),
-                Tables\Columns\TextColumn::make('hits')
+                TextColumn::make('hits')
                     ->label('Acessos')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -139,11 +148,11 @@ class LicitacaoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
@@ -160,11 +169,11 @@ class LicitacaoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLicitacao::route('/'),
-            'create' => Pages\CreateLicitacao::route('/create'),
-            'view' => Pages\ViewLicitacao::route('/{record}'),
-            'edit' => Pages\EditLicitacao::route('/{record}/edit'),
-            'documentos' => Pages\ManageDocumentosLicitacao::route('/{record}/documentos')
+            'index' => ListLicitacao::route('/'),
+            'create' => CreateLicitacao::route('/create'),
+            'view' => ViewLicitacao::route('/{record}'),
+            'edit' => EditLicitacao::route('/{record}/edit'),
+            'documentos' => ManageDocumentosLicitacao::route('/{record}/documentos')
         ];
     }
 }

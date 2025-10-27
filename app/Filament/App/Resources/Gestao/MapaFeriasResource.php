@@ -2,14 +2,25 @@
 
 namespace App\Filament\App\Resources\Gestao;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Group;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Throwable;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages\ListFerias;
+use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages\CreateFerias;
+use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages\EditFerias;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\Pages;
 use App\Filament\App\Resources\Gestao\MapaFeriasResource\RelationManagers;
 use App\Models\CalendarOccurrence;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
@@ -25,18 +36,18 @@ class MapaFeriasResource extends Resource
 
     protected static ?string $modelLabel = 'Mapa de Férias';
 
-    protected static ?string $navigationGroup = 'Gestão';
+    protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
 
-    protected static ?string $navigationIcon = 'heroicon-o-table-cells';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
 
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make([
-                    Forms\Components\Select::make('user_id')
+                    Select::make('user_id')
                         ->disabledOn('edit')
                         ->label('Usuário')
                         ->columnSpanFull()
@@ -56,17 +67,17 @@ class MapaFeriasResource extends Resource
 
                     Group::make([
 
-                        Forms\Components\TextInput::make('description')
+                        TextInput::make('description')
                             ->label('Descrição')
                             ->columnSpanFull()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('start_date')
+                        DatePicker::make('start_date')
                             ->label('Data Início')
                             ->live()
                             ->required(),
 
-                        Forms\Components\TextInput::make('days_count')
+                        TextInput::make('days_count')
                             ->label('Quantidade de Dias')
                             ->numeric()
                             ->minValue(1)
@@ -78,7 +89,7 @@ class MapaFeriasResource extends Resource
                             })
                             ->required(),
 
-                        Forms\Components\DatePicker::make('end_date')
+                        DatePicker::make('end_date')
                             ->label('Data Fim')
                             ->live()
                             ->required()
@@ -93,7 +104,7 @@ class MapaFeriasResource extends Resource
             return \Carbon\Carbon::parse($start)
                 ->addDays(max((int)$days - 1, 0))
                 ->format('Y-m-d');
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             log($th->getMessage());
         }
     }
@@ -104,39 +115,39 @@ class MapaFeriasResource extends Resource
             ->description('Pesquise por palavra-chave ou filtre por período.')
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Descrição')
                     ->limit(80)
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('user.login')
+                TextColumn::make('user.login')
                     ->label('Usuário')
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('start_date')
+                TextColumn::make('start_date')
                     ->label('Data Início')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
+                TextColumn::make('end_date')
                     ->label('Data Fim')
                     ->date('d/m/Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('date_range')
-                    ->form([
-                        Forms\Components\DatePicker::make('from')->label('Data início'),
-                        Forms\Components\DatePicker::make('until')->label('Data fim'),
+                    ->schema([
+                        DatePicker::make('from')->label('Data início'),
+                        DatePicker::make('until')->label('Data fim'),
                     ])
                     ->query(function ($query, array $data): void {
                         $query
@@ -150,12 +161,12 @@ class MapaFeriasResource extends Resource
                             );
                     }),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -171,9 +182,9 @@ class MapaFeriasResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFerias::route('/'),
-            'create' => Pages\CreateFerias::route('/create'),
-            'edit' => Pages\EditFerias::route('/{record}/edit'),
+            'index' => ListFerias::route('/'),
+            'create' => CreateFerias::route('/create'),
+            'edit' => EditFerias::route('/{record}/edit'),
         ];
     }
 

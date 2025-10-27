@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Site\WebPostResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Site\WebPostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -14,7 +15,7 @@ class EditWebPost extends EditRecord
     {
         return [
             // Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

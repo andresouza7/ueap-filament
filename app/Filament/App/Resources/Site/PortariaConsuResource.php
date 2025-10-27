@@ -2,12 +2,15 @@
 
 namespace App\Filament\App\Resources\Site;
 
+use Filament\Schemas\Schema;
+use App\Filament\App\Resources\Site\PortariaConsuResource\Pages\ListPortarias;
+use App\Filament\App\Resources\Site\PortariaConsuResource\Pages\CreatePortaria;
+use App\Filament\App\Resources\Site\PortariaConsuResource\Pages\EditPortaria;
 use App\Filament\App\Resources\Gestao\PortariaResource;
 use App\Filament\App\Resources\Site\PortariaConsuResource\Pages;
 use App\Filament\App\Resources\Site\PortariaConsuResource\RelationManagers;
 use App\Models\Portaria;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -23,9 +26,9 @@ class PortariaConsuResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Portarias Consu';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
     // protected static ?int $navigationSort = 0;
 
@@ -39,9 +42,9 @@ class PortariaConsuResource extends Resource
         return parent::getEloquentQuery()->where('origin', 'CONSU');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema(PortariaResource::getPortariaForm());
+        return $schema->components(PortariaResource::getPortariaForm());
     }
 
     public static function table(Table $table): Table
@@ -59,9 +62,9 @@ class PortariaConsuResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPortarias::route('/'),
-            'create' => Pages\CreatePortaria::route('/create'),
-            'edit' => Pages\EditPortaria::route('/{record}/edit'),
+            'index' => ListPortarias::route('/'),
+            'create' => CreatePortaria::route('/create'),
+            'edit' => EditPortaria::route('/{record}/edit'),
         ];
     }
 }

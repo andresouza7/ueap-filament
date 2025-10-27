@@ -2,18 +2,20 @@
 
 namespace App\Filament\App\Resources\Social;
 
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\TextSize;
+use Filament\Actions\BulkActionGroup;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use App\Filament\App\Resources\Social\SocialGroupResource\Pages\ListSocialGroups;
+use App\Filament\App\Resources\Social\SocialGroupResource\Pages\ViewSocialGroup;
 use App\Filament\App\Resources\Social\SocialGroupResource\Pages;
 use App\Filament\App\Resources\Social\SocialGroupResource\RelationManagers\UsersRelationManager;
 use App\Models\Group;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\Group as ComponentsGroup;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Split as ComponentsSplit;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\TextEntry\TextEntrySize;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
@@ -31,15 +33,15 @@ class SocialGroupResource extends Resource
     protected static ?string $model = Group::class;
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
     protected static ?string $slug = 'setores';
-    protected static ?string $navigationGroup = 'Social';
+    protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 //
             ]);
     }
@@ -57,12 +59,12 @@ class SocialGroupResource extends Resource
                         TextColumn::make('name')
                             ->formatStateUsing(fn($state) => strtoupper($state))
                             ->weight(FontWeight::Bold)
-                            ->size(TextColumn\TextColumnSize::Large)
+                            ->size(TextSize::Large)
                             ->searchable(),
                     ])->extraAttributes(['class' => 'mb-4']),
 
                     TextColumn::make('description')->extraAttributes(['class' => 'mt-1'])
-                        ->size(TextColumn\TextColumnSize::ExtraSmall)
+                        ->size(TextSize::ExtraSmall)
                         ->color('gray')
                         ->weight(FontWeight::SemiBold)
                         ->searchable(),
@@ -70,7 +72,7 @@ class SocialGroupResource extends Resource
                         TextColumn::make('parent.name')
                             ->color('primary')
                             ->formatStateUsing(fn($state) => strtoupper($state))
-                            ->size(TextColumn\TextColumnSize::ExtraSmall)
+                            ->size(TextSize::ExtraSmall)
                             ->weight(FontWeight::SemiBold),
                         TextColumn::make('users_count')->counts('users')
                             ->icon('heroicon-o-users')
@@ -86,24 +88,24 @@ class SocialGroupResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Dados do setor')
                     ->columns(1)
                     ->schema([
-                        ComponentsSplit::make([
+                        Flex::make([
                             ImageEntry::make('photo_url')
                                 ->size('48px')
                                 ->grow(false)
@@ -114,7 +116,7 @@ class SocialGroupResource extends Resource
                                 ->html(),
                         ])->verticallyAlignCenter()->extraAttributes(['class' => 'my-4']),
 
-                        ComponentsGroup::make([
+                        \Filament\Schemas\Components\Group::make([
                             TextEntry::make('description')
                                 ->label('Nome')
                                 ->color('gray')
@@ -141,10 +143,10 @@ class SocialGroupResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSocialGroups::route('/'),
+            'index' => ListSocialGroups::route('/'),
             // 'create' => Pages\CreateSocialGroup::route('/create'),
             // 'edit' => Pages\EditSocialGroup::route('/{record}/edit'),
-            'view' => Pages\ViewSocialGroup::route('/{record}'),
+            'view' => ViewSocialGroup::route('/{record}'),
         ];
     }
 }

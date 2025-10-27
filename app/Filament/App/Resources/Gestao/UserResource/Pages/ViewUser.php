@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Gestao\UserResource\Pages;
 
+use Filament\Actions\EditAction;
 use App\Filament\App\Resources\Gestao\UserResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -13,7 +14,7 @@ class ViewUser extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }

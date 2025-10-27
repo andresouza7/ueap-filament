@@ -2,17 +2,16 @@
 
 namespace App\Filament\App\Pages\Auth;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Forms\Components\TextInput;
-use Filament\Pages\Auth\Login as BaseLogin;
 use Illuminate\Support\Facades\Auth;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Illuminate\Validation\ValidationException;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
 use Illuminate\Contracts\Support\Htmlable;
 
-class Login extends BaseLogin
+class Login extends \Filament\Auth\Pages\Login
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -26,10 +25,10 @@ class Login extends BaseLogin
         return false;
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('login')
                     ->label('Usuário')
                     ->extraInputAttributes(['tabindex' => 1])
