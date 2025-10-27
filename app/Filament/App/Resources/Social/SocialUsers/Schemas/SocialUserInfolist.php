@@ -34,7 +34,7 @@ class SocialUserInfolist
                                 ->circular()
                                 ->alignCenter()
                                 ->columnSpan(1)
-                                ->size(200),
+                                ->imageSize(200),
 
                             TextEntry::make('login')
                                 ->size(TextSize::Large)
@@ -53,7 +53,7 @@ class SocialUserInfolist
                                 Action::make('Alterar Foto')
                                     ->size('xs')
                                     // ->badge()
-                                    ->color('gray')
+                                    ->color('secondary')
                                     ->extraAttributes(['class' => 'px-2 py-1'])
                                     ->icon('heroicon-m-pencil')
                                     ->visible(fn($record) => $record->id === Auth::id())
@@ -101,7 +101,6 @@ class SocialUserInfolist
                                 ->columnSpanFull(),
                             TextEntry::make('groups.name')
                                 ->label('Meus acessos')
-                                ->formatStateUsing(fn($record) => $record->groups->pluck('name')->join(', '))
                                 ->visible(fn($record) => $record->id === auth()->id())
                         ])->columnStart([
                             'sm' => 2,

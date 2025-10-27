@@ -32,7 +32,7 @@ class DocumentCategoriesTable
                 TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->color('gray')
+                    ->color('secondary')
                     ->searchable(),
                 // New column for displaying group names
                 TextColumn::make('groups.name')

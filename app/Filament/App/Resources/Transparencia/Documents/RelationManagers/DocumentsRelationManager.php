@@ -75,7 +75,7 @@ class DocumentsRelationManager extends RelationManager
                     ->searchable(),
                 TextColumn::make('type')
                     ->badge()
-                    ->color('gray')
+                    ->color('secondary')
                     ->label('Tipo')
                     ->searchable(),
                 TextColumn::make('created_at')

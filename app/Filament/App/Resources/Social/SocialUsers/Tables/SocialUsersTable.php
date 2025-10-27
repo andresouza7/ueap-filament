@@ -23,7 +23,7 @@ class SocialUsersTable
     {
         return $table
             ->heading('Consulta de Servidores da UEAP')
-            ->description('Lista dos servidores da universidade, seus cargos e lotações. Use o filtro de busca para encontrar informações.')
+            ->description('Use o campo de busca para localizar uma informação específica.')
             ->defaultSort('login')
             ->columns([
                 Split::make([
@@ -44,7 +44,7 @@ class SocialUsersTable
                             TextColumn::make('effective_role.description')
                                 ->tooltip(fn($state) => $state)
                                 ->size(TextSize::ExtraSmall)
-                                ->color('gray')
+                                ->color('secondary')
                                 ->weight(FontWeight::SemiBold)
                                 ->words(5)
                                 ->columnSpanFull()

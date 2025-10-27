@@ -22,7 +22,7 @@ class SocialGroupsTable
     {
         return $table
             ->heading('Consulta de Setores da UEAP')
-            ->description('Lista dos setores da instituição e suas hierarquias. Use o filtro de busca para localizar informações específicas.')
+            ->description('Use o campo de busca para localizar uma informação específica.')
             ->columns([
                 Stack::make([
                     Split::make([
@@ -37,7 +37,7 @@ class SocialGroupsTable
 
                     TextColumn::make('description')->extraAttributes(['class' => 'mt-1'])
                         ->size(TextSize::ExtraSmall)
-                        ->color('gray')
+                        ->color('secondary')
                         ->weight(FontWeight::SemiBold)
                         ->searchable(),
                     Split::make([

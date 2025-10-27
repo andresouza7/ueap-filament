@@ -61,7 +61,7 @@ class UsersRelationManager extends RelationManager
 
                         TextColumn::make('effective_role.description')
                             ->size(TextSize::ExtraSmall)
-                            ->color('gray')
+                            ->color('secondary')
                             ->weight(FontWeight::SemiBold)
                             ->columnSpanFull()
                             ->formatStateUsing(fn($state) => strtoupper($state)),

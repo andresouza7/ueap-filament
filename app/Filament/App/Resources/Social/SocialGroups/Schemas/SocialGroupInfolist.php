@@ -33,7 +33,7 @@ class SocialGroupInfolist
                         Group::make([
                             TextEntry::make('description')
                                 ->label('Nome')
-                                ->color('gray')
+                                ->color('secondary')
                                 ->formatStateUsing(fn($state) => strtoupper($state))
                                 ->weight(FontWeight::SemiBold),
                             TextEntry::make('parent.description')
@@ -41,7 +41,7 @@ class SocialGroupInfolist
                                 ->label('Vinculado a')
                                 ->formatStateUsing(fn($state) => strtoupper($state))
                                 ->weight(FontWeight::SemiBold)
-                                ->color('gray'),
+                                ->color('secondary'),
                         ]),
                     ])
             ]);

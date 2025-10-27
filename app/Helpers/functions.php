@@ -21,7 +21,8 @@ function styleFilamentPanel(Panel $panel): Panel
     return $panel->font('Karla')
         ->colors([
             // 'primary' => '#017840'
-            'primary' => '#14b8a6'
+            'primary' => '#14b8a6',
+            'secondary' => Color::Zinc,
         ])
         ->assets([
             Css::make('filament-stylesheet', resource_path('css/filament.css'))
@@ -30,29 +31,42 @@ function styleFilamentPanel(Panel $panel): Panel
 
 // ====================== TRANSPARENCIA =========================
 
-function menu_transparency($type = false){
+function menu_transparency($type = false)
+{
 
     $array = array(
         // array("name" => "Inicio",                               "parameter" => "home",              "icon" => "fa fa-file",             "route" => "transparency.home"),
 
-        array("name" => "Institucional",    "parameter" => "institucional", "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
-                "navigation" => array(
-                    // array("name" => "Institucional",    "icon" => "fa fa-file",                                     "route" => "transparency.institutional"),
-                    array("name" => "Legislação",       "icon" => "fa fa-file",   "parameter" => "legislation",     "route" => "transparency.document.list"),
-                    array("name" => "Organograma",      "icon" => "fa fa-file",                                     "route" => "transparency.organization"),
-                    array("name" => "Servidores",       "icon" => "fa fa-file",                                     "route" => "transparency.effective-role.list"),
-                    array("name" => "Cargos",           "icon" => "fa fa-file",                                     "route" => "transparency.commissioned-role.list"),
-                )
+        array(
+            "name" => "Institucional",
+            "parameter" => "institucional",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
+            "navigation" => array(
+                // array("name" => "Institucional",    "icon" => "fa fa-file",                                     "route" => "transparency.institutional"),
+                array("name" => "Legislação",       "icon" => "fa fa-file",   "parameter" => "legislation",     "route" => "transparency.document.list"),
+                array("name" => "Organograma",      "icon" => "fa fa-file",                                     "route" => "transparency.organization"),
+                array("name" => "Servidores",       "icon" => "fa fa-file",                                     "route" => "transparency.effective-role.list"),
+                array("name" => "Cargos",           "icon" => "fa fa-file",                                     "route" => "transparency.commissioned-role.list"),
+            )
         ),
 
-        array("name" => "Execução Orçamentária",  "parameter" => "finance", "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Execução Orçamentária",
+            "parameter" => "finance",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Quadro de Detalhamento de Despesas",          "icon" => "fa fa-file",            "route" => "transparency.quadro-despesas.list"),
                 array("name" => "Dotações Orçamentárias",          "icon" => "fa fa-file",           "route" => "transparency.dotacoes.list"),
-                )
-            ),
-            
-            array("name" => "Execução Financeira",  "parameter" => "finance", "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+            )
+        ),
+
+        array(
+            "name" => "Execução Financeira",
+            "parameter" => "finance",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Orçamento",                "icon" => "fa fa-file", "parameter" => "income",                    "route" => "transparency.order.list"),
                 array("name" => "Despesas",                 "icon" => "fa fa-file", "parameter" => "expense",                   "route" => "transparency.order.list"),
@@ -63,13 +77,21 @@ function menu_transparency($type = false){
             )
         ),
 
-        array("name" => "Plano Plurianual",  "parameter" => "finance", "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Plano Plurianual",
+            "parameter" => "finance",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Plano Plurianual",       "icon" => "fa fa-file", "parameter" => "ppa",                "route" => "transparency.document.list"),
             )
         ),
 
-        array("name" => "Lei Orçamentária Anual",  "parameter" => "finance", "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Lei Orçamentária Anual",
+            "parameter" => "finance",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Lei Orçamentária Anual",       "icon" => "fa fa-file", "parameter" => "loa",                "route" => "transparency.document.list"),
             )
@@ -83,14 +105,22 @@ function menu_transparency($type = false){
         // ),
 
 
-        array("name" => "Licitações",   "parameter" => "licitacao",         "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Licitações",
+            "parameter" => "licitacao",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Licitações",               "icon" => "fa fa-file",     "route" => "transparency.bid.list"),
                 array("name" => "Ata de Registro de Preço", "icon" => "fa fa-file",     "route" => "transparency.price-record.list"),
             )
         ),
 
-        array("name" => "Contratos",   "parameter" => "contratos    ",         "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Contratos",
+            "parameter" => "contratos    ",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Contratos Pessoa Física",     "icon" => "fa fa-file",     "parameter" => "fisica", "route" => "transparency.contract.list"),
                 array("name" => "Contratos Pessoa Jurídica",   "icon" => "fa fa-file",     "parameter" => "juridica", "route" => "transparency.contract.list"),
@@ -98,13 +128,17 @@ function menu_transparency($type = false){
             )
         ),
 
-        array("name" => "Convênios",   "parameter" => "convenios",         "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Convênios",
+            "parameter" => "convenios",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Acordos de Cooperação Técnica PROEXT",     "icon" => "fa fa-file",   "parameter" => "convenio-extensao",     "route" => "transparency.document.list"),
                 array("name" => "Convênios p/ Pesquisa",                    "icon" => "fa fa-file",   "parameter" => "convenio-pesquisa",     "route" => "transparency.document.list"),
                 array("name" => "Convênios p/ Pós-Graduação",               "icon" => "fa fa-file",   "parameter" => "convenio-pos-graduacao",     "route" => "transparency.document.list"),
                 array("name" => "Transferências Discricionárias", "parameter" => "transferencia-discricionaria", "icon" => "fa fa-file", "route" => "transparency.document.list"),
-                )
+            )
         ),
 
         // array("name" => "PATRIMÔNIO",                       "parameter" => "patrimonio",        "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
@@ -125,7 +159,11 @@ function menu_transparency($type = false){
         //     )
         // ),
 
-        array("name" => "Bolsas e Auxílios.",               "parameter" => "bolsa",             "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Bolsas e Auxílios.",
+            "parameter" => "bolsa",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Bolsas de Pesquisas Professor",    "icon" => "fa fa-file",   "parameter" => "bolsa-pesquisa-professor",    "route" => "transparency.document.list"),
                 array("name" => "Bolsas de Pesquisas Técnico",      "icon" => "fa fa-file",   "parameter" => "bolsa-pesquisa-tecnico",      "route" => "transparency.document.list"),
@@ -142,11 +180,15 @@ function menu_transparency($type = false){
                 array("name" => "Projetos e Programas de Extensão com UCEX",                    "icon" => "fa fa-file",   "parameter" => "ucex",        "route" => "transparency.document.list"),
 
                 array("name" => "Eventos – Financiamento",                                      "icon" => "fa fa-file",   "parameter" => "edital-financiamento-eventos",        "route" => "transparency.document.list"),
-                )
+            )
         ),
 
 
-        array("name" => "Relatórios",              "parameter" => "relatorio",         "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Relatórios",
+            "parameter" => "relatorio",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "GESTÃO",       "icon" => "fa fa-file",   "parameter" => "relatorio-gestao",     "route" => "transparency.document.list"),
                 array("name" => "PROPLAD",      "icon" => "fa fa-file",   "parameter" => "relatorio-proplad",     "route" => "transparency.document.list"),
@@ -158,7 +200,11 @@ function menu_transparency($type = false){
             )
         ),
 
-        array("name" => "Emendas",              "parameter" => "emenda",         "icon" => "fa fa-folder-open",    "route" => "transparency.navigation",
+        array(
+            "name" => "Emendas",
+            "parameter" => "emenda",
+            "icon" => "fa fa-folder-open",
+            "route" => "transparency.navigation",
             "navigation" => array(
                 array("name" => "Emendas Parlamentares", "parameter" => "emenda-parlamentar", "icon" => "fa fa-file", "route" => "transparency.document.list"),
             )
@@ -192,7 +238,7 @@ function menu_transparency($type = false){
 
     );
 
-    if($type){
+    if ($type) {
         $filtro =
             array_filter(
                 $array,
@@ -204,14 +250,12 @@ function menu_transparency($type = false){
 
 
 
-        if(isset($filtro)){
-            foreach ($filtro as $f){
+        if (isset($filtro)) {
+            foreach ($filtro as $f) {
                 return $f['navigation'];
             }
-
         }
-
-    }else{
+    } else {
         return $array;
     }
 }

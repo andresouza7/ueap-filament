@@ -89,7 +89,7 @@ class DocumentsRelationManager extends RelationManager
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('type')
                 //     ->badge()
-                //     ->color('gray')
+                //     ->color('secondary')
                 //     ->label('Tipo')
                 //     ->searchable(),
                 TextColumn::make('user_created.login')->label('Publicado por'),
