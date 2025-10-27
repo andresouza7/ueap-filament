@@ -3,27 +3,16 @@
 namespace App\Filament\App\Resources\Social\Pontos;
 
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Social\Pontos\Pages\ListPonto;
 use App\Filament\App\Resources\Social\Pontos\Pages\CreatePonto;
 use App\Filament\App\Resources\Social\Pontos\Pages\EditPonto;
-use App\Filament\App\Resources\Social\PontoResource\Pages;
-use App\Filament\App\Resources\Social\PontoResource\RelationManagers;
 use App\Filament\Resources\Social\Pontos\Schemas\PontoForm;
 use App\Filament\Resources\Social\Pontos\Tables\PontosTable;
 use App\Models\CalendarOccurrence;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 
 class PontoResource extends Resource
 {
