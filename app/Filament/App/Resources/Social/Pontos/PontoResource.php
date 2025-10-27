@@ -11,6 +11,8 @@ use App\Filament\App\Resources\Social\Pontos\Pages\CreatePonto;
 use App\Filament\App\Resources\Social\Pontos\Pages\EditPonto;
 use App\Filament\App\Resources\Social\PontoResource\Pages;
 use App\Filament\App\Resources\Social\PontoResource\RelationManagers;
+use App\Filament\Resources\Social\Pontos\Schemas\PontoForm;
+use App\Filament\Resources\Social\Pontos\Tables\PontosTable;
 use App\Models\CalendarOccurrence;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -35,60 +37,12 @@ class PontoResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make([
-                    Select::make('description')
-                        ->label('Tipo')
-                        ->columnSpanFull()
-                        ->options([
-                            'PONTO FACULTATIVO' => 'PONTO FACULTATIVO',
-                            'RECESSO' => 'RECESSO',
-                            'ATESTADO MÉDICO' => 'ATESTADO MÉDICO',
-                            'FÉRIAS DOCENTE' => 'FÉRIAS DOCENTE',
-                            'LUTO OFICIAL' => 'LUTO OFICIAL',
-                            'FALTA' => 'FALTA',
-                            'SEM VINCULO ATIVO' => 'SEM VINCULO ATIVO',
-                        ])
-                        ->required(),
-                    DatePicker::make('start_date')
-                        ->label('Data Início')
-                        ->required(),
-                    DatePicker::make('end_date')
-                        ->label('Data Fim')
-                        ->required()
-                ])
-            ]);
+        return PontoForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->heading('Minhas Ocorrências de Ponto')
-            ->description('Gerencie as alterações de expediente na sua folha de ponto.')
-            ->recordTitleAttribute('description')
-            ->defaultSort('start_date', 'desc')
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', Auth::id())->where('type', 3))
-            ->columns([
-                TextColumn::make('description')
-                    ->searchable()
-                    ->label('Descrição'),
-                TextColumn::make('start_date')
-                    ->sortable()
-                    ->dateTime('d/m/Y')
-                    ->label('Data Início'),
-                TextColumn::make('end_date')
-                    ->sortable()
-                    ->dateTime('d/m/Y')
-                    ->label('Data Fim'),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ]);
+        return PontosTable::configure($table);
     }
 
     public static function getRelations(): array

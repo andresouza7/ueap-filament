@@ -17,6 +17,8 @@ use App\Filament\App\Resources\Social\SocialUserResource\Pages;
 use App\Filament\App\Resources\Social\SocialUsers\RelationManagers\CalendarOccurrencesRelationManager;
 use App\Filament\App\Resources\Social\SocialUsers\RelationManagers\OrdinancesRelationManager;
 use App\Filament\App\Resources\Social\SocialUsers\RelationManagers\PostsRelationManager;
+use App\Filament\Resources\Social\SocialUsers\Schemas\SocialUserInfolist;
+use App\Filament\Resources\Social\SocialUsers\Tables\SocialUsersTable;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
@@ -58,152 +60,12 @@ class SocialUserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->heading('Consulta de Servidores da UEAP')
-            ->description('Lista dos servidores da universidade, seus cargos e lotações. Use o filtro de busca para encontrar informações.')
-            ->defaultSort('login')
-            ->columns([
-                Split::make([
-                    ImageColumn::make('profile_photo_url')
-                        ->grow(false)
-                        ->size('70px')
-                        ->circular(),
-                    Stack::make([
-                        TextColumn::make('login')
-                            ->size('100px')
-                            ->weight(FontWeight::SemiBold)
-                            ->formatStateUsing(fn($state) => collect(explode('.', $state))
-                                ->map(fn($part) => ucfirst(trim($part)))
-                                ->implode(' '))
-                            ->searchable(),
-
-                        Stack::make([
-                            TextColumn::make('effective_role.description')
-                                ->tooltip(fn($state) => $state)
-                                ->size(TextSize::ExtraSmall)
-                                ->color('gray')
-                                ->weight(FontWeight::SemiBold)
-                                ->words(5)
-                                ->columnSpanFull()
-                                ->formatStateUsing(fn($state) => strtoupper($state)),
-
-                            TextColumn::make('group.name')
-                                ->color('primary')
-                                ->formatStateUsing(fn($state) => strtoupper($state))
-                                ->size(TextSize::ExtraSmall)
-                                ->weight(FontWeight::SemiBold),
-                        ])
-                    ])->space(2)
-
-                ]),
-            ])
-            ->contentGrid([
-                'md' => 2,
-                'xl' => 3,
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                // Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return SocialUsersTable::configure($table);
     }
 
     public static function infolist(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make('Dados Funcionais')
-                    ->columns(3)
-                    ->schema([
-                        Group::make([
-
-                            ImageEntry::make('profile_photo_url')
-                                ->grow(false)
-                                ->hiddenLabel()
-                                ->circular()
-                                ->alignCenter()
-                                ->columnSpan(1)
-                                ->size(200),
-
-                            TextEntry::make('login')
-                                ->size(TextSize::Large)
-                                ->weight(FontWeight::Bold)
-                                ->alignCenter()
-                                ->hiddenLabel(),
-                            TextEntry::make('enrollment')
-                                ->formatStateUsing(fn($state) => "Mat.: " . $state)
-                                ->hiddenLabel()
-                                ->alignCenter()
-                                ->copyable()
-                                ->badge()
-                                ->color('success'),
-
-                            Actions::make([
-                                Action::make('Alterar Foto')
-                                    ->size('xs')
-                                    // ->badge()
-                                    ->color('gray')
-                                    ->extraAttributes(['class' => 'px-2 py-1'])
-                                    ->icon('heroicon-m-pencil')
-                                    ->visible(fn($record) => $record->id === Auth::id())
-                                    ->schema([
-                                        FileUpload::make('attachment')
-                                            ->label('Arquivo')
-                                            ->directory('users')
-                                            ->uploadingMessage('Fazendo upload...')
-                                            ->image()
-                                            ->acceptedFileTypes(['image/jpeg'])
-                                            ->avatar()
-                                            ->imageEditor()
-                                            // ->circleCropper()
-                                            ->maxSize(1024 * 10)
-                                            ->getUploadedFileNameForStorageUsing(
-                                                fn(TemporaryUploadedFile $file, $record): string => "{$record->id}.jpg"
-                                            )
-                                            ->helperText('*Salve as alterações para concluir.')
-                                    ])
-                                    ->action(function (array $data, $record): void {
-                                        redirect()->route('filament.app.resources.servidor.view', $record->id);
-                                    })
-                            ])->alignCenter(),
-                        ])->extraAttributes(['class' => 'h-full flex items-center justify-center']),
-
-                        Group::make([
-                            Flex::make([
-                                TextEntry::make('person.name')
-                                    ->label('Nome')
-                            ]),
-
-                            TextEntry::make('email')
-                                ->label('Email')
-                                ->icon('heroicon-m-envelope'),
-                            TextEntry::make('group.description')
-                                ->url(fn($record) => $record->group ? SocialGroupResource::getUrl('view', ['record' => $record->group->id]) : null)
-                                ->label('Lotação')
-                                ->icon('heroicon-o-building-office-2'),
-                            TextEntry::make('effective_role.description')
-                                ->label('Cargo Efetivo')
-                                ->icon('heroicon-o-briefcase'),
-                            TextEntry::make('commissioned_role.description')
-                                ->label('Cargo Comissionado')
-                                ->icon('heroicon-o-briefcase')
-                                ->columnSpanFull(),
-                            TextEntry::make('groups.name')
-                                ->label('Meus acessos')
-                                ->formatStateUsing(fn($record) => $record->groups->pluck('name')->join(', '))
-                                ->visible(fn($record) => $record->id === auth()->id())
-                        ])->columnStart([
-                            'sm' => 2,
-                        ])
-                    ])
-            ]);
+        return SocialUserInfolist::configure($schema);
     }
 
     public static function getRelations(): array

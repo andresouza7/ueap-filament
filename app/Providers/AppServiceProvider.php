@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
@@ -40,5 +43,13 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        Fieldset::configureUsing(fn(Fieldset $fieldset) => $fieldset
+            ->columnSpanFull());
+
+        Grid::configureUsing(fn(Grid $grid) => $grid
+            ->columnSpanFull());
+
+        Section::configureUsing(fn(Section $section) => $section
+            ->columnSpanFull());
     }
 }

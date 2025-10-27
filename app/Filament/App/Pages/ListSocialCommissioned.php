@@ -29,7 +29,7 @@ class ListSocialCommissioned extends Page implements HasTable
     {
         return $table
             ->heading('Consulta de cargos comissionados')
-            ->description('Esta tabela exibe os cargos comissionados da instituição e seus responsáveis. Utilize os filtros e opções de busca para encontrar uma informação específica.')
+            ->description('Use o filtro e o campo de busca para encontrar uma informação específica.')
             ->recordTitleAttribute('description')
             ->query(CommissionedRole::query())
             ->defaultSort('description')
