@@ -37,6 +37,7 @@ class WebMenuResource extends Resource
                         ->relationship('web_menu_place', 'name'),
                     Forms\Components\TextInput::make('slug')
                         ->required()
+                        ->disabledOn('edit')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('name')
                         ->label('Nome')

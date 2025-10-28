@@ -27,6 +27,10 @@ class WebMenuItem extends Model
         return $this->belongsTo(WebMenu::class, 'web_menu_id');
     }
 
+    public function parent() {
+        return $this->belongsTo(WebMenuItem::class, 'menu_parent_id');
+    }
+
     public function sub_itens()
     {
         return $this->hasMany(WebMenuItem::class, 'menu_parent_id');
