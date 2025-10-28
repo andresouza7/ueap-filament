@@ -11,10 +11,11 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use App\Models\WebPage;
-use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Components\Group;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class ItemsRelationManager extends RelationManager
@@ -66,12 +67,55 @@ class ItemsRelationManager extends RelationManager
                         'unpublished' => 'Não Publicado',
                     ])
                     ->required(),
+
+                Repeater::make('sub_itens')
+                    ->label('Sub Itens')
+                    ->helperText('Adicione subitens a este item de menu')
+                    ->itemLabel(fn(array $state): ?string => $state['name'] ?? null)
+                    ->orderColumn('position')
+                    ->reorderable()
+                    ->reorderableWithButtons()
+                    ->relationship() // links it to the 'sub_itens' relationship
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->label('Nome'),
+                        TextInput::make('url')
+                            ->required(),
+                        Group::make([
+                            TextInput::make('position')
+                                ->label('Posição')
+                                ->required()
+                                ->integer(),
+                            Select::make('status')
+                                ->options([
+                                    'published' => 'Publicado',
+                                    'unpublished' => 'Não Publicado',
+                                ])
+                                ->required(),
+                        ])
+
+                    ])
+                    ->mutateRelationshipDataBeforeCreateUsing(function ($record, array $data) {
+                        $data['web_menu_id'] = $record->web_menu_id;
+                        $data['web_menu_parent_id'] = $record->id; // THIS makes it a child of the current menu item
+
+                        // Set position: last position among siblings + 1
+                        $lastPosition = $record->sub_itens()->max('position') ?? 0;
+                        $data['position'] = $lastPosition + 1;
+                        $data['uuid'] = Str::uuid();
+
+                        return $data;
+                    })
+                    ->collapsible() // optional: makes sub-items collapsible
+                    ->columns(1),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->whereDoesntHave('parent'))
             ->recordTitleAttribute('name')
             ->heading('Itens do menu')
             ->description('Visualize os itens vinculados a este menu e reordene a posição')
@@ -82,7 +126,8 @@ class ItemsRelationManager extends RelationManager
                     ->sortable()
                     ->label('Posição'),
                 TextColumn::make('name')
-                    ->label('Nome'),
+                    ->label('Nome')
+                    ->searchable(),
             ])
             ->filters([
                 //

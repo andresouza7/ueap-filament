@@ -12,14 +12,10 @@ use App\Filament\App\Resources\Site\WebMenus\Pages\ListWebMenus;
 use App\Filament\App\Resources\Site\WebMenus\Pages\CreateWebMenu;
 use App\Filament\App\Resources\Site\WebMenus\Pages\ViewWebMenu;
 use App\Filament\App\Resources\Site\WebMenus\Pages\EditWebMenu;
-use App\Filament\App\Resources\Site\WebMenuResource\Pages;
-use App\Filament\App\Resources\Site\WebMenuResource\RelationManagers;
 use App\Filament\App\Resources\Site\WebMenus\RelationManagers\ItemsRelationManager;
 use App\Models\WebMenu;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,6 +40,7 @@ class WebMenuResource extends Resource
                         ->preload()
                         ->relationship('web_menu_place', 'name'),
                     TextInput::make('slug')
+                        ->disabledOn('edit')
                         ->required()
                         ->maxLength(255),
                     TextInput::make('name')
