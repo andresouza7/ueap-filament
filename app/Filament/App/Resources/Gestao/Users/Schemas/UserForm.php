@@ -45,7 +45,6 @@ class UserForm
                     ->required()
                     ->maxLength(255),
                 TextInput::make('enrollment')
-                    ->hiddenOn('create')
                     ->label('Matrícula')
                     ->maxLength(255),
                 Select::make('group_id')
@@ -113,7 +112,6 @@ class UserForm
                         TextInput::make('ordinance')
                             ->label('Doc. de Admissão')
                             ->helperText('Decreto ou Contrato')
-                            ->required()
                             ->maxLength(255),
                         DatePicker::make('ordinance_date')
                             ->label('Data do Documento')
