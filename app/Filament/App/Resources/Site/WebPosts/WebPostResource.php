@@ -27,6 +27,7 @@ use App\Filament\App\Resources\Site\WebPostResource\Pages;
 use App\Models\WebPost;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Split;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -71,16 +72,12 @@ class WebPostResource extends Resource
             ->schema([
 
                 Group::make([
-                    // Forms\Components\RichEditor::make('text')
-                    //     ->label('Conteúdo')
-                    //     ->required()
-                    //     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 30vh; overflow-y: auto;'])
-                    //     ->disableToolbarButtons(['attachFiles'])
-                    //     ->columnSpanFull(),
-                    TinyEditor::make('text')
+                    RichEditor::make('text')
                         ->label('Conteúdo')
-                        ->profile('custom')
-                        ->required(),
+                        ->required()
+                        ->extraInputAttributes(['style' => 'min-height: 25.7rem; max-height: 30vh; overflow-y: auto;'])
+                        ->disableToolbarButtons(['attachFiles'])
+                        ->columnSpanFull(),
                 ])->columnSpan(2),
                 Group::make([
                     Select::make('web_category_id')
@@ -124,7 +121,7 @@ class WebPostResource extends Resource
         return Group::make()
             ->schema([
                 FileUpload::make('file')
-                    ->label('Arquivo')
+                    ->label('Imagem JPG')
                     ->directory('web/posts')
                     ->acceptedFileTypes(['image/jpeg'])
                     ->previewable(false)
@@ -162,12 +159,9 @@ class WebPostResource extends Resource
                     ->label('Data Publicação')
                     ->sortable()
                     ->dateTime('d/m/Y'),
-                TextColumn::make('user_created.login')
-                    ->label('Autor')
-                    ->sortable(),
-                TextColumn::make('user_updated.login')
-                    ->label('Editado Por')
-                    ->sortable(),
+                TextColumn::make('user_created')
+                    ->label('Editado por')
+                    ->formatStateUsing(fn($record) => $record->user_updated?->login ?? $record->user_created->login),
                 TextColumn::make('web_category_id')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),

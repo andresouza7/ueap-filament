@@ -24,6 +24,7 @@ use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -67,18 +68,14 @@ class WebPageResource extends Resource
                             'unpublished' => 'Despublicado'
                         ]),
 
-                    TinyEditor::make('text')
+                    RichEditor::make('text')
                         ->label('Texto')
-                        ->profile('full')
-                        ->required(),
-                    // Forms\Components\RichEditor::make('text')
-                    //     ->label('Texto')
-                    //     ->required()
-                    //     ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
-                    //     ->disableToolbarButtons(['attachFiles'])
-                    //     ->columnSpanFull(),
+                        ->required()
+                        ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                        ->disableToolbarButtons(['attachFiles'])
+                        ->columnSpanFull(),
                     FileUpload::make('file')
-                        ->label('Arquivo JPG')
+                        ->label('Imagem JPG')
                         ->directory('web/pages')
                         ->acceptedFileTypes(['image/jpeg'])
                         ->previewable(false)
@@ -142,10 +139,9 @@ class WebPageResource extends Resource
                 TextColumn::make('hits')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('user_created.login')
-                    ->label('Autor'),
-                TextColumn::make('user_updated.login')
-                    ->label('Editado Por'),
+                TextColumn::make('user_created')
+                    ->label('Editado Por')
+                    ->formatStateUsing(fn($record) => $record->user_updated?->login ?? $record->user_created->login),
                 TextColumn::make('web_category_id')
                     ->numeric()
                     ->sortable()
