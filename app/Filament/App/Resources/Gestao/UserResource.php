@@ -15,6 +15,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Spatie\Permission\Models\Role;
@@ -49,7 +50,6 @@ class UserResource extends Resource
                                             ->required()
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('enrollment')
-                                            ->hiddenOn('create')
                                             ->label('Matrícula')
                                             ->maxLength(255),
                                         Forms\Components\Select::make('group_id')
@@ -109,7 +109,6 @@ class UserResource extends Resource
                                                 Forms\Components\TextInput::make('ordinance')
                                                     ->label('Doc. de Admissão')
                                                     ->helperText('Decreto ou Contrato')
-                                                    ->required()
                                                     ->maxLength(255),
                                                 Forms\Components\DatePicker::make('ordinance_date')
                                                     ->label('Data do Documento')
