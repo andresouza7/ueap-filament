@@ -50,9 +50,9 @@ class AppServiceProvider extends ServiceProvider
             // Only register assets for authenticated users and skip login page
             if ($user && !request()->routeIs('filament.app.auth.login')) {
                 FilamentAsset::register([
-                    Js::make('jumpscare-script', asset('js/filament/jumpscare.js'))->module(),
-                    Js::make('phantom-script', asset('js/filament/phantom.js'))->module(),
-                    Js::make('watch-script', asset('js/filament/watchtheme.js'))->module(),
+                    Js::make('jumpscare-script', asset('js/filament/jumpscare.js'))->module()->defer(),
+                    Js::make('phantom-script', asset('js/filament/phantom.js'))->module()->defer(),
+                    Js::make('watch-script', asset('js/filament/watchtheme.js'))->module()->defer(),
                 ]);
             }
         });

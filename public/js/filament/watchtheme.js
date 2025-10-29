@@ -3,7 +3,7 @@
 // =============================
 
 import { spawnGhost } from './phantom.js';
-import { playJumpscare, scheduleJumpscare } from './jumpscare.js';
+import { playJumpscare, scheduleJumpscare as originalScheduleJumpscare } from './jumpscare.js';
 
 // Global state
 let halloweenEnabled = false;
@@ -11,23 +11,24 @@ let ghostsInterval = null;
 let pumpkinButton = null;
 let lightThemePumpkin = null;
 let userInteracted = false;
+let jumpscareTimeout = null; // store scheduled jumpscare
 
 // Observe changes to the <html> class attribute
 const htmlEl = document.documentElement;
 const observer = new MutationObserver(() => {
-  const isDark = htmlEl.classList.contains('dark');
-  if (isDark && !halloweenEnabled) {
-    enableHalloweenEffects();
-    halloweenEnabled = true;
-  } else if (!isDark && halloweenEnabled) {
-    disableHalloweenEffects();
-    halloweenEnabled = false;
-  }
+    const isDark = htmlEl.classList.contains('dark');
+    if (isDark && !halloweenEnabled) {
+        enableHalloweenEffects();
+        halloweenEnabled = true;
+    } else if (!isDark && halloweenEnabled) {
+        disableHalloweenEffects();
+        halloweenEnabled = false;
+    }
 });
 observer.observe(htmlEl, { attributes: true, attributeFilter: ['class'] });
 
 // =============================
-// 🧙‍♂️ Style Definitions
+// 🧙‍♂️ Styles
 // =============================
 const style = document.createElement('style');
 style.textContent = `
@@ -91,86 +92,101 @@ document.head.appendChild(style);
 // 🎃 Pumpkin Buttons Setup
 // =============================
 function createDarkPumpkin() {
-  pumpkinButton = document.createElement('div');
-  pumpkinButton.className = 'pumpkin-button';
-  pumpkinButton.innerHTML = `
+    pumpkinButton = document.createElement('div');
+    pumpkinButton.className = 'pumpkin-button';
+    pumpkinButton.innerHTML = `
     <div class="pumpkin-wrapper">
       <img src="/img/pumpkin.png" alt="Gift Pumpkin" class="pumpkin-img" />
       <div class="pumpkin-text">🎁 Clique para um<br>presente misterioso!</div>
     </div>
   `;
-  document.body.appendChild(pumpkinButton);
+    document.body.appendChild(pumpkinButton);
 
-  pumpkinButton.addEventListener('click', () => {
-    if (!userInteracted) {
-      userInteracted = true;
-      scheduleJumpscare();
-    }
-    playJumpscare();
-  });
+    pumpkinButton.addEventListener('click', () => {
+        if (!userInteracted) {
+            userInteracted = true;
+            jumpscareTimeout = scheduleJumpscare(); // store timeout/interval
+        }
+        playJumpscare();
+    });
 }
 
 function createLightPumpkin() {
-  lightThemePumpkin = document.createElement('div');
-  lightThemePumpkin.className = 'pumpkin-button';
-  lightThemePumpkin.innerHTML = `
-    <div class="pumpkin-wrapper">
-      <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
-     <div class="pumpkin-text">👻 Descubra<br>o tema Halloween!</div>
-    </div>
-  `;
-  document.body.appendChild(lightThemePumpkin);
+    lightThemePumpkin = document.createElement('div');
+    lightThemePumpkin.className = 'pumpkin-button';
+    lightThemePumpkin.innerHTML = `
+      <div class="pumpkin-wrapper">
+        <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
+        <div class="pumpkin-text">👻 Descubra<br>o tema Halloween!</div>
+      </div>
+    `;
+    document.body.appendChild(lightThemePumpkin);
 
-  lightThemePumpkin.addEventListener('click', () => {
-    document.documentElement.classList.add('dark'); // activate dark theme
-    lightThemePumpkin.style.display = 'none';
-  });
+    lightThemePumpkin.addEventListener('click', () => {
+        // Click the Filament dark mode button directly
+        const darkBtn = document.querySelector('.fi-theme-switcher-btn[x-on\\:click*="dark"]');
+        if (darkBtn) darkBtn.click();
+
+        // Hide light pumpkin
+        lightThemePumpkin.style.display = 'none';
+    });
 }
 
 // =============================
 // Initialization
 // =============================
-
-// Create light pumpkin immediately if not in dark mode
 if (!htmlEl.classList.contains('dark')) {
     if (!lightThemePumpkin) createLightPumpkin();
     lightThemePumpkin.style.display = 'block';
 }
 
-
 // =============================
 // 🕯️ Activate / Deactivate Effects
 // =============================
 function enableHalloweenEffects() {
-  console.log('🎃 Halloween mode enabled');
+    console.log('🎃 Halloween mode enabled');
 
-  // Dark theme pumpkin
-  if (!pumpkinButton) createDarkPumpkin();
-  pumpkinButton.style.display = 'block';
+    if (!pumpkinButton) createDarkPumpkin();
+    pumpkinButton.style.display = 'block';
 
-  // Light theme pumpkin hidden
-  if (lightThemePumpkin) lightThemePumpkin.style.display = 'none';
+    if (lightThemePumpkin) lightThemePumpkin.style.display = 'none';
 
-  // Spawn ghosts every 3–6 seconds
-  ghostsInterval = setInterval(spawnGhost, 3000 + Math.random() * 3000);
+    ghostsInterval = setInterval(spawnGhost, 3000 + Math.random() * 3000);
 }
 
 function disableHalloweenEffects() {
-  console.log('💡 Halloween mode disabled');
+    console.log('💡 Halloween mode disabled');
 
-  // Stop ghost spawning
-  clearInterval(ghostsInterval);
-  ghostsInterval = null;
+    // Stop ghosts
+    clearInterval(ghostsInterval);
+    ghostsInterval = null;
 
-  // Hide dark theme pumpkin
-  if (pumpkinButton) pumpkinButton.style.display = 'none';
+    // Hide dark pumpkin
+    if (pumpkinButton) pumpkinButton.style.display = 'none';
 
-  // Show light theme pumpkin
-  if (!lightThemePumpkin) createLightPumpkin();
-  lightThemePumpkin.style.display = 'block';
+    // Show light pumpkin
+    if (!lightThemePumpkin) createLightPumpkin();
+    lightThemePumpkin.style.display = 'block';
 
-  // Remove all ghosts
-  document.querySelectorAll('.ghost').forEach(g => g.remove());
+    // Remove ghosts
+    document.querySelectorAll('.ghost').forEach(g => g.remove());
+
+    // Cancel jumpscare
+    if (jumpscareTimeout) {
+        clearTimeout(jumpscareTimeout);
+        jumpscareTimeout = null;
+    }
+
+    // Reset interaction
+    userInteracted = false;
+}
+
+// =============================
+// Modified scheduleJumpscare wrapper
+// =============================
+function scheduleJumpscare() {
+    // Original function returns a timeout ID
+    return originalScheduleJumpscare();
 }
 
 export { enableHalloweenEffects, disableHalloweenEffects };
