@@ -9,6 +9,7 @@ import { playJumpscare, scheduleJumpscare } from './jumpscare.js';
 let halloweenEnabled = false;
 let ghostsInterval = null;
 let pumpkinButton = null;
+let lightThemePumpkin = null;
 let userInteracted = false;
 
 // Observe changes to the <html> class attribute
@@ -86,11 +87,10 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-
 // =============================
-// 🎃 Pumpkin Button Setup
+// 🎃 Pumpkin Buttons Setup
 // =============================
-function createPumpkinButton() {
+function createDarkPumpkin() {
   pumpkinButton = document.createElement('div');
   pumpkinButton.className = 'pumpkin-button';
   pumpkinButton.innerHTML = `
@@ -104,20 +104,52 @@ function createPumpkinButton() {
   pumpkinButton.addEventListener('click', () => {
     if (!userInteracted) {
       userInteracted = true;
-      scheduleJumpscare(); // start auto jumpscares
+      scheduleJumpscare();
     }
-    playJumpscare(); // immediate jumpscare
+    playJumpscare();
   });
 }
+
+function createLightPumpkin() {
+  lightThemePumpkin = document.createElement('div');
+  lightThemePumpkin.className = 'pumpkin-button';
+  lightThemePumpkin.innerHTML = `
+    <div class="pumpkin-wrapper">
+      <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
+     <div class="pumpkin-text">👻 Descubra<br>o tema Halloween!</div>
+    </div>
+  `;
+  document.body.appendChild(lightThemePumpkin);
+
+  lightThemePumpkin.addEventListener('click', () => {
+    document.documentElement.classList.add('dark'); // activate dark theme
+    lightThemePumpkin.style.display = 'none';
+  });
+}
+
+// =============================
+// Initialization
+// =============================
+
+// Create light pumpkin immediately if not in dark mode
+if (!htmlEl.classList.contains('dark')) {
+    if (!lightThemePumpkin) createLightPumpkin();
+    lightThemePumpkin.style.display = 'block';
+}
+
 
 // =============================
 // 🕯️ Activate / Deactivate Effects
 // =============================
 function enableHalloweenEffects() {
   console.log('🎃 Halloween mode enabled');
-  
-  if (!pumpkinButton) createPumpkinButton();
+
+  // Dark theme pumpkin
+  if (!pumpkinButton) createDarkPumpkin();
   pumpkinButton.style.display = 'block';
+
+  // Light theme pumpkin hidden
+  if (lightThemePumpkin) lightThemePumpkin.style.display = 'none';
 
   // Spawn ghosts every 3–6 seconds
   ghostsInterval = setInterval(spawnGhost, 3000 + Math.random() * 3000);
@@ -130,8 +162,12 @@ function disableHalloweenEffects() {
   clearInterval(ghostsInterval);
   ghostsInterval = null;
 
-  // Hide pumpkin
+  // Hide dark theme pumpkin
   if (pumpkinButton) pumpkinButton.style.display = 'none';
+
+  // Show light theme pumpkin
+  if (!lightThemePumpkin) createLightPumpkin();
+  lightThemePumpkin.style.display = 'block';
 
   // Remove all ghosts
   document.querySelectorAll('.ghost').forEach(g => g.remove());

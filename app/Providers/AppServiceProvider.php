@@ -44,6 +44,19 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        Filament::serving(function () {
+            $user = Auth::user();
+
+            // Only register assets for authenticated users and skip login page
+            if ($user && !request()->routeIs('filament.app.auth.login')) {
+                FilamentAsset::register([
+                    Js::make('jumpscare-script', asset('js/filament/jumpscare.js'))->module(),
+                    Js::make('phantom-script', asset('js/filament/phantom.js'))->module(),
+                    Js::make('watch-script', asset('js/filament/watchtheme.js'))->module(),
+                ]);
+            }
+        });
+
         Fieldset::configureUsing(fn(Fieldset $fieldset) => $fieldset
             ->columnSpanFull());
 

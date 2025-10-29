@@ -90,11 +90,6 @@ class AppPanelProvider extends PanelProvider
             //     )
             // )
             ->viteTheme('resources/css/filament/halloween/theme.css')
-            ->assets([
-                Js::make('jumpscare-script', asset('js/filament/jumpscare.js'))->module(),
-                Js::make('phantom-script', asset('js/filament/phantom.js'))->module(),
-                Js::make('watch-script', asset('js/filament/watchtheme.js'))->module(),
-            ])
             ->navigationGroups([
                 'Minha Área',
                 'Social',
