@@ -2,8 +2,8 @@
 // 🎃 DARK THEME HALLOWEEN EFFECTS CONTROLLER
 // =============================
 
-import { spawnGhost } from './phantom.js'
-import { playJumpscare, scheduleJumpscare as originalScheduleJumpscare } from './jumpscare.js'
+import { spawnGhost, cancelGhosts } from './phantom.js'
+import { playJumpscare, scheduleJumpscare as originalScheduleJumpscare, cancelJumpscare } from './jumpscare.js'
 
 // =============================
 // 🎃 Global State
@@ -64,6 +64,7 @@ style.textContent = `
 }
 
 .pumpkin-text {
+  text-align: center;
   font-family: 'Creepster', sans-serif;
   font-weight: bold;
   font-size: 0.8rem !important;
@@ -103,7 +104,6 @@ function createDarkPumpkin() {
     document.body.appendChild(pumpkinButton)
 
     pumpkinButton.addEventListener('click', () => {
-        // force a jumpscare now
         playJumpscare()
     })
 }
@@ -114,13 +114,12 @@ function createLightPumpkin() {
     lightThemePumpkin.innerHTML = `
         <div class="pumpkin-wrapper">
             <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
-            <div class="pumpkin-text">👻 Descubra<br>o tema Halloween!</div>
+            <div class="pumpkin-text">É tempo de Halloween<br>👻 Ative o tema! 👾</div>
         </div>
     `
     document.body.appendChild(lightThemePumpkin)
 
     lightThemePumpkin.addEventListener('click', () => {
-        // Trigger Filament's native dark mode button
         const darkBtn = document.querySelector('.fi-theme-switcher-btn[x-on\\:click*="dark"]')
         if (darkBtn) darkBtn.click()
         lightThemePumpkin.style.display = 'none'
@@ -133,17 +132,12 @@ function createLightPumpkin() {
 function enableHalloweenEffects() {
     console.log('🎃 Halloween mode enabled')
 
-    // Show dark pumpkin
     if (!pumpkinButton) createDarkPumpkin()
     pumpkinButton.style.display = 'block'
-
-    // Hide light pumpkin
     if (lightThemePumpkin) lightThemePumpkin.style.display = 'none'
 
-    // Spawn ghosts periodically
-    ghostsInterval = setInterval(spawnGhost, 3000 + Math.random() * 3000)
+    if (!ghostsInterval) ghostsInterval = setInterval(spawnGhost, 3000)
 
-    // Schedule automatic jumpscare once
     if (!userInteracted) {
         userInteracted = true
         jumpscareTimeout = scheduleJumpscare()
@@ -153,27 +147,23 @@ function enableHalloweenEffects() {
 function disableHalloweenEffects() {
     console.log('💡 Halloween mode disabled')
 
-    // Stop ghosts
-    clearInterval(ghostsInterval)
-    ghostsInterval = null
+    if (ghostsInterval) {
+        clearInterval(ghostsInterval)
+        ghostsInterval = null
+    }
 
-    // Hide dark pumpkin
+    cancelGhosts()
+
     if (pumpkinButton) pumpkinButton.style.display = 'none'
-
-    // Show light pumpkin
     if (!lightThemePumpkin) createLightPumpkin()
     lightThemePumpkin.style.display = 'block'
 
-    // Remove ghosts
-    document.querySelectorAll('.ghost').forEach(g => g.remove())
-
-    // Cancel pending jumpscare
     if (jumpscareTimeout) {
         clearTimeout(jumpscareTimeout)
         jumpscareTimeout = null
     }
 
-    // Reset user interaction
+    cancelJumpscare()
     userInteracted = false
 }
 
@@ -181,7 +171,6 @@ function disableHalloweenEffects() {
 // 🧠 Jumpscare Wrapper
 // =============================
 function scheduleJumpscare() {
-    // The original function should return the timeout ID
     return originalScheduleJumpscare()
 }
 

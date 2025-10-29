@@ -9,31 +9,15 @@ const jumpscareVideos = [
 ];
 
 let isJumpscareActive = false;
-let userInteracted = false;
+let jumpscareTimeoutId = null;
 
-// Video styles
-const style = document.createElement('style');
-style.textContent = `
-.jumpscare-video {
-  position: fixed;
-  top:0; left:0;
-  width:100vw; height:100vh;
-  object-fit: cover;
-  z-index: 9999999;
-  background: black;
-}
-.fade-out {
-  opacity:0;
-  transition: opacity 1s ease-out;
-}`;
-document.head.appendChild(style);
-
+// Play a jumpscare immediately
 export function playJumpscare() {
-  if (!userInteracted || isJumpscareActive) return;
+  if (isJumpscareActive) return;
   isJumpscareActive = true;
 
   const video = document.createElement('video');
-  video.src = jumpscareVideos[Math.floor(Math.random()*jumpscareVideos.length)];
+  video.src = jumpscareVideos[Math.floor(Math.random() * jumpscareVideos.length)];
   video.className = 'jumpscare-video';
   video.autoplay = true;
   video.playsInline = true;
@@ -55,18 +39,37 @@ export function playJumpscare() {
   });
 }
 
+// Schedule repeated jumpscares
 export function scheduleJumpscare() {
+  cancelJumpscare(); // clear any previous
   const delay = 40000 + Math.random() * 50000;
-  setTimeout(() => {
+  jumpscareTimeoutId = setTimeout(() => {
     playJumpscare();
-    scheduleJumpscare();
+    scheduleJumpscare(); // schedule next
   }, delay);
 }
 
-// Enable after first interaction
-document.addEventListener('click', () => {
-  if (!userInteracted) {
-    userInteracted = true;
-    scheduleJumpscare();
+// Cancel scheduled jumpscares
+export function cancelJumpscare() {
+  if (jumpscareTimeoutId) {
+    clearTimeout(jumpscareTimeoutId);
+    jumpscareTimeoutId = null;
   }
-}, { once: true });
+}
+
+// Styles
+const style = document.createElement('style');
+style.textContent = `
+.jumpscare-video {
+  position: fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  object-fit: cover;
+  z-index: 9999999;
+  background: black;
+}
+.fade-out {
+  opacity:0;
+  transition: opacity 1s ease-out;
+}`;
+document.head.appendChild(style);
