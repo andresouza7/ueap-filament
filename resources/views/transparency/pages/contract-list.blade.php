@@ -30,7 +30,7 @@ Contratos
                                                         // Obtendo o ano atual
                                                         $atualYear = date("Y");
                                                         @endphp
-                                                        @for ($y = $atualYear; $y >= 2010; $y--)
+                                                        @for ($y = $atualYear; $y >= 2016; $y--)
                                                             <option @if($y == $year) selected @endif value={{ $y }}> {{ $y }}</option>
                                                         @endfor
 
