@@ -27,16 +27,21 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class QuadroDespesaResource extends Resource
 {
     protected static ?string $model = Orcamento::class;
     protected static ?string $modelLabel = 'Quadro de Detalhamento de Despesa';
     protected static ?string $pluralModelLabel = 'Quadros de Detalhamento de Despesa';
-
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-minus';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 4;
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole(['diplan', 'uoc']);
+    }
 
     public static function form(Schema $schema): Schema
     {

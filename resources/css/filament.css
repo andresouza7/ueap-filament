@@ -17,6 +17,9 @@
 .dark .fi-fo-tabs,
 .dark .fi-section,
 .dark .fi-simple-main,
+.dark .fi-sc-tabs-tab,
+.dark .fi-modal-window,
+.dark .fi-no-notification,
 .dark .fi-ta-record:not([class*="rounded-xl"]) {
     background-color: #161d31 !important;
 }
