@@ -33,7 +33,7 @@ class LicitacaoResource extends Resource
     protected static ?string $modelLabel = 'Licitação';
     protected static ?string $pluralModelLabel = 'Licitações';
     protected static ?string $slug = 'licitacoes';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-magnifying-glass';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 1;
 

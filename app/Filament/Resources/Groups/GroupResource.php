@@ -30,7 +30,7 @@ class GroupResource extends Resource
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
     protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

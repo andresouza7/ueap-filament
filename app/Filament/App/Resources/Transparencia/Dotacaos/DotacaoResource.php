@@ -32,7 +32,7 @@ class DotacaoResource extends Resource
     protected static ?string $modelLabel = 'Dotação Orcamentária';
     protected static ?string $pluralModelLabel = 'Dotações Orçamentárias';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-currency-dollar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 5;
 

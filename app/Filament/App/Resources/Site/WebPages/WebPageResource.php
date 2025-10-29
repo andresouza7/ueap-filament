@@ -36,7 +36,7 @@ use Illuminate\Support\Str;
 class WebPageResource extends Resource
 {
     protected static ?string $model = WebPage::class;
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
     public static function form(Schema $schema): Schema

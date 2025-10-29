@@ -20,7 +20,7 @@ class UserResource extends Resource
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
     protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema

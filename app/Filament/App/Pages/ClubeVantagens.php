@@ -6,7 +6,7 @@ use Filament\Pages\Page;
 
 class ClubeVantagens extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-gift';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected string $view = 'filament.app.pages.clube-vantagens';
 

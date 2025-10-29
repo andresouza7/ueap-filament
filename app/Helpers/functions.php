@@ -20,25 +20,25 @@ function styleFilamentPanel(Panel $panel): Panel
 {
     return $panel->font('Karla')
         ->colors([
-            // 'primary' => '#017840'
-            'primary' => [
-                50  => 'oklch(0.97 0.02 182)',
-                100 => 'oklch(0.93 0.03 182)',
-                200 => 'oklch(0.86 0.05 182)',
-                300 => 'oklch(0.78 0.07 182)',
-                400 => 'oklch(0.68 0.10 182)',
-                500 => 'oklch(0.60 0.12 182)',
-                600 => 'oklch(0.54 0.13 182)',
-                700 => 'oklch(0.48 0.12 182)',
-                800 => 'oklch(0.42 0.10 182)',
-                900 => 'oklch(0.36 0.08 182)',
-                950 => 'oklch(0.30 0.06 182)',
-            ],
+            // 'primary' => [
+            //     50  => 'oklch(0.97 0.02 182)',
+            //     100 => 'oklch(0.93 0.03 182)',
+            //     200 => 'oklch(0.86 0.05 182)',
+            //     300 => 'oklch(0.78 0.07 182)',
+            //     400 => 'oklch(0.68 0.10 182)',
+            //     500 => 'oklch(0.60 0.12 182)',
+            //     600 => 'oklch(0.54 0.13 182)',
+            //     700 => 'oklch(0.48 0.12 182)',
+            //     800 => 'oklch(0.42 0.10 182)',
+            //     900 => 'oklch(0.36 0.08 182)',
+            //     950 => 'oklch(0.30 0.06 182)',
+            // ],
+            'primary' => Color::Orange,
             'secondary' => Color::Zinc,
-        ])
-        ->assets([
-            Css::make('filament-stylesheet', resource_path('css/filament.css'))
         ]);
+        // ->assets([
+        //     Css::make('filament-stylesheet', resource_path('css/filament.css'))
+        // ]);
 }
 
 // ====================== TRANSPARENCIA =========================

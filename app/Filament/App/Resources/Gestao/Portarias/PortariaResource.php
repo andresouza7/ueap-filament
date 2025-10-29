@@ -20,7 +20,7 @@ class PortariaResource extends Resource
     protected static ?string $modelLabel = 'Portaria';
     protected static ?string $pluralModelLabel = 'Portarias';
     protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema

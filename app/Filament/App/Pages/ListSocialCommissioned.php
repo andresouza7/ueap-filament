@@ -19,7 +19,7 @@ class ListSocialCommissioned extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected string $view = 'filament.app.pages.list-social-commissioned';
     protected static ?string $title = 'Cargos Comissionados';
     protected static string | \UnitEnum | null $navigationGroup = 'Social';

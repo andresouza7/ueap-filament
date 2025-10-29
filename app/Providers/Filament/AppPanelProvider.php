@@ -89,7 +89,7 @@ class AppPanelProvider extends PanelProvider
             //         </a>'
             //     )
             // )
-            ->viteTheme('resources/css/filament/app/theme.css')
+            ->viteTheme('resources/css/filament/halloween/theme.css')
             ->navigationGroups([
                 'Minha Área',
                 'Social',

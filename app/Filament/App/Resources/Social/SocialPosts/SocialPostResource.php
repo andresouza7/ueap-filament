@@ -20,7 +20,7 @@ class SocialPostResource extends Resource
     protected static ?string $model = SocialPost::class;
     protected static ?string $modelLabel = 'Postagem';
     protected static ?string $pluralModelLabel = 'Postagens';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil-square';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'postagens';
     protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 1;

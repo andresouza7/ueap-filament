@@ -39,7 +39,7 @@ use Illuminate\Support\Str;
 class WebPostResource extends Resource
 {
     protected static ?string $model = WebPost::class;
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
     public $filename;

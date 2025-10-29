@@ -18,7 +18,7 @@ class PontoResource extends Resource
 {
     // o unico recurso gerenciavel será o das ocorrencias de ponto
     protected static ?string $model = CalendarOccurrence::class;
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $modelLabel = 'Ocorrência do Ponto';
     protected static ?string $pluralModelLabel = 'Ocorrências do Ponto';
     protected static bool $shouldRegisterNavigation = false;

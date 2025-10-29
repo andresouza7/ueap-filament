@@ -23,7 +23,7 @@ class CommissionedRoleResource extends Resource
     protected static ?string $model = CommissionedRole::class;
     protected static ?string $modelLabel = 'Cargo Comissionado';
     protected static ?string $pluralModelLabel = 'Cargos Comissionados';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'cargo-comissionado';
     protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
     protected static ?int $navigationSort = 3;

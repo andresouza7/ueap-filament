@@ -23,7 +23,7 @@ class MapaFeriasResource extends Resource
 
     protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static ?int $navigationSort = 4;
 

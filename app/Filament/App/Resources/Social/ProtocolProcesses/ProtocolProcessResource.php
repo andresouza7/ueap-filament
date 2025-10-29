@@ -20,7 +20,7 @@ class ProtocolProcessResource extends Resource
     protected static ?string $modelLabel = 'Consultar Processo';
     protected static ?string $pluralModelLabel = 'Consultar Processos';
     protected static string | \UnitEnum | null $navigationGroup = 'Protocolo Digital';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     public static function infolist(Schema $schema): Schema
     {

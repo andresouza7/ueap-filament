@@ -31,7 +31,7 @@ class DocumentCategoryResource extends Resource
     protected static ?string $model = DocumentCategory::class;
     protected static ?string $modelLabel = 'Categoria de Documento';
     protected static ?string $pluralModelLabel = 'Categorias de Documentos';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'categoria-documento';
     protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
     protected static ?int $navigationSort = 2;

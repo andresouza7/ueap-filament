@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
+use Filament\Navigation\NavigationItem;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
@@ -51,5 +52,7 @@ class AppServiceProvider extends ServiceProvider
 
         Section::configureUsing(fn(Section $section) => $section
             ->columnSpanFull());
+
+        NavigationItem::configureUsing(fn(NavigationItem $item) => $item->icon(''));
     }
 }

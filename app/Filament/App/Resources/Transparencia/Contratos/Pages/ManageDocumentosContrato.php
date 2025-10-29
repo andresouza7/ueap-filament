@@ -31,7 +31,7 @@ class ManageDocumentosContrato extends ManageRelatedRecords
     protected static string $resource = ContratoResource::class;
     protected static ?string $title = 'Gerenciar Anexos de Contrato';
     protected static string $relationship = 'documents';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     public static function getNavigationLabel(): string
     {

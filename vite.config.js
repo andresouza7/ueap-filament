@@ -10,7 +10,8 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/tutorial.js',
-                'resources/css/filament/app/theme.css'
+                'resources/css/filament/app/theme.css',
+                'resources/css/filament/halloween/theme.css'
             ],
             refresh: [
                 ...refreshPaths,

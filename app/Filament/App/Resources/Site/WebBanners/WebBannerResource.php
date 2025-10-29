@@ -33,7 +33,7 @@ class WebBannerResource extends Resource
 {
     protected static ?string $model = WebBanner::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 

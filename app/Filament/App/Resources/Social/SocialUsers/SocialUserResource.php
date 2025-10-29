@@ -22,7 +22,7 @@ class SocialUserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $modelLabel = 'Servidor';
     protected static ?string $pluralModelLabel = 'Servidores';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'servidor';
     protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 2;

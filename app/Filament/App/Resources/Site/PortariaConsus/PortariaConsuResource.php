@@ -26,7 +26,7 @@ class PortariaConsuResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Portarias Consu';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 

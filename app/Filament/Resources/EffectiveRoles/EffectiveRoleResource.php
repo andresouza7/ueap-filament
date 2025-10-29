@@ -28,7 +28,7 @@ class EffectiveRoleResource extends Resource
     protected static ?string $model = EffectiveRole::class;
     protected static ?string $modelLabel = 'Cargo Efetivo';
     protected static ?string $pluralModelLabel = 'Cargos Efetivos';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'cargo-efetivo';
     protected static string | \UnitEnum | null $navigationGroup = 'Gerência';
     protected static ?int $navigationSort = 4;

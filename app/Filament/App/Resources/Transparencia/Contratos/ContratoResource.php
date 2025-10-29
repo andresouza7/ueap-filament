@@ -31,7 +31,7 @@ class ContratoResource extends Resource
     protected static ?string $model = TransparencyBid::class;
     protected static ?string $modelLabel = 'Contrato';
     protected static ?string $slug = 'contratos';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-check';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 3;
 

@@ -27,7 +27,7 @@ class EditProfile extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected string $view = 'filament.app.pages.profile';
     protected static ?string $title = 'Alterar Perfil';
     protected static string | \UnitEnum | null $navigationGroup = 'Minha Área';

@@ -1,0 +1,206 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/App/**/*';
+@source '../../../../resources/views/filament/app/**/*';
+@source '../../../../app/Providers/Filament/**/*';
+@source './vendor/filament/**/*.blade.php';
+
+/* ============================
+ 🎃 HALLOWEEN FILAMENT DARK THEME (fixed)
+===============================*/
+
+/* 🎃 Global spooky cursor */
+html * {
+    cursor: url('/img/phantommini.gif'), 16 16, auto !important;
+}
+
+/* ============================
+ 🌫️ BACKGROUND MIST + GLOW ORBS
+===============================*/
+html.dark::before,
+html.dark::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 160%;
+    height: 160%;
+    pointer-events: none;
+    z-index: -1; /* put them BEHIND everything to prevent layout shifts */
+}
+
+.dark .fi-sidebar-item-icon {
+    display: none !important;
+}
+
+/* Soft fog effect */
+html.dark::before {
+    background: radial-gradient(circle at 30% 40%, rgba(255, 102, 0, 0.08), transparent 70%),
+                radial-gradient(circle at 70% 60%, rgba(255, 166, 0, 0.06), transparent 90%);
+    animation: mist-move 30s ease-in-out infinite alternate;
+    filter: blur(50px);
+    opacity: 0.3;
+}
+
+/* Floating glowing pumpkin orbs */
+html.dark::after {
+    background: radial-gradient(circle at 20% 80%, rgba(255, 120, 0, 0.12), transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(255, 150, 50, 0.1), transparent 30%);
+    animation: float-orbs 40s linear infinite alternate;
+    opacity: 0.4;
+}
+
+@keyframes mist-move {
+    0% { transform: translate(-2%, -2%) scale(1); }
+    50% { transform: translate(1%, 1%) scale(1.05); }
+    100% { transform: translate(-1%, 2%) scale(1); }
+}
+
+@keyframes float-orbs {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* ============================
+ 🧛 BASE COLORS & STRUCTURE
+===============================*/
+:is(.dark .fi-body) {
+    background-color: #07070e !important;
+    color: #f8e5c2 !important;
+}
+
+/* 🕸 Sidebar + Topbar: refined contrast */
+.dark .fi-sidebar,
+.dark .fi-sidebar-header,
+.dark .fi-topbar {
+    background-color: #09060e !important; /* slightly lighter plum */
+    border-color: rgba(255, 102, 0, 0.25);
+    color: #f9e4b7 !important;
+    box-shadow: 0 0 18px rgba(255, 102, 0, 0.25);
+    z-index: 10; /* keep safely above mist but below modal layers */
+}
+
+/* 👻 Main content area */
+.dark .fi-simple-main,
+.dark .fi-section,
+.dark .fi-fo-tabs,
+.dark .fi-tabs:not(.fi-fo-tabs .fi-tabs),
+.dark .fi-ta-ctn {
+    background-color: #0a070f !important;
+    border-radius: 12px;
+    z-index: 5;
+    box-shadow:
+        0 0 6px #ff6600,
+        0 0 12px #ff6600,
+        0 0 24px rgba(255, 102, 0, 0.4),
+        0 0 36px rgba(255, 102, 0, 0.25);
+    animation: neon-fade 3s infinite alternate;
+}
+.dark .fi-ta-record {
+    background-color: #0a070f !important;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.5), 0 0 20px rgba(255, 102, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.dark .fi-ta-record.fi-clickable:hover {
+    box-shadow: 0 0 16px rgba(255, 102, 0, 0.8), 0 0 32px rgba(255, 102, 0, 0.5);
+    transform: scale(1.02);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes neon-fade {
+    0% {
+        box-shadow:
+            0 0 3px #ff6600,
+            0 0 6px #ff6600,
+            0 0 12px rgba(255, 102, 0, 0.25),
+            0 0 18px rgba(255, 102, 0, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 6px #ff6600,
+            0 0 12px #ff6600,
+            0 0 24px rgba(255, 102, 0, 0.4),
+            0 0 36px rgba(255, 102, 0, 0.25);
+    }
+    100% {
+        box-shadow:
+            0 0 4px #ff6600,
+            0 0 8px #ff6600,
+            0 0 16px rgba(255, 102, 0, 0.3),
+            0 0 24px rgba(255, 102, 0, 0.15);
+    }
+}
+
+
+/* ============================
+ 🧙‍♂️ SIDEBAR & ICON DETAILS
+===============================*/
+.dark .fi-sidebar-nav a {
+    color: #f8e5c2 !important;
+    position: relative;
+}
+
+.dark .fi-sidebar-nav a:hover {
+    color: #ffae47 !important;
+    text-shadow: 0 0 5px rgba(255, 174, 66, 0.9);
+}
+
+/* 🎃 Tiny emoji icons before titles */
+.dark .fi-sidebar-nav a::before {
+    content: '🎃 ';
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.dark .fi-sidebar-nav a:hover::before {
+    opacity: 1;
+    transform: scale(1.2) rotate(-10deg);
+}
+
+/* 🕯 Active sidebar item glow */
+.dark .fi-sidebar-nav a[aria-current="page"] {
+    color: #ff6600 !important;
+    background-color: rgba(255, 102, 0, 0.15);
+    box-shadow: inset 0 0 10px rgba(255, 102, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* ============================
+ 💀 ICONS & BUTTONS
+===============================*/
+.fi-icon-btn-icon {
+    stroke: #ff6600 !important;
+    stroke-width: 2;
+    transition: stroke 0.4s ease, transform 0.4s ease, filter 0.8s ease-in-out;
+    filter: drop-shadow(0 0 2px #ff6600);
+    animation: flicker 2.5s infinite ease-in-out alternate;
+}
+.fi-icon-btn-icon:hover {
+    stroke: #ffee66 !important;
+    transform: scale(1.15) rotate(5deg);
+    filter: hue-rotate(30deg) drop-shadow(0 0 6px #ffaa33);
+}
+
+/* 🔥 Flickering glow animation */
+@keyframes flicker {
+    0%, 100% {
+        filter: hue-rotate(0deg) drop-shadow(0 0 4px #ff6600);
+    }
+    50% {
+        filter: hue-rotate(25deg) drop-shadow(0 0 8px #ffaa33);
+    }
+}
+
+/* 🧡 Button hover */
+.dark .fi-btn:hover {
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.6);
+}
+
+/* ============================
+ ⚙️ TRANSITIONS
+===============================*/
+html.dark * {
+    transition: none !important;
+}

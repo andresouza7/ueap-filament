@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class HealthAppointmentResource extends Resource
 {
     protected static ?string $model = HealthAppointment::class;
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-heart';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $modelLabel = 'Saúde e Bem-Estar';
     protected static ?string $pluralModelLabel = 'Saúde e Bem-Estar';
     protected static string | \UnitEnum | null $navigationGroup = 'Gestão';

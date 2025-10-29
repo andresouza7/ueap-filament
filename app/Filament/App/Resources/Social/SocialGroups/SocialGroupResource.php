@@ -20,7 +20,7 @@ class SocialGroupResource extends Resource
     protected static ?string $model = Group::class;
     protected static ?string $modelLabel = 'Setor';
     protected static ?string $pluralModelLabel = 'Setores';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static ?string $slug = 'setores';
     protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 3;

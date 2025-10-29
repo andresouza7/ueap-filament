@@ -30,7 +30,7 @@ class RegistroPrecoResource extends Resource
     protected static ?string $modelLabel = 'Ata de Registro de Preço';
     protected static ?string $pluralModelLabel = 'Atas de Registro de Preço';
     protected static ?string $slug = 'registro-preco';
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 2;
 

@@ -18,7 +18,7 @@ class AgendamentoSaude extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected string $view = 'filament.app.pages.agendamento-saude';
 

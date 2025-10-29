@@ -34,7 +34,7 @@ class QuadroDespesaResource extends Resource
     protected static ?string $modelLabel = 'Quadro de Detalhamento de Despesa';
     protected static ?string $pluralModelLabel = 'Quadros de Detalhamento de Despesa';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-minus';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 4;
 

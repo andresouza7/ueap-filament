@@ -35,7 +35,7 @@ class ConsuAtaResource extends Resource
 
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     public static function form(Schema $schema): Schema
     {

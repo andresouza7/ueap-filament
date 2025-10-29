@@ -6,7 +6,7 @@ use Filament\Pages\Page;
 
 class PainelSaude extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-heart';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected string $view = 'filament.app.pages.painel-saude';
 
