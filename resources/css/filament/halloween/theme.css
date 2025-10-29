@@ -9,10 +9,20 @@
  🎃 HALLOWEEN FILAMENT DARK THEME (fixed)
 ===============================*/
 
-/* 🎃 Global spooky cursor */
-html * {
-    cursor: url('/img/phantommini.gif'), 16 16, auto !important;
+.dark {
+  --primary-50:  #FFE5B3; /* very light orange */
+  --primary-100: #FFD699;
+  --primary-200: #FFC366;
+  --primary-300: #FFB233;
+  --primary-400: #FF9B00; /* your original */
+  --primary-500: #FF8C00; /* slightly darker */
+  --primary-600: #FF7F00;
+  --primary-700: #FF8000; /* your original */
+  --primary-800: #E67300;
+  --primary-900: #CC6600;
+  --primary-950: #B35900; /* darkest shade */
 }
+
 
 /* ============================
  🌫️ BACKGROUND MIST + GLOW ORBS
