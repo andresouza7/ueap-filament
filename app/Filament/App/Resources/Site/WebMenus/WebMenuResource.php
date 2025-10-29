@@ -42,6 +42,7 @@ class WebMenuResource extends Resource
                     TextInput::make('slug')
                         ->disabledOn('edit')
                         ->required()
+                        ->disabledOn('edit')
                         ->maxLength(255),
                     TextInput::make('name')
                         ->label('Nome')
