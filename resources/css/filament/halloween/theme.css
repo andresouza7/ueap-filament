@@ -240,3 +240,32 @@ html.dark::after {
 html.dark * {
     transition: none !important;
 }
+
+
+/* ================= phantoms */
+
+/* 👻 Ghost styles */
+.ghost {
+    position: fixed;
+    width: 50px; /* adjust size */
+    height: 50px;
+    pointer-events: none; /* don't block clicks */
+    opacity: 0.8;
+    animation: float-ghost linear infinite;
+    z-index: 9999; /* above everything */
+}
+
+@keyframes float-ghost {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.6;
+    }
+}
