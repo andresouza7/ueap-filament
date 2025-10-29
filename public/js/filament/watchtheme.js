@@ -112,19 +112,41 @@ function createLightPumpkin() {
     lightThemePumpkin = document.createElement('div')
     lightThemePumpkin.className = 'pumpkin-button'
     lightThemePumpkin.innerHTML = `
-        <div class="pumpkin-wrapper">
+        <div class="pumpkin-wrapper" style="position: relative;">
+            <button class="close-pumpkin" style="
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                font-weight: bold;
+            ">×</button>
             <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
-            <div class="pumpkin-text">É tempo de Halloween<br>👻 Ative o tema! 👾</div>
+            <div class="pumpkin-text">É tempo de Halloween<br>👻 Ative o tema! 👻</div>
         </div>
     `
     document.body.appendChild(lightThemePumpkin)
 
+    // Close button
+    const closeBtn = lightThemePumpkin.querySelector('.close-pumpkin')
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation() // evita disparar o clique do pumpkin
+        lightThemePumpkin.remove()
+    })
+
+    // Click on pumpkin itself triggers dark mode
     lightThemePumpkin.addEventListener('click', () => {
         const darkBtn = document.querySelector('.fi-theme-switcher-btn[x-on\\:click*="dark"]')
         if (darkBtn) darkBtn.click()
         lightThemePumpkin.style.display = 'none'
     })
 }
+
 
 // =============================
 // 🕯️ Effects Controller
