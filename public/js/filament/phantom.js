@@ -4,39 +4,91 @@ const ghostImages = [
     '/img/bats.png',
 ];
 
-const maxGhosts = 3; // Maximum ghosts visible at once
-const ghosts = []; // Track current ghosts
+const maxGhosts = 3;
+const ghosts = [];
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let chasingGhost = null;
+let lastChaseTime = 0; // track last time a ghost chased the cursor
+const chaseCooldown = 30 * 1000; // 30 seconds cooldown
+
+// Track mouse position
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
 
 function spawnGhost() {
-    // Don't spawn if max ghosts already present
     if (ghosts.length >= maxGhosts) return;
 
     const ghost = document.createElement('img');
     ghost.src = ghostImages[Math.floor(Math.random() * ghostImages.length)];
     ghost.className = 'ghost';
 
+    // Fixed size
+    ghost.style.width = '50px';
+    ghost.style.height = '50px';
+
     // Random start position
-    ghost.style.top = Math.random() * window.innerHeight + 'px';
-    ghost.style.left = Math.random() * window.innerWidth + 'px';
-
-    // Animation duration between 8-12 seconds for variety
-    const duration = 10 + Math.random() * 2; 
-    ghost.style.animationDuration = duration + 's';
-
-    // Optional: random scale for variety
-    const scale = 0.7 + Math.random() * 0.6;
-    ghost.style.transform = `scale(${scale})`;
+    let posX = Math.random() * window.innerWidth;
+    let posY = Math.random() * window.innerHeight;
+    ghost.style.left = posX + 'px';
+    ghost.style.top = posY + 'px';
 
     document.body.appendChild(ghost);
-    ghosts.push(ghost); // Add to tracking array
+    ghosts.push(ghost);
 
-    // Remove ghost after animation
+    // Normal floating movement
+    const floatSpeed = 0.5 + Math.random(); // px per frame
+    let angle = Math.random() * Math.PI * 2;
+    let chasing = false;
+
+    const chaseSpeed = 0.03; // slow chase
+
+    const moveGhost = () => {
+        if (!chasing) {
+            // Float in slow circular motion
+            angle += 0.02;
+            posX += Math.cos(angle) * floatSpeed;
+            posY += Math.sin(angle) * floatSpeed;
+        } else {
+            // Move toward cursor slowly
+            const dx = mouseX - posX;
+            const dy = mouseY - posY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance > 1) {
+                posX += dx * chaseSpeed;
+                posY += dy * chaseSpeed;
+            }
+        }
+
+        ghost.style.left = posX + 'px';
+        ghost.style.top = posY + 'px';
+        ghost._animationFrame = requestAnimationFrame(moveGhost);
+    };
+    moveGhost();
+
+    // Assign chase only if cooldown passed and no one else is chasing
+    const chaseDelay = 3000 + Math.random() * 3000;
     setTimeout(() => {
-        ghost.remove();
+        const now = Date.now();
+        if (!chasingGhost && now - lastChaseTime >= chaseCooldown) {
+            chasing = true;
+            chasingGhost = ghost;
+            lastChaseTime = now; // update last chase time
+        }
+    }, chaseDelay);
+
+    // Remove ghost after 12 seconds max
+    setTimeout(() => {
+        cancelAnimationFrame(ghost._animationFrame);
+        if (ghost.parentElement) ghost.remove();
         const index = ghosts.indexOf(ghost);
         if (index > -1) ghosts.splice(index, 1);
-    }, duration * 1000);
+        if (chasingGhost === ghost) chasingGhost = null;
+    }, 12 * 1000);
 }
 
-// Spawn a ghost every 2–5 seconds (fewer overall)
-setInterval(spawnGhost, 2000 + Math.random() * 3000);
+// Spawn ghosts every 3–6 seconds
+setInterval(spawnGhost, 3000 + Math.random() * 3000);
