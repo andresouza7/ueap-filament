@@ -24,17 +24,23 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class DotacaoResource extends Resource
 {
     protected static ?string $model = Orcamento::class;
     protected static ?string $modelLabel = 'Dotação Orcamentária';
     protected static ?string $pluralModelLabel = 'Dotações Orçamentárias';
-
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-currency-dollar';
     protected static string | \UnitEnum | null $navigationGroup = 'Transparência';
     protected static ?int $navigationSort = 5;
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole(['diplan', 'uoc']);
+    }
 
     public static function form(Schema $schema): Schema
     {

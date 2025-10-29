@@ -11,6 +11,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,21 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+
+        Gate::before(function ($user, $ability) {
+            // Give full access to 'dinfo' users
+            if ($user->hasRole('dinfo')) {
+                return true;
+            }
+
+            // Restrict deletes to admin only
+            if ($ability === 'delete' && ! $user->hasRole('dinfo')) {
+                return false;
+            }
+
+            // For all other cases, fall back to normal policy checks
+            return null;
+        });
 
         Filament::serving(function () {
             $user = Auth::user();
