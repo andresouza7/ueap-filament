@@ -3,12 +3,8 @@
     stroke-width: 2;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 .dark .fi-sidebar-header,
-.dark .fi-topbar nav {
+.dark .fi-topbar {
     background-color: #23293c !important;
 }
 
@@ -21,10 +17,35 @@ html {
 .dark .fi-fo-tabs,
 .dark .fi-section,
 .dark .fi-simple-main,
+.dark .fi-sc-tabs-tab,
+.dark .fi-modal-window,
+.dark .fi-no-notification,
 .dark .fi-ta-record:not([class*="rounded-xl"]) {
     background-color: #161d31 !important;
 }
 
 :is(.dark .fi-body) {
     background-color: #20263a !important;
+}
+
+.dark .fi-sidebar-nav::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dark .fi-sidebar-nav::-webkit-scrollbar-track {
+    background-color: #161d31; /* scrollbar track (background) */
+}
+
+.dark .fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: #2e3a59; /* scrollbar handle */
+    border-radius: 4px;
+}
+
+.dark .fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: #3d4c73;
+}
+
+html.dark *,
+html:not(.dark) * {
+  transition: none !important;
 }

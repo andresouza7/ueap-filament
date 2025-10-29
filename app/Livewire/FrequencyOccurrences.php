@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Filament\App\Resources\Social\PontoResource;
+use Filament\Actions\Action;
+use App\Filament\App\Resources\Social\Pontos\PontoResource;
 use App\Models\CalendarOccurrence;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -11,7 +12,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -39,7 +39,7 @@ class FrequencyOccurrences extends Component implements HasForms, HasTable, HasA
     {
         return EditAction::make()
             ->record(fn(array $arguments) => CalendarOccurrence::find($arguments['occurrence']))
-            ->form([
+            ->schema([
                 TextInput::make('description')
                     ->required()
                     ->maxLength(255),

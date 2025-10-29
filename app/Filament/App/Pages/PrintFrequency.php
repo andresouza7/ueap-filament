@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use App\Models\CalendarOccurrence;
 use App\Models\User;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -19,8 +21,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Concerns\InteractsWithHeaderActions;
 use Filament\Pages\Page;
-use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -32,10 +32,10 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
 {
     use InteractsWithTable, InteractsWithForms, InteractsWithHeaderActions, InteractsWithActions;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
-    protected static string $view = 'filament.app.pages.frequency';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
+    protected string $view = 'filament.app.pages.frequency';
     protected static ?string $title = 'Folha de Ponto';
-    protected static ?string $navigationGroup = 'Minha Área';
+    protected static string | \UnitEnum | null $navigationGroup = 'Minha Área';
     protected static ?int $navigationSort = 3;
 
     public User $requestedUser;
@@ -89,7 +89,7 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
                 CreateAction::make()
                     ->recordTitle('Ocorrência de Ponto')
                     // ->recordTitleAttribute('kljlçjl')
-                    ->form([
+                    ->schema([
                         Select::make('type')
                             ->options([
                                 'FACULTADO',
@@ -100,7 +100,7 @@ class PrintFrequency extends Page implements HasTable, HasForms, HasActions
                             ->required()
                     ])
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ]);
     }

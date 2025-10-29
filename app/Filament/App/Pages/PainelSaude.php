@@ -6,12 +6,12 @@ use Filament\Pages\Page;
 
 class PainelSaude extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-heart';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-heart';
 
-    protected static string $view = 'filament.app.pages.painel-saude';
+    protected string $view = 'filament.app.pages.painel-saude';
 
     protected static ?string $title = 'Saúde e Bem-Estar';
     protected ?string $heading = '';
-    protected static ?string $navigationGroup = 'Social';
+    protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 5;
 }

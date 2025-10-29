@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
 use App\Filament\App\Pages\Auth\Login;
+use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -58,7 +59,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 'panels::auth.login.form.before',
-                fn(): string => Blade::render('<div class="flex justify-center mb-6"><img src="{{ asset("img/logo-white.png") }}" class="h-16 w-auto" /></div>')
+                fn(): string => Blade::render('<div class="flex justify-center mb-1"><img src="{{ asset("img/logo-white.png") }}" class="h-16 w-auto" /></div>'),
             )
             ->renderHook(
                 PanelsRenderHook::GLOBAL_SEARCH_AFTER,
@@ -80,14 +81,14 @@ class AppPanelProvider extends PanelProvider
                 'panels::auth.login.form.after',
                 fn(): View => view('filament.app.pages.login')
             )
-            ->renderHook(
-                PanelsRenderHook::TOPBAR_START,
-                fn(): string => Blade::render(
-                    '<a href="' . route('filament.app.pages.dashboard') . '">
-                        <x-filament-panels::logo />
-                    </a>'
-                )
-            )
+            // ->renderHook(
+            //     PanelsRenderHook::TOPBAR_START,
+            //     fn(): string => Blade::render(
+            //         '<a href="' . route('filament.app.pages.dashboard') . '">
+            //             <x-filament-panels::logo />
+            //         </a>'
+            //     )
+            // )
             ->viteTheme('resources/css/filament/app/theme.css')
             ->navigationGroups([
                 'Minha Área',
@@ -114,7 +115,7 @@ class AppPanelProvider extends PanelProvider
                     ->group('Minha Área'),
             ])
             ->userMenuItems([
-                'profile' => MenuItem::make()->label('Perfil')->url('/app/edit-profile'),
+                'profile' => fn(Action $action) => $action->label('Perfil')->url('/app/edit-profile'),
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([

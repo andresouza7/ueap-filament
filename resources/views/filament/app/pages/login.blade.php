@@ -31,7 +31,7 @@
     }
 
     .fi-simple-main {
-        width: 500px !important;
+        width: 460px !important;
         padding: 30px;
         display: flex;
         flex-direction: column;

@@ -2,14 +2,14 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Actions;
+use Filament\Actions\Action;
 use App\Models\HealthAppointment;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
@@ -18,9 +18,9 @@ class AgendamentoSaude extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.app.pages.agendamento-saude';
+    protected string $view = 'filament.app.pages.agendamento-saude';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -94,9 +94,9 @@ class AgendamentoSaude extends Page implements HasForms
     }
 
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->components([
             DatePicker::make('requested_date')
                 ->label('Data do atendimento')
                 ->required(),

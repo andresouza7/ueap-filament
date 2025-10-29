@@ -2,13 +2,16 @@
 
 namespace App\Providers;
 
-use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Facades\Filament;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +32,21 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
+        Gate::before(function ($user, $ability) {
+            // Give full access to 'dinfo' users
+            if ($user->hasRole('dinfo')) {
+                return true;
+            }
+
+            // Restrict deletes to admin only
+            if ($ability === 'delete' && ! $user->hasRole('dinfo')) {
+                return false;
+            }
+
+            // For all other cases, fall back to normal policy checks
+            return null;
+        });
+
         Filament::serving(function () {
             $user = Auth::user();
 
@@ -41,21 +59,13 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
-            $panelSwitch
-                ->visible(fn(): bool => Auth::user()?->hasRole('dinfo'))
-                ->slideOver()
-                ->modalHeading('Alterar Painel')
-                ->modalWidth('sm')
-                ->panels(['app', 'admin'])
-                ->icons([
-                    'app' => 'heroicon-o-user',
-                    'admin' => 'heroicon-o-key',
-                ], $asImage = false)
-                ->labels([
-                    'app' => 'Social',
-                    'admin' => 'Admin',
-                ], $asImage = false);
-        });
+        Fieldset::configureUsing(fn(Fieldset $fieldset) => $fieldset
+            ->columnSpanFull());
+
+        Grid::configureUsing(fn(Grid $grid) => $grid
+            ->columnSpanFull());
+
+        Section::configureUsing(fn(Section $section) => $section
+            ->columnSpanFull());
     }
 }

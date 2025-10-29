@@ -2,17 +2,12 @@
 
 namespace App\Filament\App\Pages\Auth;
 
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
-use Filament\Pages\Auth\Login as BaseLogin;
-use Illuminate\Support\Facades\Auth;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Illuminate\Validation\ValidationException;
-use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
 use Illuminate\Contracts\Support\Htmlable;
 
-class Login extends BaseLogin
+class Login extends \Filament\Auth\Pages\Login
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -26,10 +21,10 @@ class Login extends BaseLogin
         return false;
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('login')
                     ->label('Usuário')
                     ->extraInputAttributes(['tabindex' => 1])
@@ -40,43 +35,18 @@ class Login extends BaseLogin
             ]);
     }
 
-    public function getPasswordFormComponent(): Component
+    protected function getCredentialsFromFormData(array $data): array
     {
-        return TextInput::make('password')
-            ->label('Senha')
-            ->password()
-            ->revealable(filament()->arePasswordsRevealable())
-            ->required()
-            ->extraInputAttributes(['tabindex' => 2]);
-    }
-
-    public function authenticate(): ?LoginResponse
-    {
-        try {
-            $this->rateLimit(5);
-        } catch (TooManyRequestsException $exception) {
-            $this->getRateLimitedNotification($exception)?->send();
-
-            return null;
-        }
-
-        $data = $this->form->getState();
-
-        // Ensure the user can access the current Filament panel
-        if (!Auth::attempt(['login' => $data['login'], 'password' => $data['password']], $data['remember'] ?? false)) {
-            $this->throwFailureValidationException();
-        }
-
-        // Regenerate session to prevent session fixation attacks
-        session()->regenerate();
-
-        return app(LoginResponse::class);
+        return [
+            'login' => $data['login'],
+            'password' => $data['password'],
+        ];
     }
 
     protected function throwFailureValidationException(): never
     {
         throw ValidationException::withMessages([
-            'data.login' => __('filament-panels::pages/auth/login.messages.failed'),
+            'data.login' => 'Usuário não encontrado',
         ]);
     }
 }

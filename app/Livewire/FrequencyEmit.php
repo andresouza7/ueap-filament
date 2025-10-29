@@ -2,20 +2,20 @@
 
 namespace App\Livewire;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
 use App\Models\CalendarOccurrence;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Split;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -58,11 +58,11 @@ class FrequencyEmit extends Component implements HasForms
         return $this->dispatch('open-new-tab', $url);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->components([
             Section::make([
-                Split::make([
+                Flex::make([
                     Group::make([
                         TextInput::make('person_name')
                             ->label('Nome')
@@ -103,7 +103,7 @@ class FrequencyEmit extends Component implements HasForms
                             ->visible($this->canFillFields),
                     ]),
                     Group::make([
-                        Split::make([
+                        Flex::make([
                             DateTimePicker::make('manha_start')
                                 ->date(false)
                                 ->seconds(false)
@@ -115,7 +115,7 @@ class FrequencyEmit extends Component implements HasForms
                                 ->label('Saída Manhã')
                                 ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
-                        Split::make([
+                        Flex::make([
                             DateTimePicker::make('tarde_start')
                                 ->date(false)
                                 ->seconds(false)
@@ -127,7 +127,7 @@ class FrequencyEmit extends Component implements HasForms
                                 ->label('Saída Tarde')
                                 ->disabled(fn(Get $get) => !$get('preencher_horario')),
                         ]),
-                        Split::make([
+                        Flex::make([
                             DateTimePicker::make('noite_start')
                                 ->date(false)
                                 ->seconds(false)

@@ -2,8 +2,9 @@
 
 namespace App\Filament\App\Widgets;
 
-use App\Filament\App\Resources\Social\SocialGroupResource;
-use App\Filament\App\Resources\Social\SocialUserResource;
+use Filament\Support\Enums\TextSize;
+use App\Filament\App\Resources\Social\SocialGroups\SocialGroupResource;
+use App\Filament\App\Resources\Social\SocialUsers\SocialUserResource;
 use App\Models\SocialPost;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -49,9 +50,9 @@ class LatestPosts extends BaseWidget
                             ]),
 
                             TextColumn::make('updated_at')
-                                ->size(TextColumn\TextColumnSize::ExtraSmall)
+                                ->size(TextSize::ExtraSmall)
                                 // ->extraAttributes(['class' => 'italic'])
-                                ->color('gray')
+                                ->color('secondary')
                                 ->dateTime('d M Y, H:i'),
                         ])->grow(false),
                     ]),

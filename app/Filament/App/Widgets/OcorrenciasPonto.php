@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use Filament\Tables\Columns\TextColumn;
 use App\Models\CalendarOccurrence;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Split;
@@ -28,12 +29,12 @@ class OcorrenciasPonto extends BaseWidget
             ->columns([
                 Split::make([
 
-                    Tables\Columns\TextColumn::make('start_date')
+                    TextColumn::make('start_date')
                         ->label('Início')
                         ->weight('medium')
                         ->date('d/m'),
 
-                    Tables\Columns\TextColumn::make('description')
+                    TextColumn::make('description')
                         ->label('Descrição')
                         ->limit(30),
                 ])

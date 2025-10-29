@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Filament\App\Resources\Social\SocialUserResource;
+use App\Filament\App\Resources\Social\SocialUsers\SocialUserResource;
 use App\Models\CommissionedRole;
 use Filament\Pages\Page;
 use Filament\Support\Enums\FontWeight;
@@ -19,17 +19,17 @@ class ListSocialCommissioned extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static string $view = 'filament.app.pages.list-social-commissioned';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected string $view = 'filament.app.pages.list-social-commissioned';
     protected static ?string $title = 'Cargos Comissionados';
-    protected static ?string $navigationGroup = 'Social';
+    protected static string | \UnitEnum | null $navigationGroup = 'Social';
     protected static ?int $navigationSort = 4;
 
     public function table(Table $table): Table
     {
         return $table
             ->heading('Consulta de cargos comissionados')
-            ->description('Esta tabela exibe os cargos comissionados da instituição e seus responsáveis. Utilize os filtros e opções de busca para encontrar uma informação específica.')
+            ->description('Use o filtro e o campo de busca para encontrar uma informação específica.')
             ->recordTitleAttribute('description')
             ->query(CommissionedRole::query())
             ->defaultSort('description')

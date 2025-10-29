@@ -2,14 +2,14 @@
 
 namespace App\Filament\App\Pages\Auth;
 
-use Filament\Forms\Form;
-use Filament\Pages\Auth\EditProfile as BaseEditProfile;
+use Filament\Panel;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\MaxWidth;
 
-class EditProfile extends BaseEditProfile
+class EditProfile extends \Filament\Auth\Pages\EditProfile
 {
 
-    public static function getSlug(): string
+    public static function getSlug(?Panel $panel = null): string
     {
         return 'password';
     }
@@ -24,10 +24,10 @@ class EditProfile extends BaseEditProfile
         return route('filament.app.pages.dashboard');
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent()->visible(),
             ]);
