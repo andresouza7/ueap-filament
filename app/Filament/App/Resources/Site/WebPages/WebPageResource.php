@@ -71,6 +71,7 @@ class WebPageResource extends Resource
                     RichEditor::make('text')
                         ->label('Texto')
                         ->required()
+                        ->formatStateUsing(fn($state) => clean_text($state))
                         ->extraInputAttributes(['style' => 'min-height: 20rem;'])
                         ->disableToolbarButtons(['attachFiles'])
                         ->columnSpanFull(),
