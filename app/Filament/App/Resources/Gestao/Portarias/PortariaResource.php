@@ -30,11 +30,6 @@ class PortariaResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return self::getPortariaTable($table);
-    }
-
-    public static function getPortariaTable(Table $table)
-    {
         return PortariasTable::configure($table);
     }
 

@@ -7,13 +7,10 @@ use App\Filament\App\Resources\Site\PortariaConsus\Pages\ListPortarias;
 use App\Filament\App\Resources\Site\PortariaConsus\Pages\CreatePortaria;
 use App\Filament\App\Resources\Site\PortariaConsus\Pages\EditPortaria;
 use App\Filament\App\Resources\Gestao\Portarias\PortariaResource;
-use App\Filament\App\Resources\Site\PortariaConsuResource\Pages;
-use App\Filament\App\Resources\Site\PortariaConsuResource\RelationManagers;
+use App\Filament\Resources\Gestao\Portarias\Schemas\PortariaForm;
+use App\Filament\Resources\Gestao\Portarias\Tables\PortariasTable;
 use App\Models\Portaria;
-use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -44,12 +41,12 @@ class PortariaConsuResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components(PortariaResource::getPortariaForm());
+        return PortariaForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return PortariaResource::getPortariaTable($table);
+        return PortariasTable::configure($table);
     }
 
     public static function getRelations(): array
