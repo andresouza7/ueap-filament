@@ -71,7 +71,7 @@ class WebPageResource extends Resource
                     RichEditor::make('text')
                         ->label('Texto')
                         ->required()
-                        ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                        ->extraInputAttributes(['style' => 'min-height: 20rem;'])
                         ->disableToolbarButtons(['attachFiles'])
                         ->columnSpanFull(),
                     FileUpload::make('file')

@@ -75,7 +75,7 @@ class WebPostResource extends Resource
                     RichEditor::make('text')
                         ->label('Conteúdo')
                         ->required()
-                        ->extraInputAttributes(['style' => 'min-height: 25.7rem; max-height: 30vh; overflow-y: auto;'])
+                        ->extraInputAttributes(['style' => 'min-height: 25.7rem;'])
                         ->disableToolbarButtons(['attachFiles'])
                         ->columnSpanFull(),
                 ])->columnSpan(2),
