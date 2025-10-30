@@ -3,7 +3,7 @@
 // =============================
 const ghostImages = [
     '/img/fantasma.png',
-    '/img/ghost.png',
+    // '/img/ghost.png',
     '/img/bats.png',
 ]
 

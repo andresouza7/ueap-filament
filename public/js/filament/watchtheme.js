@@ -127,7 +127,7 @@ function createLightPumpkin() {
                 font-weight: bold;
             ">×</button>
             <img src="/img/pumpkin.png" alt="Halloween Theme" class="pumpkin-img" />
-            <div class="pumpkin-text">É tempo de Halloween<br>👻 Ative o tema! 👻</div>
+            <div class="pumpkin-text">É tempo de Halloween<br>👻 Ative o tema! 👾</div>
         </div>
     `
     document.body.appendChild(lightThemePumpkin)
