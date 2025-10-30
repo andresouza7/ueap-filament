@@ -154,16 +154,16 @@ function createLightPumpkin() {
 function enableHalloweenEffects() {
     console.log('🎃 Halloween mode enabled')
 
-    if (!pumpkinButton) createDarkPumpkin()
-    pumpkinButton.style.display = 'block'
+    // if (!pumpkinButton) createDarkPumpkin()
+    // pumpkinButton.style.display = 'block'
     if (lightThemePumpkin) lightThemePumpkin.style.display = 'none'
 
     if (!ghostsInterval) ghostsInterval = setInterval(spawnGhost, 3000)
 
-    if (!userInteracted) {
-        userInteracted = true
-        jumpscareTimeout = scheduleJumpscare()
-    }
+    // if (!userInteracted) {
+    //     userInteracted = true
+    //     jumpscareTimeout = scheduleJumpscare()
+    // }
 }
 
 function disableHalloweenEffects() {
