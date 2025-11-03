@@ -13,10 +13,10 @@ class ViewSocialGroup extends ViewRecord
     protected ?string $heading = 'Setor';
     // protected ?string $subheading = 'Encontre informações sobre este setor e consulte os servidores nele lotados.';
 
-    public function hasCombinedRelationManagerTabsWithContent(): bool
-    {
-        return true;
-    }
+    // public function hasCombinedRelationManagerTabsWithContent(): bool
+    // {
+    //     return true;
+    // }
 
     public function getContentTabIcon(): ?string
     {

@@ -42,6 +42,8 @@ class UsersRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->heading('Servidores lotados no setor')
+            ->description('Selecione um servidor para acessar o seu perfil')
             ->recordTitleAttribute('login')
             ->recordUrl(fn($record) => $record->id ? SocialUserResource::getUrl('view', ['record' => $record->id]) : null)
             ->columns([
@@ -67,37 +69,7 @@ class UsersRelationManager extends RelationManager
                             ->formatStateUsing(fn($state) => strtoupper($state)),
                     ])->space(2)
 
-                ]),
-
-                // Stack::make([
-                //     Split::make([
-                //         ImageColumn::make('profile_photo_url')
-                //             ->grow(false)
-                //             ->size('50px')
-                //             ->circular(),
-                //         TextColumn::make('login')
-                //             ->size('100px')
-                //             ->weight(FontWeight::Bold)
-                //             ->label('Nome')
-                //             ->searchable()
-                //             ->url(fn($record) => $record->id ? SocialUserResource::getUrl('view', ['record' => $record->id]) : null)
-                //     ])
-                //     ->extraAttributes(['class' => 'mb-5'])
-
-                //     ,
-                //     Stack::make([
-                //         TextColumn::make('effective_role.description')
-                //             ->tooltip(fn($state) => $state)
-                //             ->size(TextColumn\TextColumnSize::ExtraSmall)
-                //             ->weight(FontWeight::SemiBold)
-                //             ->words(5)
-                //             ->icon('heroicon-o-briefcase')
-                //             ->formatStateUsing(fn($state) => strtoupper($state))
-                //             ->label('Lotação'),
-
-                //     ])->space(2)
-
-                // ])->space(2)
+                ])
             ])
             ->contentGrid([
                 'md' => 2,
