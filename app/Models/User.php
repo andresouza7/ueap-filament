@@ -189,7 +189,7 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     }
 
     public function isActive() {
-        return $this->password === 'X';
+        return $this->password !== 'X';
     }
 
     public function resetPassword() {

@@ -23,7 +23,7 @@ class EditUser extends EditRecord
             // Actions\ForceDeleteAction::make(),
             // Actions\RestoreAction::make(),
             Action::make('activateUser')
-                ->visible(fn($record) => $record->isActive())
+                ->hidden(fn($record) => $record->isActive())
                 ->label('Habilitar Usuário')
                 ->requiresConfirmation()
                 ->action(function () {
@@ -38,7 +38,7 @@ class EditUser extends EditRecord
                 ->icon('heroicon-s-check')
                 ->color('success'),
             Action::make('deactivateUser')
-                ->hidden(fn($record) => $record->isActive())
+                ->visible(fn($record) => $record->isActive())
                 ->label('Desativar Usuário')
                 ->requiresConfirmation()
                 ->action(function () {

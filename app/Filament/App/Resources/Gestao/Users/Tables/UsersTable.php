@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -30,6 +31,11 @@ class UsersTable
                     ->label('Cargo Comissionado')
                     ->badge()
                     ->sortable(),
+                TextColumn::make('login')
+                    ->label('Status')
+                    ->badge()
+                    ->formatStateUsing(fn($record) => $record->isActive() ? 'Ativo' : 'Inativo')
+                    ->color(fn($record) => $record->isActive() ? 'success' : 'danger'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -45,6 +51,9 @@ class UsersTable
             ])
             ->filters([
                 // Tables\Filters\TrashedFilter::make(),
+                Filter::make('active')
+                    ->label('Apenas Ativos')
+                    ->query(fn(Builder $query): Builder => $query->active()),
             ])
             ->recordActions([
                 // Tables\Actions\ViewAction::make(),
