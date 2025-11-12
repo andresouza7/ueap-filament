@@ -93,20 +93,10 @@ Route::name('site.')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
 Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
 
-// Route::name('novosite.')->prefix('/novo')->group(function () {
-//     Route::get('/',                         [PageController::class, 'home'])->name('home');
-//     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
-//     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
-//     Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
-//     Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
-//     Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
-
-//     Route::name('document.')->group(function () {
-//         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
-//         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
-//         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-//             Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
-//             Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
-//     });
-// });
+Route::name('novosite.')->prefix('/novo')->group(function () {
+    Route::get('/',                         [PageController::class, 'home'])->name('home');
+    Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
+    Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
+    Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
+});
 

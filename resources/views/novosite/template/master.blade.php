@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portal da Universidade do Estado do Amapá" />
+    <meta name="keywords" content="Amapá, Universidade, Notícias, ueap" />
+    <meta name="author" content="Universidade do Estado do Amapá" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('site_antigo/img/ico.ico') }}">
+    <title>Ueap - @yield('title')</title>
+
+    <base href="http:/ueap.edu.br" />
+    <meta property="og:url" content="http://ueap.edu.br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Universidade do Estado do Amapá" />
+    <meta property="og:description" content="Universidade do Estado do Amapá" />
+    <meta property="og:image" content="http://ueap.edu.br" />
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="315">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark-green': '#054e3d',
+                        'accent-yellow': '#facc15',
+                        'contrast-light': '#f3f4f6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '480px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1290px', // limite máximo do container
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body>
+
+    <main>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Conteúdo principal -->
+        <div>
+            @yield('content')
+        </div>
+    </main>
+
+    <footer class="bg-primary-dark-green text-white text-center py-4 mt-8 text-sm md:text-base">
+        © {{ date('Y') }} Universidade do Estado do Amapá
+    </footer>
+
+</body>
+
+</html>
