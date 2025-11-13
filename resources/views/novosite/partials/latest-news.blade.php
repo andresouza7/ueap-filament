@@ -1,6 +1,6 @@
-<section class="p-4 md:p-8">
+<section class="px-4 md:px-8">
     <div class="max-w-7xl mx-auto">
-        <h1 class="text-4xl font-bold mb-8 text-primary-dark-green border-b-4 border-accent-yellow pb-2">
+        <h1 class="text-4xl font-bold mb-8 text-primary border-b-4 border-accent-yellow pb-2">
             Últimas Notícias
         </h1>
 

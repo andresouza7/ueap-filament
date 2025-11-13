@@ -9,7 +9,7 @@
 
     <!-- Overlay -->
     <div
-        class="absolute inset-0 bg-primary-dark-green/80 group-hover:bg-primary-dark-green/40 transition-all duration-500 flex flex-col justify-end p-4">
+        class="absolute inset-0 bg-primary/80 group-hover:bg-primary/40 transition-all duration-500 flex flex-col justify-end p-4">
         <!-- Título -->
         <h3 class="text-lg font-bold text-white leading-snug">
             <a href="{{ $url }}"

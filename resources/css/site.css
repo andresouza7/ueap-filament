@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+  /* 🎨 Colors */
+  --color-primary: #054e3d;
+  --color-accent-yellow: #facc15;
+  --color-contrast-light: #f3f4f6;
+
+  /* 🖋️ Font family */
+  --font-sans: Inter, sans-serif;
+
+  /* 📱 Screens (breakpoints) */
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1290px;
+}

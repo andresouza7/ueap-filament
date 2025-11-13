@@ -20,36 +20,11 @@
     <meta property="og:image:width" content="600">
     <meta property="og:image:height" content="315">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/site.css'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary-dark-green': '#054e3d',
-                        'accent-yellow': '#facc15',
-                        'contrast-light': '#f3f4f6',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    screens: {
-                        'xs': '480px',
-                        'sm': '640px',
-                        'md': '768px',
-                        'lg': '1024px',
-                        'xl': '1290px', // limite máximo do container
-                    },
-                },
-            },
-        }
-    </script>
 </head>
 
 <body>
-
     <main>
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -67,7 +42,7 @@
         </div>
     </main>
 
-    <footer class="bg-primary-dark-green text-white text-center py-4 mt-8 text-sm md:text-base">
+    <footer class="bg-primary text-white text-center py-4 mt-8 text-sm md:text-base">
         © {{ date('Y') }} Universidade do Estado do Amapá
     </footer>
 
