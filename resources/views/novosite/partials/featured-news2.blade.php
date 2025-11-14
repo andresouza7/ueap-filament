@@ -1,20 +1,23 @@
 <section class="p-8">
     <div class="max-w-[1290px] mx-auto my-10">
 
-        <div class="grid grid-cols-1 lg:grid-cols-[2.5fr_1fr] gap-4 min-h-[27rem]"> <!-- define altura mínima -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
-            <!-- Coluna esquerda: card principal ocupa 100% da altura do grid -->
+            <!-- Principal -->
             <a href="#"
-               class="relative rounded-sm overflow-hidden group cursor-pointer shadow-xl transition-all duration-300
-                      h-full"> <!-- altura total da célula do grid -->
+               class="lg:col-span-2 relative rounded-lg overflow-hidden group cursor-pointer shadow-md transition-all duration-300
+                      h-[10rem] sm:h-[24rem] lg:h-[31.25rem]">
 
                 <img src="https://picsum.photos/id/1051/1200/600"
                      class="absolute inset-0 w-full h-full object-cover brightness-95 
                             group-hover:brightness-110 group-hover:contrast-110 group-hover:scale-105 
                             transition-all duration-500">
 
+                <!-- Overlay preto neutro -->
                 <div class="absolute inset-0 bg-black/30 transition-all duration-500"></div>
-                <div class="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+
+                <!-- Gradiente neutro p/ base -->
+                <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
                 <div class="relative z-10 p-4 md:p-6 flex flex-col justify-end h-full text-white">
                     <h2 class="text-sm md:text-2xl font-semibold leading-tight mb-2 drop-shadow-lg 
@@ -25,12 +28,11 @@
                 </div>
             </a>
 
-            <!-- Coluna direita: container flex vertical com altura total e gap -->
-            <div class="flex flex-col gap-4 h-full">
+            <div class="flex flex-col gap-3">
 
-                <!-- Card superior ocupa metade da altura -->
+                <!-- Secundária 1 -->
                 <a href="#"
-                   class="relative rounded-sm overflow-hidden group cursor-pointer shadow-xl transition-all duration-300 flex-1">
+                   class="relative rounded-lg overflow-hidden group cursor-pointer shadow-md transition-all duration-300 h-[10rem] lg:h-[15.25rem]">
 
                     <img src="https://picsum.photos/id/1049/600/400"
                          class="absolute inset-0 w-full h-full object-cover brightness-95 
@@ -38,7 +40,7 @@
                                 transition-all duration-500">
 
                     <div class="absolute inset-0 bg-black/30 transition-all duration-500"></div>
-                    <div class="absolute bottom-0 left-0 right-0 h-18 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
                     <div class="relative z-10 p-4 text-white flex flex-col justify-end h-full">
                         <h3 class="text-sm md:text-lg font-semibold leading-tight drop-shadow-lg
@@ -49,9 +51,9 @@
                     </div>
                 </a>
 
-                <!-- Card inferior ocupa metade da altura -->
+                <!-- Secundária 2 -->
                 <a href="#"
-                   class="relative rounded-sm overflow-hidden group cursor-pointer shadow-xl transition-all duration-300 flex-1">
+                   class="relative rounded-lg overflow-hidden group cursor-pointer shadow-md transition-all duration-300 h-[10rem] lg:h-[15.25rem]">
 
                     <img src="https://picsum.photos/id/1055/600/400"
                          class="absolute inset-0 w-full h-full object-cover brightness-95 
@@ -59,7 +61,7 @@
                                 transition-all duration-500">
 
                     <div class="absolute inset-0 bg-black/30 transition-all duration-500"></div>
-                    <div class="absolute bottom-0 left-0 right-0 h-18 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
                     <div class="relative z-10 p-4 text-white flex flex-col justify-end h-full">
                         <h3 class="text-sm md:text-lg font-semibold leading-tight drop-shadow-lg

@@ -42,9 +42,11 @@
         </div>
     </main>
 
-    <footer class="bg-primary text-white text-center py-4 mt-8 text-sm md:text-base">
-        © {{ date('Y') }} Universidade do Estado do Amapá
-    </footer>
+    <footer class="bg-primary w-full text-[#1b1b1b] py-14">
+            <div class="max-w-[1290px] mx-auto">
+                @include('novosite.partials.footer')
+            </div>
+        </footer>
 
 </body>
 

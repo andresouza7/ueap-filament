@@ -7,12 +7,26 @@
         @include('novosite.partials.menu-topo')
 
         <!-- SEÇÃO 1: Destaques -->
-        <section class="w-full relative py-12 overflow-hidden bg-gradient-to-t from-gray-100 to-white">
-            <!-- Conteúdo principal -->
+        <section class="relative w-full py-10 bg-gray-50 overflow-hidden">
+            <!-- Gradiente topo -->
+            {{-- <div
+                class="pointer-events-none absolute top-0 left-0 w-full h-32 
+                bg-gradient-to-b from-[#eff6f1] to-white z-0">
+            </div> --}}
+
+            <!-- Gradiente base -->
+            <div
+                class="pointer-events-none absolute bottom-0 left-0 w-full h-32 
+                bg-gradient-to-t from-[#eff6f1] to-gray-50 z-0">
+            </div>
+
+            <!-- Conteúdo -->
             <div class="relative z-10 max-w-[1290px] mx-auto">
                 @include('novosite.partials.featured-news')
             </div>
         </section>
+
+
 
         <!-- SEÇÃO 2: Acesso Rápido -->
         <section class="w-full relative -mt-15">
@@ -27,5 +41,7 @@
                 @include('novosite.partials.latest-news')
             </div>
         </section>
+
+
     </div>
 @endsection
