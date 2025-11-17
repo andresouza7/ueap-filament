@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\FolhaPontoService;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use LvjuniorUeap\GoogleDriveUploader\GoogleDrive;
@@ -43,54 +44,37 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
         ]);
     }
 
-    //ADD CHATGPT
-    public function submit()
+    public function submit(FolhaPontoService $ponto)
     {
         $formData = $this->form->getState()['data'];
 
         $filePath = storage_path('app/public/' . $formData['anexo']);
+        $file = new File($filePath);
 
-        if (!file_exists($filePath)) {
-            Notification::make()
-                ->title('Erro ao enviar folha')
-                ->body('Arquivo não encontrado: ' . $filePath)
-                ->danger()
-                ->send();
-            return;
-        }
-
+        // $user = User::where('id', $formData['user_id'])->first();
         $user = Auth::user();
 
         try {
-            // 1️⃣ Inicializa a pasta no Google Drive (ou usa existente)
-            $folderId = GoogleDrive::getOrCreateFolder('Folhas de Ponto');
+            $ponto->submitSheet(
+                $user,
+                $formData['year'],
+                $formData['month'],
+                $formData['user_notes'],
+                $file
+            );
 
-            // 2️⃣ Faz upload do arquivo
-            $uploadedFile = GoogleDrive::upload($filePath, $folderId);
+            // Delete the temporary local file
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
 
-            // 3️⃣ Cria o Ticket no banco
-            Ticket::create([
-                'user_id'      => $user->id,
-                'year'         => $formData['year'],
-                'month'        => $formData['month'],
-                'user_notes'   => $formData['user_notes'] ?? null,
-                'file_path'    => $uploadedFile->webViewLink ?? null, // link público do Google Drive
-                'status'       => 'Pendente',
-            ]);
-
-            // 4️⃣ Remove arquivo temporário
-            unlink($filePath);
-
-            // 5️⃣ Notificação de sucesso
             Notification::make()
                 ->title('Folha de ponto encaminhada.')
-                ->body('Um servidor da URH irá atender sua solicitação.')
+                ->body('Um servidor da URH irá atender a sua solicitação.')
                 ->success()
                 ->send();
 
-            // 6️⃣ Redireciona
             return redirect()->route('filament.app.pages.print-frequency');
-
         } catch (\Exception $e) {
             Notification::make()
                 ->title('Erro ao enviar folha')
