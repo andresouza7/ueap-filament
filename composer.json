@@ -13,11 +13,11 @@
         "filament/infolists": "*",
         "filament/spatie-laravel-media-library-plugin": "~4.0",
         "flowframe/laravel-trend": "^0.4.0",
+        "google/apiclient": "^2.18",
         "laravel/framework": "12.0",
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "12.2.0",
-        "lvjunior-ueap/google-drive-uploader": "dev-main",
         "opcodesio/log-viewer": "^3.19",
         "spatie/laravel-medialibrary": "^11.8",
         "spatie/laravel-permission": "^6.9"

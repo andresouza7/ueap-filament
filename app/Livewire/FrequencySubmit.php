@@ -4,7 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Ticket;
 use App\Models\User;
-//use Filament\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
 use LvjuniorUeap\GoogleDriveUploader\GoogleDrive;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -17,6 +18,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Section as ComponentsSection;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -27,9 +29,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\File;
 use Livewire\Component;
 
-class FrequencySubmit extends Component implements HasForms, HasTable
+class FrequencySubmit extends Component implements HasForms, HasTable, HasSchemas
 {
-    use InteractsWithForms, InteractsWithTable;
+    use InteractsWithForms, InteractsWithTable, InteractsWithActions;
 
     public ?array $data = [];
 
@@ -40,7 +42,6 @@ class FrequencySubmit extends Component implements HasForms, HasTable
             'year' => date('Y')
         ]);
     }
-
 
     //ADD CHATGPT
     public function submit()
