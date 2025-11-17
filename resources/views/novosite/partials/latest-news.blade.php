@@ -1,7 +1,7 @@
 <section class="px-4 md:px-8">
     <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl font-bold mb-8 text-primary border-b-4 border-accent-yellow pb-2">
-            Últimas Notícias
+            Notícias
         </h1>
 
         <!-- GRID: 4 colunas fixas, 8 cards -->

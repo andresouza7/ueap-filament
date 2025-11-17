@@ -22,32 +22,55 @@
 
     @vite(['resources/css/site.css'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: auto !important;
+            /* permite expandir além do container */
+            min-width: 100% !important;
+            /* nunca menor que o container */
+            table-layout: auto !important;
+            /* deixa o browser calcular as larguras */
+            display: block;
+            /* permite scroll horizontal */
+            overflow-x: auto;
+            /* ativa o scroll */
+            max-width: 100%;
+            /* não ultrapassa o container */
+            line-height: 1.2rem;
+            font-size: 13px;
+        }
+
+        /* células */
+        table th,
+        table td {
+            min-width: 120px;
+            /* impede colunas minúsculas */
+            padding: 6px 8px;
+            white-space: normal;
+            /* quebra linha normal */
+            word-break: break-word;
+            /* quebra palavras grandes */
+            overflow: visible;
+            /* não esconder conteúdo */
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 
 <body>
-    <main>
-        @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @include('novosite.partials.menu-topo')
 
-        <!-- Conteúdo principal -->
-        <div>
-            @yield('content')
-        </div>
+    <main>
+        @yield('content')
     </main>
 
     <footer class="bg-primary w-full text-[#1b1b1b] py-14">
-            <div class="max-w-[1290px] mx-auto">
-                @include('novosite.partials.footer')
-            </div>
-        </footer>
-
+        <div class="max-w-[1290px] mx-auto">
+            @include('novosite.partials.footer')
+        </div>
+    </footer>
 </body>
 
 </html>

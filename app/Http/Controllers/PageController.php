@@ -10,9 +10,11 @@ class PageController extends Controller
 {
     public function home()
     {
+        $featured = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')
+            ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
         $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(6)->get();
         $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(3)->get();
-        return view('novosite.pages.home', compact('posts', 'events'));
+        return view('novosite.pages.home', compact('posts', 'events', 'featured'));
     }
 
     public function pageShow($slug)
@@ -20,12 +22,12 @@ class PageController extends Controller
 
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
 
-        if($page){
-            $page->hits = $page->hits+1;
+        if ($page) {
+            $page->hits = $page->hits + 1;
             $page->save();
 
             return view('novosite.pages.page-show', compact('page'));
-        }else{
+        } else {
             return redirect()->route('novosite.home');
         }
     }
@@ -50,14 +52,13 @@ class PageController extends Controller
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
         $extra_posts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
-        if($post){
-            $post->hits = $post->hits+1;
+        if ($post) {
+            $post->hits = $post->hits + 1;
             $post->save();
             return view('novosite.pages.post-show', compact('post', 'extra_posts'));
-        }else{
+        } else {
             return redirect()->route('novosite.home');
         }
-
     }
 
     // public function documentList($type)

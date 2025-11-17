@@ -32,7 +32,7 @@ class OldPageController extends Controller
                 $page->increment('hits', 1);
             });
 
-            return view('site.pages.page-show', compact('page'));
+            return view('novosite.pages.page-show', compact('page'));
         } else {
             return redirect()->route('site.home');
         }
