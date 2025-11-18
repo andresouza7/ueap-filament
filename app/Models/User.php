@@ -168,6 +168,11 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $this->hasMany(SocialPost::class, 'user_id');
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id');
+    }
+
     public function hasDocumentCategory(string $type): bool
     {
         $userGroups = $this->groups->pluck('id');
@@ -188,11 +193,13 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $query->where('password', '<>', 'X');
     }
 
-    public function isActive() {
+    public function isActive()
+    {
         return $this->password !== 'X';
     }
 
-    public function resetPassword() {
+    public function resetPassword()
+    {
         $this->password = $this->person->cpf_cnpj;
         $this->save();
     }
