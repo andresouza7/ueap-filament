@@ -30,8 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::useBootstrap();
-
         Gate::before(function ($user, $ability) {
             // Give full access to 'dinfo' users
             if ($user->hasRole('dinfo')) {
