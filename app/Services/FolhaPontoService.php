@@ -166,7 +166,8 @@ class FolhaPontoService
         try {
             $ticket->user->notify(new TicketEvaluatedNotification($ticket));
         } catch (\Throwable $th) {
-            Log::warning("Falha ao notificar usuário {$ticket->user_id} sobre avaliação do ticket {$ticket->id}: " . $th->getMessage());
+            throw $th;
+            // Log::warning("Falha ao notificar usuário {$ticket->user_id} sobre avaliação do ticket {$ticket->id}: " . $th->getMessage());
         }
 
         return $ticket;

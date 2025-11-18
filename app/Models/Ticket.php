@@ -11,6 +11,10 @@ class Ticket extends Model
 
     protected $fillable = ['user_id', 'file_id','file_path', 'status', 'evaluador_id', 'evaluated_at', 'month', 'year', 'user_notes', 'evaluator_notes'];
 
+    protected $casts = [
+        'evaluated_at' => 'date'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

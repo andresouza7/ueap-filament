@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources\Gestao;
 
 use App\Filament\App\Resources\Gestao\TicketResource\Pages;
 use App\Models\Ticket;
+use App\Services\FolhaPontoService;
 use Filament\Actions\Action;
 use LvjuniorUeap\GoogleDriveUploader\GoogleDrive;
 use Filament\Forms;
@@ -135,10 +136,10 @@ class TicketResource extends Resource
                     ])
                     ->default('pendente'),
             ])
-            ->actions([
+            ->recordActions([
                 // Action de avaliação
                 Action::make('avaliar')
-                    ->form([
+                    ->schema([
                         Radio::make('status')
                             ->options([
                                 'aprovado' => 'Aprovado',
@@ -150,21 +151,26 @@ class TicketResource extends Resource
                             ->label('Justificativa')
                             ->required(fn(UtilitiesGet $get) => $get('status') === 'rejeitado'),
                     ])
-                    ->action(function (array $data, $record) {
+                    ->action(function (array $data, $record, FolhaPontoService $service) {
                         try {
-                            $record->update([
-                                'status' => $data['status'],
-                                'evaluator_notes' => $data['evaluator_notes'] ?? null,
-                                'evaluador_id' => auth()->id(),
-                                'evaluated_at' => now(),
-                            ]);
-    
+                            // $record->update([
+                            //     'status' => $data['status'],
+                            //     'evaluator_notes' => $data['evaluator_notes'] ?? null,
+                            //     'evaluador_id' => auth()->id(),
+                            //     'evaluated_at' => now(),
+                            // ]);
+
+                            $service->evaluateTicket($record, $data['status'], $data['evaluator_notes']);
+
+                            Notification::make()
+                                ->title('Folha de ponto avaliada!')
+                                ->success();
+
                             Notification::make()
                                 ->title('Folha de ponto avaliada')
                                 ->body("O ponto de {$record->month}/{$record->year} foi atualizado!")
                                 ->success()
                                 ->sendToDatabase($record->user);
-    
                         } catch (\Throwable $th) {
                             Notification::make()
                                 ->title('Erro ao avaliar')
@@ -174,7 +180,7 @@ class TicketResource extends Resource
                         }
                     })
                     ->visible(fn($record) => $record->status === 'pendente'),
-    
+
                 // Action de download/anexo
                 Action::make('anexo')
                     ->url(fn($record) => $record->file_path)
