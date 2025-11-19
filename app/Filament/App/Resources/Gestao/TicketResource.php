@@ -4,12 +4,16 @@ namespace App\Filament\App\Resources\Gestao;
 
 use App\Filament\App\Resources\Gestao\TicketResource\Pages;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\FolhaPontoService;
 use Filament\Actions\Action;
 use LvjuniorUeap\GoogleDriveUploader\GoogleDrive;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Infolists\Components\TextEntry;
@@ -19,7 +23,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get as UtilitiesGet;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 
 
@@ -31,12 +37,12 @@ class TicketResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return 'Ponto Enviado';
+        return 'Encaminhamento de Ponto';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Pontos Enviados';
+        return 'Encaminhamento de Ponto';
     }
 
     public static function getNavigationGroup(): ?string
@@ -60,39 +66,10 @@ class TicketResource extends Resource
             ]);
     }
 
-
-
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            Group::make()->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
-
-                Forms\Components\TextInput::make('file_id')
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('file_path')
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('month')
-                    ->required()
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('year')
-                    ->required()
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->default('pendente'),
-
-                Forms\Components\TextInput::make('evaluador_id')
-                    ->numeric(),
-
-                Forms\Components\DatePicker::make('evaluated_at'),
-            ])
+            
         ]);
     }
 

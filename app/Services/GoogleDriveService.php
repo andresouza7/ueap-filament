@@ -55,7 +55,6 @@ class GoogleDriveService
         return $response->files;
     }
 
-
     public function deleteFile(string $fileId): bool
     {
         try {
@@ -106,7 +105,7 @@ class GoogleDriveService
         return $folder->id;
     }
 
-    public function moveFileById(string $fileId, string $newParentId, string $name): DriveFile
+    public function moveFileById(string $fileId, string $destinationFolderId, string $name): DriveFile
     {
         // Pega os pais atuais do arquivo
         $file = $this->drive->files->get($fileId, [
@@ -126,7 +125,7 @@ class GoogleDriveService
             $fileId,
             $fileMetadata,
             [
-                'addParents' => $newParentId,
+                'addParents' => $destinationFolderId,
                 'removeParents' => $previousParents,
                 'fields' => 'id,name,webViewLink,webContentLink,parents',
                 'supportsAllDrives' => true,

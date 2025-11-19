@@ -15,7 +15,7 @@
             $pendencias = $ponto->getPendingSheets(auth()->user());
         @endphp
 
-        <h4>minhas pendências</h4>
+        <h4>Pontos Pendentes</h4>
         @foreach ($pendencias as $item)
             <span>{{ $item }}</span>
         @endforeach
