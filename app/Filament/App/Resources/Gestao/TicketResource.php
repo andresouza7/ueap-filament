@@ -27,6 +27,7 @@ class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
     protected static ?int $navigationSort = 8;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function getModelLabel(): string
     {

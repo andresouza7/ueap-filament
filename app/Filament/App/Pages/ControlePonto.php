@@ -29,9 +29,10 @@ class ControlePonto extends Page implements HasForms, HasSchemas
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-document-text';
 
     protected string $view = 'filament.app.pages.controle-ponto';
-    protected static ?string $title = 'Controle de Frequência';
+    protected static ?string $title = 'Planilha de Pontos';
     protected static UnitEnum|string|null $navigationGroup = 'Gestão';
     protected static ?int $navigationSort = 9;
+    protected static bool $shouldRegisterNavigation = false;
 
     public $year;
     public $search;
