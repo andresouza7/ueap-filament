@@ -17,6 +17,8 @@ class CadastroPontoUrh extends Page implements HasForms, HasSchemas
 
     protected string $view = 'filament.app.pages.cadastro-ponto-urh';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public array $formData = [];
 
     public ?int $userId;
@@ -45,7 +47,7 @@ class CadastroPontoUrh extends Page implements HasForms, HasSchemas
                     )
                     ->searchable()
                     ->preload()
-                    ->afterStateUpdated(function($state) {
+                    ->afterStateUpdated(function ($state) {
                         $this->userId = $state;
                     }),
 
