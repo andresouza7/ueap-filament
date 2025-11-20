@@ -2,8 +2,10 @@
 
 namespace App\Filament\App\Pages;
 
+use App\Exports\TicketsExport;
 use App\Services\FolhaPontoService;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -13,6 +15,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Maatwebsite\Excel\Facades\Excel;
 use UnitEnum;
 
 class ControlePonto extends Page implements HasForms, HasSchemas
@@ -42,6 +45,15 @@ class ControlePonto extends Page implements HasForms, HasSchemas
             'month' => null,
             'status' => null,
         ]);
+    }
+
+    public function getHeaderActions(): array
+    {
+        return [
+            Action::make('export')
+                ->label('Exportar Planilha')
+                ->action(fn() => Excel::download(new TicketsExport(2025), 'servidores-2025.xlsx'))
+        ];
     }
 
     public function form(Schema $form): Schema
@@ -76,6 +88,7 @@ class ControlePonto extends Page implements HasForms, HasSchemas
             ->statePath('');
     }
 
+    // injeta uma prop chamada servidores na pagina
     public function getServidoresProperty(FolhaPontoService $service)
     {
         $perPage = 15;
