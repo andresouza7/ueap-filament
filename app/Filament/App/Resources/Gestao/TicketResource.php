@@ -27,7 +27,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get as UtilitiesGet;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-
+use Illuminate\Database\Eloquent\Model;
 
 class TicketResource extends Resource
 {
@@ -131,12 +131,6 @@ class TicketResource extends Resource
                     ])
                     ->action(function (array $data, $record, FolhaPontoService $service) {
                         try {
-                            // $record->update([
-                            //     'status' => $data['status'],
-                            //     'evaluator_notes' => $data['evaluator_notes'] ?? null,
-                            //     'evaluador_id' => auth()->id(),
-                            //     'evaluated_at' => now(),
-                            // ]);
 
                             $service->evaluateTicket($record, $data['status'], $data['evaluator_notes']);
 

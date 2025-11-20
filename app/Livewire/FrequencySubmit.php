@@ -122,6 +122,8 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
             $this->deleteTempFile($tempFilePath);
             $this->notifySuccess();
 
+            $this->form->fill([]);
+
             return $this->handleRedirect();
         } catch (\Throwable $e) {
             $this->notifyError($e->getMessage());
@@ -148,13 +150,17 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
 
                     TextInput::make('year')
                         ->required()
+                        ->mask('9999')
+                        ->numeric()
+                        ->minValue(2010)
+                        ->maxValue(fn() => now()->year)
                         ->label('Ano'),
 
                     FileUpload::make('anexo')
-                        ->label('Arquivo da Folha'),
+                        ->label('Arquivo PDF'),
 
                     Textarea::make('user_notes')
-                        ->label('Observações (opcional)')
+                        ->label('Observações')
                         ->rows(3),
 
                     Actions::make([
@@ -174,7 +180,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
     {
         return $table
             ->heading('Histórico de envios')
-            ->description('Folhas de ponto já enviadas.')
+            ->description('Folhas encaminhadas e sua situação junto ao RH.')
             ->query(
                 fn() => Ticket::query()
                     ->latest('id')
@@ -183,10 +189,17 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
             ->columns([
                 TextColumn::make('month')->label('Mês'),
                 TextColumn::make('year')->label('Ano'),
-                TextColumn::make('status')->badge(),
-                TextColumn::make('created_at')->label('Enviado em')->dateTime()->sortable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->colors([
+                        'warning' => 'pendente',
+                        'success' => 'aprovado',
+                        'danger'  => 'rejeitado',
+                    ])
+                    ->label('Status'),
+                TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y')->sortable(),
                 TextColumn::make('evaluador.login')->label('Avaliador'),
-                TextColumn::make('evaluated_at')->label('Avaliado em')->date()->sortable(),
+                TextColumn::make('evaluated_at')->label('Avaliado em')->date('d/m/Y')->sortable(),
                 TextColumn::make('evaluator_notes')->label('Justificativa'),
             ])
             ->recordActions([

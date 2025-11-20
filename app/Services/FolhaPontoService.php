@@ -6,7 +6,6 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Notifications\TicketEvaluatedNotification;
 use Carbon\Carbon;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 
@@ -41,12 +40,12 @@ class FolhaPontoService
         $exists = Ticket::where('user_id', $user->id)
             ->where('year', $year)
             ->where('month', $month)
-            ->where('status', 'aprovado')
+            ->whereIn('status', ['aprovado', 'pendente'])
             ->exists();
 
         if ($exists) {
             throw new \Exception(
-                "Ticket para {$this->months[$month]}/{$year} já foi aprovado e não pode ser reenviado."
+                "Ponto de {$this->months[$month]}/{$year} já encaminhado e não pode ser reenviado no momento."
             );
         }
     }
@@ -68,7 +67,7 @@ class FolhaPontoService
         $ticket->update([
             'status'          => $status,
             'evaluator_notes' => $notes,
-            'evaluador_id'    => Auth::id(),
+            'evaluator_id'    => Auth::id(),
             'evaluated_at'    => Date::now(),
         ]);
 
@@ -142,7 +141,6 @@ class FolhaPontoService
             'file_id'      => $uploaded->id,
             'file_path'    => $uploaded->webViewLink,
             'status'       => 'pendente',
-            'evaluador_id' => null,
             'user_notes'   => $notes,
         ]);
     }

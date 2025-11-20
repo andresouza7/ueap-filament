@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('month');
             $table->integer('year');
             $table->enum('status', ['pendente', 'aprovado', 'rejeitado'])->default('pendente');
-            $table->foreignId('evaluador_id')->nullable()->constrained('users'); // avaliador RH
+            $table->foreignId('evaluator_id')->nullable()->constrained('users'); // avaliador RH
             $table->date('evaluated_at')->nullable();
             $table->text('user_notes')->nullable();
             $table->text('evaluator_notes')->nullable();

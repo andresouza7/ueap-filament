@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'file_id','file_path', 'status', 'evaluador_id', 'evaluated_at', 'month', 'year', 'user_notes', 'evaluator_notes'];
+    protected $fillable = ['user_id', 'file_id','file_path', 'status', 'evaluator_id', 'evaluated_at', 'month', 'year', 'user_notes', 'evaluator_notes'];
 
     protected $casts = [
         'evaluated_at' => 'date'
@@ -22,6 +22,6 @@ class Ticket extends Model
 
     public function evaluador()
     {
-        return $this->belongsTo(User::class, 'evaluador_id');
+        return $this->belongsTo(User::class, 'evaluator_id');
     }
 }
