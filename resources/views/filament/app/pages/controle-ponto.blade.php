@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <div class="mt-4 text-xs text-gray-600 space-y-1">
+    <div class="mt-2 text-xs text-gray-600 space-y-1">
         <p><span class="text-green-700 font-bold">✔</span> Aprovado.</p>
         <p><span class="text-yellow-700 font-bold">⏳</span> Pendente.</p>
         <p><span class="text-red-700 font-bold">❌</span> Rejeitado.</p>

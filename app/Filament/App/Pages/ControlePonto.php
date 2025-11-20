@@ -2,23 +2,16 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Models\Ticket;
 use App\Services\FolhaPontoService;
 use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
 use Illuminate\Pagination\LengthAwarePaginator;
 use UnitEnum;
 
@@ -62,12 +55,12 @@ class ControlePonto extends Page implements HasForms, HasSchemas
                             collect(range(now()->year, now()->year - 5))->mapWithKeys(fn($y) => [$y => $y])
                         )
                         ->default(now()->year)
-                        ->reactive(),
+                        ->live(),
 
                     TextInput::make('search')
                         ->label('Servidor')
                         ->placeholder('Pesquisar pelo nome...')
-                        ->reactive(),
+                        ->live(),
 
                     Select::make('category')
                         ->label('Categoria')
@@ -77,59 +70,11 @@ class ControlePonto extends Page implements HasForms, HasSchemas
                             'cedido'  => 'Cedido',
                         ])
                         ->placeholder('Todos')
-                        ->reactive(),
-
-                    // Select::make('month')
-                    //     ->label('Mês')
-                    //     ->options([
-                    //         1 => 'Janeiro',
-                    //         2 => 'Fevereiro',
-                    //         3 => 'Março',
-                    //         4 => 'Abril',
-                    //         5 => 'Maio',
-                    //         6 => 'Junho',
-                    //         7 => 'Julho',
-                    //         8 => 'Agosto',
-                    //         9 => 'Setembro',
-                    //         10 => 'Outubro',
-                    //         11 => 'Novembro',
-                    //         12 => 'Dezembro',
-                    //     ])
-                    //     ->placeholder('Todos')
-                    //     ->reactive(),
-
-                    // Select::make('status')
-                    //     ->label('Status da folha')
-                    //     ->options([
-                    //         'aprovado' => 'Aprovado',
-                    //         'pendente' => 'Pendente',
-                    //         'rejeitado' => 'Rejeitado',
-                    //     ])
-                    //     ->placeholder('Todos')
-                    //     ->reactive(),
+                        ->live(),
                 ]),
             ])
             ->statePath('');
     }
-
-    // public function getServidoresProperty()
-    // {
-    //     $query = Ticket::query()
-    //         ->with(['user.person'])
-    //         ->where('year', $this->year);
-
-    //     if ($this->search) {
-    //         $query->whereHas('user.person', function ($q) {
-    //             $q->where('name', 'ilike', '%' . $this->search . '%');
-    //         });
-    //     }
-
-    //     $result = $query->get()
-    //         ->groupBy(fn($folha) => $folha->user->person->name)
-    //         ->sortKeys();
-
-    //     return $result;
-    // }
 
     public function getServidoresProperty(FolhaPontoService $service)
     {
@@ -147,7 +92,7 @@ class ControlePonto extends Page implements HasForms, HasSchemas
             return [$name => $user->tickets];
         });
 
-        return new \Illuminate\Pagination\LengthAwarePaginator(
+        return new LengthAwarePaginator(
             $result,
             $users->total(),
             $users->perPage(),
