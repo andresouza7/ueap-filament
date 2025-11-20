@@ -6,6 +6,7 @@ use BackedEnum;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Auth;
 use UnitEnum;
 
 class ControleFrequencia extends Page
@@ -16,6 +17,11 @@ class ControleFrequencia extends Page
     protected static BackedEnum|string|null $navigationIcon = Heroicon::OutlinedClock;
     protected static UnitEnum|string|null $navigationGroup = 'Gestão';
     protected static ?int $navigationSort = 9;
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('urh|dinfo');
+    }
 
     public static function getNavigationItems(): array
     {
