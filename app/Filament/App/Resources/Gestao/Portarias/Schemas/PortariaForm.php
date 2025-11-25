@@ -2,12 +2,19 @@
 
 namespace App\Filament\Resources\Gestao\Portarias\Schemas;
 
+use App\Models\Person;
+use App\Models\User;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
 
 class PortariaForm
@@ -39,6 +46,7 @@ class PortariaForm
                         ->hidden(fn() => Auth::user()->hasRole('consu'))
                         ->label('Origem')
                         ->maxLength(255),
+
                     FileUpload::make('file')
                         ->columnSpanFull()
                         ->label('Arquivo')
@@ -59,6 +67,37 @@ class PortariaForm
                         ->multiple()
                         ->searchable()
                         ->preload(),
+
+                    Repeater::make('impediments')
+                        ->label('Registrar Impedimentos')
+                        ->table([
+                            TableColumn::make('Servidor'),
+                            TableColumn::make('Descrição'),
+                            TableColumn::make('Início'),
+                            TableColumn::make('Fim'),
+                        ])
+                        ->compact()
+                        ->relationship()
+                        ->columnSpanFull()
+                        ->schema([
+                            Select::make('user_id')
+                                ->label('Servidor')
+                                ->options(fn() => User::orderBy('login')
+                                    ->get()
+                                    ->pluck('login', 'id'))
+                                ->searchable()
+                                ->required(),
+
+                            Textarea::make('description'),
+                            DatePicker::make('start_date'),
+                            DatePicker::make('end_date'),
+                        ])
+                        ->cloneable()
+                        ->addActionLabel('Adicionar')
+                        ->minItems(0)
+                        ->live()
+
+
                 ])->columns(2)
             ]);
     }

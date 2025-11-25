@@ -51,6 +51,10 @@ class Portaria extends Model
         );
     }
 
+    public function impediments() {
+        return $this->hasMany(Impediment::class, 'document_ordinance_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

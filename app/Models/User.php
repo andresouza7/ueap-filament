@@ -7,6 +7,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -207,5 +208,30 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     public function setInactive()
     {
         DB::table('users')->where('id', $this->id)->update(['password' => 'X']);
+    }
+
+    public function impediments()
+    {
+        return $this->hasMany(Impediment::class);
+    }
+
+    protected function impedimento(): Attribute
+    {
+        return Attribute::get(function () {
+
+            return $this->impediments()
+                ->where(function ($q) {
+
+                    $q->where(function ($sub) {
+                        // PAD → dentro de 60 dias
+                        $sub->where('start_date', '>=', now()->subDays(60));
+                    })
+                        ->orWhere(function ($sub) {
+                            // SINDICANCIA → dentro de 30 dias
+                            $sub->where('start_date', '>=', now()->subDays(30));
+                        });
+                })
+                ->exists(); // <── check rápido usando SQL
+        });
     }
 }

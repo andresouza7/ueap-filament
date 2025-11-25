@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Gestao\Users\Tables;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\IconSize;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -36,15 +38,33 @@ class UsersTable
                     ->badge()
                     ->formatStateUsing(fn($record) => $record->isActive() ? 'Ativo' : 'Inativo')
                     ->color(fn($record) => $record->isActive() ? 'success' : 'danger'),
+                TextColumn::make('impedimento')
+                    ->label('Impedimento')
+                    ->badge()
+                    ->formatStateUsing(fn($record) => $record->impedimento ? 'Sim' : 'Não')
+                    ->color(fn($record) => $record->impedimento ? 'danger' : 'gray')
+                    ->extraAttributes([
+                        'class' => 'cursor-help',
+                    ])
+                    ->action(
+                        Action::make('verImpedimentos')
+                            ->label('Ver impedimentos')
+                            ->modalHeading('Impedimentos do Servidor')
+                            ->iconButton()
+                            ->icon(Heroicon::RectangleStack)
+                            ->iconSize(IconSize::Large)
+                            ->modalWidth('4xl')
+                            ->modalSubmitAction(false)
+                            ->modalCancelActionLabel('Fechar')
+                            ->modalContent(fn($record) => view('filament.app.partials.impedimentos-modal', [
+                                'impediments' => $record->impediments
+                            ])),
+                    ),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
