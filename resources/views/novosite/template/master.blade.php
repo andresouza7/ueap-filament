@@ -60,17 +60,15 @@
 </head>
 
 <body>
-    @include('novosite.partials.menu-topo')
+    @include('novosite.components.header')
+    {{-- @include('novosite.partials.menu-topo') --}}
 
     <main>
         @yield('content')
     </main>
 
-    <footer class="bg-primary w-full text-[#1b1b1b] py-14">
-        <div class="max-w-[1290px] mx-auto">
-            @include('novosite.partials.footer')
-        </div>
-    </footer>
+    @include('novosite.components.address')
+    @include('novosite.components.footer')
 </body>
 
 </html>

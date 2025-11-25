@@ -5,10 +5,18 @@
 @source '../**/*.js';
 
 @theme {
-  /* 🎨 Colors */
+  /* 🎨 Base Colors */
   --color-primary: #054e3d;
   --color-accent-yellow: #facc15;
   --color-contrast-light: #f3f4f6;
+
+  /* 🎨 Custom Color Group (ueap.*) */
+  --color-ueap-green: #16a34a;
+  /* green-600 */
+  --color-ueap-dark: #14532d;
+  /* green-900 */
+  --color-ueap-light: #dcfce7;
+  /* green-100 */
 
   /* 🖋️ Font family */
   --font-sans: Inter, sans-serif;
@@ -19,14 +27,29 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1290px;
+
+  /* 📏 Custom max-width token */
+  --spacing-ueap: 1366px;
 }
 
-.dot-mask {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  width: 100%;
-  background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
-    linear-gradient(to bottom, #80808012 1px, transparent 1px);
-  background-size: 24px 24px;
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
