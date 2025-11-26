@@ -5,13 +5,6 @@
 
 @section('content')
     <div class="flex flex-col">
-
-        {{-- Recomendo mover estas tags para <head> do master para evitar repetição --}}
-        <link
-            href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;700;1,400&family=Inter:400,600,700&display=swap"
-            rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
-
         <style>
             /* Tipografia base */
             :root {
@@ -192,7 +185,7 @@
         {{-- Conteúdo: artigo --}}
         <section class="relative w-full py-10">
             <div
-                class="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#eff6f1] to-white z-1">
+                class="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 to-white z-1">
             </div>
 
             <div class="relative z-10 max-w-[990px] mx-auto px-4 post-wrapper">

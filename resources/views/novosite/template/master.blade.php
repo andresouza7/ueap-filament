@@ -22,7 +22,9 @@
 
     @vite(['resources/css/site.css'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;700;1,400&family=Inter:400,600,700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>

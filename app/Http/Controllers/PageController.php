@@ -13,7 +13,7 @@ class PageController extends Controller
         $featured = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
         $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
-        $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(3)->get();
+        $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
         return view('novosite.pages.home', compact('posts', 'events', 'featured'));
     }
 
