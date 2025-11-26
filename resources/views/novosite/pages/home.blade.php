@@ -1,11 +1,9 @@
 @extends('novosite.template.master')
 
-@section('title', 'Notícias')
+@section('title', 'Início')
 
 @section('content')
     <div class="flex flex-col">
-
-
         @include('novosite.components.hero')
         @include('novosite.components.quick-links')
         @include('novosite.components.news')

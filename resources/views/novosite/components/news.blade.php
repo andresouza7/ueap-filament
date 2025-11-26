@@ -7,7 +7,7 @@
                 <h2 class="text-3xl font-bold text-gray-900">Últimas Notícias</h2>
                 <div class="h-1 w-20 bg-ueap-green mt-2 rounded-full"></div>
             </div>
-            <a href="#" class="text-ueap-green font-semibold hover:text-green-800 transition flex items-center">
+            <a href="{{ route('novosite.post.list') }}" class="text-ueap-green font-semibold hover:text-green-800 transition flex items-center">
                 Todas as notícias
                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

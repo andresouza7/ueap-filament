@@ -4,7 +4,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
 
             <!-- Calendário Acadêmico -->
-            <a href="#"
+            <a href="https://ueap.edu.br/documentos/calendar"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-red-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-red-500 group">
                 <div
                     class="w-14 h-14 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-red-500 group-hover:text-white transition-all duration-300">
@@ -19,7 +19,7 @@
             </a>
 
             <!-- Legislação Ueap -->
-            <a href="#"
+            <a href="http://ueap.edu.br/pagina/legislacao.html"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-emerald-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-emerald-500 group">
                 <div
                     class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
@@ -34,7 +34,7 @@
             </a>
 
             <!-- Instruções Normativas -->
-            <a href="#"
+            <a href="http://ueap.edu.br/pagina/instrucoes_normativas.html"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-teal-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-teal-500 group">
                 <div
                     class="w-14 h-14 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-3 group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">
@@ -49,7 +49,7 @@
             </a>
 
             <!-- Resoluções CONSU -->
-            <a href="#"
+            <a href="http://ueap.edu.br/consu/resolucoes"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-blue-500 group">
                 <div
                     class="w-14 h-14 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
@@ -64,7 +64,7 @@
             </a>
 
             <!-- Licitações -->
-            <a href="#"
+            <a href="https://transparencia.ueap.edu.br/licitacoes"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-amber-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-amber-500 group">
                 <div
                     class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
@@ -79,7 +79,7 @@
             </a>
 
             <!-- Processos Seletivos -->
-            <a href="#"
+            <a href="http://ueap.edu.br/pagina/area-processos-seletivos.html"
                 class="flex flex-col items-center p-4 bg-white rounded-2xl shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-rose-500/20 hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-rose-500 group">
                 <div
                     class="w-14 h-14 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-rose-500 group-hover:text-white transition-all duration-300">
