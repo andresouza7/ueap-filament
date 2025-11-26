@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\Portarias\Tables;
+namespace App\Filament\App\Resources\Gestao\Portarias\Tables;
 
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\DocumentCategoryResource\RelationManagers;
+namespace App\Filament\App\Resources\Site\Documents\RelationManagers;
 
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;

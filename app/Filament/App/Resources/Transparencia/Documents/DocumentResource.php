@@ -7,7 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use App\Filament\App\Resources\Transparencia\Documents\Pages\ListDocuments;
 use App\Filament\App\Resources\Transparencia\Documents\Pages\EditDocument;
 use App\Filament\App\Resources\Transparencia\DocumentResource\Pages;
-use App\Filament\Resources\DocumentCategoryResource\RelationManagers\DocumentsRelationManager;
+use app\Filament\App\Resources\Transparencia\Documents\RelationManagers\DocumentsRelationManager;
 use App\Models\DocumentCategory;
 use Filament\Resources\Resource;
 use Filament\Tables;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\CalendarOccurrences\Schemas;
+namespace App\Filament\App\Resources\Gestao\CalendarOccurrences\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;

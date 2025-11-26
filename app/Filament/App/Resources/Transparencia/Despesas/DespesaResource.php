@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Transparencia\Despesas\Pages\EditDespesa;
 use App\Filament\App\Resources\Transparencia\Despesas\Pages\ListDespesas;
 use App\Filament\App\Resources\Transparencia\Despesas\Schemas\DespesaForm;
 use App\Filament\App\Resources\Transparencia\Despesas\Tables\DespesasTable;
+use App\Filament\App\Resources\Transparencia\QuadroDespesas\Pages\CreateQuadroDespesa;
 use App\Models\TransparencyOrder;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -55,7 +56,7 @@ class DespesaResource extends Resource
     {
         return [
             'index' => ListDespesas::route('/'),
-            'create' => CreateDespesa::route('/create'),
+            'create' => CreateQuadroDespesa::route('/create'),
             'edit' => EditDespesa::route('/{record}/edit'),
         ];
     }
