@@ -28,19 +28,107 @@
                 </div>
             </a>
 
-            <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-                <a href="#"
-                    class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">Institucional</a>
-                <a href="#"
-                    class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">Cursos</a>
-                <a href="#"
-                    class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">Ensino</a>
-                <a href="#"
-                    class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">Comunidade</a>
-                <a href="#"
-                    class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base whitespace-nowrap">Acesso
-                    à Informação</a>
-            </div>
+            @php
+                $menu = \App\Models\WebMenu::where('status', 'published')->where('slug', 'novo')->first();
+
+                $items = $menu
+                    ?->items()
+                    ->whereNull('menu_parent_id')
+                    ->where('status', 'published')
+                    ->orderBy('position')
+                    ->get();
+
+                // Função recursiva que rende apenas SUBITENS
+                function renderSubItems($items)
+                {
+                    $html = '';
+
+                    foreach ($items as $item) {
+                        $children = $item->sub_itens()->where('status', 'published')->orderBy('position')->get();
+
+                        // ITEM SEM FILHOS
+                        if ($children->isEmpty()) {
+                            $html .=
+                                '
+                    <a href="' .
+                                ($item->url ?? '#') .
+                                '"
+                       class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-ueap-green text-sm whitespace-nowrap">
+                        ' .
+                                $item->name .
+                                '
+                    </a>
+                ';
+                        }
+
+                        // ITEM COM FILHOS → submenu lateral
+                        else {
+                            $html .=
+                                '
+                <div class="relative group/submenu">
+
+                    <div class="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-ueap-green text-sm cursor-pointer whitespace-nowrap">
+                        <span>' .
+                                $item->name .
+                                '</span>
+                        <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                    </div>
+
+                    <div class="absolute top-0 left-full ml-1 bg-white shadow-lg rounded-lg border border-gray-100
+                                opacity-0 invisible group-hover/submenu:opacity-100 group-hover/submenu:visible transition-all">
+                ';
+
+                            $html .= renderSubItems($children);
+
+                            $html .= '</div></div>';
+                        }
+                    }
+
+                    return $html;
+                }
+            @endphp
+
+            @if ($menu && $items)
+                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+
+                    @foreach ($items as $item)
+                        @php
+                            $sub = $item->sub_itens()->where('status', 'published')->orderBy('position')->get();
+                        @endphp
+
+                        {{-- ITEM SEM DROPDOWN --}}
+                        @if ($sub->isEmpty())
+                            <a href="{{ $item->url ?? '#' }}"
+                                class="text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">
+                                {{ $item->name }}
+                            </a>
+
+                            {{-- ITEM COM DROPDOWN --}}
+                        @else
+                            <div class="relative group inline-block">
+
+                                <button
+                                    class="flex items-center gap-1 text-gray-700 hover:text-ueap-green font-medium transition text-sm xl:text-base">
+                                    {{ $item->name }}
+                                  
+                                </button>
+
+                                <!-- DROPDOWN -->
+                                <div
+                                    class="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-100
+                            opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+
+                                    {!! renderSubItems($sub) !!}
+
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+
+                </nav>
+            @endif
+
+
 
             <div class="hidden lg:flex items-center">
                 <button class="text-gray-500 hover:text-ueap-green p-2 xl:hidden transition-colors">

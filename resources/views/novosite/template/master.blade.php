@@ -29,6 +29,7 @@
 
 <body>
     @include('novosite.components.header')
+    @include('novosite.components.subheader')
 
     <main>
         @yield('content')
