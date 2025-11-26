@@ -1,4 +1,4 @@
-<div  class="w-full bg-[#017D49] bg-cover bg-center bg-no-repeat pt-10 pb-32" style="background-image: url('/img/site/hero-bg.svg');">
+<div  class="w-full bg-[#017D49] bg-cover bg-center bg-no-repeat pt-10 pb-28" style="background-image: url('/img/site/hero-bg.svg');">
 
     <section class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
 

@@ -228,7 +228,7 @@
         {{-- Seção complementar --}}
         <section class="w-full text-[#1b1b1b] py-14">
             <div class="max-w-[1290px] mx-auto px-4">
-                @include('novosite.partials.latest-news')
+                @include('novosite.components.news')
             </div>
         </section>
 

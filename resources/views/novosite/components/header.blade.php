@@ -12,18 +12,21 @@
     <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
 
-            <div class="flex items-center flex-shrink-0">
-                <div class="flex flex-row items-center gap-2">
-                    <img src="/img/site/logo.png" alt="Logo UEAP" class="h-14 sm:h-16">
-                    <div class="flex flex-col justify-center leading-none select-none cursor-pointer">
-                        <span class="text-3xl font-extrabold text-ueap-green tracking-tighter leading-none">UEAP</span>
-                        <span
-                            class="text-[0.55rem] sm:text-[0.6rem] text-gray-500 uppercase tracking-wide sm:tracking-widest leading-tight font-medium">
-                            Universidade do<br class="sm:hidden"> Estado do Amapá
-                        </span>
+            <a href="/novo">
+                <div class="flex items-center flex-shrink-0">
+                    <div class="flex flex-row items-center gap-2">
+                        <img src="/img/site/logo.png" alt="Logo UEAP" class="h-14 sm:h-16">
+                        <div class="flex flex-col justify-center leading-none select-none cursor-pointer">
+                            <span
+                                class="text-3xl font-extrabold text-ueap-green tracking-tighter leading-none">UEAP</span>
+                            <span
+                                class="text-[0.55rem] sm:text-[0.6rem] text-gray-500 uppercase tracking-wide sm:tracking-widest leading-tight font-medium">
+                                Universidade do<br class="sm:hidden"> Estado do Amapá
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
                 <a href="#"

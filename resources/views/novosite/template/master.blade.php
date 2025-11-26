@@ -23,45 +23,10 @@
     @vite(['resources/css/site.css'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
 
-    <style>
-        table {
-            border-collapse: collapse;
-            width: auto !important;
-            /* permite expandir além do container */
-            min-width: 100% !important;
-            /* nunca menor que o container */
-            table-layout: auto !important;
-            /* deixa o browser calcular as larguras */
-            display: block;
-            /* permite scroll horizontal */
-            overflow-x: auto;
-            /* ativa o scroll */
-            max-width: 100%;
-            /* não ultrapassa o container */
-            line-height: 1.2rem;
-            font-size: 13px;
-        }
-
-        /* células */
-        table th,
-        table td {
-            min-width: 120px;
-            /* impede colunas minúsculas */
-            padding: 6px 8px;
-            white-space: normal;
-            /* quebra linha normal */
-            word-break: break-word;
-            /* quebra palavras grandes */
-            overflow: visible;
-            /* não esconder conteúdo */
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 
 <body>
     @include('novosite.components.header')
-    {{-- @include('novosite.partials.menu-topo') --}}
 
     <main>
         @yield('content')
