@@ -6,6 +6,7 @@ use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\Site\WebPosts\WebPostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Auth;
 
 class EditWebPost extends EditRecord
 {
@@ -17,5 +18,12 @@ class EditWebPost extends EditRecord
             // Actions\ViewAction::make(),
             DeleteAction::make(),
         ];
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['user_updated_id'] = Auth::id();
+
+        return $data;
     }
 }
