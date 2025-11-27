@@ -8,24 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class TransparencyBidDocument extends Model
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload;
+    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $fillable = [
-        // 'uuid',
-        // 'number',
-        // 'year',
-        // 'type',
-        // 'location',
-        // 'link',
-        // 'description',
-        // 'observation',
-        // 'start_date',
-        // 'status',
-        // 'user_created_id',
-
         'uuid',
         'number',
         'transparency_bid_id',
@@ -40,7 +37,7 @@ class TransparencyBidDocument extends Model
     public function getFileUrlAttribute()
     {
         $path = 'documents/bids/' . $this->id . '.pdf';
-        
+
         return Storage::exists($path) ? Storage::url($path) : null;
     }
 

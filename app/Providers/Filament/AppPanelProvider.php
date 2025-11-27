@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
 use App\Filament\App\Pages\Auth\Login;
+use App\Http\Middleware\LogThrottle;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
@@ -135,6 +136,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                LogThrottle::class
             ]);
     }
 }

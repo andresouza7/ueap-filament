@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogAuthEvent;
 use Filament\Facades\Filament;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Grid;
@@ -9,8 +10,13 @@ use Filament\Schemas\Components\Section;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
+use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +37,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+
+        // logs user logins and registration attempts
+        Event::listen(Login::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Logout::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Registered::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Failed::class, [LogAuthEvent::class, 'handle']);
 
         Gate::before(function ($user, $ability) {
             // Give full access to 'dinfo' users

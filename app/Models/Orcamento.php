@@ -6,10 +6,19 @@ use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Orcamento extends Model
 {
-    use HasFactory, HandlesFileUpload;
+    use HasFactory, HandlesFileUpload, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $fillable = [
         'uuid',

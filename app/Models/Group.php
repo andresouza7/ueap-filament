@@ -5,10 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Group extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $fillable = [
         'uuid',
@@ -20,7 +29,8 @@ class Group extends Model
         'photo_url'
     ];
 
-    public function getPhotoUrlAttribute() {
+    public function getPhotoUrlAttribute()
+    {
         return asset('img/brasao_ueap.png');
     }
 

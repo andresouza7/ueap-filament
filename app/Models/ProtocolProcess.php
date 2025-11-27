@@ -6,26 +6,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class ProtocolProcess extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->dontSubmitEmptyLogs();
+    }
 
-
-    public function person(){
+    public function person()
+    {
         return $this->belongsTo(Person::class, 'person_id');
     }
 
-    public function subject(){
+    public function subject()
+    {
         return $this->belongsTo(ProtocolSubject::class, 'subject_id');
     }
 
-    public function group_sent(){
+    public function group_sent()
+    {
         return $this->belongsTo(Group::class, 'group_sent_id');
     }
 
-    public function group_received(){
+    public function group_received()
+    {
         return $this->belongsTo(Group::class, 'group_received_id');
     }
 
@@ -33,5 +44,4 @@ class ProtocolProcess extends Model
     {
         return $this->hasMany(ProtocolProcessHistory::class, 'protocol_process_id');
     }
-
 }
