@@ -16,7 +16,8 @@ class Orcamento extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logFillable()
+            ->logAll()
+            ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
 
