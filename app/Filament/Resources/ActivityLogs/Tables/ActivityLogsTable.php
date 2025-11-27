@@ -11,7 +11,10 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -86,6 +89,43 @@ class ActivityLogsTable
                         'login' => 'Login',
                         'logout' => 'Logout',
                     ]),
+
+                Filter::make('periodo')
+                    ->label('Período')
+                    ->schema([
+                        DateTimePicker::make('inicio')
+                            ->label('Início'),
+
+                        DateTimePicker::make('fim')
+                            ->label('Fim'),
+                    ])
+                    ->query(function ($query, array $data) {
+
+                        return $query
+                            ->when(
+                                $data['inicio'],
+                                fn($q) =>
+                                $q->whereTime('created_at', '>=', $data['inicio'])
+                            )
+                            ->when(
+                                $data['fim'],
+                                fn($q) =>
+                                $q->whereTime('created_at', '<=', $data['fim'])
+                            );
+                    })
+                    ->indicateUsing(function (array $data) {
+                        $indicators = [];
+
+                        if ($data['inicio'] ?? false) {
+                            $indicators[] = 'De: ' . \Carbon\Carbon::parse($data['inicio'])->format('d/m/Y H:i');
+                        }
+
+                        if ($data['fim'] ?? false) {
+                            $indicators[] = 'Até: ' . \Carbon\Carbon::parse($data['fim'])->format('d/m/Y H:i');
+                        }
+
+                        return $indicators;
+                    })
             ])
             ->recordActions([
                 ViewAction::make()->label('Visualizar'),
