@@ -25,6 +25,7 @@ class WebPage extends Model
         'uuid',
         'web_menu_id',
         'user_created_id',
+        'user_updated_id',
         'web_category_id',
         'slug',
         'title',
