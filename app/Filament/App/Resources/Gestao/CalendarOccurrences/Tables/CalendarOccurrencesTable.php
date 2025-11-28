@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\CalendarOccurrences\Tables;
+namespace App\Filament\App\Resources\Gestao\CalendarOccurrences\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;

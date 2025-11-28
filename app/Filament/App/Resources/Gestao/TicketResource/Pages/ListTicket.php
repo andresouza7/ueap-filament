@@ -7,7 +7,7 @@ use Filament\Actions;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListTickets extends ListRecords
+class ListTicket extends ListRecords
 {
     protected static string $resource = TicketResource::class;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\SocialPosts\Tables;
+namespace App\Filament\App\Resources\Social\SocialPosts\Tables;
 
 use App\Filament\App\Resources\Social\SocialGroups\SocialGroupResource;
 use App\Filament\App\Resources\Social\SocialUsers\SocialUserResource;

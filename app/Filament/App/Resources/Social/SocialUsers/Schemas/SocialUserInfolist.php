@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\SocialUsers\Schemas;
+namespace App\Filament\App\Resources\Social\SocialUsers\Schemas;
 
 use App\Filament\App\Resources\Social\SocialGroups\SocialGroupResource;
 use Filament\Actions\Action;

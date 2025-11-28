@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\Portarias\Schemas;
+namespace App\Filament\App\Resources\Gestao\Portarias\Schemas;
 
 use App\Models\Person;
 use App\Models\User;

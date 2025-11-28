@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('skip_tutorial')->default(false);
+        Schema::create('protocol_subjects', function (Blueprint $table) {
+            $table->id();
+            $table->string('description');
+            $table->timestamps();
+            $table->softDeletes();
+            $table->string('_delete_')->nullable();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('skip_tutorial');
-        });
+        Schema::dropIfExists('protocol_subjects');
     }
 };

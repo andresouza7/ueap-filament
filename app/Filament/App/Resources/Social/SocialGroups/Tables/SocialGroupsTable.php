@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\SocialGroups\Tables;
+namespace App\Filament\App\Resources\Social\SocialGroups\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

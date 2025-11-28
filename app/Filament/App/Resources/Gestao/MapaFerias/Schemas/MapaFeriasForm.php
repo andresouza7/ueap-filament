@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\MapaFerias\Schemas;
+namespace App\Filament\App\Resources\Gestao\MapaFerias\Schemas;
 
 use App\Models\User;
 use Filament\Forms\Components\DatePicker;
