@@ -68,37 +68,90 @@ class PortariaForm
                         ->searchable()
                         ->preload(),
 
-                    Repeater::make('impediments')
-                        ->label('Registrar Impedimentos')
-                        ->table([
-                            TableColumn::make('Servidor'),
-                            TableColumn::make('Descrição'),
-                            TableColumn::make('Início'),
-                            TableColumn::make('Fim'),
-                        ])
-                        ->compact()
-                        ->relationship()
-                        ->columnSpanFull()
-                        ->schema([
-                            Select::make('user_id')
-                                ->label('Servidor')
-                                ->options(fn() => User::orderBy('login')
-                                    ->get()
-                                    ->pluck('login', 'id'))
-                                ->searchable()
-                                ->required(),
-
-                            Textarea::make('description'),
-                            DatePicker::make('start_date'),
-                            DatePicker::make('end_date'),
-                        ])
-                        ->cloneable()
-                        ->addActionLabel('Adicionar')
-                        ->minItems(0)
-                        ->live()
-
+                    self::getImpedimentSection()
 
                 ])->columns(2)
             ]);
+    }
+
+    private static function getImpedimentSection()
+    {
+        return Repeater::make('impediments')
+            ->label('Registrar Impedimento')
+            ->table([
+                TableColumn::make('Descrição')
+                    ->width('260px')
+                    ->markAsRequired(),
+
+                TableColumn::make('Tipo')
+                    ->width('120px')
+                    ->markAsRequired(),
+
+                TableColumn::make('Início')
+                    ->width('120px'),
+
+                TableColumn::make('Fim')
+                    ->width('120px'),
+
+                TableColumn::make('Servidores')
+                    ->width('200px')
+                    ->markAsRequired()
+            ])
+            ->compact()
+            ->columnSpanFull()
+            ->schema([
+                Textarea::make('description')->required(),
+                Select::make('type')
+                    ->options([
+                        'pad' => 'PAD',
+                        'sindicancia' => 'Sindicância'
+                    ])
+                    ->live()
+                    ->required(),
+                DatePicker::make('start_date')->readOnly(),
+                DatePicker::make('end_date')->readOnly(),
+
+                Select::make('user_id')
+                    ->options(
+                        fn() => User::with('person')
+                            ->orderBy('login')
+                            ->get()
+                            ->mapWithKeys(fn($user) => [
+                                $user->id => $user->person->name ?? '(Sem nome)'
+                            ])
+                    )
+                    ->multiple()
+                    ->searchable()
+                    ->required()
+                    ->required(),
+            ])
+            ->addActionLabel('Adicionar')
+            ->minItems(0)
+            ->maxItems(1)
+            ->live()
+            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                // Obtém a data de criação do registro principal
+                $createdAt = \Carbon\Carbon::parse($get('created_at'));
+
+                foreach ($state as $key => $item) {
+
+                    // Preencher start_date sempre igual ao created_at
+                    $set("impediments.$key.start_date", $createdAt->toDateString());
+
+                    // Verifica o tipo
+                    $type = $item['type'] ?? null;
+
+                    if ($type === 'sindicancia') {
+                        $endDate = $createdAt->clone()->addDays(30);
+                    } elseif ($type === 'pad') {
+                        $endDate = $createdAt->clone()->addDays(60);
+                    } else {
+                        // Caso não tenha tipo escolhido ainda
+                        $endDate = $createdAt;
+                    }
+
+                    $set("impediments.$key.end_date", $endDate->toDateString());
+                }
+            });
     }
 }

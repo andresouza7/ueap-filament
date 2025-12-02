@@ -24,10 +24,12 @@ class Portaria extends Model
         'subject',
         'origin',
         'created_at',
+        'impediments'
     ];
 
     protected $casts = [
         'number' => 'integer',
+        'impediments' => 'array'
     ];
 
     protected $appends = [
@@ -49,10 +51,6 @@ class Portaria extends Model
             'document_ordinance_id',
             'person_id'
         );
-    }
-
-    public function impediments() {
-        return $this->hasMany(Impediment::class, 'document_ordinance_id');
     }
 
     protected static function boot()

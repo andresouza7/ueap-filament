@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    @if ($impediments->isEmpty())
+    @if (!count($impediments))
         <p class="text-sm text-gray-500">Nenhum impedimento registrado.</p>
     @else
         <table class="w-full text-left text-sm">
@@ -12,17 +12,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($impediments as $imp)
+                @foreach ($impediments as $portaria)
+                    @php
+                        $imp = $portaria->impediments[0] ?? null;
+                    @endphp
+
                     <tr class="border-t">
-                        <td class="py-2">{{ $imp->description }}</td>
-                        <td class="py-2">{{ optional($imp->start_date)->format('d/m/Y') ?? '—' }}</td>
-                        <td class="py-2">{{ optional($imp->end_date)->format('d/m/Y') ?? '—' }}</td>
                         <td class="py-2">
-                            @if ($imp->ordinance)
-                                {{ $imp->ordinance->number }}/{{ $imp->ordinance->year }}
-                            @else
-                                —
-                            @endif
+                            {{ $imp['description'] ?? '—' }}
+                        </td>
+
+                        <td class="py-2">
+                            {{ isset($imp['start_date']) ? \Carbon\Carbon::parse($imp['start_date'])->format('d/m/Y') : '—' }}
+                        </td>
+
+                        <td class="py-2">
+                            {{ isset($imp['end_date']) ? \Carbon\Carbon::parse($imp['end_date'])->format('d/m/Y') : '—' }}
+                        </td>
+
+                        <td class="py-2">
+                            {{ $portaria->number }}/{{ $portaria->year }}
                         </td>
                     </tr>
                 @endforeach

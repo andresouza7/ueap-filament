@@ -77,7 +77,8 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     protected $appends = [
         'nickname',
         'profile_photo_url',
-        'signature_url'
+        'signature_url',
+        'impediments'
     ];
 
     public function getNicknameAttribute()
@@ -210,28 +211,22 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         DB::table('users')->where('id', $this->id)->update(['password' => 'X']);
     }
 
-    public function impediments()
+    public function getImpedimentsAttribute()
     {
-        return $this->hasMany(Impediment::class);
-    }
-
-    protected function impedimento(): Attribute
-    {
-        return Attribute::get(function () {
-
-            return $this->impediments()
-                ->where(function ($q) {
-
-                    $q->where(function ($sub) {
-                        // PAD → dentro de 60 dias
-                        $sub->where('start_date', '>=', now()->subDays(60));
-                    })
-                        ->orWhere(function ($sub) {
-                            // SINDICANCIA → dentro de 30 dias
-                            $sub->where('start_date', '>=', now()->subDays(30));
-                        });
-                })
-                ->exists(); // <── check rápido usando SQL
+        // filtra pelo id do usuario no banco
+        $portarias = Portaria::whereJsonContains('impediments', [["user_id" => [$this->id]]])->get();
+        // filtra pela data no servidor
+        $today = now()->toDateString();
+        return $portarias->filter(function ($portaria) use ($today) {
+            foreach ($portaria->impediments as $impediment) {
+                if (
+                    $impediment['start_date'] <= $today &&
+                    $impediment['end_date'] >= $today
+                ) {
+                    return true;
+                }
+            }
+            return false;
         });
     }
 }

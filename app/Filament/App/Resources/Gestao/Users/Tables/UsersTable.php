@@ -12,6 +12,8 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UsersTable
 {
     public static function configure(Table $table): Table
@@ -38,11 +40,11 @@ class UsersTable
                     ->badge()
                     ->formatStateUsing(fn($record) => $record->isActive() ? 'Ativo' : 'Inativo')
                     ->color(fn($record) => $record->isActive() ? 'success' : 'danger'),
-                TextColumn::make('impedimento')
+                TextColumn::make('impediments')
                     ->label('Impedimento')
                     ->badge()
-                    ->formatStateUsing(fn($record) => $record->impedimento ? 'Sim' : 'Não')
-                    ->color(fn($record) => $record->impedimento ? 'danger' : 'gray')
+                    ->getStateUsing(fn($record) => count($record->impediments) ? 'Sim' : 'Não')
+                    ->color(fn($record) => count($record->impediments) ? 'danger' : 'gray')
                     ->extraAttributes([
                         'class' => 'cursor-help',
                     ])
