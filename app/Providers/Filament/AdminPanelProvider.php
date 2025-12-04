@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\LogThrottle;
 use Filament\Pages\Dashboard;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
@@ -45,7 +46,7 @@ class AdminPanelProvider extends PanelProvider
                 'Gerência'
             ])
             ->navigationItems([
-                NavigationItem::make('Logs')
+                NavigationItem::make('Laravel Logs')
                     ->url('/admin/log')
                     ->icon('heroicon-o-clipboard-document-list') // opcional
                     ->group('Gerência'), // mantém organizado no grupo
@@ -68,6 +69,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                LogThrottle::class,
             ]);
     }
 }

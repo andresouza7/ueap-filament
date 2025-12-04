@@ -9,10 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\FileService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Portaria extends Model
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload;
+    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $table = 'document_ordinances';
 

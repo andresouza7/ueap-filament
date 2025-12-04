@@ -7,10 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WebBanner extends Model
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload;
+    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $fillable = [
         'uuid',
@@ -29,7 +39,7 @@ class WebBanner extends Model
     public function getImageUrlAttribute()
     {
         $path = 'web/banners/' . $this->id . '.jpg';
-        
+
         return Storage::exists($path) ? Storage::url($path) : null;
     }
 

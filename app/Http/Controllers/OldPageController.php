@@ -28,7 +28,9 @@ class OldPageController extends Controller
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
 
         if ($page) {
+            // Updating with logging disabled
             WebPage::withoutTimestamps(function () use ($page) {
+                $page->disableLogging();
                 $page->increment('hits', 1);
             });
 
@@ -56,6 +58,7 @@ class OldPageController extends Controller
 
         if ($post) {
             WebPost::withoutTimestamps(function () use ($post) {
+                $post->disableLogging();
                 $post->increment('hits', 1);
             });
 

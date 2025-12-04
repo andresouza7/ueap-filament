@@ -6,16 +6,28 @@ use App\Actions\HandlesFileUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WebPage extends Model
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload;
+    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected $fillable = [
         'uuid',
         'web_menu_id',
         'user_created_id',
+        'user_updated_id',
         'web_category_id',
         'slug',
         'title',
