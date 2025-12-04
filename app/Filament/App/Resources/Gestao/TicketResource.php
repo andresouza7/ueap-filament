@@ -136,11 +136,12 @@ class TicketResource extends Resource
 
                             Notification::make()
                                 ->title('Folha de ponto avaliada!')
-                                ->success();
+                                ->success()
+                                ->send();
 
                             Notification::make()
                                 ->title('Folha de ponto avaliada')
-                                ->body("O ponto de {$record->month}/{$record->year} foi atualizado!")
+                                ->body("Seu ponto de {$record->month}/{$record->year} foi avaliado!")
                                 ->success()
                                 ->sendToDatabase($record->user);
                         } catch (\Throwable $th) {

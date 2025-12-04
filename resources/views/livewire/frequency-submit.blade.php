@@ -18,7 +18,7 @@
     </div>
 
     <!-- Último bloco embaixo -->
-    <div>
+    {{-- <div>
         @php
             $drive = new \App\Services\GoogleDriveService();
             $ponto = new \App\Services\FolhaPontoService($drive);
@@ -29,6 +29,6 @@
         @foreach ($pendencias as $item)
             <span>{{ $item }}</span>
         @endforeach
-    </div>
+    </div> --}}
 
 </div>

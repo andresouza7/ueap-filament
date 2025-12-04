@@ -131,7 +131,7 @@ class FolhaPontoService
         $this->ensureMonthNotApproved($user, $year, $month);
 
         // Upload provisional
-        $tempFolder = $this->drive->getOrCreateFolder('temp', env('GOOGLE_DRIVE_FOLDER_ID'));
+        $tempFolder = $this->drive->getOrCreateFolder('novos', env('GOOGLE_DRIVE_FOLDER_ID'));
         $uploaded = $this->drive->upload($file, $tempFolder);
 
         return Ticket::create([

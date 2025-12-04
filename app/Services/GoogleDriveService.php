@@ -7,6 +7,7 @@ use Google\Service\Drive as GoogleDrive;
 use Google\Service\Drive\DriveFile;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class GoogleDriveService
@@ -129,6 +130,22 @@ class GoogleDriveService
                 'removeParents' => $previousParents,
                 'fields' => 'id,name,webViewLink,webContentLink,parents',
                 'supportsAllDrives' => true,
+            ]
+        );
+
+        // --- SHARE FILE WITH EMAIL ---
+        $permission = new \Google\Service\Drive\Permission([
+            'type' => 'user',
+            'role' => 'reader',       // or writer
+            'emailAddress' => Auth::user()->email ?? null,
+        ]);
+
+        $this->drive->permissions->create(
+            $updatedFile->id,
+            $permission,
+            [
+                'sendNotificationEmail' => true,   // optional
+                'supportsAllDrives' => true
             ]
         );
 

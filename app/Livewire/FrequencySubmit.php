@@ -81,7 +81,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
     {
         Notification::make()
             ->title('Folha de ponto encaminhada.')
-            ->body('Um servidor da URH irá atender a sua solicitação.')
+            ->body('A URH irá atender a sua solicitação.')
             ->success()
             ->send();
     }
@@ -157,6 +157,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
                         ->label('Ano'),
 
                     FileUpload::make('anexo')
+                        ->required()
                         ->label('Arquivo PDF'),
 
                     Textarea::make('user_notes')
