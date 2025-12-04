@@ -66,6 +66,8 @@ Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('fr
 // Marca o tutorial de boas vindas da intranet como completo
 Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
 
+Route::get('tutorial-ponto/complete', [ManagerController::class, 'completeTutorialPonto'])->name('tutorial-ponto.complete');
+
 // Redirecionamento para login no painel app do filament. necesário definir essa rota pois há mais de um painel
 Route::get('/login', function () {
     return redirect()->route('filament.app.auth.login');

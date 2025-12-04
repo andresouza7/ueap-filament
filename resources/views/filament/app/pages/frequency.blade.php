@@ -44,9 +44,4 @@
                 </div>
             </div>
         </div>
-
-        @push('scripts')
-            @vite('public\js\filament\tutorial-ponto.js')
-        @endpush
-
     </x-filament-panels::page>

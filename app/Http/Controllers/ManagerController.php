@@ -80,4 +80,12 @@ class ManagerController extends Controller
         $user->skip_tutorial = true;
         $user->save();
     }
+
+    public function completeTutorialPonto(Request $request)
+    {
+        $user = $request->user();
+
+        $user->skip_tutorial_ponto = true;
+        $user->save();
+    }
 }

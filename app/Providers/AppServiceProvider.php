@@ -55,11 +55,18 @@ class AppServiceProvider extends ServiceProvider
         Filament::serving(function () {
             $user = Auth::user();
 
-            if ($user && ! $user->skip_tutorial && request()->routeIs('filament.app.pages.dashboard')) {
+            if ($user && !$user->skip_tutorial && request()->routeIs('filament.app.pages.dashboard')) {
                 FilamentAsset::register([
-                    Js::make('tutorial-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
-                    // Js::make('tutorial-script', asset('build/assets/tutorial-BXecf3-O.js'))->module(),
-                    // Css::make('tutorial-script', asset('build/assets/tutorial-BmhU-YmB.css')),
+                    // Js::make('tutorial-script', Vite::asset('resources/js/tutorial.js'))->module(),
+                    Js::make('tutorial-script', asset('build/assets/tutorial-BXecf3-O.js'))->module(),
+                    Css::make('tutorial-script', asset('build/assets/tutorial-BmhU-YmB.css')),
+                ]);
+            }
+            
+            if ($user && !$user->skip_tutorial_ponto && request()->routeIs('filament.app.pages.dashboard')) {
+                FilamentAsset::register([
+                    Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
+                    
                 ]);
             }
         });

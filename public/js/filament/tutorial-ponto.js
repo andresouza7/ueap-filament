@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         allowClose: false,
 
         onDestroyed: () => {
-            fetch('/tutorial/complete', { method: 'GET', credentials: 'same-origin' })
+            fetch('/tutorial-ponto/complete', { method: 'GET', credentials: 'same-origin' })
                 .then(response => response.json())
                 .then(data => console.log('Tutorial marcado como concluído:', data))
                 .catch(err => console.error('Erro ao marcar tutorial como concluído:', err));
@@ -60,17 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         <strong>Mês</strong> e <strong>Ano</strong> identificam o período da folha.<br>
                         No campo <strong>Arquivo PDF</strong>, selecione o documento digitalizado da sua folha de ponto.<br><br>
                         Após preencher, clique em <strong>Enviar</strong> para encaminhar ao setor responsável.
-                    `
-                }
-            },
-
-            {
-                element: "#form-submit-ponto",
-                popover: {
-                    title: "Observações",
-                    description: `
-                        Campo opcional para registrar informações adicionais relacionadas ao envio da folha de ponto.<br>
-                        As observações são encaminhadas junto ao documento para análise do RH.
                     `
                 }
             },
