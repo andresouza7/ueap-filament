@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
 
         <!-- Formulário (col-span-1) -->
-        <div>
+        <div id="form-submit-ponto">
             <form wire:submit.prevent="submit">
                 {{ $this->form }}
             </form>
