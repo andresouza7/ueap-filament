@@ -1,111 +1,55 @@
 <?php
 
-namespace App\Filament\App\Resources\Gestao;
+namespace App\Filament\App\Resources\Gestao\Tickets\Tables;
 
-use App\Filament\App\Resources\Gestao\TicketResource\Pages;
-use App\Models\Ticket;
-use App\Models\User;
 use App\Services\FolhaPontoService;
 use Filament\Actions\Action;
-use LvjuniorUeap\GoogleDriveUploader\GoogleDrive;
-use Filament\Forms;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get as UtilitiesGet;
-use Filament\Schemas\Components\View;
-use Filament\Schemas\Schema;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
-class TicketResource extends Resource
+class TicketsTable
 {
-    protected static ?string $model = Ticket::class;
-    protected static ?int $navigationSort = 8;
-    protected static bool $shouldRegisterNavigation = false;
-
-    public static function getModelLabel(): string
+    public static function configure(Table $table): Table
     {
-        return 'Encaminhamento de Ponto';
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return 'Encaminhamento de Ponto';
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Gestão';
-    }
-
-    public static function getNavigationIcon(): ?string
-    {
-        return 'heroicon-o-rectangle-stack';
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return $infolist
-            ->schema([
-                TextEntry::make('user.person.name'),
-                TextEntry::make('month'),
-                TextEntry::make('year'),
-                TextEntry::make('user_notes'),
-            ]);
-    }
-
-    public static function form(Schema $schema): Schema
-    {
-        return $schema->schema([
-            
-        ]);
-    }
-
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->heading('Pontos encaminhados')
+        return $table->heading('Pontos encaminhados')
             ->description('Gerencie aqui as solicitações encaminhadas.')
             ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('user.person.name')
+                TextColumn::make('user.person.name')
                     ->label('Servidor')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('month')
+                TextColumn::make('month')
                     ->label('Mês')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->label('Ano')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Enviado em')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('evaluador.person.name')
+                TextColumn::make('evaluador.person.name')
                     ->label('Avaliador'),
-                Tables\Columns\TextColumn::make('evaluated_at')
+                TextColumn::make('evaluated_at')
                     ->label('Avaliado em')
                     ->date()
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->label('Status')
                     ->options([
                         'pendente'   => 'Pendente',
@@ -127,7 +71,7 @@ class TicketResource extends Resource
                             ->required(),
                         Textarea::make('evaluator_notes')
                             ->label('Justificativa')
-                            ->required(fn(UtilitiesGet $get) => $get('status') === 'rejeitado'),
+                            ->required(fn(callable $get) => $get('status') === 'rejeitado'),
                     ])
                     ->action(function (array $data, $record, FolhaPontoService $service) {
                         try {
@@ -160,20 +104,5 @@ class TicketResource extends Resource
                     ->openUrlInNewTab()
                     ->visible(fn($record) => $record->file_path),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListTicket::route('/'),
-            'create' => Pages\CreateTicket::route('/create'),
-            'view' => Pages\ViewTicket::route('/{record}'),
-            'edit' => Pages\EditTicket::route('/{record}/edit'),
-        ];
     }
 }
