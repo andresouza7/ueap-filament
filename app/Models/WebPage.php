@@ -21,11 +21,12 @@ class WebPage extends Model
         'title',
         'description',
         'text',
+        'content',
         'status',
     ];
 
     protected $appends = [
-        'image_url'
+        'image_url',
     ];
 
     public function getImageUrlAttribute()
