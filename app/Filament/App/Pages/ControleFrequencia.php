@@ -34,9 +34,9 @@ class ControleFrequencia extends Page
                 ->isActiveWhen(
                     fn() =>
                     request()->routeIs(
-                        'filament.app.resources.gestao.mapa-ferias.*',
+                        // 'filament.app.resources.gestao.mapa-ferias.*',
+                        // 'filament.app.resources.gestao.calendar-occurrences.*',
                         'filament.app.resources.gestao.tickets.*',
-                        'filament.app.resources.gestao.calendar-occurrences.*',
                         'filament.app.pages.cadastro-ponto-urh',
                         'filament.app.pages.controle-ponto',
                         'filament.app.pages.controle-frequencia',

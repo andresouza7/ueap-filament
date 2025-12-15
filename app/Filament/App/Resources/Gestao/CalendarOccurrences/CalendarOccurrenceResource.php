@@ -30,7 +30,7 @@ class CalendarOccurrenceResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
-    protected static bool $shouldRegisterNavigation = false;
+    // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?int $navigationSort = 3;
 

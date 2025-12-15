@@ -133,22 +133,24 @@ class GoogleDriveService
             ]
         );
 
+        return $updatedFile;
+    }
+
+    public function shareFileWithEmail($file, $email) {
         // --- SHARE FILE WITH EMAIL ---
         $permission = new \Google\Service\Drive\Permission([
             'type' => 'user',
             'role' => 'reader',       // or writer
-            'emailAddress' => Auth::user()->email ?? null,
+            'emailAddress' => $email,
         ]);
 
         $this->drive->permissions->create(
-            $updatedFile->id,
+            $file->id,
             $permission,
             [
-                'sendNotificationEmail' => true,   // optional
+                'sendNotificationEmail' => false,   // optional
                 'supportsAllDrives' => true
             ]
         );
-
-        return $updatedFile;
     }
 }

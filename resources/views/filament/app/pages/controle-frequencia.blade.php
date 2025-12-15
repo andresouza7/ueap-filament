@@ -2,27 +2,21 @@
 
     @php
         $items = [
+            // [
+            //     'label' => 'Mapa de Férias',
+            //     'icon' => 'heroicon-o-map',
+            //     'color' => 'green',
+            //     'href' => route('filament.app.resources.gestao.mapa-ferias.index'),
+            // ],
+            // [
+            //     'label' => 'Ocorrências de Ponto',
+            //     'icon' => 'heroicon-o-exclamation-circle',
+            //     'color' => 'yellow',
+            //     'href' => route('filament.app.resources.gestao.calendar-occurrences.index'),
+            // ],
             [
-                'label' => 'Mapa de Férias',
-                'icon' => 'heroicon-o-map',
-                'color' => 'green',
-                'href' => route('filament.app.resources.gestao.mapa-ferias.index'),
-            ],
-            [
-                'label' => 'Ocorrências de Ponto',
-                'icon' => 'heroicon-o-exclamation-circle',
-                'color' => 'yellow',
-                'href' => route('filament.app.resources.gestao.calendar-occurrences.index'),
-            ],
-            [
-                'label' => 'Planilha de Pontos',
-                'icon' => 'heroicon-o-calendar',
-                'color' => 'red',
-                'href' => route('filament.app.pages.controle-ponto'),
-            ],
-            [
-                'label' => 'Encaminhamento de Ponto',
-                'icon' => 'heroicon-o-paper-airplane',
+                'label' => 'Recebimento de Ponto',
+                'icon' => 'heroicon-o-document-check',
                 'color' => 'blue',
                 'href' => route('filament.app.resources.gestao.tickets.index'),
             ],
@@ -32,11 +26,18 @@
                 'color' => 'gray',
                 'href' => route('filament.app.pages.cadastro-ponto-urh'),
             ],
+            [
+                'label' => 'Planilha de Pontos',
+                'icon' => 'heroicon-o-calendar',
+                'color' => 'red',
+                'href' => route('filament.app.pages.controle-ponto'),
+            ],
         ];
     @endphp
 
     {{-- CONTAINER PRINCIPAL COM BORDA VISÍVEL NO DARK --}}
-    <div class="
+    <div
+        class="
         rounded-xl shadow-lg overflow-hidden
         dark:border
         dark:border-gray-700/70 
@@ -45,9 +46,8 @@
 
         {{-- Banner com borda curva --}}
         <div class="relative w-full h-56 md:h-96 overflow-hidden rounded-t-xl">
-            <img src="/img/bg-frequencia.jpg"
-                 class="absolute inset-0 w-full h-full object-cover object-center"
-                 alt="Banner">
+            <img src="/img/bg-frequencia.jpg" class="absolute inset-0 w-full h-full object-cover object-center"
+                alt="Banner">
 
             {{-- Overlay claro/escuro --}}
             <div class="absolute inset-0 bg-black/30 dark:bg-black/60"></div>
@@ -76,9 +76,8 @@
                         </h2>
 
                         <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                            Aqui você encontra todas as funcionalidades relacionadas ao controle de frequência,
-                            férias e ocorrências funcionais.
-                            Utilize os módulos ao lado para acessar rapidamente cada seção.
+                            Aqui você encontra todas as funcionalidades relacionadas ao controle de frequência.
+                            Utilize os módulos ao lado para acessar cada seção.
                         </p>
                     </aside>
 
@@ -94,7 +93,7 @@
                                 @endphp
 
                                 <a href="{{ $item['href'] }}"
-                                   class="group 
+                                    class="group 
                                         bg-gray-50 
                                         dark:bg-[#232a3d] 
                                         rounded-xl p-4 
@@ -104,10 +103,7 @@
 
                                     {{-- Coluna esquerda: Ícone --}}
                                     <div class="p-3 rounded-lg {{ $iconBg }}">
-                                        <x-dynamic-component
-                                            :component="$item['icon']"
-                                            class="w-6 h-6 {{ $iconTxt }}"
-                                        />
+                                        <x-dynamic-component :component="$item['icon']" class="w-6 h-6 {{ $iconTxt }}" />
                                     </div>
 
                                     {{-- Coluna direita: Texto --}}
