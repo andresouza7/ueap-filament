@@ -8,6 +8,7 @@ use App\Filament\App\Resources\Gestao\Users\UserResource;
 use App\Filament\Exports\UserExporter;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\Width;
 
 class ListUsers extends ListRecords
 {
@@ -21,5 +22,10 @@ class ListUsers extends ListRecords
                 ->exporter(UserExporter::class),
             CreateAction::make(),
         ];
+    }
+
+    public function getMaxContentWidth(): Width
+    {
+        return Width::Full;
     }
 }

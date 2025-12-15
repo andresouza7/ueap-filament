@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\MapaFerias\Tables;
+namespace App\Filament\App\Resources\Gestao\MapaFerias\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\HealthAppointments\Schemas;
+namespace App\Filament\App\Resources\Gestao\HealthAppointments\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;

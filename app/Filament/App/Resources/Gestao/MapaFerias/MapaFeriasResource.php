@@ -6,8 +6,8 @@ use Filament\Schemas\Schema;
 use App\Filament\App\Resources\Gestao\MapaFerias\Pages\ListFerias;
 use App\Filament\App\Resources\Gestao\MapaFerias\Pages\CreateFerias;
 use App\Filament\App\Resources\Gestao\MapaFerias\Pages\EditFerias;
-use App\Filament\Resources\Gestao\MapaFerias\Schemas\MapaFeriasForm;
-use App\Filament\Resources\Gestao\MapaFerias\Tables\MapaFeriasTable;
+use App\Filament\App\Resources\Gestao\MapaFerias\Schemas\MapaFeriasForm;
+use App\Filament\App\Resources\Gestao\MapaFerias\Tables\MapaFeriasTable;
 use App\Models\CalendarOccurrence;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -26,6 +26,8 @@ class MapaFeriasResource extends Resource
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
 
     protected static ?int $navigationSort = 4;
+
+    // protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Transparencia\Contratos\Tables;
+namespace App\Filament\App\Resources\Transparencia\Contratos\Tables;
 
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;

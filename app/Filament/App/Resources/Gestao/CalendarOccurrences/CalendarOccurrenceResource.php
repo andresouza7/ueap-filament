@@ -6,8 +6,8 @@ use Filament\Schemas\Schema;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\ListCalendarOccurrences;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\CreateCalendarOccurrence;
 use App\Filament\App\Resources\Gestao\CalendarOccurrences\Pages\EditCalendarOccurrence;
-use App\Filament\Resources\Gestao\CalendarOccurrences\Schemas\CalendarOccurenceForm;
-use App\Filament\Resources\Gestao\CalendarOccurrences\Tables\CalendarOccurrencesTable;
+use App\Filament\App\Resources\Gestao\CalendarOccurrences\Schemas\CalendarOccurenceForm;
+use App\Filament\App\Resources\Gestao\CalendarOccurrences\Tables\CalendarOccurrencesTable;
 use App\Models\CalendarOccurrence;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -29,6 +29,8 @@ class CalendarOccurrenceResource extends Resource
     protected static string | \UnitEnum | null $navigationGroup = 'Gestão';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
+
+    // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?int $navigationSort = 3;
 

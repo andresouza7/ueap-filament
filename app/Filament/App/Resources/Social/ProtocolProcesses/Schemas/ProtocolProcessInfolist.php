@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\ProtocolProcesses\Schemas;
+namespace App\Filament\App\Resources\Social\ProtocolProcesses\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;

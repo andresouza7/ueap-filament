@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('skip_tutorial')->default(false);
+        Schema::table('document_ordinances', function (Blueprint $table) {
+            $table->jsonb('impediments')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('skip_tutorial');
+        Schema::table('document_ordinances', function (Blueprint $table) {
+            $table->dropColumn('impediments');
         });
     }
 };

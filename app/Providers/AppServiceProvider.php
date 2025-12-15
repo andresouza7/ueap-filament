@@ -37,18 +37,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::useBootstrap();
-
-        if (Auth::check()) {
-            CauserResolver::setCauser(Auth::user());
-        }
-
-        // logs user logins and registration attempts
-        Event::listen(Login::class, [LogAuthEvent::class, 'handle']);
-        Event::listen(Logout::class, [LogAuthEvent::class, 'handle']);
-        Event::listen(Registered::class, [LogAuthEvent::class, 'handle']);
-        Event::listen(Failed::class, [LogAuthEvent::class, 'handle']);
-
         Gate::before(function ($user, $ability) {
             // Give full access to 'dinfo' users
             if ($user->hasRole('dinfo')) {

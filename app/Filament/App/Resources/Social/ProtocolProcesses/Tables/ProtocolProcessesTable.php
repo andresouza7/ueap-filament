@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\ProtocolProcesses\Tables;
+namespace App\Filament\App\Resources\Social\ProtocolProcesses\Tables;
 
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;

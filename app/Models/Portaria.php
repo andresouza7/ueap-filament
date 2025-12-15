@@ -34,10 +34,12 @@ class Portaria extends Model
         'subject',
         'origin',
         'created_at',
+        'impediments'
     ];
 
     protected $casts = [
         'number' => 'integer',
+        'impediments' => 'array'
     ];
 
     protected $appends = [

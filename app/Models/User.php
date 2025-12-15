@@ -7,6 +7,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -86,7 +87,8 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     protected $appends = [
         'nickname',
         'profile_photo_url',
-        'signature_url'
+        'signature_url',
+        'impediments'
     ];
 
     public function getNicknameAttribute()
@@ -178,6 +180,11 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
         return $this->hasMany(SocialPost::class, 'user_id');
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id');
+    }
+
     public function hasDocumentCategory(string $type): bool
     {
         $userGroups = $this->groups->pluck('id');
@@ -212,5 +219,24 @@ class User extends Authenticatable implements HasName, FilamentUser, HasMedia
     public function setInactive()
     {
         DB::table('users')->where('id', $this->id)->update(['password' => 'X']);
+    }
+
+    public function getImpedimentsAttribute()
+    {
+        // filtra pelo id do usuario no banco
+        $portarias = Portaria::whereJsonContains('impediments', [["user_id" => [$this->id]]])->get();
+        // filtra pela data no servidor
+        $today = now()->toDateString();
+        return $portarias->filter(function ($portaria) use ($today) {
+            foreach ($portaria->impediments as $impediment) {
+                if (
+                    $impediment['start_date'] <= $today &&
+                    $impediment['end_date'] >= $today
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }

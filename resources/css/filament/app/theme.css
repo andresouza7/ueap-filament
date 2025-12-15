@@ -3,5 +3,6 @@
 @source '../../../../app/Filament/App/**/*';
 @source '../../../../app/Providers/Filament/**/*';
 @source '../../../../resources/views/filament/app/**/*';
+@source '../../../../resources/views/livewire/*';
 @source './vendor/filament/**/*.blade.php';
 

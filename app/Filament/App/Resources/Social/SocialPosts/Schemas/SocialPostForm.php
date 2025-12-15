@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\SocialPosts\Schemas;
+namespace App\Filament\App\Resources\Social\SocialPosts\Schemas;
 
 use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Components\Grid;

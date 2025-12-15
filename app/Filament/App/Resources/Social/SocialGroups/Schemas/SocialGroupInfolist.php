@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\SocialGroups\Schemas;
+namespace App\Filament\App\Resources\Social\SocialGroups\Schemas;
 
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;

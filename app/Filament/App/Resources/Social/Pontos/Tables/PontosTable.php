@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\Pontos\Tables;
+namespace App\Filament\App\Resources\Social\Pontos\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

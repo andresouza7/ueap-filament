@@ -13,18 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orcamentos', function (Blueprint $table) {
-            $table->id();
-            $table->uuid();
-            $table->string('type');
-            $table->integer('year');
-            $table->integer('month');
-            $table->bigInteger('value')->nullable();
-            $table->text('description');
-            $table->text('observation')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('orcamentos')) {
+            Schema::create('orcamentos', function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid');
+                $table->string('type');
+                $table->integer('year');
+                $table->integer('month');
+                $table->bigInteger('value')->nullable();
+                $table->text('description');
+                $table->text('observation')->nullable();
+                $table->timestamps();
+            });
+        }
     }
+
 
     /**
      * Reverse the migrations.

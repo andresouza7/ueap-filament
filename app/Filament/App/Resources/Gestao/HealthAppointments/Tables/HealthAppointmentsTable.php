@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Gestao\HealthAppointments\Tables;
+namespace App\Filament\App\Resources\Gestao\HealthAppointments\Tables;
 
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;

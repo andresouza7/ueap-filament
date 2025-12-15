@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Social\Pontos\Schemas;
+namespace App\Filament\App\Resources\Social\Pontos\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
