@@ -50,12 +50,12 @@ class PageController extends Controller
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $posts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
+        $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
         if ($post) {
             $post->hits = $post->hits + 1;
             $post->save();
-            return view('novosite.pages.post-show', compact('post', 'posts'));
+            return view('novosite.pages.post-show', compact('post', 'latestPosts'));
         } else {
             return redirect()->route('novosite.home');
         }

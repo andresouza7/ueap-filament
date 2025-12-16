@@ -4,226 +4,184 @@
     : 'Notícia'))
 
 @section('content')
-    <div class="flex flex-col">
-        <style>
-            /* Tipografia base */
-            :root {
-                --text: #0f172a;
-                --muted: #6b7280;
-                --card-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
-                --accent: #0b6b3a;
-                /* use sua cor se tiver */
-            }
 
-            body {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
+    <style>
+        /* Tipografia editorial (o que não fica ideal só com Tailwind) */
+        .article-body p {
+            @apply mb-6 leading-relaxed text-slate-700 text-lg;
+            font-family: 'Merriweather', serif !important;
+        }
 
-            .post-wrapper {
-                font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-                color: var(--text);
-            }
+        .article-body h2 {
+            @apply mt-10 mb-4 text-3xl font-bold text-gray-900 tracking-tight;
+        }
 
-            .post-article {
-                font-family: "Merriweather", Georgia, serif;
-                line-height: 1.78;
-                font-size: 1.03rem;
-                color: var(--text);
-            }
+        .article-body ul {
+            @apply list-disc ml-6 mb-6 text-slate-700;
+            font-family: 'Merriweather', serif;
+        }
 
-            /* Drop cap (somente em telas md+) */
-            @media (min-width:768px) {
-                .post-article p:first-of-type::first-letter {
-                    float: left;
-                    font-size: 4.6rem;
-                    line-height: 0.78;
-                    font-weight: 700;
-                    margin-right: .55rem;
-                    margin-top: .08rem;
-                    color: var(--text);
-                    font-family: "Merriweather", Georgia, serif;
-                    -webkit-font-smoothing: antialiased;
-                }
-            }
+        .article-body li {
+            @apply mb-2;
+        }
 
-            .post-card {
-                overflow: hidden;
-            }
+        .article-body blockquote {
+            @apply my-8 p-6 bg-slate-50 border-l-4 border-green-600 italic text-gray-600 text-xl rounded-r-lg;
+        }
+    </style>
 
-            /* Botões */
-            .btn-back {
-                display: inline-flex;
-                align-items: center;
-                gap: .6rem;
-                background: linear-gradient(180deg, #fbfdff, #f6f9fb);
-                border: 1px solid #e6e9eb;
-                padding: .5rem .85rem;
-                border-radius: .6rem;
-                font-weight: 600;
-                color: var(--text);
-                text-decoration: none;
-            }
+    <main class="bg-gray-50 py-10">
+        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
 
-            .btn-back .fa-fw {
-                width: 1rem;
-                text-align: center;
-            }
+            {{-- Breadcrumb --}}
+            <nav class="text-sm text-gray-500 mb-8">
+                <ol class="flex flex-wrap items-center gap-2">
+                    <li>
+                        <a href="{{ url('/') }}" class="hover:text-green-600">Início</a>
+                    </li>
+                    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
+                    <li>
+                        <a href="/" class="hover:text-green-600">Notícias</a>
+                    </li>
+                    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
+                    <li class="font-bold uppercase text-green-600">
+                        {{ $post->category->name ?? 'Institucional' }}
+                    </li>
+                </ol>
+            </nav>
 
-            .share-icon {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                border-radius: 999px;
-                border: 1px solid rgba(15, 23, 42, 0.06);
-                background: white;
-                box-shadow: 0 6px 18px rgba(15, 23, 42, 0.03);
-                color: var(--text);
-                text-decoration: none;
-            }
-
-            .share-label {
-                font-weight: 600;
-                margin-left: .5rem;
-                display: inline-block;
-            }
-
-            /* Header layout */
-            .post-header {
-                background: transparent;
-                padding: 1rem;
-                border-radius: .5rem;
-            }
-
-            @media(min-width:1024px) {
-                .post-header {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 1.25rem;
-                }
-            }
-
-            /* Breadcrumb overflow */
-            .breadcrumb {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                white-space: nowrap;
-            }
-
-            /* Small niceties */
-            .muted {
-                color: var(--muted);
-            }
-
-            .meta-item {
-                display: flex;
-                align-items: center;
-                gap: .5rem;
-                color: var(--muted);
-                font-weight: 600;
-            }
-
-            .meta-item i {
-                color: #9ca3af;
-                width: 1.05rem;
-                text-align: center;
-            }
-        </style>
-
-        {{-- Topo branco: somente breadcrumb --}}
-        <section class="w-full py-8 border-b border-gray-200"> <!-- border cinza claro -->
-            <div class="max-w-[1290px] mx-auto px-4">
-                <nav class="text-sm mb-3" aria-label="Breadcrumb">
-                    <a href="{{ url('/') }}" class="hover:underline">Início</a>
-                    <span class="mx-2">/</span>
-                    <a href="{{ route('novosite.home') }}" class="hover:underline">Notícias</a>
-                    <span class="mx-2">/</span>
-                    <span class="text-gray-600">{{ $post->slug }}</span>
-                </nav>
-
-                <header class="mb-4">
-                    <h1 class="text-3xl lg:text-4xl font-extrabold text-[#071133] leading-tight">
-                        {{ isset($post->title) ? $post->title : (isset($post->slug) ? str_replace('-', ' ', ucfirst($post->slug)) : 'Notícia') }}
-                    </h1>
-
-                    <div class="mt-3 text-sm text-gray-500 flex flex-wrap gap-4 items-center">
-                        <span>Autor: <strong
-                                class="text-gray-700">{{ $post->user_created->login ?? 'Desconhecido' }}</strong></span>
-                        <span>•</span>
-                        <span>Última modificação: <strong
-                                class="text-gray-700">{{ optional($post->updated_at)->format('d/m/Y H:i') ?? '—' }}</strong></span>
-                        <span>•</span>
-                        <span>Visualizações: <strong
-                                class="text-gray-700">{{ number_format($post->hits ?? 0, 0, ',', '.') }}</strong></span>
-                        <span class="hidden sm:inline">•</span>
-                        <span class="text-gray-400">slug: <code
-                                class="bg-gray-100 px-2 py-0.5 rounded">{{ $post->category->name ?? 'sem categoria' }}</code></span>
-                    </div>
-                </header>
-
-                <div class="flex items-center gap-2">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}"
-                        class="share-icon" target="_blank" rel="noopener" aria-label="Compartilhar no Facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($post->title ?? $post->slug) }}"
-                        class="share-icon" target="_blank" rel="noopener" aria-label="Compartilhar no Twitter">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
-                    <a href="https://wa.me/?text={{ urlencode(($post->title ?? $post->slug) . ' ' . request()->fullUrl()) }}"
-                        class="share-icon md:hidden" target="_blank" rel="noopener" aria-label="Compartilhar no WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                </div>
-            </div>
-
-        </section>
-
-        {{-- Conteúdo: artigo --}}
-        <section class="relative w-full py-10">
-            <div
-                class="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 to-white z-1">
-            </div>
-
-            <div class="relative z-10 max-w-[990px] mx-auto px-4 post-wrapper">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
                 {{-- Artigo --}}
-                <article class="post-article p-7 lg:p-10 post-card">
-                    {{-- ATENÇÃO: renderiza HTML — certifique-se que $post->text está sanitizado no backend --}}
-                    {!! $post->text !!}
+                <article class="lg:col-span-8 bg-white rounded-2xl shadow-sm p-8 md:p-12">
+
+                    {{-- Cabeçalho --}}
+                    <header class="mb-10">
+                        <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                            {{ $post->title }}
+                        </h1>
+
+                        @if ($post->description)
+                            <p class="text-xl text-gray-600 mb-8">
+                                {{ $post->description }}
+                            </p>
+                        @endif
+
+                        {{-- Autor e data --}}
+                        <div class="flex flex-wrap items-center gap-6 border-y border-gray-100 py-4 text-sm">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
+                                    {{ strtoupper(substr($post->author->name ?? 'UEAP', 0, 2)) }}
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">
+                                        {{ $post->author->name ?? 'Assessoria de Comunicação' }}
+                                    </p>
+                                    <p class="text-gray-500">
+                                        {{ $post->created_at->format('d/m/Y H:i') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- Compartilhar --}}
+                            <div class="flex gap-2 ml-auto">
+                                <a href="#" class="p-2 rounded-full hover:bg-gray-100 text-gray-500">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="p-2 rounded-full hover:bg-gray-100 text-gray-500">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </a>
+                                <a href="#" class="p-2 rounded-full hover:bg-gray-100 text-gray-500">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+
+                    {{-- Imagem --}}
+                    @if (true)
+                        <figure class="mb-10">
+                            <img src="https://picsum.photos/1200/630" alt="{{ $post->title }}"
+                                class="w-full rounded-xl shadow-lg">
+                            @if ($post->image_caption)
+                                <figcaption class="text-sm text-gray-500 text-center italic mt-2">
+                                    {{ $post->image_caption }}
+                                </figcaption>
+                            @endif
+                        </figure>
+                    @endif
+
+                    {{-- Conteúdo --}}
+                    <div class="article-body prose max-w-none">
+                        {{-- {!! $post->text !!} --}}
+                       A Universidade do Estado do Amapá (UEAP) deu um passo importante nesta terça-feira (10) para a consolidação de sua estratégia de internacionalização. Em reunião realizada no Campus I, a Reitoria recebeu representantes diplomáticos e acadêmicos de cinco universidades europeias para discutir a criação de novos acordos de cooperação técnica e mobilidade acadêmica.
+                    </div>
+
+                    {{-- Tags --}}
+                    @if ($post->tags?->count())
+                        <div class="mt-12 pt-8 border-t">
+                            <h4 class="text-sm font-bold text-gray-500 uppercase mb-4">
+                                Tópicos relacionados
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($post->tags as $tag)
+                                    <a href="/"
+                                        class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-800 transition">
+                                        {{ $tag->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                 </article>
 
-                {{-- Ações secundárias (mobile) --}}
-                <div class="mt-6 flex items-center justify-between gap-4">
-                    <a href="{{ route('novosite.home') }}" class="btn-back md:hidden" aria-label="Voltar às notícias">
-                        <i class="fa-solid fa-arrow-left fa-fw"></i>
-                        <span>Voltar</span>
-                    </a>
+                {{-- Sidebar --}}
+                <aside class="lg:col-span-4 space-y-8">
 
-                    <div class="flex items-center gap-2">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}"
-                            class="share-icon md:hidden" target="_blank" rel="noopener" aria-label="Facebook">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($post->title ?? $post->slug) }}"
-                            class="share-icon md:hidden" target="_blank" rel="noopener" aria-label="Twitter">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
+                    {{-- Busca --}}
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h3 class="font-bold mb-4">Buscar Notícias</h3>
+                        <div class="relative">
+                            <input type="text" placeholder="Digite sua busca..."
+                                class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-ueap-green focus:ring-1 focus:ring-ueap-green">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                </div>
 
+                    {{-- Últimas --}}
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold border-l-4 border-green-600 pl-3">
+                                Últimas Notícias
+                            </h3>
+                            <a href="/" class="text-xs font-semibold text-green-600">
+                                Ver todas
+                            </a>
+                        </div>
+
+                        <div class="space-y-6">
+                            @foreach ($latestPosts as $item)
+                                <a href="/" class="flex gap-4 group">
+                                    <img src="https://picsum.photos/200/150"
+                                        class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition">
+                                    <div>
+                                        <span class="text-xs font-bold uppercase text-green-600 block">
+                                            {{ $item->category->name }}
+                                        </span>
+                                        <h4 class="text-sm font-semibold text-gray-900 group-hover:text-green-600">
+                                            {{ $item->title }}
+                                        </h4>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                </aside>
             </div>
-        </section>
+        </div>
+    </main>
 
-        {{-- Seção complementar --}}
-        <section class="w-full text-[#1b1b1b] py-14">
-            <div class="max-w-[1290px] mx-auto px-4">
-                @include('novosite.components.news')
-            </div>
-        </section>
-
-    </div>
 @endsection
