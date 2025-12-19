@@ -86,3 +86,27 @@ table td {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* pagina post-show */
+.article-body p {
+  @apply mb-6 leading-relaxed text-slate-700 text-base;
+  font-family: 'Merriweather', serif !important;
+}
+
+.article-body h2 {
+  @apply mt-10 mb-4 text-3xl font-bold text-gray-900 tracking-tight leading-tight;
+}
+
+.article-body ul {
+  @apply list-disc ml-6 mb-6 text-slate-700;
+  font-family: 'Merriweather', serif;
+}
+
+.article-body li {
+  @apply mb-2;
+}
+
+.article-body blockquote {
+  @apply my-8 p-6 bg-slate-50 border-l-4 border-green-600 italic text-gray-600 text-xl rounded-r-lg;
+}
+/* fim pagina post show */

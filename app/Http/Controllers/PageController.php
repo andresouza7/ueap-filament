@@ -51,11 +51,16 @@ class PageController extends Controller
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
         $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
+        $relatedPosts = WebPost::latest('id')->where('status', 'published')
+            ->whereHas('category', function ($query) use ($post) {
+                $query->where('name', $post->category->name);
+            })
+            ->take(3)->get();
 
         if ($post) {
             $post->hits = $post->hits + 1;
             $post->save();
-            return view('novosite.pages.post-show', compact('post', 'latestPosts'));
+            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts'));
         } else {
             return redirect()->route('novosite.home');
         }
