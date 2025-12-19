@@ -114,7 +114,7 @@
 
                     {{-- Conteúdo --}}
                     <div class="article-body prose max-w-none">
-                        {!! $post->text !!}
+                        {!! clean_text($post->text) !!}
                     </div>
 
                     {{-- Tags --}}
@@ -155,14 +155,14 @@
                             <h3 class="font-bold border-l-4 border-green-600 pl-3">
                                 Últimas Notícias
                             </h3>
-                            <a href="/" class="text-xs font-semibold text-green-600">
+                            <a href="{{ route('novosite.post.list') }}" class="text-xs font-semibold text-green-600">
                                 Ver todas
                             </a>
                         </div>
 
                         <div class="space-y-6">
                             @foreach ($latestPosts as $item)
-                                <a href="/" class="flex gap-4 group">
+                                <a href="{{ route('novosite.post.show', $post->slug) }}" class="flex gap-4 group">
                                     <img src="https://picsum.photos/200/150"
                                         class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition">
                                     <div>
@@ -204,7 +204,7 @@
 
                 <div class="grid md:grid-cols-3 gap-8">
                     @foreach ($relatedPosts as $post)
-                        <a href="/" class="group block">
+                        <a href="{{ route('novosite.post.show', $post->slug) }}" class="group block">
                             <div class="aspect-video rounded-xl overflow-hidden mb-4">
                                 <img src="{{ $post->image ?? 'https://picsum.photos/600/400' }}" alt="{{ $post->title }}"
                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500">

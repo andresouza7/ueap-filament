@@ -90,6 +90,9 @@ table td {
 /* pagina post-show */
 .article-body p {
   @apply mb-6 leading-relaxed text-slate-700 text-base;
+}
+
+.article-body * {
   font-family: 'Merriweather', serif !important;
 }
 

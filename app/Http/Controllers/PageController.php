@@ -34,7 +34,7 @@ class PageController extends Controller
 
     public function postList(Request $request)
     {
-        $searchString = $request->input('qry');
+        $searchString = $request->input('search');
 
         $query = WebPost::where('status', 'published')->whereRelation('category.section', 'slug', 'news');
 
