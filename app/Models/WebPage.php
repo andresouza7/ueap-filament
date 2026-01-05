@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class WebPage extends Model
+class WebPage extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload;
+    use HasFactory, SoftDeletes, HandlesFileUpload, InteractsWithMedia;
 
     protected $fillable = [
         'uuid',
@@ -27,6 +29,10 @@ class WebPage extends Model
 
     protected $appends = [
         'image_url',
+    ];
+
+    protected $casts = [
+        'content' => 'array'
     ];
 
     public function getImageUrlAttribute()

@@ -31,15 +31,16 @@
 
                 {{-- Listagem de Notícias --}}
                 <div class="lg:col-span-8 space-y-8">
-                    
+
                     @forelse ($posts as $item)
-                        <article class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col md:flex-row group hover:shadow-md transition duration-300">
+                        <article
+                            class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col md:flex-row group hover:shadow-md transition duration-300">
                             {{-- Imagem da Notícia --}}
                             <div class="md:w-1/3 overflow-hidden">
                                 <a href="{{ route('novosite.post.show', $item->slug) }}">
-                                    <img src="{{ $item->image ?? 'https://picsum.photos/seed/'.$item->id.'/600/400' }}" 
-                                         alt="{{ $item->title }}"
-                                         class="w-full h-48 md:h-full object-cover group-hover:scale-105 transition duration-500">
+                                    <img src="{{ $item->getFirstMediaUrl() ?? 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
+                                        alt="{{ $item->title }}"
+                                        class="w-full h-48 md:h-full object-cover aspect-square group-hover:scale-105 transition duration-500">
                                 </a>
                             </div>
 
@@ -47,7 +48,8 @@
                             <div class="p-6 md:p-8 flex flex-col justify-between md:w-2/3">
                                 <div>
                                     <div class="flex items-center gap-3 mb-3">
-                                        <span class="px-3 py-1 text-xs font-bold uppercase rounded-full bg-green-100 text-green-700">
+                                        <span
+                                            class="px-3 py-1 text-xs font-bold uppercase rounded-full bg-green-100 text-green-700">
                                             {{ $item->category->name ?? 'Institucional' }}
                                         </span>
                                         <span class="text-xs text-gray-400">
@@ -55,9 +57,10 @@
                                             {{ $item->created_at->format('d/m/Y') }}
                                         </span>
                                     </div>
-                                    
+
                                     <a href="{{ route('novosite.post.show', $item->slug) }}">
-                                        <h2 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-green-600 transition mb-3">
+                                        <h2
+                                            class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-green-600 transition mb-3">
                                             {{ $item->title }}
                                         </h2>
                                     </a>
@@ -67,8 +70,9 @@
                                     </p>
                                 </div>
 
-                                <a href="{{ route('novosite.post.show', $item->slug) }}" class="text-green-600 font-bold text-sm inline-flex items-center gap-2 hover:underline">
-                                    Ler notícia completa 
+                                <a href="{{ route('novosite.post.show', $item->slug) }}"
+                                    class="text-green-600 font-bold text-sm inline-flex items-center gap-2 hover:underline">
+                                    Ler notícia completa
                                     <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </a>
                             </div>
@@ -117,7 +121,8 @@
                     <div class="bg-gray-900 rounded-xl p-6 text-white relative overflow-hidden">
                         <div class="relative z-10">
                             <h3 class="font-bold text-xl mb-2">Fique por dentro</h3>
-                            <p class="text-gray-300 text-sm mb-4">Receba as principais notícias diretamente no seu e-mail.</p>
+                            <p class="text-gray-300 text-sm mb-4">Receba as principais notícias diretamente no seu e-mail.
+                            </p>
                             <form>
                                 <input type="email" placeholder="Seu melhor e-mail"
                                     class="w-full px-4 py-2 bg-white rounded-lg text-gray-900 mb-2 focus:outline-none">

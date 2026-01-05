@@ -19,6 +19,7 @@ use App\Filament\App\Resources\Site\WebPages\Pages\EditWebPage;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPageResource\Pages;
 use App\Filament\App\Resources\Site\WebPages\RelationManagers\MenuItemsRelationManager;
+use App\Filament\App\Resources\Site\WebPosts\WebPostResource;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CourseCoordinator;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CurriculumBlock;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\HeroBlock;
@@ -75,36 +76,8 @@ class WebPageResource extends Resource
                             'unpublished' => 'Despublicado'
                         ]),
 
-                    RichEditor::make('text')
-                        ->label('Texto')
-                        ->required()
-                        ->formatStateUsing(fn($state) => clean_text($state))
-                        ->extraInputAttributes(['style' => 'min-height: 20rem;'])
-                        ->disableToolbarButtons(['attachFiles'])
-                        ->columnSpanFull(),
+                    WebPostResource::PageContentBlock(),
 
-                    RichEditor::make('content')
-                        ->label('Conteúdo dinâmico')
-                        ->mergeTags([
-                            'name',
-                            'today'
-                        ])
-                        ->customBlocks([
-                            HeroBlock::class,
-                            StaffBlock::class,
-                            CurriculumBlock::class,
-                            CourseCoordinator::class,
-                            SimpleTextSection::class,
-                        ])
-                        ->required(),
-
-                    FileUpload::make('file')
-                        ->label('Imagem JPG')
-                        ->directory('web/pages')
-                        ->acceptedFileTypes(['image/jpeg'])
-                        ->previewable(false)
-                        ->maxFiles(1)
-                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
                     Select::make('web_menu_id')
                         ->hiddenOn('create')
                         ->label('Exibir menu nesta página?')

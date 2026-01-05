@@ -13,7 +13,7 @@ function clean_text($text)
         "http://www2.ueap.edu.br/Arquivos/" => "http://www.ueap.edu.br/storage/old_files/Arquivos/"
     );
 
-    return strtr($text, $map);
+    return trim(strtr($text, $map));
 }
 
 function styleFilamentPanel(Panel $panel): Panel

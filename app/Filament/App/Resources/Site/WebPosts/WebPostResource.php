@@ -26,8 +26,11 @@ use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPostResource\Pages;
 use App\Models\WebPost;
 use Filament\Forms;
+use Filament\Forms\Components\Builder as ComponentsBuilder;
+use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -44,27 +47,105 @@ class WebPostResource extends Resource
 
     public $filename;
 
-    public static function form(Schema $schema): Schema
+    protected static function textBlock(): Block
     {
-        return $schema
-            ->components([
-                Grid::make(1)
-                    ->schema([
-                        Tabs::make('Tabs')
-                            ->tabs([
-                                Tab::make('Texto')
-                                    ->schema([
-                                        static::getTextFormSection()
-                                    ]),
-                                Tab::make('Imagem')
-                                    ->schema([
-                                        static::getImageFormSection()
-                                    ]),
-                            ]),
-                    ])
-
+        return Block::make('text')
+            ->label('Texto')
+            ->schema([
+                RichEditor::make('body')
+                    ->label('Conteúdo')
+                    ->required()
+                    ->disableToolbarButtons(['attachFiles'])
+                    ->extraInputAttributes(['style' => 'min-height: 18rem;']),
             ]);
     }
+
+    protected static function ImageBlock(): Block
+    {
+        return Block::make('gallery')
+            ->label('Imagem / Galeria')
+            ->schema([
+                SpatieMediaLibraryFileUpload::make('images')
+                    ->label('Imagens')
+                    ->multiple()
+                    ->minFiles(1)
+                    ->maxFiles(10)
+                    ->acceptedFileTypes(['image/jpeg'])
+                    ->reorderable()
+                    ->previewable(false)
+                    ->required(),
+
+                TextInput::make('subtitle')
+                    ->label('Legenda'),
+
+                TextInput::make('credits')
+                    ->label('Fonte das Imagens'),
+            ]);
+    }
+
+    public static function PageContentBlock(): ComponentsBuilder
+    {
+        return ComponentsBuilder::make('content')
+            ->label('Conteúdo')
+            ->columnSpan(2)
+            ->blocks([
+                static::textBlock(),
+                static::ImageBlock(),
+            ])
+            ->reorderable()
+            ->collapsible()
+            ->addActionLabel('Adicionar bloco')
+            ->required();
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            Grid::make(3)->schema([
+
+                // LEFT: Main content (builder)
+                static::PageContentBlock(),
+
+                // RIGHT: Post metadata (keeps your existing logic)
+                Group::make([
+                    Select::make('web_category_id')
+                        ->label('Categoria')
+                        ->relationship('category', 'name')
+                        ->searchable()
+                        ->required(),
+
+                    TextInput::make('title')
+                        ->label('Título')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(
+                            fn(Set $set, ?string $state) =>
+                            $set('slug', Str::slug($state) . '.html')
+                        ),
+
+                    TextInput::make('slug')
+                        ->required()
+                        ->suffixIcon('heroicon-m-globe-alt'),
+
+                    Select::make('status')
+                        ->required()
+                        ->options([
+                            'draft' => 'Rascunho',
+                            'published' => 'Publicado',
+                            'unpublished' => 'Despublicado',
+                        ]),
+
+                    Toggle::make('featured')->label('Destaque'),
+
+                    TextInput::make('text_credits')
+                        ->label('Fonte do Texto')
+                        ->default('Ascom/UEAP'),
+                ]),
+
+            ]),
+        ]);
+    }
+
 
     public static function getTextFormSection()
     {
