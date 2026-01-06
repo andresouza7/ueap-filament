@@ -93,8 +93,8 @@ table td {
 }
 
 .article-body * {
-  @apply mb-3 leading-relaxed text-slate-700 text-base;
-  font-family: 'Merriweather', serif !important;
+  @apply mb-3 leading-relaxed text-slate-700 text-sm;
+  font-family: 'Inter', serif !important;
   text-align: left !important;
 }
 

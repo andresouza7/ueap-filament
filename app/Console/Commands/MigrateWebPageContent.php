@@ -20,19 +20,7 @@ class MigrateWebPageContent extends Command
                 $content = [];
 
                 /**
-                 * 1. TEXT NODE
-                 */
-                if (!empty($page->text)) {
-                    $content[] = [
-                        'type' => 'text',
-                        'data' => [
-                            'body' => $page->text,
-                        ],
-                    ];
-                }
-
-                /**
-                 * 2. IMAGE → GALLERY NODE + MEDIA LIBRARY
+                 * 1. IMAGE → GALLERY NODE + MEDIA LIBRARY
                  */
                 $path = 'web/pages/' . $page->id . '.jpg';
 
@@ -50,6 +38,18 @@ class MigrateWebPageContent extends Command
                         'data' => [
                             'subtitle' => null,
                             'credits'  => null,
+                        ],
+                    ];
+                }
+
+                /**
+                 * 2. TEXT NODE
+                 */
+                if (!empty($page->text)) {
+                    $content[] = [
+                        'type' => 'text',
+                        'data' => [
+                            'body' => $page->text,
                         ],
                     ];
                 }

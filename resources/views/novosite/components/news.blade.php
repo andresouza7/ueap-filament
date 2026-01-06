@@ -19,7 +19,7 @@
 
             @foreach ($posts as $post)
                 <article
-                    class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full">
+                    class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden flex flex-col h-full">
 
                     <div class="h-48 overflow-hidden">
                         <img src="{{ $post->image_url ?: 'https://picsum.photos/600/400?random=' . $post->id }}"
@@ -50,12 +50,9 @@
                             </h3>
                         </a>
 
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3 flex-1">
-                            {{ strip_tags($post->text) }}
+                        <p class="text-sm text-gray-600 line-clamp-3 flex-1">
+                            {{ Str::limit(clean_text(html_entity_decode(strip_tags($post->text))), 150) }}
                         </p>
-
-                        <a href="{{ route('novosite.post.show', $post->slug) }}"
-                            class="text-sm font-semibold text-ueap-green hover:underline mt-auto">Ler mais →</a>
                     </div>
 
                 </article>

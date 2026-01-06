@@ -26,13 +26,14 @@ class OldPageController extends Controller
     {
 
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
+         $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
         if ($page) {
             WebPage::withoutTimestamps(function () use ($page) {
                 $page->increment('hits', 1);
             });
 
-            return view('novosite.pages.page-show', compact('page'));
+            return view('novosite.pages.page-show', compact('page', 'latestPosts'));
         } else {
             return redirect()->route('site.home');
         }

@@ -26,11 +26,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
         rel="stylesheet">
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
     @include('novosite.components.header')
-    @include('novosite.components.subheader')
+    {{-- @include('novosite.components.subheader') --}}
 
     <main>
         @yield('content')
@@ -38,6 +39,7 @@
 
     @include('novosite.components.address')
     @include('novosite.components.footer')
+    
 </body>
 
 </html>

@@ -3,42 +3,102 @@
 @section('title', 'Notícias - UEAP')
 
 @section('content')
+    @php
+        $url_atual = urlencode(url()->current());
+    @endphp
 
-    <main class="bg-gray-50 py-10">
+    {{-- ================= HEADER ================= --}}
+    <header class="bg-gray-50 border-b border-gray-200">
+        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded uppercase">
+                            PESQUISA
+                        </span>
+                    </div>
+
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+                        Todas as Notícias
+                    </h1>
+
+                    <div class="flex gap-10 text-sm text-gray-600">
+
+                        {{-- Metadados --}}
+                        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-tag text-ueap-green"></i>
+                                <span class="font-medium">Seção:</span>
+                                <span class="text-gray-500">Notícias</span>
+                            </div>
+                        </div>
+
+                        {{-- Compartilhamento --}}
+                        <div class="flex items-center gap-1">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-share-nodes text-ueap-green"></i>
+                                <span class="text-gray-500">Compartilhar</span>
+                            </div>
+
+                            <div class="flex items-center">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center justify-center
+                      w-9 h-9 rounded-full
+                      text-gray-500
+                      hover:text-blue-600 hover:bg-gray-100
+                      transition"
+                                    aria-label="Compartilhar no Facebook">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+
+                                <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center justify-center
+                      w-9 h-9 rounded-full
+                      text-gray-500
+                      hover:text-green-600 hover:bg-gray-100
+                      transition"
+                                    aria-label="Compartilhar no WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+
+                                <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center justify-center
+                      w-9 h-9 rounded-full
+                      text-gray-500
+                      hover:text-blue-500 hover:bg-gray-100
+                      transition"
+                                    aria-label="Compartilhar no WhatsApp">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="bg-white py-10">
         <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- Breadcrumb --}}
-            <nav class="text-sm text-gray-500 mb-8">
-                <ol class="flex flex-wrap items-center gap-2">
-                    <li>
-                        <a href="{{ url('/') }}" class="hover:text-green-600">Início</a>
-                    </li>
-                    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
-                    <li class="font-bold uppercase text-green-600">
-                        Todas as Notícias
-                    </li>
-                </ol>
-            </nav>
-
-            <header class="mb-12">
-                <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">
-                    Central de Notícias
-                </h1>
-                <p class="text-lg text-gray-600 mt-2">Fique por dentro de tudo o que acontece na nossa universidade.</p>
-            </header>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
                 {{-- Listagem de Notícias --}}
                 <div class="lg:col-span-8 space-y-8">
 
                     @forelse ($posts as $item)
                         <article
-                            class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col md:flex-row group hover:shadow-md transition duration-300">
+                            class="bg-white rounded-2xl shadow overflow-hidden flex flex-col md:flex-row group hover:shadow-md transition duration-300">
                             {{-- Imagem da Notícia --}}
                             <div class="md:w-1/3 overflow-hidden">
                                 <a href="{{ route('novosite.post.show', $item->slug) }}">
-                                    <img src="{{ $item->getFirstMediaUrl() ?? 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
+                                    <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
                                         alt="{{ $item->title }}"
                                         class="w-full h-48 md:h-full object-cover aspect-square group-hover:scale-105 transition duration-500">
                                 </a>
@@ -94,7 +154,7 @@
                 <aside class="lg:col-span-4 space-y-8">
 
                     {{-- Busca --}}
-                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl shadow">
                         <h3 class="font-bold mb-4">Filtrar Notícias</h3>
                         <form action="{{ url()->current() }}" method="GET" class="relative">
                             <input type="text" name="search" placeholder="Digite sua busca..."

@@ -21,12 +21,13 @@ class PageController extends Controller
     {
 
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
+        $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
         if ($page) {
             $page->hits = $page->hits + 1;
             $page->save();
 
-            return view('novosite.pages.page-show', compact('page'));
+            return view('novosite.pages.page-show', compact('page', 'latestPosts'));
         } else {
             return redirect()->route('novosite.home');
         }
