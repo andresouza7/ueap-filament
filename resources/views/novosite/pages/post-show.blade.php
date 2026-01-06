@@ -14,7 +14,7 @@
         <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
-                <div>
+                <div class="w-full">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded uppercase">
                             {{ $post->category->name }}
@@ -25,127 +25,68 @@
                         {{ $post->title }}
                     </h1>
 
-                    <div class="flex gap-10 text-sm text-gray-600">
+                    {{-- Grid de Metadados e Share: Alinhamento preciso --}}
+                    <div class="flex flex-col gap-4 text-sm text-gray-600 md:flex-row md:items-center md:justify-between">
 
-                        {{-- Metadados --}}
-                        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-tag text-ueap-green"></i>
-                                <span class="font-medium">Seção:</span>
-                                <span class="text-gray-500">Notícias</span>
+                        <div class="flex flex-wrap items-center gap-6">
+                            {{-- Data --}}
+                            <div class="flex items-center gap-2 group">
+                                <i class="fa-regular fa-clock text-ueap-green"></i>
+                                <span class="text-gray-400">Atualizado:</span>
+                                <span
+                                    class="font-semibold text-gray-800">{{ $post->updated_at->format('d/m/Y H:i') }}</span>
+                            </div>
+
+                            {{-- Views --}}
+                            <div class="flex items-center gap-2 group">
+                                <i class="fa-solid fa-eye text-ueap-green"></i>
+                                <span class="text-gray-400">Leituras:</span>
+                                <span class="font-semibold text-gray-800">{{ $post->hits }}</span>
                             </div>
                         </div>
 
-                        {{-- Compartilhamento --}}
-                        <div class="flex items-center gap-1">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-share-nodes text-ueap-green"></i>
-                                <span class="text-gray-500">Compartilhar</span>
-                            </div>
+                        {{-- Compartilhamento: Botões Minimalistas --}}
+                        <div class="flex items-center gap-3 pt-4 md:pt-0">
+                            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Compartilhar</span>
 
-                            <div class="flex items-center">
+                            <div class="flex items-center gap-1">
                                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-blue-600 hover:bg-gray-100
-                      transition"
-                                    aria-label="Compartilhar no Facebook">
-                                    <i class="fa-brands fa-facebook-f"></i>
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-600 hover:shadow-sm transition-all"
+                                    aria-label="Facebook">
+                                    <i class="fa-brands fa-facebook-f text-xs"></i>
                                 </a>
 
                                 <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-green-600 hover:bg-gray-100
-                      transition"
-                                    aria-label="Compartilhar no WhatsApp">
-                                    <i class="fa-brands fa-whatsapp"></i>
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-green-600 hover:border-green-600 hover:shadow-sm transition-all"
+                                    aria-label="WhatsApp">
+                                    <i class="fa-brands fa-whatsapp text-xs"></i>
                                 </a>
 
-                                <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-blue-500 hover:bg-gray-100
-                      transition"
-                                    aria-label="Compartilhar no WhatsApp">
-                                    <i class="fa-brands fa-twitter"></i>
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-black hover:border-black hover:shadow-sm transition-all"
+                                    aria-label="Twitter">
+                                    <i class="fa-brands fa-x-twitter text-xs"></i>
                                 </a>
                             </div>
                         </div>
 
                     </div>
-
-
                 </div>
+
             </div>
+        </div>
     </header>
 
     <main class="bg-white py-10">
         <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- Breadcrumb --}}
-            {{-- <nav class="text-sm text-gray-500 mb-8">
-                <ol class="flex flex-wrap items-center gap-2">
-                    <li>
-                        <a href="{{ url('/') }}" class="hover:text-green-600">Início</a>
-                    </li>
-                    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
-                    <li>
-                        <a href="/" class="hover:text-green-600">Notícias</a>
-                    </li>
-                    <li><i class="fa-solid fa-chevron-right text-xs"></i></li>
-                    <li class="font-bold uppercase text-green-600">
-                        {{ $post->category->name ?? 'Institucional' }}
-                    </li>
-                </ol>
-            </nav> --}}
-
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
                 {{-- Artigo --}}
                 <article class="lg:col-span-8 rounded-2xl p-4 md:p-0">
-
-                    {{-- Cabeçalho --}}
-                    <header class="mb-10">
-                        {{-- <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-none mb-4">
-                            {{ $post->title }}
-                        </h1>
-
-                        @if ($post->description)
-                            <p class="text-xl text-gray-600 mb-8">
-                                {{ $post->description }}
-                            </p>
-                        @endif --}}
-
-
-                        {{-- Autor e data --}}
-                        <div class="flex flex-wrap items-center gap-6 border-b border-gray-100 py-4 text-sm">
-
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
-                                    {{ strtoupper(substr($post->author->name ?? 'UE', 0, 2)) }}
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-gray-900">
-                                        {{ $post->author->name ?? 'Assessoria de Comunicação' }}
-                                    </p>
-                                    <p class="text-gray-500">
-                                        {{ $post->created_at->format('d/m/Y H:i') }}
-                                    </p>
-                                </div>
-                            </div>
-
-                           
-                        </div>
-                    </header>
 
                     {{-- Conteúdo --}}
                     <div class="article-body prose max-w-none">
@@ -166,7 +107,7 @@
                                 @case('image')
                                 @case('gallery')
                                     @if ($mediaCount === 1)
-                                        <figure class="my-10 border-gray-100 border-b-1">
+                                        <figure class="mb-10 border-gray-100 border-b-1">
                                             <div class="w-full aspect-video overflow-hidden rounded-xl shadow-lg">
                                                 <img src="{{ $mediaItems->first()->getUrl() }}" alt="{{ $post->title }}"
                                                     class="w-full h-full object-cover">
@@ -217,6 +158,64 @@
 
                     </div>
 
+                    {{-- Autoria --}}
+                    <section class="mt-12 mb-10 border-t border-gray-100 pt-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-8">
+
+                            {{-- Autor e Info --}}
+                            <div class="flex items-center gap-4">
+                                {{-- Avatar Minimalista --}}
+                                <div class="shrink-0">
+                                    <div
+                                        class="w-12 h-12 rounded-xl bg-ueap-green text-white flex items-center justify-center font-bold shadow-sm">
+                                        {{ strtoupper(substr($post->author->name ?? 'UE', 0, 2)) }}
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <span
+                                        class="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 leading-none mb-1">
+                                        Publicado por
+                                    </span>
+                                    <p class="font-bold text-gray-900 text-base leading-tight">
+                                        {{ $post->author->name ?? 'Assessoria de Comunicação' }}
+                                    </p>
+                                    <div class="text-gray-500 text-xs mt-1.5 flex items-center gap-2 font-medium">
+                                        <i class="fa-regular fa-calendar text-[10px]"></i>
+                                        {{ $post->created_at->translatedFormat('d \d\e M, Y \à\s H:i') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Compartilhamento (Mesmo estilo do Header) --}}
+                            <div class="flex items-center gap-4 border-t sm:border-t-0 pt-6 sm:pt-0">
+                                <span
+                                    class="text-[10px] font-black uppercase tracking-widest text-gray-400">Compartilhar</span>
+
+                                <div class="flex items-center gap-1.5">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:text-blue-600 hover:border-blue-600 hover:shadow-sm transition-all">
+                                        <i class="fa-brands fa-facebook-f text-sm"></i>
+                                    </a>
+
+                                    <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:text-green-600 hover:border-green-600 hover:shadow-sm transition-all">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                                    </a>
+
+                                    <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:text-black hover:border-black hover:shadow-sm transition-all">
+                                        <i class="fa-brands fa-x-twitter text-sm"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
                     {{-- Tags --}}
                     @if ($post->tags?->count())
                         <div class="mt-12 pt-8 border-t">
@@ -238,90 +237,133 @@
                 </article>
 
                 {{-- Sidebar --}}
-                <aside class="lg:col-span-4 space-y-8">
+                <aside class="lg:col-span-4 space-y-12">
 
-                    {{-- Busca --}}
-                    <div class="bg-white p-6 rounded-xl shadow">
-                        <h3 class="font-bold mb-4">Buscar Notícias</h3>
-                        <div class="relative">
-                            <input type="text" placeholder="Digite sua busca..."
-                                class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-ueap-green focus:ring-1 focus:ring-ueap-green">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+                    {{-- Busca - Minimalista --}}
+                    <section>
+                        <div class="group relative">
+                            <input type="text" placeholder="Buscar no portal..."
+                                class="w-full bg-transparent border-b-2 border-gray-100 py-2 pl-0 pr-8
+                       text-gray-800 placeholder:text-gray-400 focus:outline-none 
+                       focus:border-ueap-green transition-all duration-300 text-lg">
+                            <button
+                                class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-ueap-green">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
                         </div>
-                    </div>
+                    </section>
 
-                    {{-- Últimas --}}
-                    <div class="bg-white p-6 rounded-xl shadow">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-bold border-l-4 border-green-600 pl-3">
-                                Últimas Notícias
-                            </h3>
-                            <a href="{{ route('novosite.post.list') }}" class="text-xs font-semibold text-green-600">
-                                Ver todas
-                            </a>
-                        </div>
-
-                        <div class="space-y-6">
-                            @foreach ($latestPosts as $item)
-                                <a href="{{ route('novosite.post.show', $post->slug) }}" class="flex gap-4 group">
-                                    <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
-                                        class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition">
-                                    <div>
-                                        <span class="text-xs font-bold uppercase text-green-600 block">
-                                            {{ $item->category->name }}
-                                        </span>
-                                        <h4 class="text-sm font-semibold text-gray-900 group-hover:text-green-600">
-                                            {{ $item->title }}
-                                        </h4>
-                                    </div>
+                    {{-- Últimas Notícias - Estilo Listagem Premium --}}
+                    <section>
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500">
+                                    Mais Visualizadas
+                                </h3>
+                                <div class="h-px flex-1 bg-gray-100 mx-4"></div>
+                                <a href="{{ route('novosite.post.list') }}"
+                                    class="text-xs font-bold text-ueap-green hover:opacity-70">
+                                    Ver tudo
                                 </a>
-                            @endforeach
-                        </div>
-                    </div>
+                            </div>
 
-                    <!-- Newsletter Widget -->
-                    <div class="bg-ueap-dark rounded-xl p-6 text-white relative overflow-hidden">
-                        <div class="relative z-10">
-                            <h3 class="font-bold text-xl mb-2">Fique por dentro</h3>
-                            <p class="text-gray-300 text-sm mb-4">Receba as principais notícias da UEAP diretamente no
-                                seu e-mail.</p>
-                            <form>
-                                <input type="email" placeholder="Seu e-mail"
-                                    class="w-full px-4 py-2 bg-white rounded-lg text-gray-900 mb-2 focus:outline-none focus:ring-2 focus:ring-ueap-green">
-                                <button type="submit"
-                                    class="w-full bg-ueap-green hover:bg-green-600 hover:cursor-pointer font-bold py-2 rounded-lg transition text-sm">Inscrever-se</button>
-                            </form>
+                            <div class="space-y-6">
+                                @foreach ($latestPosts as $item)
+                                    <a href="{{ route('novosite.post.show', $item->slug) }}"
+                                        class="group flex items-start gap-4">
+                                        {{-- Foto à Esquerda --}}
+                                        <div class="relative shrink-0">
+                                            <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/200' }}"
+                                                class="w-24 h-20 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-all duration-300">
+                                        </div>
+
+                                        {{-- Texto à Direita --}}
+                                        <div class="flex flex-col min-w-0 py-0.5">
+                                            <span
+                                                class="text-[10px] font-bold text-ueap-green uppercase mb-1 tracking-tight">
+                                                {{ $item->category->name }}
+                                            </span>
+                                            <h4
+                                                class="text-sm font-semibold text-gray-900 leading-[1.3] group-hover:text-ueap-green transition-colors line-clamp-2">
+                                                {{ $item->title }}
+                                            </h4>
+                                            <span class="text-[11px] text-gray-400 mt-1">
+                                                <i
+                                                    class="fa-regular fa-clock mr-1"></i>{{ $item->created_at->diffForHumans() }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
-                        <!-- Decorative circle -->
-                        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white opacity-5 rounded-full"></div>
-                    </div>
+                    </section>
+
+                    {{-- Newsletter - Minimalist Card --}}
+                    <section class="bg-[#f8f9fa] p-8 rounded-sm border-l-4 border-ueap-green">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Newsletter</h3>
+                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                            Receba uma curadoria semanal das atividades acadêmicas.
+                        </p>
+
+                        <form class="flex flex-col gap-3">
+                            <input type="email" placeholder="E-mail acadêmico ou pessoal"
+                                class="w-full bg-white border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 transition">
+
+                            <button type="submit"
+                                class="w-full bg-gray-900 text-white py-3 text-xs font-bold uppercase tracking-widest hover:bg-ueap-green transition-colors cursor-pointer">
+                                Assinar agora
+                            </button>
+                        </form>
+                    </section>
 
                 </aside>
-
             </div>
 
             <!-- Read Also (Bottom Grid) -->
-            <section class="mt-16 pt-12 border-t border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-900 mb-8">Leia também</h2>
+            <section class="mt-8 pt-12">
+                <div class="flex items-center justify-between mb-10">
+                    <h2 class="text-xl font-black uppercase tracking-tight text-gray-900 flex items-center gap-3">
+                        <span class="w-8 h-1 bg-ueap-green"></span>
+                        Leia também
+                    </h2>
+                </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
+                {{-- Grid: Flex-col no mobile, 4 colunas no desktop --}}
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-6">
                     @foreach ($relatedPosts as $post)
-                        <a href="{{ route('novosite.post.show', $post->slug) }}" class="group block">
-                            <div class="aspect-video rounded-xl overflow-hidden mb-4">
-                                <img src="{{ 'https://picsum.photos/seed/' . $post->id . '/600/400' }}"
-                                    alt="{{ $post->title }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            </div>
+                        <article>
+                            <a href="{{ route('novosite.post.show', $post->slug) }}"
+                                class="group flex flex-row lg:flex-col gap-4 lg:gap-4 items-start">
 
-                            <h3
-                                class="font-bold text-lg text-gray-900 group-hover:text-ueap-green transition leading-tight mb-2">
-                                {{ $post->title }}
-                            </h3>
+                                {{-- Container da Imagem: Tamanho fixo no mobile, proporção 4:3 no desktop --}}
+                                <div
+                                    class="shrink-0 w-28 h-20 sm:w-36 sm:h-28 lg:w-full lg:h-auto lg:aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:shadow-ueap-green/10">
+                                    <img src="{{ 'https://picsum.photos/seed/' . $post->id . '/600/450' }}"
+                                        alt="{{ $post->title }}"
+                                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                </div>
 
-                            <p class="text-sm text-gray-500">
-                                {{ $post->created_at->diffForHumans() }}
-                            </p>
-                        </a>
+                                {{-- Conteúdo --}}
+                                <div class="flex flex-col min-w-0 py-1">
+                                    <div class="flex items-center gap-2 mb-1 lg:mb-2">
+                                        <span class="text-[10px] font-bold uppercase tracking-[0.1em] text-ueap-green">
+                                            {{ $post->category->name ?? 'Notícia' }}
+                                        </span>
+                                    </div>
+
+                                    <h3
+                                        class="font-bold text-sm sm:text-base text-gray-900 group-hover:text-ueap-green transition-colors leading-snug line-clamp-2 lg:line-clamp-3">
+                                        {{ $post->title }}
+                                    </h3>
+
+                                    <div
+                                        class="mt-2 lg:mt-3 flex items-center text-gray-400 text-[10px] sm:text-[11px] font-medium">
+                                        <i class="fa-regular fa-calendar-days mr-1.5"></i>
+                                        {{ $post->created_at->translatedFormat('d \d\e M, Y') }}
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
                     @endforeach
                 </div>
             </section>

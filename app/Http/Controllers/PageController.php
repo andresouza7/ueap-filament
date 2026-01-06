@@ -56,7 +56,7 @@ class PageController extends Controller
             ->whereHas('category', function ($query) use ($post) {
                 $query->where('name', $post->category->name);
             })
-            ->take(3)->get();
+            ->take(4)->get();
 
         if ($post) {
             $post->hits = $post->hits + 1;

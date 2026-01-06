@@ -14,7 +14,7 @@
             <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
-                    <div>
+                    <div class="w-full">
                         <div class="flex items-center gap-2 mb-4">
                             <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded uppercase">
                                 {{ $page->category->name }}
@@ -25,56 +25,52 @@
                             {{ $page->title }}
                         </h1>
 
-                        <div class="flex gap-10 text-sm text-gray-600">
+                        {{-- Grid de Metadados e Share: Alinhamento preciso --}}
+                        <div
+                            class="flex flex-col gap-4 text-sm text-gray-600 md:flex-row md:items-center md:justify-between">
 
-                            {{-- Metadados --}}
-                            <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-tag text-ueap-green"></i>
-                                    <span class="font-medium">Seção:</span>
-                                    <span class="text-gray-500">Páginas</span>
+                            <div class="flex flex-wrap items-center gap-6">
+                                {{-- Data --}}
+                                <div class="flex items-center gap-2 group">
+                                    <i class="fa-regular fa-clock text-ueap-green"></i>
+                                    <span class="text-gray-400">Atualizado:</span>
+                                    <span
+                                        class="font-semibold text-gray-800">{{ $page->updated_at->format('d/m/Y H:i') }}</span>
+                                </div>
+
+                                {{-- Views --}}
+                                <div class="flex items-center gap-2 group">
+                                    <i class="fa-solid fa-eye text-ueap-green"></i>
+                                    <span class="text-gray-400">Leituras:</span>
+                                    <span class="font-semibold text-gray-800">{{ $page->hits }}</span>
                                 </div>
                             </div>
 
-                            {{-- Compartilhamento --}}
-                            <div class="flex items-center gap-1">
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-share-nodes text-ueap-green"></i>
-                                    <span class="text-gray-500">Compartilhar</span>
-                                </div>
+                            {{-- Compartilhamento: Botões Minimalistas --}}
+                            <div class="flex items-center gap-3 pt-4 md:pt-0">
+                                <span
+                                    class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Compartilhar</span>
 
-                                <div class="flex items-center">
+                                <div class="flex items-center gap-1">
                                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}"
                                         target="_blank" rel="noopener noreferrer"
-                                        class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-blue-600 hover:bg-gray-100
-                      transition"
-                                        aria-label="Compartilhar no Facebook">
-                                        <i class="fa-brands fa-facebook-f"></i>
+                                        class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-600 hover:shadow-sm transition-all"
+                                        aria-label="Facebook">
+                                        <i class="fa-brands fa-facebook-f text-xs"></i>
                                     </a>
 
                                     <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
                                         rel="noopener noreferrer"
-                                        class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-green-600 hover:bg-gray-100
-                      transition"
-                                        aria-label="Compartilhar no WhatsApp">
-                                        <i class="fa-brands fa-whatsapp"></i>
+                                        class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-green-600 hover:border-green-600 hover:shadow-sm transition-all"
+                                        aria-label="WhatsApp">
+                                        <i class="fa-brands fa-whatsapp text-xs"></i>
                                     </a>
 
-                                    <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                    <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
                                         rel="noopener noreferrer"
-                                        class="inline-flex items-center justify-center
-                      w-9 h-9 rounded-full
-                      text-gray-500
-                      hover:text-blue-500 hover:bg-gray-100
-                      transition"
-                                        aria-label="Compartilhar no WhatsApp">
-                                        <i class="fa-brands fa-twitter"></i>
+                                        class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-black hover:border-black hover:shadow-sm transition-all"
+                                        aria-label="Twitter">
+                                        <i class="fa-brands fa-x-twitter text-xs"></i>
                                     </a>
                                 </div>
                             </div>
