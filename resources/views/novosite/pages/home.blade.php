@@ -10,6 +10,6 @@
         @include('novosite.components.events')
         {{-- @include('novosite.components.courses') --}}
         {{-- @include('novosite.components.programs') --}}
-        @include('novosite.components.videos')
+        {{-- @include('novosite.components.videos') --}}
     </div>
 @endsection

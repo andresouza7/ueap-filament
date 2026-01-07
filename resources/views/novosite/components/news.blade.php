@@ -4,34 +4,22 @@
         {{-- Cabeçalho da Seção --}}
         <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-12 gap-4">
             <div>
-                <span class="text-emerald-600 font-bold text-sm uppercase tracking-[0.2em] mb-2 block">Fique por dentro</span>
+                <span class="text-emerald-600 font-bold text-sm uppercase tracking-[0.2em] mb-2 block">Fique por
+                    dentro</span>
                 <h2 class="text-4xl font-black text-slate-900 tracking-tight">Últimas Notícias</h2>
             </div>
-            <a href="{{ route('novosite.post.list') }}" 
-               class="group flex items-center text-slate-500 font-bold hover:text-emerald-600 transition-colors duration-300">
+            <a href="{{ route('novosite.post.list') }}"
+                class="group flex items-center text-slate-500 font-bold hover:text-emerald-600 transition-colors duration-300">
                 Ver todo o acervo
-                <span class="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-all">
+                <span
+                    class="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-all">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
                 </span>
             </a>
         </div>
-
-        {{-- Cabeçalho da Seção --}}
-        {{-- <div class="flex justify-between items-end mb-8 border-b border-gray-100 pb-4">
-            <div>
-                <h2 class="text-2xl font-black text-slate-900 tracking-tight">Notícias</h2>
-                <div class="h-1 w-12 bg-[#017D49] mt-1.5 rounded-full"></div>
-            </div>
-            <a href="{{ route('novosite.post.list') }}" 
-               class="group flex items-center text-xs font-bold text-slate-500 hover:text-[#017D49] transition-all uppercase tracking-widest">
-                Todas as notícias
-                <svg class="w-3.5 h-3.5 ml-1.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </a>
-        </div> --}}
 
         {{-- Grid de Notícias --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
@@ -40,12 +28,13 @@
                     {{-- Imagem Condensada --}}
                     <div class="relative aspect-[16/9] overflow-hidden rounded-xl mb-4 bg-gray-100">
                         <img src="{{ $post->image_url ?: 'https://picsum.photos/600/400?random=' . $post->id }}"
-                             alt="{{ $post->title }}"
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        
+                            alt="{{ $post->title }}"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+
                         {{-- Categoria Discreta --}}
                         <div class="absolute top-2.5 left-2.5">
-                            <span class="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded uppercase tracking-tighter">
+                            <span
+                                class="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded uppercase tracking-tighter">
                                 {{ $post->category->description ?? 'Geral' }}
                             </span>
                         </div>
@@ -54,16 +43,21 @@
                     {{-- Conteúdo Condensado --}}
                     <div class="flex flex-col">
                         {{-- Data e Meta --}}
-                        <div class="flex items-center text-slate-400 text-[10px] font-bold uppercase tracking-tight mb-1.5">
-                            <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        <div
+                            class="flex items-center text-slate-400 text-[10px] font-bold uppercase tracking-tight mb-1.5">
+                            <svg class="w-3 h-3 mr-1 opacity-60" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
                             </svg>
                             {{ $post->created_at->translatedFormat('d M Y') }}
                         </div>
 
                         {{-- Título --}}
                         <a href="{{ route('novosite.post.show', $post->slug) }}" class="block mb-2">
-                            <h3 class="text-base font-bold text-slate-800 leading-snug group-hover:text-[#017D49] transition-colors line-clamp-2">
+                            <h3
+                                class="text-base font-bold text-slate-800 leading-snug group-hover:text-[#017D49] transition-colors line-clamp-2">
                                 {{ $post->title }}
                             </h3>
                         </a>
@@ -72,8 +66,6 @@
                         <p class="text-slate-500 text-xs leading-normal line-clamp-2 mb-3">
                             {{ Str::limit(clean_text(html_entity_decode(strip_tags($post->text))), 100) }}
                         </p>
-
-                        
                     </div>
                 </article>
             @endforeach

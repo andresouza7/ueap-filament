@@ -1,235 +1,103 @@
-<!-- Events Section -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-20 bg-gradient-to-br from-[#013a24] via-[#015c38] to-[#013d29] relative overflow-hidden">
+    {{-- Textura sutil --}}
+    <div class="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay"
+        style="background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');">
+    </div>
 
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <h2 class="text-3xl font-bold text-gray-900">Agenda de Eventos</h2>
-                <div class="h-1 w-20 bg-ueap-green mt-2 rounded-full"></div>
+    <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {{-- Header --}}
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-white/10 pb-8">
+            <div class="max-w-xl">
+                <div class="flex items-center mb-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-emerald-300">
+                        Agenda Institucional
+                    </span>
+                </div>
+                <h2 class="text-3xl font-black text-white tracking-tight uppercase leading-none">
+                    Eventos <span class="text-emerald-300/70">&</span> Programação
+                </h2>
             </div>
-            <a href="#" class="text-ueap-green font-semibold hover:text-green-800 transition flex items-center">
+
+            <a href="#"
+                class="group mt-6 md:mt-0 inline-flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-emerald-200 hover:text-white transition">
                 Ver calendário completo
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                <svg class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Event Card 1 -->
-            <article
-                class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                        alt="Semana de Tecnologia"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div
-                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center shadow-sm min-w-[60px]">
-                        <span class="block text-xl font-bold text-ueap-green leading-none">15</span>
-                        <span class="block text-xs font-semibold text-gray-600 uppercase mt-1">Nov</span>
-                    </div>
-                    <div
-                        class="absolute top-4 right-4 bg-ueap-green text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">
-                        Presencial
-                    </div>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h3
-                        class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-ueap-green transition">
-                        IV Semana de Tecnologia e Inovação
-                    </h3>
+        {{-- Grid --}}
+        {{-- Grid de Banners de Eventos - Layout Consolidado --}}
+        {{-- Grid de Banners de Eventos --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            @foreach ($events as $event)
+                <article
+                    class="group relative h-[450px] w-full overflow-hidden rounded-2xl bg-[#012a1a] border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 flex flex-col">
 
-                    <div class="space-y-2 mb-4 flex-1">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            08:00 - 18:00
+                    {{-- Camada de Design de Fundo --}}
+                    <div
+                        class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none">
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500 rounded-full blur-[100px]">
                         </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            Auditório Central
+                        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-emerald-900 rounded-full blur-[80px]">
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                        <a href="#" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Detalhes</a>
-                        <a href="#"
-                            class="px-4 py-2 bg-ueap-green text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition shadow-sm hover:shadow-md">
-                            Inscreva-se
-                        </a>
-                    </div>
-                </div>
-            </article>
+                    {{-- Conteúdo do Banner --}}
+                    <div class="relative h-full p-8 flex flex-col justify-between z-10">
 
-            <!-- Event Card 2 -->
-            <article
-                class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                        alt="Workshop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div
-                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center shadow-sm min-w-[60px]">
-                        <span class="block text-xl font-bold text-ueap-green leading-none">22</span>
-                        <span class="block text-xs font-semibold text-gray-600 uppercase mt-1">Nov</span>
-                    </div>
-                    <div
-                        class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">
-                        Híbrido
-                    </div>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h3
-                        class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-ueap-green transition">
-                        II Seminário de Graduação da instituição
-                    </h3>
-
-                    <div class="space-y-2 mb-4 flex-1">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            14:00 - 17:00
+                        {{-- Topo: Categoria --}}
+                        <div class="flex justify-between items-start">
+                            <span
+                                class="text-[10px] font-black uppercase tracking-[0.3em] px-3 py-1 bg-white text-emerald-950 rounded-sm shrink-0">
+                                {{ $event->category->description ?? 'Evento' }}
+                            </span>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 group-hover:animate-ping shrink-0"></div>
                         </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            Lab. de Informática 3
+
+                        {{-- Meio: Título e Descrição (Container com overflow controlado) --}}
+                        <div class="flex-1 flex flex-col justify-center min-h-0 py-4">
+                            <h3
+                                class="text-2xl font-bold text-white leading-[1.1] uppercase tracking-tight group-hover:text-emerald-300 transition-colors duration-300 line-clamp-6">
+                                {{ $event->title }}
+                            </h3>
+
+                            {{-- Divisor --}}
+                            <div
+                                class="w-12 h-1 bg-emerald-500 my-4 shrink-0 transition-all duration-500 group-hover:w-full">
+                            </div>
+
+                            {{-- Descrição --}}
+                            <p class="text-sm text-emerald-50/70 leading-relaxed line-clamp-3 font-medium italic">
+                                {{ Str::limit(clean_text(html_entity_decode(strip_tags($event->text))), 110) }}
+                            </p>
+                        </div>
+
+                        {{-- Base: Botão Estilo Chamada --}}
+                        <div class="pt-2">
+                            <a href="{{ route('novosite.post.show', $event->slug) }}"
+                                class="flex items-center justify-between w-full py-4 px-6 bg-white/[0.05] border border-white/10 text-white text-[11px] font-black uppercase tracking-widest group-hover:bg-white group-hover:text-emerald-950 transition-all duration-500 rounded-xl whitespace-nowrap">
+                                <span>Acessar Evento</span>
+                                <svg class="w-4 h-4 shrink-0 ml-2" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                        <a href="#" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Detalhes</a>
-                        <a href="#"
-                            class="px-4 py-2 bg-ueap-green text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition shadow-sm hover:shadow-md">
-                            Inscreva-se
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 3 -->
-            <article
-                class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                        alt="Palestra" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    {{-- Overlay de Interação --}}
                     <div
-                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center shadow-sm min-w-[60px]">
-                        <span class="block text-xl font-bold text-ueap-green leading-none">05</span>
-                        <span class="block text-xs font-semibold text-gray-600 uppercase mt-1">Dez</span>
+                        class="absolute inset-0 border-[6px] border-emerald-500/0 group-hover:border-emerald-500/10 transition-all duration-500 pointer-events-none rounded-2xl">
                     </div>
-                    <div
-                        class="absolute top-4 right-4 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">
-                        Online
-                    </div>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h3
-                        class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-ueap-green transition">
-                        Webinar: O Futuro da Educação Superior
-                    </h3>
-
-                    <div class="space-y-2 mb-4 flex-1">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            19:00 - 21:00
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Google Meet
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                        <a href="#" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Detalhes</a>
-                        <a href="#"
-                            class="px-4 py-2 bg-ueap-green text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition shadow-sm hover:shadow-md">
-                            Inscreva-se
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 4 -->
-            <article
-                class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                        alt="Cultural" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div
-                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-center shadow-sm min-w-[60px]">
-                        <span class="block text-xl font-bold text-ueap-green leading-none">12</span>
-                        <span class="block text-xs font-semibold text-gray-600 uppercase mt-1">Dez</span>
-                    </div>
-                    <div
-                        class="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">
-                        Cultural
-                    </div>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h3
-                        class="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-ueap-green transition">
-                        Mostra Cultural de Encerramento do Ano
-                    </h3>
-
-                    <div class="space-y-2 mb-4 flex-1">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            16:00 - 22:00
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="w-4 h-4 mr-2 text-ueap-green" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            Pátio Central
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                        <a href="#" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Detalhes</a>
-                        <a href="#"
-                            class="px-4 py-2 bg-ueap-green text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition shadow-sm hover:shadow-md">
-                            Inscreva-se
-                        </a>
-                    </div>
-                </div>
-            </article>
+                </article>
+            @endforeach
         </div>
     </div>
 </section>
