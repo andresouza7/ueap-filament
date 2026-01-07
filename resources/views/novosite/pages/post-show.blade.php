@@ -10,72 +10,82 @@
     @endphp
 
     {{-- ================= HEADER ================= --}}
-    <header class="bg-gray-50 border-b border-gray-200">
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <header class="bg-white border-b border-gray-100">
+        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="max-w-4xl"> {{-- Limitador para melhor leitura do título --}}
 
-                <div class="w-full">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded uppercase">
-                            {{ $post->category->name }}
-                        </span>
-                    </div>
-
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
-                        {{ $post->title }}
-                    </h1>
-
-                    {{-- Grid de Metadados e Share: Alinhamento preciso --}}
-                    <div class="flex flex-col gap-4 text-sm text-gray-600 md:flex-row md:items-center md:justify-between">
-
-                        <div class="flex flex-wrap items-center gap-6">
-                            {{-- Data --}}
-                            <div class="flex items-center gap-2 group">
-                                <i class="fa-regular fa-clock text-ueap-green"></i>
-                                <span class="text-gray-400">Atualizado:</span>
-                                <span
-                                    class="font-semibold text-gray-800">{{ $post->updated_at->format('d/m/Y H:i') }}</span>
-                            </div>
-
-                            {{-- Views --}}
-                            <div class="flex items-center gap-2 group">
-                                <i class="fa-solid fa-eye text-ueap-green"></i>
-                                <span class="text-gray-400">Leituras:</span>
-                                <span class="font-semibold text-gray-800">{{ $post->hits }}</span>
-                            </div>
-                        </div>
-
-                        {{-- Compartilhamento: Botões Minimalistas --}}
-                        <div class="flex items-center gap-3 pt-4 md:pt-0">
-                            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Compartilhar</span>
-
-                            <div class="flex items-center gap-1">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-600 hover:shadow-sm transition-all"
-                                    aria-label="Facebook">
-                                    <i class="fa-brands fa-facebook-f text-xs"></i>
-                                </a>
-
-                                <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-green-600 hover:border-green-600 hover:shadow-sm transition-all"
-                                    aria-label="WhatsApp">
-                                    <i class="fa-brands fa-whatsapp text-xs"></i>
-                                </a>
-
-                                <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white border border-gray-200 text-gray-400 hover:text-black hover:border-black hover:shadow-sm transition-all"
-                                    aria-label="Twitter">
-                                    <i class="fa-brands fa-x-twitter text-xs"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
+                {{-- Breadcrumb / Categoria --}}
+                <div class="flex items-center gap-3 mb-6">
+                    <a href="#"
+                        class="inline-flex items-center bg-[#017D49]/5 text-[#017D49] text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest hover:bg-[#017D49] hover:text-white transition-all duration-300">
+                        {{ $post->category->name }}
+                    </a>
+                    <span class="h-px w-8 bg-gray-200"></span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Notícia</span>
                 </div>
 
+                {{-- Título Principal --}}
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-900 leading-[1.15] md:leading-[1.1] tracking-tight mb-1">
+                    {{ $post->title }}
+                </h1>
+
+                {{-- Info Bar: Metadados e Share --}}
+                <div class="flex flex-col gap-6 pt-6 md:flex-row md:items-center md:justify-between">
+
+                    {{-- Autor e Info --}}
+                    <div class="flex flex-wrap items-center gap-y-4 gap-x-8">
+                        {{-- Data de Publicação --}}
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#017D49]">
+                                <i class="fa-regular fa-calendar-check text-sm"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[10px] leading-none text-gray-400 uppercase font-bold tracking-tight">Publicado
+                                    em</span>
+                                <span class="text-sm font-semibold text-gray-700">
+                                    {{ $post->created_at->translatedFormat('d M, Y') }}
+                                </span>
+                            </div>
+                        </div>
+
+                        {{-- Leituras --}}
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400">
+                                <i class="fa-solid fa-chart-line text-sm"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[10px] leading-none text-gray-400 uppercase font-bold tracking-tight">Engajamento</span>
+                                <span class="text-sm font-semibold text-gray-700">{{ $post->hits }} leituras</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Social Share - Estilo Floating Pill --}}
+                    <div class="flex items-center gap-4 bg-gray-50/50 p-1.5 pr-4 rounded-full border border-gray-100 w-fit">
+                        <div class="flex items-center -space-x-1">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}" target="_blank"
+                                class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-gray-500 hover:text-blue-600 hover:shadow-md transition-all border border-gray-100"
+                                aria-label="Facebook">
+                                <i class="fa-brands fa-facebook-f text-xs"></i>
+                            </a>
+                            <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-gray-500 hover:text-green-600 hover:shadow-md transition-all border border-gray-100"
+                                aria-label="WhatsApp">
+                                <i class="fa-brands fa-whatsapp text-xs"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
+                                class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-gray-500 hover:text-black hover:shadow-md transition-all border border-gray-100"
+                                aria-label="Twitter">
+                                <i class="fa-brands fa-x-twitter text-xs"></i>
+                            </a>
+                        </div>
+                        <span
+                            class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">Compartilhar</span>
+                    </div>
+
+                </div>
             </div>
         </div>
     </header>
@@ -86,7 +96,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
                 {{-- Artigo --}}
-                <article class="lg:col-span-8 rounded-2xl p-4 md:p-0">
+                <article class="lg:col-span-8 rounded-2xl md:p-0">
 
                     {{-- Conteúdo --}}
                     <div class="article-body prose max-w-none">
@@ -188,7 +198,7 @@
                             </div>
 
                             {{-- Compartilhamento (Mesmo estilo do Header) --}}
-                            <div class="flex items-center gap-4 border-t sm:border-t-0 pt-6 sm:pt-0">
+                            <div class="flex items-center gap-4 sm:border-t-0 pt-6 sm:pt-0">
                                 <span
                                     class="text-[10px] font-black uppercase tracking-widest text-gray-400">Compartilhar</span>
 

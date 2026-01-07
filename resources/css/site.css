@@ -87,11 +87,14 @@ table td {
   background: #94a3b8;
 }
 
-/* pagina post-show */
-.article-body p {
-  
+.article-body a {
+  text-decoration: underline !important;
+}
+.article-body a:hover {
+  color: #054e3d;
 }
 
+/* pagina post-show */
 .article-body * {
   @apply mb-3 leading-relaxed text-slate-700 text-sm;
   font-family: 'Inter', serif !important;
