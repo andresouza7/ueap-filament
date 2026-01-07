@@ -1,100 +1,109 @@
-<section class="py-20 bg-gradient-to-br from-[#013a24] via-[#015c38] to-[#013d29] relative overflow-hidden">
-    {{-- Textura sutil --}}
-    <div class="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay"
-        style="background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');">
-    </div>
+<section class="pt-20 pb-24 bg-gradient-to-br from-[#013321] via-[#014d2f] to-[#013a24] relative overflow-hidden">
+    {{-- Textura e Luzes --}}
+    <div class="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay"
+        style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
 
     <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        {{-- Header --}}
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-white/10 pb-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between pb-10">
             <div class="max-w-xl">
-                <div class="flex items-center mb-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
-                    <span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-emerald-300">
-                        Agenda Institucional
+                <div class="flex items-center mb-3">
+                    <span class="flex h-2 w-2 relative mr-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                     </span>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-300/80">Agenda
+                        Institucional</span>
                 </div>
-                <h2 class="text-3xl font-black text-white tracking-tight uppercase leading-none">
-                    Eventos <span class="text-emerald-300/70">&</span> Programação
+                <h2 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9]">
+                    Eventos <span class="text-emerald-400/40 font-light">&</span><br>
+                    <span class="text-emerald-400">Programação</span>
                 </h2>
             </div>
-
             <a href="#"
-                class="group mt-6 md:mt-0 inline-flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-emerald-200 hover:text-white transition">
-                Ver calendário completo
-                <svg class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                class="group mt-8 md:mt-0 inline-flex items-center px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-emerald-500 transition-all duration-300 shadow-xl">
+                Ver calendário completo <i class="fa-solid fa-calendar-days ml-2 opacity-60"></i>
             </a>
         </div>
+    </div>
 
-        {{-- Grid --}}
-        {{-- Grid de Banners de Eventos - Layout Consolidado --}}
-        {{-- Grid de Banners de Eventos --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {{-- SHAPE DIVIDER: Fill alterado para Gray-50 (#f9fafb) --}}
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg class="relative block w-[calc(100%+1.3px)] h-[60px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path
+                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.1,24.2,105.86,43.4,170.1,51.81,228.62,59.48,280.05,61.76,321.39,56.44Z"
+                fill="#f9fafb"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="bg-gray-50 pt-20 pb-32 relative z-20">
+    <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-l border-slate-200">
             @foreach ($events as $event)
                 <article
-                    class="group relative h-[450px] w-full overflow-hidden rounded-2xl bg-[#012a1a] border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 flex flex-col">
+                    class="group relative bg-white flex flex-col h-[520px] transition-all duration-500 
+                                border-r border-y border-slate-200
+                                hover:z-30 hover:shadow-[0_0_50px_rgba(0,0,0,0.12)] overflow-hidden">
 
-                    {{-- Camada de Design de Fundo --}}
-                    <div
-                        class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none">
-                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500 rounded-full blur-[100px]">
-                        </div>
-                        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-emerald-900 rounded-full blur-[80px]">
-                        </div>
+                    {{-- Acabamento de Topo (Accent) --}}
+                    <div class="h-1.5 w-full bg-slate-900 group-hover:bg-emerald-500 transition-colors duration-500">
                     </div>
 
-                    {{-- Conteúdo do Banner --}}
-                    <div class="relative h-full p-8 flex flex-col justify-between z-10">
+                    <div class="p-8 flex flex-col h-full">
 
-                        {{-- Topo: Categoria --}}
-                        <div class="flex justify-between items-start">
-                            <span
-                                class="text-[10px] font-black uppercase tracking-[0.3em] px-3 py-1 bg-white text-emerald-950 rounded-sm shrink-0">
-                                {{ $event->category->description ?? 'Evento' }}
+                        {{-- Badge e Data/Índice --}}
+                        <div class="flex justify-between items-baseline mb-10">
+                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600">
+                                {{ $event->category->description ?? 'Agenda' }}
                             </span>
-                            <div class="w-2 h-2 rounded-full bg-emerald-500 group-hover:animate-ping shrink-0"></div>
+                            <span class="text-xs font-mono text-slate-300 group-hover:text-slate-900 transition-colors">
+                                // 0{{ $loop->iteration }}
+                            </span>
                         </div>
 
-                        {{-- Meio: Título e Descrição (Container com overflow controlado) --}}
-                        <div class="flex-1 flex flex-col justify-center min-h-0 py-4">
-                            <h3
-                                class="text-2xl font-bold text-white leading-[1.1] uppercase tracking-tight group-hover:text-emerald-300 transition-colors duration-300 line-clamp-6">
-                                {{ $event->title }}
-                            </h3>
+                        {{-- Título como Link Principal --}}
+                        <div class="flex-1">
+                            <a href="{{ route('novosite.post.show', $event->slug) }}" class="block group/title">
+                                <h3
+                                    class="text-xl md:text-2xl font-black text-slate-900 leading-[1.3] uppercase tracking-normal line-clamp-6">
+                                    <span
+                                        class="bg-[left_bottom_2px] bg-gradient-to-r from-emerald-500 to-emerald-500 bg-[length:0%_2px] bg-no-repeat group-hover/title:bg-[length:100%_2px] transition-[background-size] duration-500 pb-1">
+                                        {{ $event->title }}
+                                    </span>
+                                </h3>
+                            </a>
 
-                            {{-- Divisor --}}
-                            <div
-                                class="w-12 h-1 bg-emerald-500 my-4 shrink-0 transition-all duration-500 group-hover:w-full">
+                            {{-- Elemento Decorativo Estilo Banner --}}
+                            <div class="mt-8 mb-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                                <div class="h-px w-full bg-slate-200 relative">
+                                    <div class="absolute -top-1 left-0 h-2 w-2 bg-emerald-500 rounded-full"></div>
+                                </div>
                             </div>
 
                             {{-- Descrição --}}
-                            <p class="text-sm text-emerald-50/70 leading-relaxed line-clamp-3 font-medium italic">
-                                {{ Str::limit(clean_text(html_entity_decode(strip_tags($event->text))), 110) }}
+                            <p class="text-slate-500 text-sm leading-relaxed line-clamp-4 font-medium">
+                                {{ Str::limit(clean_text(html_entity_decode(strip_tags($event->text))), 160) }}
                             </p>
                         </div>
 
-                        {{-- Base: Botão Estilo Chamada --}}
-                        <div class="pt-2">
-                            <a href="{{ route('novosite.post.show', $event->slug) }}"
-                                class="flex items-center justify-between w-full py-4 px-6 bg-white/[0.05] border border-white/10 text-white text-[11px] font-black uppercase tracking-widest group-hover:bg-white group-hover:text-emerald-950 transition-all duration-500 rounded-xl whitespace-nowrap">
-                                <span>Acessar Evento</span>
-                                <svg class="w-4 h-4 shrink-0 ml-2" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </a>
+                        {{-- Footer Minimalista --}}
+                        <div
+                            class="mt-auto flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 group-hover:text-emerald-600 transition-colors">
+                            <span>Ler Mais</span>
+                            <svg class="w-4 h-4 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
                         </div>
                     </div>
 
-                    {{-- Overlay de Interação --}}
+                    {{-- Overlay de Fundo no Hover --}}
                     <div
-                        class="absolute inset-0 border-[6px] border-emerald-500/0 group-hover:border-emerald-500/10 transition-all duration-500 pointer-events-none rounded-2xl">
+                        class="absolute inset-0 bg-slate-50/50 translate-y-full group-hover:translate-y-0 transition-transform duration-500 -z-10">
                     </div>
                 </article>
             @endforeach

@@ -37,8 +37,8 @@
         @yield('content')
     </main>
 
-    @include('novosite.components.address')
     @include('novosite.components.footer')
+    {{-- @include('novosite.components.address') --}}
     
 </body>
 

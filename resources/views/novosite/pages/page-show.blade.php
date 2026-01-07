@@ -271,7 +271,7 @@
             {{-- ========== BOTÃO FLUTUANTE MOBILE (Aparece no Scroll) ========= --}}
             <div x-show="true" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-10" x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-200" class="fixed bottom-13 right-3 z-50 lg:hidden"
+                x-transition:leave="transition ease-in duration-200" class="fixed bottom-8 right-6 z-50 lg:hidden"
                 style="display: none;">
                 <button @click="open = true"
                     class="flex items-center justify-center w-14 h-14 bg-gray-900 text-white rounded-full shadow-2xl ring-4 ring-white/10 active:scale-95 transition-all">

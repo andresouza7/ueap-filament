@@ -101,53 +101,6 @@
         </div>
     </section>
 
-    {{-- BARRA DE ACESSO RÁPIDO COM OVERLAY ESCURO --}}
-    <section class="w-full relative z-20 border-y border-white/10">
-        {{-- Fundo translúcido com matiz esmeralda para harmonizar com o Hero --}}
-        <div class="absolute inset-0 bg-emerald-950/80 backdrop-blur-xl"></div>
-
-        <div class="max-w-ueap mx-auto px-0 lg:px-8 relative z-10">
-            {{-- Grid: divisórias usando a cor do fundo levemente clareada --}}
-            <div
-                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-white/10 lg:gap-4 lg:bg-transparent">
-                @php
-                    $links = [
-                        [
-                            'icon' => 'fa-calendar-days',
-                            'label' => 'Calendário Acadêmico',
-                            'color' => 'text-emerald-400',
-                        ],
-                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'color' => 'text-teal-400'],
-                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'color' => 'text-emerald-400'],
-                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'color' => 'text-teal-400'],
-                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'color' => 'text-emerald-400'],
-                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'color' => 'text-teal-400'],
-                    ];
-                @endphp
-
-                @foreach ($links as $link)
-                    <a href="#"
-                        class="flex flex-row lg:flex-col items-center justify-start lg:justify-center group transition-all duration-300 
-                           py-3.5 px-4 lg:py-10 lg:px-4 
-                           bg-emerald-950/40 lg:bg-transparent lg:hover:bg-white/5">
-
-                        {{-- Ícone: Mais vivo para destacar no fundo esverdeado --}}
-                        <div
-                            class="w-8 h-8 lg:w-16 lg:h-16 flex-shrink-0 flex items-center justify-center 
-                                mr-3 lg:mr-0 lg:mb-4 transition-transform duration-300 group-hover:-translate-y-1">
-                            <i
-                                class="fa-solid {{ $link['icon'] }} {{ $link['color'] }} text-base lg:text-2xl opacity-90 group-hover:opacity-100 group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"></i>
-                        </div>
-
-                        {{-- Texto: Cinza claro que não briga com o verde --}}
-                        <span
-                            class="flex-1 lg:flex-none text-[9px] lg:text-[10px] font-semibold text-emerald-50/70 uppercase tracking-[0.1em] 
-                                 text-left lg:text-center leading-tight group-hover:text-white transition-colors duration-200">
-                            {{ $link['label'] }}
-                        </span>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    
 </div>
+

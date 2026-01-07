@@ -12,16 +12,25 @@
     <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
 
-            <a href="/novo">
+            <a href="/novo" class="block group">
                 <div class="flex items-center flex-shrink-0">
-                    <div class="flex flex-row items-center gap-2">
-                        <img src="/img/site/logo.png" alt="Logo UEAP" class="h-14 sm:h-16">
+                    <div class="flex flex-row items-center gap-1.5 sm:gap-2">
+
+                        {{-- Logo: h-10 no mobile, h-14 em telas médias, h-16 em desktop --}}
+                        <img src="/img/site/logo.png" alt="Logo UEAP"
+                            class="h-10 md:h-14 lg:h-16 w-auto transition-all">
+
                         <div class="flex flex-col justify-center leading-none select-none cursor-pointer">
+                            {{-- UEAP: text-xl no mobile, text-3xl no desktop --}}
                             <span
-                                class="text-3xl font-extrabold text-ueap-green tracking-tighter leading-none">UEAP</span>
+                                class="text-xl md:text-2xl lg:text-3xl font-extrabold text-ueap-green tracking-tighter leading-none">
+                                UEAP
+                            </span>
+
+                            {{-- Descrição: Diminuída para text-[0.45rem] em telas muito pequenas --}}
                             <span
-                                class="text-[0.55rem] sm:text-[0.6rem] text-gray-500 uppercase tracking-wide sm:tracking-widest leading-tight font-medium">
-                                Universidade do<br class="sm:hidden"> Estado do Amapá
+                                class="text-[0.45rem] md:text-[0.55rem] lg:text-[0.6rem] text-gray-500 uppercase tracking-tighter sm:tracking-widest leading-[1.1] font-medium">
+                                Universidade do<br class="md:hidden"> Estado do Amapá
                             </span>
                         </div>
                     </div>
@@ -92,8 +101,6 @@
                     </nav>
                 </div>
             @endif
-
-
 
 
             <div class="hidden lg:flex items-center">

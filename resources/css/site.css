@@ -91,7 +91,7 @@ table td {
   text-decoration: underline !important;
 }
 .article-body a:hover {
-  color: #054e3d;
+  color: #054e3d !important;
 }
 
 /* pagina post-show */
