@@ -4,12 +4,11 @@
 
 @section('content')
     <div class="flex flex-col">
-        @include('novosite.components.hero')
-        @include('novosite.components.quick-links')
-        @include('novosite.components.news')
-        @include('novosite.components.events')
-        {{-- @include('novosite.components.courses') --}}
-        {{-- @include('novosite.components.programs') --}}
+        @include('novosite.components.home-destaques')
+        @include('novosite.components.home-acesso-rapido')
+        @include('novosite.components.home-noticias')
+        @include('novosite.components.home-eventos')
+        @include('novosite.components.home-institucional')
         {{-- @include('novosite.components.videos') --}}
     </div>
 @endsection

@@ -8,7 +8,7 @@
                     dentro</span>
                 <h2 class="text-4xl font-black text-slate-900 tracking-tight">Últimas Notícias</h2>
             </div>
-            <a href="{{ route('novosite.post.list') }}"
+            <a href="{{ route('site.post.list') }}"
                 class="group flex items-center text-slate-500 font-bold hover:text-emerald-600 transition-colors duration-300">
                 Ver todo o acervo
                 <span
@@ -35,7 +35,7 @@
                         <div class="absolute top-2.5 left-2.5">
                             <span
                                 class="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded uppercase tracking-tighter">
-                                {{ $post->category->description ?? 'Geral' }}
+                                {{ $post->category->name ?? 'Geral' }}
                             </span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         </div>
 
                         {{-- Título --}}
-                        <a href="{{ route('novosite.post.show', $post->slug) }}" class="block mb-2">
+                        <a href="{{ route('site.post.show', $post->slug) }}" class="block mb-2">
                             <h3
                                 class="text-base font-bold text-slate-800 leading-snug group-hover:text-[#017D49] transition-colors line-clamp-2">
                                 {{ $post->title }}

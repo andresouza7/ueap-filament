@@ -2,48 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WebCategory;
 use App\Models\WebPage;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $featured = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')
+        $featured = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
-        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(8)->get();
-        $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
-        return view('novosite.pages.home', compact('posts', 'events', 'featured'));
-    }
-
-    public function pageShow($slug)
-    {
-
-        $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
-        $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
-
-        if ($page) {
-            $page->hits = $page->hits + 1;
-            $page->save();
-
-            return view('novosite.pages.page-show', compact('page', 'latestPosts'));
-        } else {
-            return redirect()->route('novosite.home');
-        }
+        $posts = WebPost::where('type', 'news')->where('status', 'published')
+            ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
+        $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
+        return view('novosite.pages.home', compact('featured', 'posts', 'events'));
     }
 
     public function postList(Request $request)
     {
         $searchString = $request->input('search');
+        $postType = $request->input('type');
+        $categorySlug = $request->query('category');
 
-        $query = WebPost::where('status', 'published')->whereRelation('category.section', 'slug', 'news');
+        $query = WebPost::where('status', 'published');
 
         if ($searchString) {
-            $query->search($searchString);
+            $query->where('title', 'ilike', "%$searchString%")
+                ->orWhere('content', 'ilike', "%$searchString%");
         }
 
-        $posts = $query->orderByDesc('id')->simplePaginate(10)->withQueryString();
+        if ($postType) {
+            $query->where('type', $postType);
+        }
+
+        if ($categorySlug) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        // if ($searchString) {
+        //     $query->search($searchString);
+        // }
+
+        $posts = $query->orderByDesc('created_at')->simplePaginate(10)->withQueryString();
 
         return view('novosite.pages.post-list', compact('posts', 'searchString'));
     }
@@ -51,19 +55,35 @@ class PageController extends Controller
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
+        $latestPosts = WebPost::where('status', 'published')->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
         $relatedPosts = WebPost::latest('id')->where('status', 'published')
             ->whereHas('category', function ($query) use ($post) {
                 $query->where('name', $post->category->name);
             })
             ->take(4)->get();
+        $frequentPages = WebPost::where('status', 'published')->where('type', 'page')->orderBy('created_at', 'desc')->take(5)->get();
+
+        $topCategories = WebCategory::query()
+            ->join('web_category_post', 'web_categories.id', '=', 'web_category_post.web_category_id')
+            ->join('web_posts', 'web_posts.id', '=', 'web_category_post.web_post_id')
+            ->select(
+                'web_categories.id',
+                'web_categories.name',
+                'web_categories.slug',
+                DB::raw('SUM(web_posts.hits) as total_hits')
+            )
+            ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
+            ->orderByDesc('total_hits')
+            ->take(5)
+            ->get();
+
 
         if ($post) {
             $post->hits = $post->hits + 1;
             $post->save();
-            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts'));
+            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'topCategories', 'frequentPages'));
         } else {
-            return redirect()->route('novosite.home');
+            return redirect()->route('site.home');
         }
     }
 

@@ -72,7 +72,7 @@ Route::get('/login', function () {
 })->name('login');
 
 // Rotas do site institucional
-Route::name('site.')->group(function () {
+Route::name('old.site.')->prefix('old/')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
     Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
     Route::get('/postagem/{slug}',          [OldPageController::class, 'postShow'])->name('post.show');
@@ -93,10 +93,10 @@ Route::name('site.')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
 Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
 
-Route::name('novosite.')->prefix('/novo')->group(function () {
+Route::name('site.')->group(function () {
     Route::get('/',                         [PageController::class, 'home'])->name('home');
     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
-    Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
+    Route::get('/pagina/{slug}',            [PageController::class, 'postShow'])->name('page.show');
 });
 

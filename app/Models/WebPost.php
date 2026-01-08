@@ -49,6 +49,21 @@ class WebPost extends Model implements HasMedia
         return $this->belongsTo(WebCategory::class, 'web_category_id');
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(WebCategory::class, 'web_category_post', 'web_post_id', 'web_category_id');
+    }
+
+    public function web_menu()
+    {
+        return $this->belongsTo(WebMenu::class, 'web_menu_id');
+    }
+
+    public function menu_items()
+    {
+        return $this->hasManyThrough(WebMenuItem::class, WebMenu::class, 'id', 'web_menu_id', 'web_menu_id', 'id');
+    }
+
     public function user_created()
     {
         return $this->belongsTo(User::class, 'user_created_id', 'id', 'users');

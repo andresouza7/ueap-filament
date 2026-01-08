@@ -28,7 +28,7 @@
                         {{-- POST PRINCIPAL --}}
                         @if (isset($posts[0]))
                             <div class="min-w-full lg:min-w-0 snap-center lg:col-span-8 lg:row-span-2">
-                                <a href="{{ route('novosite.post.show', $posts[0]->slug) }}"
+                                <a href="{{ route('site.post.show', $posts[0]->slug) }}"
                                     class="bg-black/30 backdrop-blur-sm overflow-hidden group h-[320px] lg:h-[520px] flex flex-col relative shadow-2xl transition-all block lg:rounded-[2rem]">
                                     <div class="absolute inset-0">
                                         <img src="{{ $posts[0]->image_url }}"
@@ -58,7 +58,7 @@
                         {{-- POSTS SECUNDÁRIOS --}}
                         @foreach ($posts->slice(1, 2) as $index => $item)
                             <div class="min-w-full lg:min-w-0 snap-center lg:col-start-9 lg:col-span-4">
-                                <a href="{{ route('novosite.post.show', $item->slug) }}"
+                                <a href="{{ route('site.post.show', $item->slug) }}"
                                     class="h-[320px] lg:h-[248px] bg-black/30 backdrop-blur-sm overflow-hidden group flex flex-col relative shadow-xl transition-all block lg:rounded-[1.5rem] {{ $index === 0 ? 'lg:mb-6' : '' }}">
                                     <div class="absolute inset-0">
                                         <img src="{{ $item->image_url }}"

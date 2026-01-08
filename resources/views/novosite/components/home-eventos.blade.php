@@ -66,7 +66,7 @@
 
                         {{-- Título como Link Principal --}}
                         <div class="flex-1">
-                            <a href="{{ route('novosite.post.show', $event->slug) }}" class="block group/title">
+                            <a href="{{ route('site.post.show', $event->slug) }}" class="block group/title">
                                 <h3
                                     class="text-xl md:text-2xl font-black text-slate-900 leading-[1.3] uppercase tracking-normal line-clamp-6">
                                     <span
