@@ -2,7 +2,7 @@
 <section class="w-full relative z-20 bg-white border-b border-gray-200">
     
     <div class="max-w-ueap mx-auto px-0 lg:px-8 relative z-10">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             @php
                 $links = [
                     ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'color' => 'text-emerald-600'],
@@ -17,7 +17,7 @@
             @foreach ($links as $link)
                 <a href="#"
                     class="flex flex-row lg:flex-col items-center justify-start lg:justify-center group transition-all duration-300 
-                       py-4 px-6 lg:py-6 lg:px-4 
+                       py-7 px-6 lg:py-6 lg:px-4 
                        bg-transparent hover:bg-gray-50/80">
 
                     {{-- Ícone --}}

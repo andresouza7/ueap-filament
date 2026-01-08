@@ -1,4 +1,4 @@
-<section class="py-16 bg-white">
+<section class="py-10 lg:py-16 bg-white">
     <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
 
         {{-- Cabeçalho da Seção --}}
