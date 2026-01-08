@@ -1,8 +1,9 @@
 <div class="bg-gray-900 text-gray-300 text-xs py-3"> <!-- bg-[#023E88] -->
     <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 flex justify-end space-x-6">
-        <a href="https://sigaa.ueap.edu.br/sigaa" class="hover:text-white transition">Portal do Aluno</a>
+        <a href="https://sigaa.ueap.edu.br/sigaa" class="hover:text-white transition">SIGAA</a>
         <a href="https://intranet.ueap.edu.br" class="hover:text-white transition">Intranet</a>
-        <a href="https://transparencia.ueap.edu.br" class="hover:text-white transition">Portal da Transparência</a>
+        <a href="https://transparencia.ueap.edu.br" class="hover:text-white transition">Transparência</a>
+        <a href="https://servicedesk.ueap.edu.br" class="hover:text-white transition">Service Desk</a>
     </div>
 </div>
 

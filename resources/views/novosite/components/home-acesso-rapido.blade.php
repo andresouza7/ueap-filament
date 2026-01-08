@@ -17,7 +17,7 @@
             @foreach ($links as $link)
                 <a href="#"
                     class="flex flex-row lg:flex-col items-center justify-start lg:justify-center group transition-all duration-300 
-                       py-7 px-6 lg:py-6 lg:px-4 
+                       py-4 sm:py-7 px-10 lg:py-6 lg:px-4 
                        bg-transparent hover:bg-gray-50/80">
 
                     {{-- Ícone --}}
