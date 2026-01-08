@@ -75,6 +75,105 @@
                 {{-- Listagem de Conteúdo --}}
                 <div class="lg:col-span-8 space-y-4 sm:space-y-6">
 
+                    @php
+                        $currentType = request('type');
+                        $types = [
+                            ['label' => 'Notícias', 'value' => 'news', 'icon' => 'fa-newspaper'],
+                            ['label' => 'Eventos', 'value' => 'event', 'icon' => 'fa-calendar-check'],
+                            ['label' => 'Páginas', 'value' => 'page', 'icon' => 'fa-file-lines'],
+                        ];
+                    @endphp
+
+                    <div class="mb-12">
+                        {{-- Header de Contexto --}}
+                        @if (isset($searchString) && $searchString)
+                            <div class="mb-6">
+                                {{-- Rótulo de Contexto --}}
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-[2px] w-4 bg-[#017D49]"></span>
+                                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                        Resultados Para
+                                    </span>
+                                </div>
+
+                                {{-- Título de Busca Estilizado --}}
+                                <h1 class="text-4xl font-black text-gray-900 uppercase tracking-tighter leading-none">
+                                    <span class="text-gray-300">"</span>{{ $searchString }}<span
+                                        class="text-gray-300">"</span>
+                                </h1>
+                            </div>
+                        @endif
+
+                        {{-- Caixa de Comando Integrada --}}
+                        <div class="bg-gray-50 p-1 border border-gray-100 flex flex-col md:flex-row items-stretch gap-1">
+
+                            {{-- Input de Busca Principal --}}
+                            <form action="{{ route('site.post.list') }}" method="GET"
+                                class="flex-1 flex items-center bg-white border border-gray-100 px-4 py-3">
+                                {{-- Preserva o Tipo se já estiver selecionado --}}
+                                @if ($currentType)
+                                    <input type="hidden" name="type" value="{{ $currentType }}">
+                                @endif
+
+                                <i class="fa-solid fa-magnifying-glass text-gray-300 mr-3 text-xs"></i>
+                                <input type="text" name="search" value="{{ $searchString ?? '' }}"
+                                    placeholder="Refinar busca atual..."
+                                    class="w-full bg-transparent text-sm focus:outline-none font-medium placeholder:text-gray-300 italic">
+
+                                @if ($searchString)
+                                    <a href="{{ route('site.post.list', request()->except('search')) }}"
+                                        class="text-gray-300 hover:text-red-500 transition-colors">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </a>
+                                @endif
+                            </form>
+
+                            {{-- Filtros de Tipo Integrados (Empilháveis) --}}
+                            <div class="flex items-stretch gap-1">
+                                @foreach ($types as $type)
+                                    @php
+                                        $isActive = $currentType == $type['value'];
+                                        // Lógica de Toggle: se clicar no ativo, remove o filtro
+                                        $params = request()->query();
+                                        if ($isActive) {
+                                            unset($params['type']);
+                                        } else {
+                                            $params['type'] = $type['value'];
+                                        }
+                                    @endphp
+
+                                    <a href="{{ route('site.post.list', $params) }}"
+                                        class="flex items-center gap-2 px-5 py-3 transition-all duration-300 whitespace-nowrap
+                   {{ $isActive
+                       ? 'bg-gray-900 text-white shadow-inner'
+                       : 'bg-white text-gray-500 hover:text-gray-900 border border-gray-100' }}">
+                                        <i
+                                            class="fa-solid {{ $type['icon'] }} text-[10px] {{ $isActive ? 'text-ueap-green' : 'opacity-30' }}"></i>
+                                        <span
+                                            class="text-[11px] font-black uppercase tracking-tighter italic">{{ $type['label'] }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Footer de Status --}}
+                        <div class="mt-4 flex items-center justify-between px-1">
+                            <p class="text-[11px] text-gray-400 font-medium uppercase tracking-widest">
+                                Exibindo <span class="text-gray-900">{{ $posts->total() }}</span> registros
+                                @if ($currentType)
+                                    para <span class="text-[#017D49]">{{ ucfirst($currentType) }}</span>
+                                @endif
+                            </p>
+
+                            @if (request()->anyFilled(['search', 'type', 'category']))
+                                <a href="{{ route('site.post.list') }}"
+                                    class="text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline">
+                                    Limpar todos os filtros ×
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
                     @forelse ($posts as $item)
                         <article
                             class="group flex flex-row gap-4 sm:gap-5 items-start pb-4 sm:pb-6 border-b border-gray-100 last:border-0">
@@ -119,7 +218,7 @@
                                 </a>
 
                                 <p class="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-3 hidden sm:block">
-                                    {{ $item->description ?? Str::limit(strip_tags($item->text), 120) }}
+                                    {{ $item->resume ?? Str::limit(clean_text(html_entity_decode(strip_tags($item->text))), 120) }}
                                 </p>
 
                                 <a href="{{ route('site.post.show', $item->slug) }}"
@@ -147,43 +246,7 @@
 
                 {{-- Sidebar --}}
                 <aside class="lg:col-span-4 space-y-8">
-
-                    {{-- Busca --}}
-                    <section>
-                        <div class="group relative">
-                            <input type="text" name="search" value="{{ $searchString ?? '' }}"
-                                placeholder="Buscar publicações..."
-                                class="w-full bg-transparent border-b-2 border-gray-100 py-2 pl-0 pr-8 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-ueap-green transition-all duration-300 text-lg">
-                            <button
-                                class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-ueap-green">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
-                        </div>
-                    </section>
-
-                    <div>
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500">Mais Acessados</h3>
-                            <div class="h-px flex-1 bg-gray-100 mx-4"></div>
-                        </div>
-
-                        <section class="bg-[#f8f9fa] p-8 rounded-sm border-l-4 border-ueap-green">
-                            <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Informativo</h3>
-                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">
-                                Receba atualizações sobre eventos, notícias e editais acadêmicos.
-                            </p>
-
-                            <form class="flex flex-col gap-3">
-                                <input type="email" placeholder="Seu melhor e-mail"
-                                    class="w-full bg-white border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 transition">
-                                <button type="submit"
-                                    class="w-full bg-gray-900 text-white py-3 text-xs font-bold uppercase tracking-widest hover:bg-ueap-green transition-colors cursor-pointer">
-                                    Inscrever-se
-                                </button>
-                            </form>
-                        </section>
-                    </div>
-
+                    @include('novosite.components.sidebar-newsletter')
                 </aside>
             </div>
         </div>

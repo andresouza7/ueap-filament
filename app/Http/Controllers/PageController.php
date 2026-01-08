@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\WebCategory;
-use App\Models\WebPage;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +46,7 @@ class PageController extends Controller
         //     $query->search($searchString);
         // }
 
-        $posts = $query->orderByDesc('created_at')->simplePaginate(10)->withQueryString();
+        $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
 
         return view('novosite.pages.post-list', compact('posts', 'searchString'));
     }

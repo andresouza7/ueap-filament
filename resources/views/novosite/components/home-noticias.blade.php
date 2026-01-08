@@ -8,7 +8,7 @@
                     dentro</span>
                 <h2 class="text-4xl font-black text-slate-900 tracking-tight">Últimas Notícias</h2>
             </div>
-            <a href="{{ route('site.post.list') }}"
+            <a href="{{ route('site.post.list', ['type' => 'news']) }}"
                 class="group flex items-center text-slate-500 font-bold hover:text-emerald-600 transition-colors duration-300">
                 Ver todo o acervo
                 <span

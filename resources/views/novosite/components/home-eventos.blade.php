@@ -21,7 +21,7 @@
                     <span class="text-emerald-400">Programação</span>
                 </h2>
             </div>
-            <a href="#"
+            <a href="{{ route('site.post.list', ['type' => 'event']) }}"
                 class="group mt-8 md:mt-0 inline-flex items-center px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-emerald-500 transition-all duration-300 shadow-xl">
                 Ver calendário completo <i class="fa-solid fa-calendar-days ml-2 opacity-60"></i>
             </a>
