@@ -19,7 +19,7 @@ class TicketFactory extends Factory
             'month' => $this->faker->numberBetween(1, 12),
             'year' => $this->faker->numberBetween(2020, 2030),
             'status' => 'pendente',
-            'evaluador_id' => null,
+            'evaluator_id' => null,
             'evaluated_at' => null,
             'user_notes' => null,
             'evaluator_notes' => null,

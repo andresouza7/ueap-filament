@@ -45,7 +45,7 @@ class TicketEvaluatedNotification extends Notification
             ->greeting("Olá {$notifiable->person->name},")
             ->line("Sua folha de ponto para {$months[$this->ticket->month]}/{$this->ticket->year} foi **{$this->ticket->status}** em {$this->ticket->evaluated_at->format('d/m/Y')}.");
 
-        $mail->line("Avaliado por: {$this->ticket->user->login}");
+        $mail->line("Avaliado por: {$this->ticket->evaluator->login}");
 
         if ($this->ticket->status === 'rejeitado' && $this->ticket->evaluator_notes) {
             $mail->line("Observações do avaliador: {$this->ticket->evaluator_notes}");

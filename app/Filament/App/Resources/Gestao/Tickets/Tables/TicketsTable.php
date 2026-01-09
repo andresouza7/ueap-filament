@@ -41,7 +41,7 @@ class TicketsTable
                     ->label('Enviado em')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('evaluador.person.name')
+                TextColumn::make('evaluator.person.name')
                     ->label('Avaliador'),
                 TextColumn::make('evaluated_at')
                     ->label('Avaliado em')
