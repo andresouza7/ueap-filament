@@ -71,6 +71,7 @@ class TicketsTable
                             ->required(),
                         Textarea::make('evaluator_notes')
                             ->label('Justificativa')
+                            ->visible(fn(callable $get) => $get('status') === 'rejeitado')
                             ->required(fn(callable $get) => $get('status') === 'rejeitado'),
                     ])
                     ->action(function (array $data, $record, FolhaPontoService $service) {

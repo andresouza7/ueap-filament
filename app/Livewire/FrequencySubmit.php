@@ -52,6 +52,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
 
     public function mount(?int $userId = null): void
     {
+        // Verifica se é o próprio usuário ou a urh que está cadastrando
         $this->isManualInsertion = filled($userId);
         $this->user = $userId ? User::find($userId) : Auth::user();
 
@@ -201,7 +202,7 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
                 TextColumn::make('created_at')->label('Enviado em')->date('d/m/Y')->sortable(),
                 TextColumn::make('evaluator.login')->label('Avaliador'),
                 TextColumn::make('evaluated_at')->label('Avaliado em')->date('d/m/Y')->sortable(),
-                TextColumn::make('evaluator_notes')->label('Justificativa'),
+                TextColumn::make('evaluator_notes')->label('Motivo Rejeição'),
             ])
             ->recordActions([
                 Action::make('anexo')

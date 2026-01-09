@@ -152,6 +152,7 @@ class FolhaPontoService
         $uploaded = $this->drive->upload($file, $tempFolder);
 
         if ($uploaded) {
+            // Compartilha arquivo com o próprio usuário que enviou
             $this->drive->shareFileWithEmail($uploaded, Auth::user()->email);
         }
 
