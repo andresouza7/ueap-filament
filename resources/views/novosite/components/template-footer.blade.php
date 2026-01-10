@@ -1,5 +1,5 @@
 <footer class="bg-slate-950 text-white pt-10 md:pt-20 pb-8 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none">
+    <div class="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none">
     </div>
 
     <div class="max-w-ueap mx-auto px-4 md:px-10 relative z-10">
@@ -126,7 +126,8 @@
 
                     {{-- Texto Informativo --}}
                     <div class="text-left md:text-center lg:text-right order-1 md:order-2 lg:order-1">
-                        <p class="text-[10px] sm:text-sm font-black uppercase tracking-[0.2em] text-emerald-500 mb-2">Portal e-MEC
+                        <p class="text-[10px] sm:text-sm font-black uppercase tracking-[0.2em] text-emerald-500 mb-2">
+                            Portal e-MEC
                         </p>
                         <p class="text-[12px] sm:text-base text-slate-400 font-bold leading-tight">
                             Consulte o cadastro oficial da <span class="text-white">UEAP</span><br
