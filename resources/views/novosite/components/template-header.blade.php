@@ -6,29 +6,38 @@
 @endphp
 
 <style>
-    [x-cloak] { display: none !important; }
-    .no-scroll { overflow: hidden !important; }
+    [x-cloak] {
+        display: none !important;
+    }
+
+    .no-scroll {
+        overflow: hidden !important;
+    }
 
     /* Ajuste de Sombra para fundo escuro */
-    .nav-ueap-shadow { box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6); }
+    .nav-ueap-shadow {
+        box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+    }
 
-    /* SKEW DINÂMICO - Agora em tons escuros para integrar com o site */
+    /* FADE DINÂMICO (SUBSTITUINDO O CORTE SECO) */
     .header-skew-bg {
         position: absolute;
         top: 0;
-        left: -10%;
+        left: 0;
         width: 85%;
         height: 100%;
-        background: #0f172a; /* Slate 900 */
-        transform: skewX(-12deg);
-        border-right: 2px solid #10b981;
+        background: #0f172a;
         z-index: 0;
+        pointer-events: none;
+        -webkit-mask-image: linear-gradient(to right, black 60%, transparent 90%);
+        mask-image: linear-gradient(to right, black 60%, transparent 90%);
     }
+
     @media (min-width: 1024px) {
-        .header-skew-bg { 
-            width: 35%;
-            left: -5%;
-            border-right: 1px solid rgba(255,255,255,0.05);
+        .header-skew-bg {
+            -webkit-mask-image: linear-gradient(to right, black 20%, transparent 35%);
+            mask-image: linear-gradient(to right, black 20%, transparent 35%);
+            transform: none;
         }
     }
 
@@ -40,11 +49,43 @@
         clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
     }
 
-    /* MODAL E MENU MOBILE */
+    /* O MODAL DE BUSCA (TERMINAL) */
     .cyber-panel {
-        background: #020617; /* Slate 950 */
+        background: rgba(6, 9, 15, 0.98);
+        backdrop-filter: blur(15px);
         border: 1px solid rgba(16, 185, 129, 0.3);
         clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+    }
+
+    /* Linha de Scan animada do Modal (Corrigida: Vertical) */
+    .input-scan {
+        background: linear-gradient(to right, transparent, rgba(16, 185, 129, 0.5), transparent);
+        height: 2px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        animation: scan-vertical 3s ease-in-out infinite;
+    }
+
+    @keyframes scan-vertical {
+
+        0%,
+        100% {
+            top: 0%;
+            opacity: 0;
+        }
+
+        5%,
+        95% {
+            opacity: 1;
+        }
+
+        50% {
+            top: 100%;
+        }
     }
 </style>
 
@@ -53,7 +94,8 @@
     class="relative w-full bg-slate-950 font-sans border-b border-white/5">
 
     {{-- BARRA DE SISTEMAS --}}
-    <div class="bg-black/50 text-slate-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] py-2 relative z-[80]">
+    <div
+        class="bg-black/50 text-slate-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] py-2 relative z-[80]">
         <div class="mx-auto px-4 lg:px-12 lg:max-w-ueap flex justify-between items-center">
             <span class="text-emerald-500/80 font-black animate-pulse uppercase">Ueap_Core_v4.0</span>
             <div class="flex gap-4">
@@ -72,39 +114,55 @@
 
         <div class="mx-auto px-4 lg:px-12 lg:max-w-ueap relative z-10">
             <div class="flex justify-between items-center h-20 lg:h-24">
-                
+
                 {{-- LOGO + IDENTIDADE --}}
-                <a href="/" class="flex items-center gap-2 shrink-0 group relative z-20">
-                    <img src="/img/site/logo.png" alt="Logo" class="h-14 lg:h-16 w-auto object-contain brightness-110">
-                    <div class="flex flex-col justify-center leading-[0.75]">
-                        <span class="text-2xl lg:text-3xl font-[1000] text-white tracking-[-0.08em] uppercase italic">
-                            UEAP<span class="text-emerald-500 not-italic animate-pulse">_</span>
-                        </span>
-                        <span class="text-[7px] lg:text-[8px] font-black text-slate-400 uppercase tracking-tighter mt-1 leading-none">
-                            Universidade do Estado <br> do Amapá
-                        </span>
+                <a href="/"
+                    class="flex items-center gap-1 shrink-0 group relative z-20 transition-all duration-300">
+                    <img src="/img/site/logo.png" alt="Logo"
+                        class="h-14 lg:h-[4.4rem] w-auto object-contain brightness-110 drop-shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:scale-105 transition-transform">
+
+                    <div class="flex flex-col justify-between h-14 lg:h-[4.2rem] py-0.5">
+                        <div class="flex flex-col justify-start">
+                            <span
+                                class="text-2xl lg:text-[2.6rem] font-[1000] text-white tracking-[-0.08em] uppercase italic leading-[0.8] mb-1.5">
+                                UEAP<span class="text-emerald-500 not-italic animate-pulse">_</span>
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col justify-end">
+                            <span
+                                class="text-[7.5px] lg:text-[8px] font-black text-slate-400 uppercase tracking-wider leading-[1.2] border-t border-white/10 pt-1.5">
+                                Universidade do Estado <br>
+                                <span class="text-slate-200">do Amapá</span>
+                            </span>
+                        </div>
                     </div>
                 </a>
 
                 {{-- MENU DESKTOP --}}
                 <div class="hidden lg:flex h-full items-center ml-auto">
                     @foreach ($menus as $menu)
-                        <div class="relative h-full group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        <div class="relative h-full group" x-data="{ open: false }" @mouseenter="open = true"
+                            @mouseleave="open = false">
                             <button class="h-full px-3 flex items-center">
-                                <span class="text-[11px] xl:text-[12px] font-[900] text-slate-300 group-hover:text-emerald-400 uppercase tracking-tight transition-colors">
+                                <span
+                                    class="text-[11px] xl:text-[12px] font-[900] text-slate-300 group-hover:text-emerald-400 uppercase tracking-tight transition-colors">
                                     {{ $menu->name }}
                                 </span>
                             </button>
 
-                            @if($menu->items->count())
-                                <div x-show="open" x-cloak 
-                                    x-transition:enter="transition duration-150 ease-out"
+                            @if ($menu->items->count())
+                                <div x-show="open" x-cloak x-transition:enter="transition duration-150 ease-out"
                                     class="absolute left-0 top-[80%] w-[240px] dropdown-cyber shadow-2xl py-5 z-50">
                                     @foreach ($menu->items as $item)
-                                        <a href="{{ $item->url }}" class="group/item flex items-center px-6 py-2 hover:bg-emerald-500/5 transition-all">
-                                            <div class="flex flex-col border-l border-white/10 pl-3 py-1 group-hover/item:border-emerald-500">
-                                                <span class="text-[11px] font-bold text-slate-300 uppercase group-hover/item:text-emerald-400 tracking-tight">{{ $item->name }}</span>
-                                                <span class="text-[6px] text-slate-600 font-mono uppercase">link_point_{{ $loop->iteration }}</span>
+                                        <a href="{{ $item->url }}"
+                                            class="group/item flex items-center px-6 py-2 hover:bg-emerald-500/5 transition-all">
+                                            <div
+                                                class="flex flex-col border-l border-white/10 pl-3 py-1 group-hover/item:border-emerald-500">
+                                                <span
+                                                    class="text-[11px] font-bold text-slate-300 uppercase group-hover/item:text-emerald-400 tracking-tight">{{ $item->name }}</span>
+                                                <span
+                                                    class="text-[6px] text-slate-600 font-mono uppercase">link_point_{{ $loop->iteration }}</span>
                                             </div>
                                         </a>
                                     @endforeach
@@ -116,10 +174,12 @@
 
                 {{-- BOTÕES --}}
                 <div class="flex items-center gap-3 ml-4">
-                    <button @click="searchModal = true" class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-500 text-white transition-all">
+                    <button @click="searchModal = true"
+                        class="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-500 text-white transition-all">
                         <i class="fa-solid fa-magnifying-glass text-sm"></i>
                     </button>
-                    <button @click="mobileMenu = true" class="lg:hidden w-10 h-10 bg-emerald-500 text-slate-950 flex items-center justify-center">
+                    <button @click="mobileMenu = true"
+                        class="lg:hidden w-10 h-10 bg-emerald-500 text-slate-950 flex items-center justify-center">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                 </div>
@@ -127,33 +187,44 @@
         </div>
     </nav>
 
-    {{-- MENU MOBILE COLAPSÁVEL CYBER --}}
-    <div x-show="mobileMenu" x-cloak 
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="translate-x-full"
-        x-transition:enter-end="translate-x-0"
-        class="fixed inset-0 z-[200] bg-slate-950 p-6 overflow-y-auto">
-        
-        <div class="flex justify-between items-center mb-10 border-b border-white/5 pb-4">
-            <span class="text-emerald-500 font-black text-[10px] tracking-[0.3em] uppercase">// DATA_INDEX_MOBILE</span>
-            <button @click="mobileMenu = false" class="text-white font-bold text-xl">[ X ]</button>
+    {{-- MENU MOBILE --}}
+    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+        class="fixed inset-0 z-[200] bg-slate-950 p-4 overflow-y-auto">
+
+        <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-3">
+            <span class="text-emerald-500 font-black text-[10px] tracking-[0.3em] uppercase">// NAV_CORE_SYSTEM</span>
+            <button @click="mobileMenu = false"
+                class="text-white font-mono text-xs border border-white/20 px-2 py-1 hover:bg-white hover:text-black transition-all">
+                [ CLOSE ]
+            </button>
         </div>
 
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
             @foreach ($menus as $menu)
-                <div x-data="{ open: false }" class="border border-white/5 bg-slate-900/50 overflow-hidden">
-                    <button @click="open = !open" class="w-full p-5 flex justify-between items-center text-left">
-                        <span class="text-xl font-[1000] text-white uppercase italic tracking-tighter" :class="open ? 'text-emerald-500' : ''">
+                <div x-data="{ open: false }" class="border border-white/5 bg-slate-900/40">
+                    <button @click="open = !open"
+                        class="w-full py-3 px-4 flex justify-between items-center text-left transition-colors"
+                        :class="open ? 'bg-emerald-500/5' : ''">
+                        <span class="text-sm font-black text-white uppercase italic tracking-tight"
+                            :class="open ? 'text-emerald-400' : ''">
                             {{ $menu->name }}
                         </span>
-                        <span class="text-emerald-500 font-mono" x-text="open ? '[-]' : '[+]'"></span>
+                        <span class="text-emerald-500 font-mono text-xs" x-text="open ? '[-]' : '[+]'"></span>
                     </button>
-                    
+
                     <div x-show="open" x-cloak x-collapse class="bg-black/40 border-t border-white/5">
-                        <div class="flex flex-col py-4">
+                        <div class="flex flex-col p-1.5 gap-1">
                             @foreach ($menu->items as $item)
-                                <a href="{{ $item->url }}" class="px-8 py-3 text-[12px] font-bold text-slate-400 uppercase tracking-widest hover:text-emerald-400 border-l-2 border-transparent hover:border-emerald-500 transition-all">
-                                    > {{ $item->name }}
+                                <a href="{{ $item->url }}"
+                                    class="group flex items-center justify-between px-3 py-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest transition-all hover:bg-emerald-500 hover:text-black">
+                                    <span class="flex items-center">
+                                        <span class="mr-2 opacity-50 group-hover:opacity-100">_</span>
+                                        {{ $item->name }}
+                                    </span>
+                                    <span class="text-[9px] opacity-0 group-hover:opacity-100 font-mono font-normal">
+                                        RUN_FILE >
+                                    </span>
                                 </a>
                             @endforeach
                         </div>
@@ -165,13 +236,32 @@
 
     {{-- MODAL PESQUISA --}}
     <div x-show="searchModal" x-cloak class="fixed inset-0 z-[200] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-sm" @click="searchModal = false"></div>
-        <div class="w-full max-w-2xl cyber-panel p-8 relative z-10 overflow-hidden">
-            <div class="flex justify-between items-end mb-8 border-b border-white/10 pb-2">
-                <h2 class="text-emerald-500 font-black text-[10px] tracking-widest uppercase">// QUERY_TERMINAL</h2>
-                <button @click="searchModal = false" class="text-slate-500 text-[10px] font-bold">[ ESC_EXIT ]</button>
+        <div class="absolute inset-0 bg-slate-950/95 backdrop-blur-md" @click="searchModal = false"></div>
+        <div class="w-full max-w-2xl cyber-panel p-10 relative z-10 overflow-hidden">
+            {{-- LINHA DE SCAN --}}
+            <div class="input-scan"></div>
+
+            <div class="flex justify-between items-end mb-10">
+                <h2 class="text-emerald-500 font-black text-xs tracking-[0.4em] uppercase">// BUSCA_GLOBAL_SISTEMA</h2>
+                <button @click="searchModal = false"
+                    class="text-slate-500 hover:text-white text-[10px] font-bold tracking-widest">[ ESC_CLOSE ]</button>
             </div>
-            <input type="text" placeholder="BUSCAR..." class="w-full bg-transparent text-white text-4xl font-[1000] italic uppercase tracking-tighter focus:outline-none placeholder:text-slate-900">
+
+            <form action="{{ route('site.post.list') }}" method="GET" class="relative">
+                <input type="text" name="search" placeholder="DIGITE SUA BUSCA..." autocomplete="off"
+                    class="w-full bg-transparent border-b-2 border-emerald-500/20 text-white text-3xl font-black italic uppercase tracking-tighter py-6 focus:outline-none focus:border-emerald-500 transition-all placeholder:text-slate-800">
+
+                <div class="mt-4 flex justify-between items-center">
+                    <div class="flex gap-6 text-[8px] text-slate-600 font-mono italic">
+                        <span>QUERY_STATUS: WAITING</span>
+                        <span>ENCRYPTION: AES-256</span>
+                    </div>
+                    <button type="submit"
+                        class="text-emerald-500 font-black text-[10px] hover:text-white transition-colors tracking-widest uppercase">
+                        [ EXECUTAR_QUERY ]
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </header>
