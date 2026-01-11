@@ -31,7 +31,7 @@
                                 <a href="{{ route('site.post.show', $posts[0]->slug) }}"
                                     class="bg-black/30 backdrop-blur-sm overflow-hidden group h-[320px] lg:h-[520px] flex flex-col relative shadow-2xl transition-all block lg:rounded-[2rem]">
                                     <div class="absolute inset-0">
-                                        <img src="{{ $posts[0]->image_url }}"
+                                        <img src="{{ 'https://picsum.photos/seed/' . $posts[0]->id . '/600/450' }}"
                                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90">
                                         <div class="absolute inset-0 bg-[#017D49]/20 mix-blend-multiply"></div>
                                         <div
@@ -61,7 +61,7 @@
                                 <a href="{{ route('site.post.show', $item->slug) }}"
                                     class="h-[320px] lg:h-[248px] bg-black/30 backdrop-blur-sm overflow-hidden group flex flex-col relative shadow-xl transition-all block lg:rounded-[1.5rem] {{ $index === 0 ? 'lg:mb-6' : '' }}">
                                     <div class="absolute inset-0">
-                                        <img src="{{ $item->image_url }}"
+                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/450' }}"
                                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80">
                                         <div class="absolute inset-0 bg-[#017D49]/10 mix-blend-color"></div>
                                         <div

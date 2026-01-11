@@ -202,12 +202,12 @@
                                         </time>
                                     </div>
 
-                                    {{-- @if ($item->type)
+                                    @if ($item->type)
                                         <span
                                             class="px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 text-[8px] sm:text-[9px] font-bold uppercase border border-gray-200">
                                             {{ $item->type }}
                                         </span>
-                                    @endif --}}
+                                    @endif
                                 </div>
 
                                 <a href="{{ route('site.post.show', $item->slug) }}" class="block mb-1.5 sm:mb-2">
@@ -223,7 +223,7 @@
 
                                 <a href="{{ route('site.post.show', $item->slug) }}"
                                     class="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gray-400 group-hover:text-ueap-green transition-all">
-                                    Ler Mais
+                                    Acessar conteúdo
                                     <i
                                         class="fa-solid fa-chevron-right text-[8px] sm:text-[9px] transition-transform group-hover:translate-x-1"></i>
                                 </a>
