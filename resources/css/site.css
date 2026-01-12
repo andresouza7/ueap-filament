@@ -97,11 +97,19 @@ table td {
 .article-body * {
     /* Reseta cores, fontes e tamanhos que o usuário possa ter inventado no editor */
     color: inherit !important;
-    font-size: inherit !important;
+    font-size: 14px !important;
     font-family: inherit !important;
     background-color: transparent !important;
     /* Mas mantém o que importa para estrutura */
     box-sizing: border-box;
+}
+
+/* Media Query para telas menores que 1024px (LG) */
+@media (max-width: 1023px) {
+    .article-body * {
+        /* Aumenta a fonte para melhorar a legibilidade no mobile */
+        font-size: 16px !important; 
+    }
 }
 
 /* Agora suas classes (que passei na resposta anterior) aplicam o estilo correto */
@@ -144,7 +152,7 @@ table td {
 
 /* Links: Identidade Esmeralda */
 .article-body a {
-    @apply relative font-semibold text-slate-900 transition-all duration-300;
+    @apply relative font-semibold leading-loose text-slate-900 transition-all duration-300;
     /* Cria uma linha customizada com borda inferior */
     border-bottom: 2px solid theme('colors.emerald.100');
     text-decoration: none !important;

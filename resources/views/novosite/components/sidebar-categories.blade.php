@@ -4,12 +4,14 @@
 
 <section>
     {{-- Header Padrão Sidebar --}}
-    <div class="flex items-center gap-3 mb-5 border-b border-slate-100 pb-2">
-        <h3 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-900 whitespace-nowrap">
-            Assuntos
-        </h3>
-        <div class="h-[1px] flex-1 bg-transparent"></div>
-        <i class="fa-solid fa-tags text-[10px] text-slate-300"></i>
+    <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-2">
+        <div class="flex items-center gap-2">
+            <span class="flex h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+            <h3 class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900">
+                Assuntos
+            </h3>
+        </div>
+        <span class="text-[8px] font-mono text-slate-400 uppercase tracking-tighter bg-slate-100 px-1.5 py-0.5 border border-slate-200">TAGS_DB</span>
     </div>
 
     {{-- Tags com Design Sharp e Industrial --}}

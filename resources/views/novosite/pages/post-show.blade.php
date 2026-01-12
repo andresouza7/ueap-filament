@@ -9,6 +9,10 @@
     {{-- ================= HEADER INDUSTRIAL HYBRID PREMIUM ================= --}}
     <header class="relative overflow-hidden border-b border-slate-200 bg-[#f1f5f9]">
 
+        {{-- EFEITO PONTILHADO (Adicionado) --}}
+        <div class="absolute inset-0 opacity-[0.05] pointer-events-none"
+            style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"></div>
+
         {{-- Background Skew (Desktop Only) --}}
         <div
             class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-slate-300/40 skew-x-[-12deg] translate-x-20 z-0 border-l-4 border-emerald-500/20 shadow-[-10px_0_30px_rgba(0,0,0,0.03)]">
@@ -21,14 +25,28 @@
         <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-14 relative z-10">
             <div class="max-w-4xl relative">
 
-                {{-- Categoria & Tipo --}}
-                <div class="flex items-center gap-3 mb-4 lg:mb-8">
-                    <div class="flex items-center bg-slate-900 px-3 py-1 ring-1 ring-emerald-500/30">
-                        <span class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.15em]">
-                            {{ $post->category->name }}
+                {{-- Categoria & Tipo + Badge de Status (Badge Adicionada) --}}
+                <div class="flex flex-wrap items-center gap-3 mb-4 lg:mb-8">
+                   <a href="{{ route('site.post.list', ['category' => $post->category->slug]) }}" 
+   class="flex items-center bg-slate-900 px-3 py-1 ring-1 ring-emerald-500/30 hover:ring-emerald-500 transition-all group">
+    <span class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.15em] group-hover:text-emerald-400">
+        {{ $post->category->name }}
+    </span>
+</a>
+
+                    {{-- Status de Conexão (Novo detalhe para alinhar com a listagem) --}}
+                    <div class="flex items-center gap-1.5 bg-emerald-500/10 px-2 py-1 border border-emerald-500/20">
+                        <span class="relative flex h-1.5 w-1.5">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                         </span>
+                        <span
+                            class="text-[8px] font-mono text-emerald-600 font-bold tracking-widest uppercase">Live_Post</span>
                     </div>
-                    <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+
+                    <span class="hidden sm:block w-1 h-1 bg-slate-300 rounded-full"></span>
+
                     <span
                         class="text-[10px] lg:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] italic font-mono">
                         {{ $post->type }}
@@ -46,13 +64,11 @@
                     class="pt-6 lg:pt-10 mt-6 lg:mt-10 border-t border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-8">
 
                     {{-- Bloco de Metadados (Data Panel) --}}
-                    {{-- No mobile: w-full | No desktop: w-fit --}}
                     <div
-                        class="flex items-stretch gap-0 bg-slate-200/40 border border-slate-300 overflow-hidden w-full lg:w-fit">
-
-                        {{-- Módulo 01: Timestamp (flex-1 para ocupar metade no mobile) --}}
+                        class="flex items-stretch gap-0 bg-slate-200/40 border border-slate-300 overflow-hidden w-full lg:w-fit shadow-sm">
+                        {{-- Módulo 01: Timestamp --}}
                         <div
-                            class="relative flex-1 lg:flex-none flex flex-col justify-between p-3 border-r border-slate-300 lg:min-w-[130px]">
+                            class="relative flex-1 lg:flex-none flex flex-col justify-between p-3 border-r border-slate-300 lg:min-w-[130px] bg-white/20">
                             <div class="absolute top-0 left-0 w-4 h-[2px] bg-emerald-500"></div>
                             <span
                                 class="text-[7px] font-black text-slate-500 uppercase tracking-[0.4em] font-mono mb-2">Publicado</span>
@@ -65,7 +81,7 @@
                             </div>
                         </div>
 
-                        {{-- Módulo 02: Acessos (flex-1 para ocupar a outra metade no mobile) --}}
+                        {{-- Módulo 02: Acessos --}}
                         <div
                             class="relative flex-1 lg:flex-none flex flex-col justify-between p-3 bg-white/40 lg:min-w-[120px]">
                             <div class="absolute top-0 right-0 w-6 h-6 overflow-hidden text-slate-300">
@@ -80,12 +96,10 @@
                                     class="text-[12px] sm:text-[13px] font-[1000] text-slate-900 uppercase font-mono tracking-tighter leading-none">
                                     {{ number_format($post->hits, 0, ',', '.') }}
                                 </span>
-                                <span
-                                    class="text-[8px] font-bold text-emerald-600 font-mono animate-pulse hidden sm:inline">[Leituras]</span>
                             </div>
                         </div>
 
-                        {{-- Módulo 03: Status Tag (Oculto em telas muito pequenas se necessário, ou fixo) --}}
+                        {{-- Módulo 03: Status Tag --}}
                         <div class="bg-slate-900 flex items-center justify-center px-2 border-l border-slate-900">
                             <span
                                 class="text-[7px] font-bold text-white uppercase [writing-mode:vertical-lr] rotate-180 tracking-[0.2em] font-mono">
@@ -193,62 +207,56 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
                 {{-- MAIN CONTENT --}}
                 <main class="lg:col-span-8">
+                    {{-- Conteúdo da Notícia --}}
                     <article
                         class="article-body prose prose-slate max-w-none 
-                        prose-headings:uppercase prose-headings:italic prose-headings:font-[1000] prose-headings:tracking-tighter
-                        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900">
+        prose-headings:uppercase prose-headings:italic prose-headings:font-[1000] prose-headings:tracking-tighter
+        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900">
+
                         @foreach ($post->content ?? [] as $block)
                             @include('novosite.components.post-block-renderer', ['block' => $block])
                         @endforeach
                     </article>
 
-                    <div class="mt-20 pt-10 border-t-4 border-slate-900">
+                    {{-- Divisor e Data de Atualização --}}
+                    <div class="mt-16">
+                        {{-- Linha de Separação H1 --}}
+                        <div class="h-1 w-full bg-slate-900"></div>
+
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900">
+                                    Última Atualização
+                                </span>
+                                <span class="h-[1px] w-8 bg-slate-200"></span>
+                                <time class="text-[13px] font-bold text-slate-500 italic tracking-tight">
+                                    {{ $post->updated_at->format('d') }} de {{ $post->updated_at->translatedFormat('F') }}
+                                    de {{ $post->updated_at->format('Y') }} — {{ $post->updated_at->format('H:i') }}
+                                </time>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Seção Related Posts --}}
+                    <div class="mt-10">
                         @include('novosite.components.related-posts', ['posts' => $relatedPosts])
                     </div>
                 </main>
 
                 {{-- SIDEBAR --}}
                 <aside class="hidden lg:block lg:col-span-4 relative h-full">
-                    {{-- Container de Fundo: Preenche toda a largura da aside --}}
-                    <div class="absolute inset-y-0 left-0 right-0 z-0 bg-slate-50/50 border-x border-slate-200/60">
-                        {{-- Grid de pontos sutil --}}
-                        <div class="absolute inset-0 opacity-[0.03]"
-                            style="background-image: radial-gradient(#000 0.5px, transparent 0.5px); background-size: 20px 20px;">
+                    @if ($post->web_menu)
+                        @include('novosite.components.page-navigation', ['menu' => $post->web_menu])
+                    @else
+                        <div class="space-y-12">
+                            @include('novosite.components.sidebar-search')
+                            @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
+                            @include('novosite.components.sidebar-newsletter')
+                            @include('novosite.components.sidebar-categories', [
+                                'categories' => $topCategories,
+                            ])
                         </div>
-
-                        {{-- Linha decorativa fina no centro para "sustentar" os componentes --}}
-                        <div class="absolute inset-y-0 left-1/2 w-px bg-slate-200/20 -translate-x-1/2"></div>
-                    </div>
-
-                    {{-- Conteúdo: Sem padding em cima/baixo (py-0), centralizado com padding igual nas laterais --}}
-                    <div class="relative z-10 py-0 px-8">
-                        @if ($post->web_menu)
-                            @include('novosite.components.page-navigation', ['menu' => $post->web_menu])
-                        @else
-                            <div class="space-y-12">
-                                {{-- Cada bloco agora herda o alinhamento centralizado --}}
-                                <section>
-                                    @include('novosite.components.sidebar-search')
-                                </section>
-
-                                <section class="relative">
-                                    {{-- Detalhe lateral futurista para quebrar a monotonia --}}
-                                    <div class="absolute -left-4 top-0 h-4 w-1 bg-emerald-500/40"></div>
-                                    @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
-                                </section>
-
-                                <section>
-                                    @include('novosite.components.sidebar-newsletter')
-                                </section>
-
-                                <section class="border-t border-slate-200 pt-8">
-                                    @include('novosite.components.sidebar-categories', [
-                                        'categories' => $topCategories,
-                                    ])
-                                </section>
-                            </div>
-                        @endif
-                    </div>
+                    @endif
                 </aside>
             </div>
         </div>

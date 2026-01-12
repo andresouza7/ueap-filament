@@ -9,6 +9,7 @@
         @include('novosite.components.home-noticias')
         @include('novosite.components.home-eventos')
         @include('novosite.components.home-institucional')
+        @include('novosite.components.home-programas')
         {{-- @include('novosite.components.videos') --}}
     </div>
 @endsection
