@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
     @case('image')
     @case('gallery')
         @php
-            $images = collect($block['data']['images'] ?? ($block['data']['path'] ?? []))->filter()->values();
+            $images = collect($block['data']['images'] ?? ($block['data']['path'] ?? []))->values();
             $count = $images->count();
         @endphp
 

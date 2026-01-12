@@ -13,7 +13,7 @@ class PageController extends Controller
     {
         $featured = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
-            // dd($featured);
+        // dd($featured);
         $posts = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
@@ -80,8 +80,10 @@ class PageController extends Controller
 
 
         if ($post) {
-            $post->hits = $post->hits + 1;
-            $post->save();
+            WebPost::withoutTimestamps(function () use ($post) {
+                $post->increment('hits', 1);
+            });
+
             return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'topCategories', 'frequentPages'));
         } else {
             return redirect()->route('site.home');

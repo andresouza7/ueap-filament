@@ -93,11 +93,11 @@
                                 <div class="flex items-center gap-3 mb-1">
                                     <span
                                         class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-emerald-600 animate-pulse">
-                                        Search_Query_Active
+                                        Exibindo_Resultados_Para
                                     </span>
                                     <span class="hidden md:block h-px w-12 bg-slate-200"></span>
                                     <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest">
-                                        {{ $posts->total() }} matches_found
+                                        {{ $posts->total() }} registros_encontrados
                                     </span>
                                 </div>
                                 <h1

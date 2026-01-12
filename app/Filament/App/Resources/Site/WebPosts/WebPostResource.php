@@ -63,7 +63,7 @@ class WebPostResource extends Resource
 
     protected static function ImageBlock(): Block
     {
-        return Block::make('gallery')
+        return Block::make('image')
             ->label('Imagem / Galeria')
             ->schema([
                 FileUpload::make('path')
@@ -74,7 +74,7 @@ class WebPostResource extends Resource
                     ->maxFiles(10)
                     ->acceptedFileTypes(['image/jpeg', 'image/png'])
                     ->reorderable()
-                    ->previewable(false)
+                    ->previewable()
                     ->required(),
 
                 TextInput::make('subtitle')
@@ -114,6 +114,7 @@ class WebPostResource extends Resource
                         ->label('Categoria')
                         ->relationship('category', 'name')
                         ->searchable()
+                        ->preload()
                         ->required(),
 
                     TextInput::make('title')

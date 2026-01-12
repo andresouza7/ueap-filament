@@ -39,11 +39,24 @@ class WebPost extends Model implements HasMedia
 
     public function getImageUrlAttribute()
     {
-        // $path = 'web/posts/' . $this->id . '.jpg';
+        if (is_array($this->content)) {
+            foreach ($this->content as $block) {
+                if (
+                    ($block['type'] ?? null) === 'image' &&
+                    !empty($block['data']['path']) &&
+                    is_array($block['data']['path'])
+                ) {
+                    $path = $block['data']['path'][0] ?? null;
 
-        // return Storage::exists($path) ? Storage::url($path) : null;
+                    if ($path) {
+                        return Storage::url($path); // or return $path
+                    }
+                }
+            }
+        }
 
-        return $this->hasMedia() ? $this->getFirstMediaUrl() : 'https://picsum.photos/seed/' . $this->id . '/600/400';
+        // ✅ fallback image
+        return 'https://picsum.photos/seed/' . $this->id . '/600/400';
     }
 
     public function category()

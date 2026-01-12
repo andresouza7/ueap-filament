@@ -38,7 +38,7 @@
                 {{-- Label Vertical (Desktop) --}}
                 <div class="hidden lg:flex items-center justify-center w-12 border-r border-white/5 bg-black/10 flex-none">
                     <span class="rotate-180 [writing-mode:vertical-lr] text-[8px] font-black uppercase tracking-[0.5em] text-slate-500">
-                        SISTEMA_ACESSO
+                        ACESSO_RÁPIDO
                     </span>
                 </div>
 

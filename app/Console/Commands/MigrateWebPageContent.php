@@ -26,12 +26,12 @@ class MigrateWebPageContent extends Command
 
                 if (Storage::exists($path)) {
                     // Register media (default collection)
-                    if (! $page->hasMedia()) {
-                        $page
-                            ->addMedia(Storage::path($path))
-                            ->preservingOriginal()
-                            ->toMediaCollection();
-                    }
+                    // if (! $page->hasMedia()) {
+                    //     $page
+                    //         ->addMedia(Storage::path($path))
+                    //         ->preservingOriginal()
+                    //         ->toMediaCollection();
+                    // }
 
                     $content[] = [
                         'type' => 'image',
@@ -39,6 +39,7 @@ class MigrateWebPageContent extends Command
                             'subtitle' => null,
                             'credits'  => null,
                         ],
+                        'path' => [$path]
                     ];
                 }
 
