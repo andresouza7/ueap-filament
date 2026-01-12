@@ -62,7 +62,7 @@
 
                         {{-- Imagem de Fundo --}}
                         <div class="absolute inset-0 z-0">
-                            <img src="https://picsum.photos/seed/{{ $event->id }}/800/800" alt="{{ $event->title }}"
+                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}"
                                 class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-50 transition-all duration-700">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-[#020618] via-[#020618]/60 to-transparent z-10">

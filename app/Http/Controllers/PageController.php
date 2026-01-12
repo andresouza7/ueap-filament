@@ -13,6 +13,7 @@ class PageController extends Controller
     {
         $featured = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
+            // dd($featured);
         $posts = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
@@ -54,7 +55,8 @@ class PageController extends Controller
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $latestPosts = WebPost::where('status', 'published')->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+            ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
         $relatedPosts = WebPost::latest('id')->where('status', 'published')
             ->whereHas('category', function ($query) use ($post) {
                 $query->where('name', $post->category->name);

@@ -33,6 +33,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -65,12 +66,13 @@ class WebPostResource extends Resource
         return Block::make('gallery')
             ->label('Imagem / Galeria')
             ->schema([
-                SpatieMediaLibraryFileUpload::make('images')
+                FileUpload::make('path')
                     ->label('Imagens')
                     ->multiple()
+                    ->directory('test/web_posts')
                     ->minFiles(1)
                     ->maxFiles(10)
-                    ->acceptedFileTypes(['image/jpeg'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
                     ->reorderable()
                     ->previewable(false)
                     ->required(),
