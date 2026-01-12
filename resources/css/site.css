@@ -87,34 +87,79 @@ table td {
   background: #94a3b8;
 }
 
-.article-body a {
-  text-decoration: underline !important;
-}
-.article-body a:hover {
-  color: #054e3d !important;
-}
-
 /* pagina post-show */
+.article-body {
+    /* Reseta a base para garantir consistência */
+    @apply text-slate-600 leading-relaxed text-base;
+}
+
+/* Mata qualquer estilo vindo do banco (inline styles) */
 .article-body * {
-  @apply mb-3 leading-relaxed text-slate-700 text-sm;
-  font-family: 'Inter', serif !important;
-  text-align: left !important;
+    /* Reseta cores, fontes e tamanhos que o usuário possa ter inventado no editor */
+    color: inherit !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    background-color: transparent !important;
+    /* Mas mantém o que importa para estrutura */
+    box-sizing: border-box;
 }
 
-.article-body h2 {
-  @apply mt-10 mb-4 text-3xl font-bold text-gray-900 tracking-tight leading-tight;
+/* Media Query para telas menores que 1024px (LG) */
+@media (max-width: 1023px) {
+    .article-body * {
+        /* Aumenta a fonte para melhorar a legibilidade no mobile */
+        font-size: 16px !important; 
+    }
 }
 
-.article-body ul {
-  @apply list-disc ml-6 mb-6 text-slate-700;
-  font-family: 'Merriweather', serif;
+/* Agora suas classes (que passei na resposta anterior) aplicam o estilo correto */
+.article-body p {
+    @apply mb-4 text-slate-600 leading-relaxed text-base;
 }
+
+/* Títulos: Identidade do Header (Peso 1000 + Itálico + Tracking) */
+.article-body h1, 
+.article-body h2, 
+.article-body h3 {
+    @apply mt-12 mb-6 font-[1000] text-slate-900 uppercase italic tracking-tighter leading-[1.1];
+}
+
+.article-body h2 { @apply text-2xl md:text-3xl; }
+.article-body h3 { @apply text-xl md:text-2xl; }
+
+/* Listas: Limpas e Técnicas */
+.article-body ul, 
+.article-body ol {
+    @apply ml-5 mb-2 space-y-2;
+}
+
+.article-body ul { @apply list-disc; }
+.article-body ol { @apply list-decimal; }
 
 .article-body li {
-  @apply mb-2;
+    @apply pl-2;
 }
 
+/* Negrito: Contraste Máximo */
+.article-body strong {
+    @apply font-black text-slate-900;
+}
+
+/* Citações: Brutalista (Sem arredondamentos) */
 .article-body blockquote {
-  @apply my-8 p-6 bg-slate-50 border-l-4 border-green-600 italic text-gray-600 text-xl rounded-r-lg;
+    @apply my-12 p-8 bg-slate-50 border-l-8 border-emerald-500 italic text-slate-800 text-xl font-bold uppercase tracking-tight;
+}
+
+/* Links: Identidade Esmeralda */
+.article-body a {
+    @apply relative font-semibold leading-loose text-slate-900 transition-all duration-300;
+    /* Cria uma linha customizada com borda inferior */
+    border-bottom: 2px solid theme('colors.emerald.100');
+    text-decoration: none !important;
+}
+
+.article-body a:hover {
+    @apply text-emerald-600;
+    border-bottom-color: theme('colors.emerald.500');
 }
 /* fim pagina post show */

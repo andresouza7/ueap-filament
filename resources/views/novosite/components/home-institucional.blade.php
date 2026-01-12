@@ -1,102 +1,104 @@
-<section class="py-12 bg-white">
-    <div class="max-w-ueap mx-auto px-6 lg:px-10 font-sans">
+{{-- SECTION 01: SERVIÇOS & PLATAFORMAS (GRADIENTE TÉCNICO) --}}
+<section
+    class="relative overflow-hidden bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 py-16 md:py-28 border-b border-slate-300">
+    {{-- Grid de Background e Ruído --}}
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
 
-        {{-- SEÇÃO 1: SERVIÇOS --}}
-        <div class="mb-14">
-            <div class="flex items-center gap-4 mb-8">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 whitespace-nowrap">Serviços Institucionais</h2>
-                <div class="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></div>
+    <div class="max-w-ueap relative z-10 mx-auto px-4 md:px-10">
+
+        <div class="space-y-24 md:space-y-32">
+
+            {{-- SUB-BLOCO 01: SERVIÇOS (ALINHADO À ESQUERDA) --}}
+            <div class="flex flex-col md:flex-row items-start justify-start gap-8">
+                <div class="w-full md:w-1/3">
+                    <div class="mb-4 flex items-center gap-2">
+                        <div class="h-4 w-1 bg-emerald-600"></div>
+                        <span class="font-mono text-[9px] font-black uppercase tracking-[0.4em] text-emerald-700">LVL_01
+                            // UTILIDADE</span>
+                    </div>
+                    <h2
+                        class="text-4xl md:text-6xl font-[1000] text-slate-900 uppercase tracking-tighter leading-[0.85] italic mb-6">
+                        Canais de <br><span class="text-emerald-600">Atendimento</span>
+                    </h2>
+                    <div class="h-px w-20 bg-slate-400 opacity-30"></div>
+                </div>
+
+                <div class="grid w-full md:w-1/2 grid-cols-1 gap-px bg-slate-300 shadow-2xl">
+                    <a href="#"
+                        class="group flex items-center p-8 bg-white/80 backdrop-blur-sm transition-all hover:bg-white">
+                        <div class="flex-1">
+                            <h4
+                                class="text-2xl font-black text-slate-900 uppercase tracking-tighter group-hover:text-emerald-600 transition-colors">
+                                Carta de Serviços</h4>
+                            <span
+                                class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest mt-1 block">DOC_ID:
+                                772-B</span>
+                        </div>
+                        <i
+                            class="fa-solid fa-arrow-right-long text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-2 transition-all"></i>
+                    </a>
+                    <a href="#"
+                        class="group flex items-center p-8 bg-white/80 backdrop-blur-sm transition-all hover:bg-white">
+                        <div class="flex-1">
+                            <h4
+                                class="text-2xl font-black text-slate-900 uppercase tracking-tighter group-hover:text-emerald-600 transition-colors">
+                                Ouvidoria @UEAP</h4>
+                            <span
+                                class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest mt-1 block">CHANNEL:
+                                FEEDBACK</span>
+                        </div>
+                        <i
+                            class="fa-solid fa-arrow-right-long text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-2 transition-all"></i>
+                    </a>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-100 border border-gray-100">
-                <a href="#" class="group flex items-center p-8 bg-white transition-all duration-300 hover:bg-gray-50">
-                    <div class="flex-1">
-                        <span class="text-[10px] font-bold text-[#017D49] uppercase tracking-widest mb-1 block">Acesso ao Usuário</span>
-                        <h4 class="text-xl font-black text-gray-900 uppercase tracking-tighter">Carta de Serviços</h4>
+            {{-- SUB-BLOCO 02: PLATAFORMAS (ALINHADO À DIREITA) --}}
+            <div class="flex flex-col md:flex-row-reverse items-start justify-start gap-8">
+                <div class="w-full md:w-1/3 md:text-right flex flex-col md:items-end">
+                    <div class="mb-4 flex items-center gap-2">
+                        <span class="font-mono text-[9px] font-black uppercase tracking-[0.4em] text-emerald-700">LVL_02
+                            // DIGITAL</span>
+                        <div class="h-4 w-1 bg-emerald-600"></div>
                     </div>
-                    <i class="fa-solid fa-arrow-right-long text-gray-200 group-hover:text-gray-900 group-hover:translate-x-2 transition-all"></i>
-                </a>
+                    <h2
+                        class="text-4xl md:text-6xl font-[1000] text-slate-900 uppercase tracking-tighter leading-[0.85] italic mb-6">
+                        Nossas <br><span class="text-emerald-600">Plataformas</span>
+                    </h2>
+                    <div class="h-px w-20 bg-slate-400 opacity-30"></div>
+                </div>
 
-                <a href="#" class="group flex items-center p-8 bg-white transition-all duration-300 hover:bg-gray-50">
-                    <div class="flex-1">
-                        <span class="text-[10px] font-bold text-[#017D49] uppercase tracking-widest mb-1 block">Canal de Escuta</span>
-                        <h4 class="text-xl font-black text-gray-900 uppercase tracking-tighter">Ouvidoria @UVAP</h4>
-                    </div>
-                    <i class="fa-solid fa-arrow-right-long text-gray-200 group-hover:text-gray-900 group-hover:translate-x-2 transition-all"></i>
-                </a>
+                <div class="grid w-full md:w-1/2 grid-cols-1 md:grid-cols-2 gap-px bg-slate-300 shadow-2xl">
+                    <a href="#" class="group relative h-48 overflow-hidden bg-slate-950">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800"
+                            class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:scale-110 group-hover:grayscale-0 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                        <div class="absolute bottom-5 left-5">
+                            <h4 class="text-xl font-black text-white uppercase italic tracking-tighter">UEAP TV</h4>
+                            <div class="mt-1 flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span
+                                    class="text-[8px] font-mono text-emerald-400 uppercase tracking-widest">Live_Active</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="group relative h-48 overflow-hidden bg-[#01261a]">
+                        <div class="absolute inset-0 opacity-10 flex justify-end items-center -mr-8">
+                            <i class="fa-solid fa-dna text-[120px] text-white"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#01261a] via-transparent to-transparent">
+                        </div>
+                        <div class="absolute bottom-5 left-5">
+                            <h4 class="text-xl font-black text-white uppercase italic tracking-tighter leading-none">
+                                Herbário Amapá</h4>
+                            <span
+                                class="text-[8px] font-mono text-emerald-400 uppercase tracking-widest mt-1 block">Science_Repo_v2</span>
+                        </div>
+                    </a>
+                </div>
             </div>
+
         </div>
-
-        {{-- SEÇÃO 2: ACESSE (Cards de Impacto) --}}
-        <div class="mb-14">
-            <div class="flex items-center gap-4 mb-8">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 whitespace-nowrap">Plataformas</h2>
-                <div class="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {{-- UEAP TV --}}
-                <a href="#" class="relative h-48 bg-gray-900 overflow-hidden group">
-                    <img src="placeholder-tv.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <span class="text-[10px] font-bold text-[#017D49] uppercase tracking-widest">Streaming</span>
-                        <h4 class="text-2xl font-black text-white uppercase tracking-tighter">UEAP TV</h4>
-                    </div>
-                    <div class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center border border-white/20 group-hover:bg-white group-hover:text-black transition-all">
-                        <i class="fa-solid fa-play text-xs"></i>
-                    </div>
-                </a>
-
-                {{-- HERBÁRIO --}}
-                <a href="#" class="relative h-48 bg-[#017D49] group overflow-hidden border border-gray-100">
-                    <div class="absolute inset-0 opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-leaf text-[150px] text-white"></i>
-                    </div>
-                    <div class="absolute bottom-6 left-6">
-                        <span class="text-[10px] font-bold text-green-200 uppercase tracking-widest">Ciência e Pesquisa</span>
-                        <h4 class="text-2xl font-black text-white uppercase tracking-tighter">Herbário Amapá</h4>
-                    </div>
-                    <div class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center border border-white/20 group-hover:bg-white group-hover:text-[#017D49] transition-all">
-                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        {{-- SEÇÃO 3: PROGRAMAS (Grid Editorial Compacto) --}}
-        <div>
-            <div class="flex items-center gap-4 mb-8">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 whitespace-nowrap">Programas e Bolsas</h2>
-                <div class="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @php
-                    $programas = [
-                        ['sigla' => 'PIBID', 'desc' => 'Iniciação à Docência'],
-                        ['sigla' => 'PRP', 'desc' => 'Residência Pedagógica'],
-                        ['sigla' => 'PROACE', 'desc' => 'Ações Comunitárias'],
-                        ['sigla' => 'PROAPE', 'desc' => 'Apoio Pedagógico'],
-                        ['sigla' => 'PROBICT', 'desc' => 'Bolsas de C&T'],
-                        ['sigla' => 'PROMONITORIA', 'desc' => 'Monitoria Acadêmica'],
-                        ['sigla' => 'PIBIC', 'desc' => 'Iniciação Científica'],
-                        ['sigla' => 'PIBT', 'desc' => 'Inovação Tecnológica'],
-                    ];
-                @endphp
-
-                @foreach ($programas as $p)
-                <a href="#" class="group block border-l border-gray-100 pl-4 py-2 hover:border-gray-900 transition-all">
-                    <h4 class="text-lg font-black text-gray-900 tracking-tighter leading-none group-hover:text-[#017D49] transition-colors">
-                        {{ $p['sigla'] }}
-                    </h4>
-                    <p class="text-[11px] text-gray-400 font-medium uppercase tracking-tight mt-1 leading-tight italic">
-                        {{ $p['desc'] }}
-                    </p>
-                </a>
-                @endforeach
-            </div>
-        </div>
-
     </div>
 </section>

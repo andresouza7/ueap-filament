@@ -1,50 +1,55 @@
 @props([
-    'posts' => []
+    'posts' => [],
 ])
 
-<!-- Read Also (Bottom Grid) -->
-<section class="mt-8 pt-12">
+<section class="w-full">
+    {{-- Header alinhado com a identidade visual --}}
     <div class="flex items-center justify-between mb-10">
-        <h2 class="text-xl font-black uppercase tracking-tight text-gray-900 flex items-center gap-3">
-            <span class="w-8 h-1 bg-ueap-green"></span>
-            Veja também
+        <h2 class="text-3xl lg:text-4xl font-black tracking-tighter uppercase italic text-slate-900 whitespace-nowrap">
+            <span class="text-slate-400 not-italic font-light">Veja</span> também<span class="text-emerald-500 not-italic">.</span>
         </h2>
+        <div class="hidden lg:block h-[2px] flex-1 mx-8 bg-slate-100"></div>
     </div>
 
-    {{-- Grid: Flex-col no mobile, 4 colunas no desktop --}}
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-6">
-        @foreach ($posts as $post)
-            <article>
-                <a href="{{ route('site.post.show', $post->slug) }}"
-                    class="group flex flex-row lg:flex-col gap-4 lg:gap-4 items-start">
-
-                    {{-- Container da Imagem: Tamanho fixo no mobile, proporção 4:3 no desktop --}}
-                    <div
-                        class="shrink-0 w-28 h-20 sm:w-36 sm:h-28 lg:w-full lg:h-auto lg:aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:shadow-ueap-green/10">
-                        <img src="{{ 'https://picsum.photos/seed/' . $post->id . '/600/450' }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:rotate-1">
-                    </div>
-
-                    {{-- Conteúdo --}}
-                    <div class="flex flex-col min-w-0 py-1">
-                        <div class="flex items-center gap-2 mb-1 lg:mb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-[0.1em] text-ueap-green">
-                                {{ $post->category->name ?? 'Notícia' }}
-                            </span>
-                        </div>
-
-                        <h3
-                            class="font-bold text-sm sm:text-base text-gray-900 group-hover:text-ueap-green transition-colors leading-snug line-clamp-2 lg:line-clamp-3">
-                            {{ $post->title }}
-                        </h3>
-
-                        <div
-                            class="mt-2 lg:mt-3 flex items-center text-gray-400 text-[10px] sm:text-[11px] font-medium">
-                            <i class="fa-regular fa-calendar-days mr-1.5"></i>
-                            {{ $post->created_at->translatedFormat('d \d\e M, Y') }}
-                        </div>
+    {{-- Layout Adaptativo: Lista no Mobile (cols-1) e Grid no Desktop (lg:cols-4) --}}
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-6">
+        @foreach ($posts->take(4) as $item)
+            <article class="group relative flex flex-col gap-3">
+                
+                {{-- Miniatura Sharp --}}
+                <a href="{{ route('site.post.show', $item->slug) }}" class="block">
+                    <div class="relative aspect-video overflow-hidden rounded-[1px] bg-slate-50 border border-slate-100">
+                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/400/225' }}"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110">
+                        
+                        {{-- Detalhe Cyber Sutil no Canto da Imagem --}}
+                        <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                 </a>
+
+                {{-- Conteúdo --}}
+                <div class="flex flex-col">
+                    {{-- Badge de Categoria --}}
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest">
+                            {{ $item->categories->first()->name ?? 'Geral' }}
+                        </span>
+                    </div>
+
+                    {{-- Título com Underline Dinâmico --}}
+                    <a href="{{ route('site.post.show', $item->slug) }}">
+                        <h4 class="text-lg lg:text-[15px] font-extrabold text-slate-800 leading-tight italic tracking-tight
+                                   bg-gradient-to-r from-emerald-500 to-emerald-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat 
+                                   transition-[background-size] duration-500 group-hover:bg-[length:100%_2px] pb-1">
+                            {{ $item->title }}
+                        </h4>
+                    </a>
+                    
+                    {{-- Info extra visível apenas no mobile ou em hover --}}
+                    <p class="mt-2 text-xs text-slate-500 line-clamp-2 lg:hidden">
+                        {{ $item->excerpt ?? '' }}
+                    </p>
+                </div>
             </article>
         @endforeach
     </div>
