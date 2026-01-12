@@ -1,251 +1,99 @@
-{{-- BARRA DE ACESSO RÁPIDO - DESKTOP ORIGINAL / MOBILE 3-ITENS FULL --}}
-
-<section class="w-full relative z-20 bg-slate-50 border-b-2 border-slate-300 overflow-hidden" x-data="{
-
-    scrollNext() { $refs.grid.scrollBy({ left: $refs.grid.clientWidth, behavior: 'smooth' }); },
-
+{{-- BARRA DE ACESSO RÁPIDO - DARK MODE COM NAVEGAÇÃO INTELIGENTE --}}
+<section class="w-full relative z-20 bg-[#0f172a] border-b border-white/5 overflow-hidden" 
+    x-data="{
+        atStart: true,
+        atEnd: false,
+        checkScroll() {
+            const el = $refs.grid;
+            this.atStart = el.scrollLeft <= 10;
+            this.atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
+        },
+        scrollNext() { $refs.grid.scrollBy({ left: $refs.grid.clientWidth, behavior: 'smooth' }); },
         scrollPrev() { $refs.grid.scrollBy({ left: -$refs.grid.clientWidth, behavior: 'smooth' }); }
+    }"
+    x-init="checkScroll()"
+>
 
-}">
-
-
-
-    {{-- Numeração Lateral Decorativa --}}
-
-    <div
-        class="absolute left-0 top-0 h-full w-12 bg-slate-100 border-r border-slate-200 pointer-events-none hidden lg:flex flex-col items-center py-4 gap-4 opacity-60">
-
+    {{-- Numeração Lateral Decorativa (Desktop) --}}
+    <div class="absolute left-0 top-0 h-full w-12 bg-black/20 border-r border-white/5 pointer-events-none hidden lg:flex flex-col items-center py-4 gap-4 opacity-40">
         @for ($i = 1; $i <= 6; $i++)
-            <span class="text-[7px] font-mono text-slate-400 font-bold">0{{ $i }}</span>
+            <span class="text-[7px] font-mono text-slate-500 font-bold">0{{ $i }}</span>
         @endfor
-
     </div>
 
+    <div class="max-w-ueap mx-auto relative lg:pl-12 lg:pr-12">
+        <div class="flex items-stretch h-32 lg:h-auto">
 
-
-    <div class="max-w-ueap mx-auto relative lg:pl-12">
-
-        <div class="flex items-stretch h-32 lg:h-auto"> {{-- Altura menor no mobile, original no LG --}}
-
-
-
-            {{-- Label Vertical --}}
-
-            <div class="hidden lg:flex items-center justify-center w-10 border-r border-slate-200 bg-slate-100/50">
-
-                <span
-                    class="rotate-180 [writing-mode:vertical-lr] text-[8px] font-black uppercase tracking-[0.5em] text-slate-400">
-
-                    SISTEMA_ACESSO
-
-                </span>
-
-            </div>
-
-
-
-            {{-- Navegação Mobile --}}
-
-            <button @click="scrollPrev()"
-                class="lg:hidden px-4 text-slate-400 border-r border-slate-200 active:bg-slate-200 transition-all">
-
-                <i class="fa-solid fa-chevron-left text-[10px]"></i>
-
+            {{-- Seta Esquerda Mobile --}}
+            <button @click="scrollPrev()" 
+                :class="atStart ? 'text-slate-600' : 'text-emerald-500'"
+                class="lg:hidden flex-none w-10 flex items-center justify-center transition-colors duration-300 z-30">
+                <i class="fa-solid fa-chevron-left text-[14px]"></i>
             </button>
 
-
-
             {{-- Grid de Itens --}}
+            <div x-ref="grid" @scroll.debounce.50ms="checkScroll()"
+                class="flex-1 flex overflow-x-auto py-0 snap-x snap-mandatory hide-scroll scroll-smooth lg:flex-row lg:overflow-visible lg:justify-center">
 
-            <div x-ref="grid"
-                class="flex-1 flex overflow-x-auto py-0 snap-x snap-mandatory hide-scroll scroll-smooth lg:flex-row lg:overflow-visible">
-
-
+                {{-- Label Vertical (Desktop) --}}
+                <div class="hidden lg:flex items-center justify-center w-12 border-r border-white/5 bg-black/10 flex-none">
+                    <span class="rotate-180 [writing-mode:vertical-lr] text-[8px] font-black uppercase tracking-[0.5em] text-slate-500">
+                        SISTEMA_ACESSO
+                    </span>
+                </div>
 
                 @php
-
                     $links = [
-                        [
-                            'icon' => 'fa-calendar-days',
-
-                            'label' => 'Calendário Acadêmico',
-
-                            'id' => 'CAL-01',
-
-                            'color' => 'text-emerald-600',
-                        ],
-
-                        [
-                            'icon' => 'fa-scale-balanced',
-
-                            'label' => 'Legislação Ueap',
-
-                            'id' => 'LEG-02',
-
-                            'color' => 'text-teal-600',
-                        ],
-
-                        [
-                            'icon' => 'fa-file-lines',
-
-                            'label' => 'Instruções Normativas',
-
-                            'id' => 'NOR-03',
-
-                            'color' => 'text-emerald-600',
-                        ],
-
-                        [
-                            'icon' => 'fa-gavel',
-
-                            'label' => 'Resoluções CONSU',
-
-                            'id' => 'RES-04',
-
-                            'color' => 'text-teal-600',
-                        ],
-
-                        [
-                            'icon' => 'fa-handshake',
-
-                            'label' => 'Licitações',
-
-                            'id' => 'LIC-05',
-
-                            'color' => 'text-emerald-600',
-                        ],
-
-                        [
-                            'icon' => 'fa-user-tie',
-
-                            'label' => 'Processos Seletivos',
-
-                            'id' => 'SEL-06',
-
-                            'color' => 'text-teal-600',
-                        ],
+                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'id' => 'CAL-01', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'id' => 'LEG-02', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'id' => 'NOR-03', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'id' => 'RES-04', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'id' => 'LIC-05', 'color' => 'text-emerald-500'],
+                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'id' => 'SEL-06', 'color' => 'text-teal-400'],
                     ];
-
                 @endphp
 
-
-
                 @foreach ($links as $link)
-                    <a href="#" {{-- w-1/3 no mobile para 3 itens cravados; lg:flex-1 volta ao original --}}
-                        class="flex-none w-1/3 lg:w-auto lg:flex-1 snap-start
+                    <a href="#" 
+                        class="flex-none w-[33.333%] lg:w-auto lg:min-w-[175px] lg:flex-1 snap-start
+                               flex flex-col items-center lg:items-start justify-center lg:justify-between group transition-all duration-300
+                               py-5 lg:py-7 px-2 lg:px-9 relative overflow-hidden 
+                               border-none lg:border-r lg:border-white/5 last:border-r-0">
 
-                               flex flex-col items-start justify-between group transition-all duration-300
+                        <div class="absolute inset-0 bg-[#020618] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
 
-                               py-6 lg:py-7 px-4 lg:px-7 relative overflow-hidden border-r border-slate-200 last:border-r-0">
-
-
-
-                        {{-- O Efeito Hover Original (Slide-up Escuro) --}}
-
-                        <div
-                            class="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
-
+                        <div class="hidden lg:flex relative z-10 w-full justify-end items-start mb-4">
+                            <div class="w-1.5 h-1.5 bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_#10b981]"></div>
                         </div>
 
-
-
-                        {{-- Metadata --}}
-
-                        <div class="relative z-10 w-full flex justify-between items-start mb-4">
-
-                            <span
-                                class="text-[7px] font-mono text-slate-400 group-hover:text-slate-500 transition-colors uppercase tracking-tighter">
-
-                                Entry_{{ $link['id'] }}
-
-                            </span>
-
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-
-                                <div class="w-1 h-1 bg-emerald-500"></div>
-
-                            </div>
-
+                        <div class="relative z-10 mb-2 lg:mb-4 transition-transform duration-500 group-hover:-translate-y-1 text-center">
+                            <i class="fa-solid {{ $link['icon'] }} {{ $link['color'] }} group-hover:text-white text-lg lg:text-2xl transition-colors"></i>
                         </div>
 
-
-
-                        {{-- Ícone --}}
-
-                        <div class="relative z-10 mb-3 transition-transform duration-500 group-hover:-translate-y-1">
-
-                            <i
-                                class="fa-solid {{ $link['icon'] }} {{ $link['color'] }} group-hover:text-emerald-400/90 text-lg lg:text-xl transition-colors"></i>
-
-                        </div>
-
-
-
-                        {{-- Label --}}
-
-                        <div class="relative z-10">
-
-                            <h2
-                                class="text-[9px] lg:text-[10px] font-[1000] text-slate-700 group-hover:text-slate-300 uppercase italic tracking-tighter leading-[1.1]
-
-                                         text-left transition-colors duration-300 max-w-[90px] lg:max-w-none">
-
+                        <div class="relative z-10 text-center lg:text-left">
+                            <h2 class="text-[8px] lg:text-[10px] font-[1000] text-slate-300 group-hover:text-white uppercase italic tracking-tighter leading-[1.1] max-w-[80px] lg:max-w-[110px]">
                                 {{ $link['label'] }}
-
                             </h2>
-
                         </div>
 
-
-
-                        {{-- Cantos Técnicos --}}
-
-                        <div
-                            class="absolute top-0 right-0 w-2 h-2 border-t border-r border-slate-200 group-hover:border-emerald-500 transition-colors">
-
-                        </div>
-
-                        <div
-                            class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20">
-
-                        </div>
-
+                        <div class="hidden lg:block absolute top-0 right-0 w-2 h-2 border-t border-r border-white/10 group-hover:border-emerald-500 transition-colors"></div>
+                        <div class="absolute bottom-0 left-0 w-full h-[3px] bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20 shadow-[0_0_15px_#10b981]"></div>
                     </a>
                 @endforeach
-
             </div>
 
-
-
-            <button @click="scrollNext()"
-                class="lg:hidden px-4 text-slate-400 border-l border-slate-200 active:bg-slate-200 transition-all">
-
-                <i class="fa-solid fa-chevron-right text-[10px]"></i>
-
+            {{-- Seta Direita Mobile --}}
+            <button @click="scrollNext()" 
+                :class="atEnd ? 'text-slate-600' : 'text-emerald-500'"
+                class="lg:hidden flex-none w-10 flex items-center justify-center transition-colors duration-300 z-30">
+                <i class="fa-solid fa-chevron-right text-[14px]"></i>
             </button>
 
         </div>
-
     </div>
-
 </section>
 
-
-
 <style>
-    .hide-scroll::-webkit-scrollbar {
-
-        display: none;
-
-    }
-
-
-
-    .hide-scroll {
-
-        -ms-overflow-style: none;
-
-        scrollbar-width: none;
-
-    }
+    .hide-scroll::-webkit-scrollbar { display: none; }
+    .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
