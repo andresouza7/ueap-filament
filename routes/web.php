@@ -10,6 +10,9 @@ use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
+//
+use App\Http\Controllers\NewsletterController;
+//
 
 // Intercepta o subdominio intranet.ueap.edu.br e roteia para o painel /app do filament
 Route::domain(env('INTRANET_URL'))->group(function () {
@@ -100,3 +103,7 @@ Route::name('site.')->group(function () {
     Route::get('/pagina/{slug}',            [PageController::class, 'postShow'])->name('page.show');
 });
 
+//Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->name('newsletter.subscribe');

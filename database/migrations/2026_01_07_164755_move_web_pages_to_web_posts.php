@@ -12,10 +12,11 @@ return new class extends Migration
     {
         // Buscamos todos os registros de web_pages
         $pages = DB::table('web_pages')->get();
+        $defaultCategoryId = 15; //sem categoria
 
         foreach ($pages as $page) {
             DB::table('web_posts')->insert([
-                'web_category_id' => $page->web_category_id,
+                'web_category_id' => $page->web_category_id ?? $defaultCategoryId,
                 'web_menu_id'     => $page->web_menu_id,
                 'slug'            => $page->slug,
                 'title'           => $page->title,

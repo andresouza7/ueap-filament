@@ -102,7 +102,7 @@
                 </div>
 
                 {{-- Newsletter Original --}}
-                <div class="mt-8 lg:mt-auto pt-6 lg:pt-8">
+                <div id="newsletter" class="mt-8 lg:mt-auto pt-6 lg:pt-8">
                     <div class="bg-slate-950 p-6 lg:p-8 relative overflow-hidden shadow-2xl border-t border-slate-800">
                         <div class="absolute right-0 top-0 w-24 h-full bg-emerald-500/10 skew-x-[-20deg] translate-x-12"></div>
                         <h5 class="text-white text-xl lg:text-2xl font-[1000] uppercase italic tracking-tighter mb-1 relative z-10">
@@ -110,13 +110,37 @@
                         </h5>
                         <p class="text-slate-500 font-mono text-[9px] uppercase tracking-[0.3em] mb-6 relative z-10">Sincronizar boletim informativo</p>
                         
-                        <form action="#" class="relative z-10">
-                            <input type="email" placeholder="ENDEREÇO_DE_EMAIL" 
-                                class="w-full bg-slate-900 border border-slate-800 text-white text-[10px] font-mono tracking-[0.2em] px-5 py-3 lg:py-4 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-slate-700">
+                        {{-- Newsletter, com método --}}
+                        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="relative z-10">
+                            @csrf
+
+                            <input 
+                                type="email"
+                                name="email"
+                                placeholder="ENDEREÇO_DE_EMAIL"
+                                required
+                                class="w-full bg-slate-900 border border-slate-800 text-white text-[10px] font-mono tracking-[0.2em] px-5 py-3 lg:py-4 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-slate-700"
+                            >
+
                             <button class="absolute right-0 top-0 bottom-0 px-4 lg:px-6 bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors">
                                 <i class="fa-solid fa-arrow-right text-sm"></i>
                             </button>
                         </form>
+
+
+                        @if(session('success'))
+                            <p class="text-emerald-500 text-xs mt-3 font-mono">
+                                {{ session('success') }}
+                            </p>
+                        @endif
+
+                        @if($errors->any())
+                            <p class="text-red-500 text-xs mt-3 font-mono">
+                                {{ $errors->first('email') }}
+                            </p>
+                        @endif
+
+
                     </div>
                 </div>
             </div>
