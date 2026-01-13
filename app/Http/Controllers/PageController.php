@@ -13,10 +13,10 @@ class PageController extends Controller
     {
         $featured = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
-        // dd($featured);
         $posts = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
+
         return view('novosite.pages.home', compact('featured', 'posts', 'events'));
     }
 
@@ -68,34 +68,7 @@ class PageController extends Controller
             ->take(4)->get();
         $frequentPages = WebPost::where('status', 'published')->where('type', 'page')->orderBy('created_at', 'desc')->take(5)->get();
 
-        // $topCategories = WebCategory::query()
-        //     ->join('web_category_post', 'web_categories.id', '=', 'web_category_post.web_category_id')
-        //     ->join('web_posts', 'web_posts.id', '=', 'web_category_post.web_post_id')
-        //     ->select(
-        //         'web_categories.id',
-        //         'web_categories.name',
-        //         'web_categories.slug',
-        //         DB::raw('SUM(web_posts.hits) as total_hits')
-        //     )
-        //     ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
-        //     ->orderByDesc('total_hits')
-        //     ->take(5)
-        //     ->get();
-
-        // $topCategories = WebCategory::query()
-        //     ->join('web_posts', 'web_categories.id', '=', 'web_posts.web_category_id')
-        //     ->select(
-        //         'web_categories.id',
-        //         'web_categories.name',
-        //         'web_categories.slug',
-        //         DB::raw('SUM(web_posts.hits) as total_hits')
-        //     )
-        //     ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
-        //     ->orderByDesc('total_hits')
-        //     ->take(6)
-        //     ->get();
-
-        $topCategories = WebCategory::has('posts')
+        $categories = WebCategory::has('posts')
             ->inRandomOrder()
             ->take(6)
             ->get();
@@ -106,7 +79,7 @@ class PageController extends Controller
                 $post->increment('hits', 1);
             });
 
-            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'topCategories', 'frequentPages'));
+            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories', 'frequentPages'));
         } else {
             return redirect()->route('site.home');
         }

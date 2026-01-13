@@ -254,7 +254,7 @@
                             @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
                             @include('novosite.components.sidebar-newsletter')
                             @include('novosite.components.sidebar-categories', [
-                                'categories' => $topCategories,
+                                'categories' => $categories,
                             ])
                         </div>
                     @endif
