@@ -24,21 +24,21 @@
 
         @php
             $programas = [
-                ['sigla' => 'PIBID', 'desc' => 'Iniciação à Docência'],
-                ['sigla' => 'PRP', 'desc' => 'Residência Pedagógica'],
-                ['sigla' => 'PROACE', 'desc' => 'Ações Comunitárias'],
-                ['sigla' => 'PROAPE', 'desc' => 'Apoio Pedagógico'],
-                ['sigla' => 'PROBICT', 'desc' => 'Bolsas de C&T'],
-                ['sigla' => 'MONITORIA', 'desc' => 'Apoio Acadêmico'],
-                ['sigla' => 'PIBIC', 'desc' => 'Iniciação Científica'],
-                ['sigla' => 'PIBT', 'desc' => 'Inovação Tecnológica'],
+                ['sigla' => 'PIBID', 'desc' => 'Iniciação à Docência', 'url' => '/pagina/pibid.html'],
+                ['sigla' => 'PRP', 'desc' => 'Residência Pedagógica', 'url' => '/pagina/prp.html'],
+                ['sigla' => 'PROACE', 'desc' => 'Ações Comunitárias', 'url' => '/pagina/proace.html'],
+                ['sigla' => 'PROAPE', 'desc' => 'Apoio Pedagógico', 'url' => '/pagina/proape.html'],
+                ['sigla' => 'PROBICT', 'desc' => 'Bolsas de C&T', 'url' => '/pagina/probict.html'],
+                ['sigla' => 'MONITORIA', 'desc' => 'Apoio Acadêmico', 'url' => '/pagina/promonitoria.html'],
+                ['sigla' => 'PIBIC', 'desc' => 'Iniciação Científica', 'url' => '/pagina/pibic.html'],
+                ['sigla' => 'PIBT', 'desc' => 'Inovação Tecnológica', 'url' => '/pagina/pibt.html'],
             ];
         @endphp
 
         {{-- Grid: Mobile Lista | Desktop Cards --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
             @foreach ($programas as $index => $p)
-                <a href="#"
+                <a href="{{ $p['url'] }}"
                     class="group relative block bg-white p-4 md:p-8 transition-all duration-500 overflow-hidden">
 
                     {{-- Indicador Lateral (Hover) --}}

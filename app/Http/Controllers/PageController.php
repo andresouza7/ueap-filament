@@ -48,8 +48,12 @@ class PageController extends Controller
         // }
 
         $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+        $categories = WebCategory::has('posts')
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
 
-        return view('novosite.pages.post-list', compact('posts', 'searchString'));
+        return view('novosite.pages.post-list', compact('posts', 'categories', 'searchString'));
     }
 
     public function postShow($slug)
@@ -64,18 +68,36 @@ class PageController extends Controller
             ->take(4)->get();
         $frequentPages = WebPost::where('status', 'published')->where('type', 'page')->orderBy('created_at', 'desc')->take(5)->get();
 
-        $topCategories = WebCategory::query()
-            ->join('web_category_post', 'web_categories.id', '=', 'web_category_post.web_category_id')
-            ->join('web_posts', 'web_posts.id', '=', 'web_category_post.web_post_id')
-            ->select(
-                'web_categories.id',
-                'web_categories.name',
-                'web_categories.slug',
-                DB::raw('SUM(web_posts.hits) as total_hits')
-            )
-            ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
-            ->orderByDesc('total_hits')
-            ->take(5)
+        // $topCategories = WebCategory::query()
+        //     ->join('web_category_post', 'web_categories.id', '=', 'web_category_post.web_category_id')
+        //     ->join('web_posts', 'web_posts.id', '=', 'web_category_post.web_post_id')
+        //     ->select(
+        //         'web_categories.id',
+        //         'web_categories.name',
+        //         'web_categories.slug',
+        //         DB::raw('SUM(web_posts.hits) as total_hits')
+        //     )
+        //     ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
+        //     ->orderByDesc('total_hits')
+        //     ->take(5)
+        //     ->get();
+
+        // $topCategories = WebCategory::query()
+        //     ->join('web_posts', 'web_categories.id', '=', 'web_posts.web_category_id')
+        //     ->select(
+        //         'web_categories.id',
+        //         'web_categories.name',
+        //         'web_categories.slug',
+        //         DB::raw('SUM(web_posts.hits) as total_hits')
+        //     )
+        //     ->groupBy('web_categories.id', 'web_categories.name', 'web_categories.slug')
+        //     ->orderByDesc('total_hits')
+        //     ->take(6)
+        //     ->get();
+
+        $topCategories = WebCategory::has('posts')
+            ->inRandomOrder()
+            ->take(6)
             ->get();
 
 

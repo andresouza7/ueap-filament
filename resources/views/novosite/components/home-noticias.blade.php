@@ -29,7 +29,7 @@
 
                 <a href="{{ route('site.post.list', ['type' => 'news']) }}"
                     class="group flex items-center gap-3 lg:gap-4 text-slate-900 font-black hover:text-emerald-600 transition-all uppercase text-[9px] lg:text-[10px] tracking-[0.2em] shrink-0">
-                    <span class="relative">Acervo Full
+                    <span class="relative">Ver Acervo
                         <span class="absolute -bottom-1 left-0 w-full h-[2px] bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                     </span>
                     <div class="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center border-2 border-slate-900 group-hover:border-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-all">

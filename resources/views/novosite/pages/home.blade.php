@@ -5,7 +5,7 @@
 @section('content')
     <div class="flex flex-col">
         @include('novosite.components.home-destaques')
-        @include('novosite.components.home-acesso-rapido-alt')
+        @include('novosite.components.home-acesso-rapido')
         @include('novosite.components.home-noticias')
         @include('novosite.components.home-eventos')
         @include('novosite.components.home-institucional')

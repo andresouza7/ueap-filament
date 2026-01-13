@@ -240,14 +240,14 @@
 
                     {{-- Seção Related Posts --}}
                     <div class="mt-10">
-                        @include('novosite.components.related-posts', ['posts' => $relatedPosts])
+                        @include('novosite.components.post-relacionados', ['posts' => $relatedPosts])
                     </div>
                 </main>
 
                 {{-- SIDEBAR --}}
                 <aside class="hidden lg:block lg:col-span-4 relative h-full">
                     @if ($post->web_menu)
-                        @include('novosite.components.page-navigation', ['menu' => $post->web_menu])
+                        @include('novosite.components.post-navigation', ['menu' => $post->web_menu])
                     @else
                         <div class="space-y-12">
                             @include('novosite.components.sidebar-search')
