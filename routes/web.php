@@ -112,3 +112,6 @@ Route::name('site.')->group(function () {
 
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     ->name('newsletter.subscribe');
+
+Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
+    ->name('newsletter.dispatch');

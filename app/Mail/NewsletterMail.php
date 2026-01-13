@@ -18,6 +18,6 @@ class NewsletterMail extends Mailable
     public function build()
     {
         return $this->subject('Nova publicação')
-                    ->view('emails.newsletter');
+            ->view('emails.newsletter');
     }
 }

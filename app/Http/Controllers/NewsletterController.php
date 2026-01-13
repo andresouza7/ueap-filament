@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNewsletter;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use App\Mail\NewsletterSubscribed;
@@ -29,4 +30,15 @@ class NewsletterController extends Controller
             ->with('success', 'Email cadastrado com sucesso!');
     }
 
+    public function dispatch(Request $request) {
+
+
+        $message = "teste";
+
+        $service = new SendNewsletter($message);
+
+        $service->handle();
+
+        return "enviando emails...";
+    }
 }
