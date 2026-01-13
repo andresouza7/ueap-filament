@@ -74,7 +74,7 @@ class TicketsTable
                             ->visible(fn(callable $get) => $get('status') === 'rejeitado')
                             ->required(fn(callable $get) => $get('status') === 'rejeitado'),
                     ])
-                    ->action(function (array $data, $record, FolhaPontoService $service, callable $get) {
+                    ->action(function (array $data, $record, FolhaPontoService $service) {
                         try {
                             $notes = $data['evaluator_notes'] ?? null;
                             $service->evaluateTicket($record, $data['status'], $notes);
