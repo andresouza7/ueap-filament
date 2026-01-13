@@ -5,75 +5,77 @@
 
     <div class="max-w-ueap mx-auto px-4 md:px-10 relative z-10">
 
+        @php
+            $footerMenu = [
+                [
+                    'title' => 'Institucional',
+                    'links' => [
+                        'Sobre a UEAP' => '/pagina/historia.html',
+                        'Reitoria' => '/pagina/reitoria.html',
+                        'Pró-Reitorias' => '/pagina/pro_reitorias.html',
+                        'Conselhos' => '#',
+                        'Campi e Polos' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Cursos',
+                    'links' => [
+                        'Graduação' => '#',
+                        'Pós-Graduação' => '#',
+                        'Extensão' => '#',
+                        'EAD' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Ensino',
+                    'links' => [
+                        'Biblioteca' => '/pagina/biblioteca.html',
+                        'Portal do Aluno' => 'https://sigaa.ueap.edu.br/sigaa/',
+                        'Calendário' => '/documentos/calendar',
+                    ],
+                ],
+                [
+                    'title' => 'Comunidade',
+                    'links' => [
+                        'Notícias' => '/postagens?type=news',
+                        'Eventos' => '/postagens?type=event',
+                        'Editais' => 'https://processoseletivo.ueap.edu.br',
+                    ],
+                ],
+                [
+                    'title' => 'Transparência',
+                    'links' => [
+                        'Dados Abertos' => '#',
+                        'Licitações' => 'https://transparencia.ueap.edu.br/licitacoes',
+                        'Ouvidoria (e-SIC)' => 'https://ouvamapa.portal.ap.gov.br/',
+                    ],
+                    'wide' => true, // Flag para a coluna que ocupa 2 espaços no mobile
+                ],
+            ];
+        @endphp
+
         {{-- GRID DE LINKS --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 md:gap-8 mb-12 md:mb-20">
-            {{-- Coluna 1 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Institucional</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Sobre a UEAP</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Reitoria</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Pró-Reitorias</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Conselhos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Campi e Polos</a></li>
-                </ul>
-            </div>
+            @foreach ($footerMenu as $section)
+                <div class="{{ $section['wide'] ?? false ? 'col-span-2 lg:col-span-1' : '' }}">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-4 h-[2px] bg-emerald-500"></span>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">
+                            {{ $section['title'] }}
+                        </h4>
+                    </div>
 
-            {{-- Coluna 2 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Cursos</h4>
+                    <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
+                        @foreach ($section['links'] as $label => $url)
+                            <li>
+                                <a href="{{ $url }}" class="hover:text-emerald-400 transition-colors">
+                                    {{ $label }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Graduação</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Pós-Graduação</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Extensão</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">EAD</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 3 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Ensino</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Biblioteca</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Portal do Aluno</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Calendário</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 4 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Comunidade</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Notícias</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Eventos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Editais</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 5 --}}
-            <div class="col-span-2 lg:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Transparência</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Dados Abertos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Licitações</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Ouvidoria (e-SIC)</a></li>
-                </ul>
-            </div>
+            @endforeach
         </div>
 
         {{-- INFO PRINCIPAL --}}
