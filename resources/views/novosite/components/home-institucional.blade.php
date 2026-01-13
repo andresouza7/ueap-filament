@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="grid w-full md:w-1/2 grid-cols-1 gap-px bg-slate-300 shadow-2xl">
-                    <a href="#"
+                    <a href="https://cartaservico.portal.ap.gov.br/carta-de-servico-publica/orgao/46/servicos"
                         class="group flex items-center p-8 bg-white/80 backdrop-blur-sm transition-all hover:bg-white">
                         <div class="flex-1">
                             <h4
@@ -38,7 +38,7 @@
                         <i
                             class="fa-solid fa-arrow-right-long text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-2 transition-all"></i>
                     </a>
-                    <a href="#"
+                    <a href="https://ouvamapa.portal.ap.gov.br/"
                         class="group flex items-center p-8 bg-white/80 backdrop-blur-sm transition-all hover:bg-white">
                         <div class="flex-1">
                             <h4
@@ -56,6 +56,7 @@
 
             {{-- SUB-BLOCO 02: PLATAFORMAS (ALINHADO À DIREITA) --}}
             <div class="flex flex-col md:flex-row-reverse items-start justify-start gap-8">
+                {{-- TÍTULO DA SEÇÃO --}}
                 <div class="w-full md:w-1/3 md:text-right flex flex-col md:items-end">
                     <div class="mb-4 flex items-center gap-2">
                         <span class="font-mono text-[9px] font-black uppercase tracking-[0.4em] text-emerald-700">LVL_02
@@ -69,31 +70,69 @@
                     <div class="h-px w-20 bg-slate-400 opacity-30"></div>
                 </div>
 
+                {{-- GRID DE CARDS --}}
                 <div class="grid w-full md:w-1/2 grid-cols-1 md:grid-cols-2 gap-px bg-slate-300 shadow-2xl">
-                    <a href="#" class="group relative h-48 overflow-hidden bg-slate-950">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800"
-                            class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:scale-110 group-hover:grayscale-0 transition-all duration-700">
+
+                    {{-- CARD UEAP TV (YouTube Colors) --}}
+                    <a href="http://ueap.edu.br/pagina/ueap_tv.html" target="_blank"
+                        class="group relative h-48 overflow-hidden bg-slate-950">
+                        {{-- Gradiente YouTube: Vermelho Intenso --}}
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-red-600 via-red-950 to-slate-950 opacity-40 group-hover:opacity-60 transition-opacity duration-500">
+                        </div>
+
+                        {{-- Ícone de Fundo --}}
+                        <div
+                            class="absolute inset-0 opacity-20 flex justify-end items-center -mr-6 transition-transform duration-700 group-hover:-translate-x-6">
+                            <i class="fa-solid fa-play text-[100px] text-white"></i>
+                        </div>
+
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
                         <div class="absolute bottom-5 left-5">
-                            <h4 class="text-xl font-black text-white uppercase italic tracking-tighter">UEAP TV</h4>
-                            <div class="mt-1 flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="fa-brands fa-youtube text-red-500 text-xs"></i>
+                                <h4 class="text-xl font-black text-white uppercase italic tracking-tighter">UEAP TV</h4>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
                                 <span
-                                    class="text-[8px] font-mono text-emerald-400 uppercase tracking-widest">Live_Active</span>
+                                    class="text-[8px] font-mono text-red-400 uppercase tracking-widest">Live_Streaming_v1</span>
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="group relative h-48 overflow-hidden bg-[#01261a]">
-                        <div class="absolute inset-0 opacity-10 flex justify-end items-center -mr-8">
-                            <i class="fa-solid fa-dna text-[120px] text-white"></i>
+
+                    {{-- CARD INSTAGRAM (Instagram Official Colors) --}}
+                    <a href="https://www.instagram.com/ueapoficial/" target="_blank"
+                        class="group relative h-48 overflow-hidden bg-slate-950">
+                        {{-- Gradiente Instagram: Roxo, Rosa e Laranja --}}
+                        <div
+                            class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-600 via-pink-600 to-orange-500 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-br from-[#01261a] via-transparent to-transparent">
+
+                        {{-- Ícone de Fundo --}}
+                        <div
+                            class="absolute inset-0 opacity-10 flex justify-end items-center -mr-8 transition-transform duration-700 group-hover:-translate-x-6">
+                            <i class="fa-brands fa-instagram text-[120px] text-white"></i>
                         </div>
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
                         <div class="absolute bottom-5 left-5">
-                            <h4 class="text-xl font-black text-white uppercase italic tracking-tighter leading-none">
-                                Herbário Amapá</h4>
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="fa-brands fa-instagram text-pink-500 text-xs"></i>
+                                <h4
+                                    class="text-xl font-black text-white uppercase italic tracking-tighter leading-none">
+                                    Instagram <span class="text-emerald-500">Oficial</span>
+                                </h4>
+                            </div>
                             <span
-                                class="text-[8px] font-mono text-emerald-400 uppercase tracking-widest mt-1 block">Science_Repo_v2</span>
+                                class="text-[8px] font-mono text-emerald-400 uppercase tracking-widest mt-1 block tracking-[0.2em]">Social_Connect_v2</span>
+                        </div>
+
+                        {{-- Borda interna sutil no hover --}}
+                        <div
+                            class="absolute inset-0 border border-white/0 group-hover:border-white/10 transition-all duration-500 pointer-events-none">
                         </div>
                     </a>
                 </div>

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConsuAta;
+use App\Models\ConsuResolution;
+use App\Models\Document;
+use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
@@ -85,26 +89,71 @@ class PageController extends Controller
         }
     }
 
-    // public function documentList($type)
-    // {
-    //     $check = new DocumentController();
+    public function calendarList(Request $request)
+    {
+        $query = Document::where('type', 'calendar')->orderByDesc('year')->orderBy('title');
 
-    //     if($check->checkType($type)){
-    //         $documents = Document::where('type', $type)->orderByDesc('year')->orderByDesc('title')->paginate(25)->withQueryString();
-    //         return view('site.pages.document-list', compact('documents'));
-    //     }
-    //     return redirect()->route('site.home');
-    // }
+        if ($request->name) {
+            $query->where('title', 'ilike', "%$request->name%");
+        }
 
+        if ($request->year) {
+            $query->where('year',  $request->year);
+        }
 
-    // public function normativeInstructionList($type=false)
-    // {
-    //     $instructions = NormativeInstruction::orderBy('year', 'DESC')
-    //     ->orderBy('number', 'DESC')
-    //     ->paginate(25)
-    //     ->withQueryString();
-    //     return view('site.pages.document-normative-instruction-list', compact('instructions'));
+        $items = $query->paginate(25)->withQueryString();
 
+        return view('novosite.pages.calendar-list', compact('items'));
+    }
 
-    // }
+    #################################
+    ## CONSU
+    #################################
+    public function listOrdinance(Request $request)
+    {
+        $query = Portaria::where('origin', 'CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+
+        if ($request->name) {
+            $request->validate(['name' => 'string|max:255']);
+            $query
+                ->where('description', 'ilike', "%$request->name%");
+        }
+
+        if ($request->number) {
+            $request->validate(['number' => 'integer']);
+            $query->where('number',  $request->number);
+        }
+
+        if ($request->year) {
+            $request->validate(['year' => 'integer']);
+            $query->where('year',  $request->year);
+        }
+
+        $items = $query->paginate(25)->withQueryString();
+
+        return view('novosite.pages.consu-list', compact('items'));
+    }
+
+    public function listResolution(Request $request)
+    {
+        $query = ConsuResolution::orderBy('year', 'DESC')->orderBy('number', 'DESC');
+
+        if ($request->name) {
+            $request->validate(['name' => 'string|max:255']);
+            $query->where('name', 'ilike', "%$request->name%");
+        }
+
+        if ($request->number) {
+            $request->validate(['number' => 'integer']);
+            $query->where('number',  $request->number);
+        }
+
+        if ($request->year) {
+            $request->validate(['year' => 'integer']);
+            $query->where('year',  $request->year);
+        }
+
+        $items = $query->paginate(25)->withQueryString();
+        return view('novosite.pages.consu-list', compact('items'));
+    }
 }

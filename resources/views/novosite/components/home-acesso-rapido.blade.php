@@ -44,17 +44,17 @@
 
                 @php
                     $links = [
-                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'id' => 'CAL-01', 'color' => 'text-emerald-400'],
-                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'id' => 'LEG-02', 'color' => 'text-teal-400'],
-                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'id' => 'NOR-03', 'color' => 'text-emerald-400'],
-                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'id' => 'RES-04', 'color' => 'text-teal-400'],
-                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'id' => 'LIC-05', 'color' => 'text-emerald-500'],
-                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'id' => 'SEL-06', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'url' => '/documentos/calendar', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'url' => '/pagina/legislacao.html', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'url' => '/pagina/instrucoes_normativas.html', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'url' => '/consu/resolucoes', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'url' => 'https://transparencia.ueap.edu.br/licitacoes', 'color' => 'text-emerald-500'],
+                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'url' => '/pagina/area-processos-seletivos.html', 'color' => 'text-teal-400'],
                     ];
                 @endphp
 
                 @foreach ($links as $link)
-                    <a href="#" 
+                    <a href="{{ $link['url'] }}" 
                         class="flex-none w-[33.333%] lg:w-auto lg:min-w-[175px] lg:flex-1 snap-start
                                flex flex-col items-center lg:items-start justify-center lg:justify-between group transition-all duration-300
                                py-5 lg:py-7 px-2 lg:px-9 relative overflow-hidden 
