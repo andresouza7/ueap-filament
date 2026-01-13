@@ -13,7 +13,7 @@ class NewsletterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public string $content) {}
+    public function __construct(public mixed $content) {}
 
     public function build()
     {

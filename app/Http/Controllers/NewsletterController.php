@@ -8,6 +8,7 @@ use App\Models\Subscriber;
 use App\Models\WebPage;
 use Illuminate\Http\Request;
 use App\Mail\NewsletterSubscribed;
+use App\Models\WebPost;
 use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
@@ -40,21 +41,21 @@ class NewsletterController extends Controller
     public function dispatch()
     {
         // 1️⃣ Busca as 5 últimas notícias publicadas
-        $items = WebPage::query()
+        $items = WebPost::query()
             ->where('status', 'published')
             ->orderByDesc('created_at')
             ->limit(5)
             ->get([
                 'slug',
                 'title',
-                'description',
+                'resume',
                 'created_at',
             ])
             ->map(fn ($page) => new NewsletterItem(
                 title: $page->title,
-                excerpt: $page->description
+                excerpt: $page->resume
                     ?? str($page->title)->limit(140),
-                url: url('/' . $page->slug),
+                url: url('/postagem/' . $page->slug),
                 publishedAt: $page->created_at->format('d/m/Y'),
             ));
 
