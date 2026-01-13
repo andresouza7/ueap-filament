@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use App\Mail\NewsletterSubscribed;
+use Illuminate\Support\Facades\Mail;
 
 
 
