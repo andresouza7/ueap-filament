@@ -8,7 +8,6 @@ use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 //
 use App\Http\Controllers\NewsletterController;
@@ -101,6 +100,12 @@ Route::name('site.')->group(function () {
     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
     Route::get('/pagina/{slug}',            [PageController::class, 'postShow'])->name('page.show');
+
+    Route::name('consu.')->group(function () {
+        Route::get('consu/portarias',      [PageController::class, 'listOrdinance'])->name('ordinance.list');
+        Route::get('consu/resolucoes',      [PageController::class, 'listResolution'])->name('resolution.list');
+        Route::get('documentos/calendar',      [PageController::class, 'calendarList'])->name('calendar.list');
+    });
 });
 
 //Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);

@@ -27,12 +27,13 @@
 
                 {{-- Categoria & Tipo + Badge de Status (Badge Adicionada) --}}
                 <div class="flex flex-wrap items-center gap-3 mb-4 lg:mb-8">
-                   <a href="{{ route('site.post.list', ['category' => $post->category->slug]) }}" 
-   class="flex items-center bg-slate-900 px-3 py-1 ring-1 ring-emerald-500/30 hover:ring-emerald-500 transition-all group">
-    <span class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.15em] group-hover:text-emerald-400">
-        {{ $post->category->name }}
-    </span>
-</a>
+                    <a href="{{ route('site.post.list', ['category' => $post->category->slug]) }}"
+                        class="flex items-center bg-slate-900 px-3 py-1 ring-1 ring-emerald-500/30 hover:ring-emerald-500 transition-all group">
+                        <span
+                            class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.15em] group-hover:text-emerald-400">
+                            {{ $post->category->name }}
+                        </span>
+                    </a>
 
                     {{-- Status de Conexão (Novo detalhe para alinhar com a listagem) --}}
                     <div class="flex items-center gap-1.5 bg-emerald-500/10 px-2 py-1 border border-emerald-500/20">
@@ -138,7 +139,7 @@
     </header>
 
     {{-- ================= CONTENT AREA ================= --}}
-    <section x-data="{ open: false }" class="w-full py-16 relative">
+    <section x-data="{ open: false }" class="w-full py-16 lg:py-24 relative">
 
         {{-- BOTÃO MOBILE --}}
         @if ($post->web_menu)
@@ -211,7 +212,7 @@
                     <article
                         class="article-body prose prose-slate max-w-none 
         prose-headings:uppercase prose-headings:italic prose-headings:font-[1000] prose-headings:tracking-tighter
-        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900">
+        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 flex flex-col gap-10">
 
                         @foreach ($post->content ?? [] as $block)
                             @include('novosite.components.post-block-renderer', ['block' => $block])
@@ -239,21 +240,21 @@
 
                     {{-- Seção Related Posts --}}
                     <div class="mt-10">
-                        @include('novosite.components.related-posts', ['posts' => $relatedPosts])
+                        @include('novosite.components.post-relacionados', ['posts' => $relatedPosts])
                     </div>
                 </main>
 
                 {{-- SIDEBAR --}}
                 <aside class="hidden lg:block lg:col-span-4 relative h-full">
                     @if ($post->web_menu)
-                        @include('novosite.components.page-navigation', ['menu' => $post->web_menu])
+                        @include('novosite.components.post-navigation', ['menu' => $post->web_menu])
                     @else
                         <div class="space-y-12">
                             @include('novosite.components.sidebar-search')
                             @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
                             @include('novosite.components.sidebar-newsletter')
                             @include('novosite.components.sidebar-categories', [
-                                'categories' => $topCategories,
+                                'categories' => $categories,
                             ])
                         </div>
                     @endif

@@ -1,55 +1,94 @@
-{{-- BARRA DE ACESSO RÁPIDO - COM NAVEGAÇÃO MOBILE --}}
-<section class="w-full relative z-20 bg-white border-b border-gray-200">
-    <div class="max-w-ueap mx-auto relative z-10 lg:px-8">
-        
-        {{-- Setas de Navegação - Visíveis apenas no Mobile --}}
-        <div class="flex items-center lg:block">
-            
-            {{-- Seta Esquerda --}}
-            <button onclick="scrollGrid('left')" class="lg:hidden p-3 text-slate-400 active:text-emerald-600">
-                <i class="fa-solid fa-chevron-left"></i>
+{{-- BARRA DE ACESSO RÁPIDO - DARK MODE COM NAVEGAÇÃO INTELIGENTE --}}
+<section class="w-full relative z-20 bg-[#0f172a] border-b border-white/5 overflow-hidden" 
+    x-data="{
+        atStart: true,
+        atEnd: false,
+        checkScroll() {
+            const el = $refs.grid;
+            this.atStart = el.scrollLeft <= 10;
+            this.atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
+        },
+        scrollNext() { $refs.grid.scrollBy({ left: $refs.grid.clientWidth, behavior: 'smooth' }); },
+        scrollPrev() { $refs.grid.scrollBy({ left: -$refs.grid.clientWidth, behavior: 'smooth' }); }
+    }"
+    x-init="checkScroll()"
+>
+
+    {{-- Numeração Lateral Decorativa (Desktop) --}}
+    <div class="absolute left-0 top-0 h-full w-12 bg-black/20 border-r border-white/5 pointer-events-none hidden lg:flex flex-col items-center py-4 gap-4 opacity-40">
+        @for ($i = 1; $i <= 6; $i++)
+            <span class="text-[7px] font-mono text-slate-500 font-bold">0{{ $i }}</span>
+        @endfor
+    </div>
+
+    <div class="max-w-ueap mx-auto relative lg:pl-12 lg:pr-12">
+        <div class="flex items-stretch h-32 lg:h-auto">
+
+            {{-- Seta Esquerda Mobile --}}
+            <button @click="scrollPrev()" 
+                :class="atStart ? 'text-slate-600' : 'text-emerald-500'"
+                class="lg:hidden flex-none w-10 flex items-center justify-center transition-colors duration-300 z-30">
+                <i class="fa-solid fa-chevron-left text-[14px]"></i>
             </button>
 
-            <div id="quick-access-grid" 
-                 class="flex overflow-x-auto pb-2 pt-2 gap-2 snap-x snap-mandatory hide-scroll scroll-smooth
-                        lg:grid lg:grid-cols-6 lg:gap-0 lg:pb-0 lg:pt-0 lg:overflow-visible">
-                
+            {{-- Grid de Itens --}}
+            <div x-ref="grid" @scroll.debounce.50ms="checkScroll()"
+                class="flex-1 flex overflow-x-auto py-0 snap-x snap-mandatory hide-scroll scroll-smooth lg:flex-row lg:overflow-visible lg:justify-center">
+
+                {{-- Label Vertical (Desktop) --}}
+                <div class="hidden lg:flex items-center justify-center w-12 border-r border-white/5 bg-black/10 flex-none">
+                    <span class="rotate-180 [writing-mode:vertical-lr] text-[8px] font-black uppercase tracking-[0.5em] text-slate-500">
+                        ACESSO_RÁPIDO
+                    </span>
+                </div>
+
                 @php
                     $links = [
-                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'color' => 'text-emerald-600'],
-                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'color' => 'text-teal-600'],
-                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'color' => 'text-emerald-600'],
-                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'color' => 'text-teal-600'],
-                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'color' => 'text-emerald-600'],
-                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'color' => 'text-teal-600'],
+                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'url' => '/documentos/calendar', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'url' => '/pagina/legislacao.html', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'url' => '/pagina/instrucoes_normativas.html', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'url' => '/consu/resolucoes', 'color' => 'text-teal-400'],
+                        ['icon' => 'fa-handshake', 'label' => 'Licitações', 'url' => 'https://transparencia.ueap.edu.br/licitacoes', 'color' => 'text-emerald-500'],
+                        ['icon' => 'fa-user-tie', 'label' => 'Processos Seletivos', 'url' => '/pagina/area-processos-seletivos.html', 'color' => 'text-teal-400'],
                     ];
                 @endphp
 
                 @foreach ($links as $link)
-                    <a href="#"
-                        {{-- w-[calc(33.333%-8px)] garante que apareçam exatamente 3 itens no mobile --}}
-                        class="flex-none w-[calc(33.333%-8px)] lg:w-auto snap-start
-                               flex flex-col items-center justify-center group transition-all duration-300 
-                               py-6 px-1 lg:py-6 lg:px-4 
-                               bg-transparent hover:bg-gray-50/80">
+                    <a href="{{ $link['url'] }}" 
+                        class="flex-none w-[33.333%] lg:w-auto lg:min-w-[175px] lg:flex-1 snap-start
+                               flex flex-col items-center lg:items-start justify-center lg:justify-between group transition-all duration-300
+                               py-5 lg:py-7 px-2 lg:px-9 relative overflow-hidden 
+                               border-none lg:border-r lg:border-white/5 last:border-r-0">
 
-                        <div class="w-10 h-10 lg:w-16 lg:h-16 flex-shrink-0 flex items-center justify-center 
-                                    mb-3 lg:mb-4 transition-transform duration-300 group-hover:-translate-y-1">
-                            <i class="fa-solid {{ $link['icon'] }} {{ $link['color'] }} text-lg lg:text-2xl opacity-90 group-hover:opacity-100"></i>
+                        <div class="absolute inset-0 bg-[#020618] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
+
+                        <div class="hidden lg:flex relative z-10 w-full justify-end items-start mb-4">
+                            <div class="w-1.5 h-1.5 bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_#10b981]"></div>
                         </div>
 
-                        <span class="text-[9px] lg:text-[10px] font-bold text-slate-700 uppercase tracking-[0.15em] 
-                                     text-center leading-tight group-hover:text-emerald-700 transition-colors duration-200">
-                            {{ $link['label'] }}
-                        </span>
+                        <div class="relative z-10 mb-2 lg:mb-4 transition-transform duration-500 group-hover:-translate-y-1 text-center">
+                            <i class="fa-solid {{ $link['icon'] }} {{ $link['color'] }} group-hover:text-white text-lg lg:text-2xl transition-colors"></i>
+                        </div>
+
+                        <div class="relative z-10 text-center lg:text-left">
+                            <h2 class="text-[8px] lg:text-[12px] font-[1000] text-slate-300 group-hover:text-white uppercase italic tracking-tighter leading-[1.1] max-w-[80px] lg:max-w-[110px]">
+                                {{ $link['label'] }}
+                            </h2>
+                        </div>
+
+                        <div class="hidden lg:block absolute top-0 right-0 w-2 h-2 border-t border-r border-white/10 group-hover:border-emerald-500 transition-colors"></div>
+                        <div class="absolute bottom-0 left-0 w-full h-[3px] bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20 shadow-[0_0_15px_#10b981]"></div>
                     </a>
                 @endforeach
             </div>
 
-            {{-- Seta Direita --}}
-            <button onclick="scrollGrid('right')" class="lg:hidden p-3 text-slate-400 active:text-emerald-600">
-                <i class="fa-solid fa-chevron-right"></i>
+            {{-- Seta Direita Mobile --}}
+            <button @click="scrollNext()" 
+                :class="atEnd ? 'text-slate-600' : 'text-emerald-500'"
+                class="lg:hidden flex-none w-10 flex items-center justify-center transition-colors duration-300 z-30">
+                <i class="fa-solid fa-chevron-right text-[14px]"></i>
             </button>
+
         </div>
     </div>
 </section>
@@ -57,21 +96,4 @@
 <style>
     .hide-scroll::-webkit-scrollbar { display: none; }
     .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Garante que o scroll suave funcione via JS */
-    .scroll-smooth { scroll-behavior: smooth; }
 </style>
-
-<script>
-    function scrollGrid(direction) {
-        const grid = document.getElementById('quick-access-grid');
-        // Calcula a largura de um "bloco" de 3 itens
-        const scrollAmount = grid.clientWidth; 
-        
-        if (direction === 'left') {
-            grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else {
-            grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    }
-</script>

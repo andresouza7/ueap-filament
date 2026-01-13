@@ -26,7 +26,7 @@
             </div>
 
             <p class="text-[12px] text-slate-500 leading-snug mb-6 font-medium italic border-l border-slate-300 pl-3">
-                O resumo essencial do que acontece na UEAP, toda semana diretamente no seu terminal.
+                O resumo essencial do que acontece na UEAP, toda semana diretamente no seu e-mail.
             </p>
 
             <form class="flex flex-col gap-2">

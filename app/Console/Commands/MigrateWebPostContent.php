@@ -26,12 +26,12 @@ class MigrateWebPostContent extends Command
 
                 if (Storage::exists($path)) {
                     // Register media (default collection)
-                    if (! $post->hasMedia()) {
-                        $post
-                            ->addMedia(Storage::path($path))
-                            ->preservingOriginal()
-                            ->toMediaCollection();
-                    }
+                    // if (! $post->hasMedia()) {
+                    //     $post
+                    //         ->addMedia(Storage::path($path))
+                    //         ->preservingOriginal()
+                    //         ->toMediaCollection();
+                    // }
 
                     $content[] = [
                         'type' => 'image',
@@ -39,6 +39,7 @@ class MigrateWebPostContent extends Command
                             'subtitle' => $post->image_subtitle,
                             'credits'  => $post->image_credits,
                         ],
+                        'path' => [$path]
                     ];
                 }
 

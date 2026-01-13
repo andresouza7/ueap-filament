@@ -47,7 +47,7 @@
                             0{{ $index + 1 }}
                         </div>
 
-                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/200' }}"
+                        <img src="{{ $item->image_url }}"
                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
                     </div>
 

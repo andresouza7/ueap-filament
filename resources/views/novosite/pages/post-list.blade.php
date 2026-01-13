@@ -38,7 +38,7 @@
                             <a href="/"
                                 class="text-[10px] font-mono uppercase text-slate-500 hover:text-emerald-400 transition-colors">Início</a>
                             <i class="fa-solid fa-chevron-right text-[8px] text-slate-700"></i>
-                            <span class="text-[10px] font-mono uppercase text-slate-200">Listar_Publicações</span>
+                            <span class="text-[10px] font-mono uppercase text-slate-200">Publicações</span>
                         </div>
                     </nav>
 
@@ -93,11 +93,11 @@
                                 <div class="flex items-center gap-3 mb-1">
                                     <span
                                         class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-emerald-600 animate-pulse">
-                                        Search_Query_Active
+                                        Exibindo_Resultados_Para
                                     </span>
                                     <span class="hidden md:block h-px w-12 bg-slate-200"></span>
                                     <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest">
-                                        {{ $posts->total() }} matches_found
+                                        {{ $posts->total() }} registros_encontrados
                                     </span>
                                 </div>
                                 <h1
@@ -218,7 +218,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-8">
+                    <div class="space-y-3">
                         @forelse ($posts as $item)
                             <article
                                 class="group relative flex flex-col sm:flex-row gap-6 p-4 border border-transparent hover:border-slate-100 hover:bg-slate-50/50 transition-all duration-300">
@@ -263,7 +263,7 @@
 
                                     <a href="{{ route('site.post.show', $item->slug) }}"
                                         class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-950 transition-all">
-                                        READ_FULL_ACCESS
+                                        ACESSAR_CONTEÚDO
                                         <i
                                             class="fa-solid fa-arrow-right-long transition-transform group-hover:translate-x-2"></i>
                                     </a>
@@ -280,15 +280,16 @@
 
                     @if ($posts->hasPages())
                         <div class="pt-12">
-                            {{ $posts->links() }}
+                            {{ $posts->links('novosite.components.post-paginator') }}
                         </div>
                     @endif
                 </div>
 
                 {{-- Sidebar Futurista --}}
-                <aside class="lg:col-span-4 space-y-8">
-                    <div class="sticky top-8">
+                <aside class="lg:col-span-4">
+                    <div class="sticky top-8 space-y-8">
                         @include('novosite.components.sidebar-newsletter')
+                        @include('novosite.components.sidebar-categories', ['categories' => $categories])
                     </div>
                 </aside>
             </div>

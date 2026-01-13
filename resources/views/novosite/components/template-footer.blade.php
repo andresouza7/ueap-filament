@@ -1,78 +1,81 @@
 <footer class="bg-slate-950 text-white pt-10 md:pt-20 pb-8 relative overflow-hidden">
-    <div class="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none">
+    <div
+        class="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none">
     </div>
 
     <div class="max-w-ueap mx-auto px-4 md:px-10 relative z-10">
 
+        @php
+            $footerMenu = [
+                [
+                    'title' => 'Institucional',
+                    'links' => [
+                        'Sobre a UEAP' => '/pagina/historia.html',
+                        'Reitoria' => '/pagina/reitoria.html',
+                        'Pró-Reitorias' => '/pagina/pro_reitorias.html',
+                        'Conselhos' => '#',
+                        'Campi e Polos' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Cursos',
+                    'links' => [
+                        'Graduação' => '#',
+                        'Pós-Graduação' => '#',
+                        'Extensão' => '#',
+                        'EAD' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Ensino',
+                    'links' => [
+                        'Biblioteca' => '/pagina/biblioteca.html',
+                        'Portal do Aluno' => 'https://sigaa.ueap.edu.br/sigaa/',
+                        'Calendário' => '/documentos/calendar',
+                    ],
+                ],
+                [
+                    'title' => 'Comunidade',
+                    'links' => [
+                        'Notícias' => '/postagens?type=news',
+                        'Eventos' => '/postagens?type=event',
+                        'Editais' => 'https://processoseletivo.ueap.edu.br',
+                    ],
+                ],
+                [
+                    'title' => 'Transparência',
+                    'links' => [
+                        'Dados Abertos' => '#',
+                        'Licitações' => 'https://transparencia.ueap.edu.br/licitacoes',
+                        'Ouvidoria (e-SIC)' => 'https://ouvamapa.portal.ap.gov.br/',
+                    ],
+                    'wide' => true, // Flag para a coluna que ocupa 2 espaços no mobile
+                ],
+            ];
+        @endphp
+
         {{-- GRID DE LINKS --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 md:gap-8 mb-12 md:mb-20">
-            {{-- Coluna 1 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Institucional</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Sobre a UEAP</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Reitoria</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Pró-Reitorias</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Conselhos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Campi e Polos</a></li>
-                </ul>
-            </div>
+            @foreach ($footerMenu as $section)
+                <div class="{{ $section['wide'] ?? false ? 'col-span-2 lg:col-span-1' : '' }}">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-4 h-[2px] bg-emerald-500"></span>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">
+                            {{ $section['title'] }}
+                        </h4>
+                    </div>
 
-            {{-- Coluna 2 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Cursos</h4>
+                    <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
+                        @foreach ($section['links'] as $label => $url)
+                            <li>
+                                <a href="{{ $url }}" class="hover:text-emerald-400 transition-colors">
+                                    {{ $label }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Graduação</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Pós-Graduação</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Extensão</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">EAD</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 3 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Ensino</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Biblioteca</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Portal do Aluno</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Calendário</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 4 --}}
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Comunidade</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Notícias</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Eventos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Editais</a></li>
-                </ul>
-            </div>
-
-            {{-- Coluna 5 --}}
-            <div class="col-span-2 lg:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="w-4 h-[2px] bg-emerald-500"></span>
-                    <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500">Transparência</h4>
-                </div>
-                <ul class="space-y-2 text-[12px] md:text-sm text-slate-400 font-medium">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Dados Abertos</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Licitações</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Ouvidoria (e-SIC)</a></li>
-                </ul>
-            </div>
+            @endforeach
         </div>
 
         {{-- INFO PRINCIPAL --}}
@@ -120,7 +123,8 @@
             </div>
 
             {{-- Selo MEC: Agora Centralizado Verticalmente e mais Robusto --}}
-            <a href="#" class="group block w-full md:w-auto">
+            <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/NTcwMQ=="
+                class="group block w-full md:w-auto">
                 <div
                     class="flex flex-row md:flex-col lg:flex-row items-center justify-between md:justify-center gap-6 bg-white/[0.02] md:bg-transparent p-4 md:p-0 rounded-lg">
 
@@ -141,7 +145,7 @@
 
                     {{-- Card do Selo (Aumentado para ocupar espaço) --}}
                     <div
-                        class="relative w-24 h-24 md:w-36 md:h-36 bg-white rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-1 transition-all duration-500 transform group-hover:scale-105 group-hover:shadow-emerald-500/20 order-2 md:order-1 lg:order-2 flex-shrink-0">
+                        class="relative w-24 h-24 md:w-32 md:h-32 bg-white rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-1 transition-all duration-500 transform group-hover:scale-105 group-hover:shadow-emerald-500/20 order-2 md:order-1 lg:order-2 flex-shrink-0">
 
                         <div class="w-full h-full flex items-center justify-center overflow-hidden bg-white">
                             <img class="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-700"
@@ -244,14 +248,18 @@
                 © 2026 UEAP — Todos os direitos reservados.
             </p>
             <div class="flex gap-4">
-                <a href="#"
+                <a href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ"
+                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-youtube text-sm"></i>
+                </a>
+                <a href="https://www.instagram.com/ueapoficial/"
                     class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-slate-400 hover:text-white">
                     <i class="fa-brands fa-instagram text-sm"></i>
                 </a>
-                <a href="#"
+                {{-- <a href="#"
                     class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-emerald-500 transition-all text-slate-400 hover:text-white">
                     <i class="fa-brands fa-facebook-f text-sm"></i>
-                </a>
+                </a> --}}
             </div>
         </div>
     </div>

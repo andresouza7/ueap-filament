@@ -33,6 +33,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -62,17 +63,18 @@ class WebPostResource extends Resource
 
     protected static function ImageBlock(): Block
     {
-        return Block::make('gallery')
-            ->label('Imagem / Galeria')
+        return Block::make('image')
+            ->label('Imagem')
             ->schema([
-                SpatieMediaLibraryFileUpload::make('images')
+                FileUpload::make('path')
                     ->label('Imagens')
                     ->multiple()
+                    ->directory('test/web_posts')
                     ->minFiles(1)
                     ->maxFiles(10)
-                    ->acceptedFileTypes(['image/jpeg'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
                     ->reorderable()
-                    ->previewable(false)
+                    ->previewable()
                     ->required(),
 
                 TextInput::make('subtitle')
@@ -103,6 +105,21 @@ class WebPostResource extends Resource
         return $schema->components([
             Grid::make(3)->schema([
 
+                TextInput::make('title')
+                    ->label('Título')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(
+                        fn(Set $set, ?string $state) =>
+                        $set('slug', Str::slug($state) . '.html')
+                    )
+                    ->columnSpan(2),
+
+                TextInput::make('slug')
+                    ->required()
+                    ->suffixIcon('heroicon-m-globe-alt')
+                    ->columnSpan(1),
+
                 // LEFT: Main content (builder)
                 static::PageContentBlock(),
 
@@ -112,20 +129,9 @@ class WebPostResource extends Resource
                         ->label('Categoria')
                         ->relationship('category', 'name')
                         ->searchable()
+                        // ->multiple()
+                        ->preload()
                         ->required(),
-
-                    TextInput::make('title')
-                        ->label('Título')
-                        ->required()
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(
-                            fn(Set $set, ?string $state) =>
-                            $set('slug', Str::slug($state) . '.html')
-                        ),
-
-                    TextInput::make('slug')
-                        ->required()
-                        ->suffixIcon('heroicon-m-globe-alt'),
 
                     Select::make('status')
                         ->required()
@@ -135,11 +141,12 @@ class WebPostResource extends Resource
                             'unpublished' => 'Despublicado',
                         ]),
 
-                    Toggle::make('featured')->label('Destaque'),
-
                     TextInput::make('text_credits')
                         ->label('Fonte do Texto')
-                        ->default('Ascom/UEAP'),
+                        ->default('Ascom/UEAP')
+                        ->columnSpan(1),
+
+                    Toggle::make('featured')->label('Destaque'),
                 ]),
 
             ]),

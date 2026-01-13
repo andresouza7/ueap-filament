@@ -93,23 +93,13 @@ table td {
     @apply text-slate-600 leading-relaxed text-base;
 }
 
-/* Mata qualquer estilo vindo do banco (inline styles) */
-.article-body * {
-    /* Reseta cores, fontes e tamanhos que o usuário possa ter inventado no editor */
+/* Mata estilos do banco, EXCETO o que está dentro do figcaption */
+.article-body *:not(figure, figure *) {
     color: inherit !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
     font-family: inherit !important;
     background-color: transparent !important;
-    /* Mas mantém o que importa para estrutura */
     box-sizing: border-box;
-}
-
-/* Media Query para telas menores que 1024px (LG) */
-@media (max-width: 1023px) {
-    .article-body * {
-        /* Aumenta a fonte para melhorar a legibilidade no mobile */
-        font-size: 16px !important; 
-    }
 }
 
 /* Agora suas classes (que passei na resposta anterior) aplicam o estilo correto */

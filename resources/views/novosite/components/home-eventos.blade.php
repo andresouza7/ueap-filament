@@ -40,7 +40,7 @@
                 <div class="mt-4 md:mt-0">
                     <a href="{{ route('site.post.list', ['type' => 'event']) }}"
                         class="group relative inline-flex items-center w-full md:w-auto justify-center px-8 md:px-10 py-4 bg-emerald-500 text-[#020618] text-[10px] md:text-[11px] font-mono font-black uppercase tracking-[0.2em] transition-all hover:bg-white active:scale-95">
-                        Full_Calendar
+                        Ver_Todos
                         <i class="fa-solid fa-arrow-right-long ml-3 transition-transform group-hover:translate-x-2"></i>
                     </a>
                 </div>
@@ -62,7 +62,7 @@
 
                         {{-- Imagem de Fundo --}}
                         <div class="absolute inset-0 z-0">
-                            <img src="https://picsum.photos/seed/{{ $event->id }}/800/800" alt="{{ $event->title }}"
+                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}"
                                 class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-50 transition-all duration-700">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-[#020618] via-[#020618]/60 to-transparent z-10">
@@ -90,7 +90,7 @@
                                 <div class="flex flex-col gap-2">
                                     <span
                                         class="text-[9px] font-mono font-bold text-emerald-500 tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                        ACCESS_DATA_
+                                        ACESSAR_CONTEÚDO_
                                     </span>
                                     <div class="h-[2px] w-12 bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
                                 </div>

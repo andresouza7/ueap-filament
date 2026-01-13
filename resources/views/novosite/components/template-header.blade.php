@@ -97,10 +97,13 @@
     <div
         class="bg-black/50 text-slate-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] py-2 relative z-[80]">
         <div class="mx-auto px-4 lg:px-12 lg:max-w-ueap flex justify-between items-center">
-            <span class="text-emerald-500/80 font-black animate-pulse uppercase">Ueap_Core_v4.0</span>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-emerald-400 transition-colors tracking-tighter">[ SIGAA ]</a>
-                <a href="#" class="hover:text-emerald-400 transition-colors tracking-tighter">[ INTRANET ]</a>
+            <span class="text-emerald-500/80 font-black animate-pulse uppercase">Site_UEAP_v2.0</span>
+            <div class="flex gap-2 md:gap-4">
+                <a href="https://sigaa.ueap.edu.br/sigaa/" class="hover:text-emerald-400 transition-colors tracking-tighter">[ SIGAA ]</a>
+                <a href="http://intranet.ueap.edu.br/" class="hover:text-emerald-400 transition-colors tracking-tighter">[ INTRANET ]</a>
+                <a href="http://transparencia.ueap.edu.br/" class="hover:text-emerald-400 transition-colors tracking-tighter">[ TRANSPARÊNCIA
+                    ]</a>
+                <a href="https://servicedesk.ueap.edu.br/" class="hover:text-emerald-400 transition-colors tracking-tighter">[ SERVICE DESK ]</a>
             </div>
         </div>
     </div>
@@ -235,24 +238,27 @@
     </div>
 
     {{-- MODAL PESQUISA --}}
-    <div x-show="searchModal" x-cloak class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+    <div x-show="searchModal" x-cloak @keydown.window.escape="searchModal = false"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-950/95 backdrop-blur-md" @click="searchModal = false"></div>
-        <div class="w-full max-w-2xl cyber-panel p-10 relative z-10 overflow-hidden">
+        <div class="w-full max-w-2xl cyber-panel p-6 md:p-10 relative z-10 overflow-hidden">
             {{-- LINHA DE SCAN --}}
             <div class="input-scan"></div>
 
-            <div class="flex justify-between items-end mb-10">
-                <h2 class="text-emerald-500 font-black text-xs tracking-[0.4em] uppercase">// BUSCA_GLOBAL_SISTEMA</h2>
+            <div class="flex justify-between items-end mb-6 md:mb-10">
+                <h2 class="text-emerald-500 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">//
+                    BUSCA_GLOBAL_SISTEMA</h2>
                 <button @click="searchModal = false"
-                    class="text-slate-500 hover:text-white text-[10px] font-bold tracking-widest">[ ESC_CLOSE ]</button>
+                    class="text-slate-500 hover:text-white text-[9px] md:text-[10px] font-bold tracking-widest">[
+                    ESC_CLOSE ]</button>
             </div>
 
             <form action="{{ route('site.post.list') }}" method="GET" class="relative">
                 <input type="text" name="search" placeholder="DIGITE SUA BUSCA..." autocomplete="off"
-                    class="w-full bg-transparent border-b-2 border-emerald-500/20 text-white text-3xl font-black italic uppercase tracking-tighter py-6 focus:outline-none focus:border-emerald-500 transition-all placeholder:text-slate-800">
+                    class="w-full bg-transparent text-white border-b-2 border-emerald-500/20 text-xl md:text-3xl font-black italic uppercase tracking-tighter py-4 md:py-6 focus:outline-none focus:border-emerald-500 transition-all placeholder:text-slate-800">
 
-                <div class="mt-4 flex justify-between items-center">
-                    <div class="flex gap-6 text-[8px] text-slate-600 font-mono italic">
+                <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+                    <div class="flex gap-4 md:gap-6 text-[8px] text-slate-600 font-mono italic">
                         <span>QUERY_STATUS: WAITING</span>
                         <span>ENCRYPTION: AES-256</span>
                     </div>
