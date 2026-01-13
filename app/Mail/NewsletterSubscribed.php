@@ -21,14 +21,6 @@ class NewsletterSubscribed extends Mailable
         //
     }
 
-    public function build()
-    {
-        return $this
-            ->subject('Inscrição confirmada')
-            ->view('emails.newsletter-subscribed');
-    }
-
-
     /**
      * Get the message envelope.
      */
@@ -45,9 +37,10 @@ class NewsletterSubscribed extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.newsletter-subscribed',
         );
     }
+
 
     /**
      * Get the attachments for the message.
