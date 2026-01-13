@@ -14,7 +14,7 @@ class SendNewsletter implements ShouldQueue
     public function handle()
     {
         Subscriber::where('active', true)
-            ->chunk(50, function ($subscribers) {
+            ->chunk(1, function ($subscribers) {
                 foreach ($subscribers as $subscriber) {
                     Mail::to($subscriber->email)
                         ->send(new NewsletterMail($this->content));
