@@ -113,5 +113,6 @@ Route::name('site.')->group(function () {
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     ->name('newsletter.subscribe');
 
+    //Rota do email em massa
 Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
     ->name('newsletter.dispatch');

@@ -2,27 +2,37 @@
 
 namespace App\Jobs;
 
-use App\Models\Subscriber; // Referência do seu Model
-use App\Mail\NewsletterMail; // Referência da sua classe de e-mail
-use Illuminate\Support\Facades\Mail; // Facade para envio
+use App\Mail\NewsletterMail;
+use App\Models\Subscriber;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Foundation\Queue\Queueable as QueueableTrait; // Aliasing para não conflitar com a trait original se necessário
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SendNewsletter implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public string $content) {}
+    /**
+     * @param Collection $items  Coleção de DTOs (NewsletterItem)
+     */
+    public function __construct(
+        protected Collection $items
+    ) {}
 
-    public function handle()
+    public function handle(): void
     {
         try {
-            Log::info("Iniciando envio de Newsletter. Conteúdo: " . substr($this->content, 0, 50) . "...");
+            Log::info(
+                'Iniciando envio da Newsletter',
+                [
+                    'itens' => $this->items->count(),
+                ]
+            );
 
             $totalSent = 0;
 
@@ -31,22 +41,40 @@ class SendNewsletter implements ShouldQueue
                     foreach ($subscribers as $subscriber) {
                         try {
                             Mail::to($subscriber->email)
-                                ->send(new NewsletterMail($this->content));
+                                ->send(new NewsletterMail($this->items));
 
                             $totalSent++;
+
+                            // Throttle conservador (Gmail-safe)
                             sleep(30);
-                        } catch (\Exception $e) {
-                            Log::error("Erro ao enviar para {$subscriber->email}: " . $e->getMessage());
-                            // O loop continua para o próximo inscrito mesmo se um falhar
+                        } catch (\Throwable $e) {
+                            Log::error(
+                                'Erro ao enviar newsletter',
+                                [
+                                    'email' => $subscriber->email,
+                                    'error' => $e->getMessage(),
+                                ]
+                            );
+                            // continua com os próximos
                         }
                     }
                 });
 
-            Log::info("Newsletter finalizada com sucesso. Total enviado: {$totalSent}");
-        } catch (\Exception $e) {
-            Log::critical("Falha crítica no Job de Newsletter: " . $e->getMessage());
+            Log::info(
+                'Envio de Newsletter finalizado',
+                [
+                    'total_enviado' => $totalSent,
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::critical(
+                'Falha crítica no Job de Newsletter',
+                [
+                    'error' => $e->getMessage(),
+                ]
+            );
 
-            // Lança a exceção para que o Laravel marque o job como 'failed' na tabela
+            // Marca o job como failed
             throw $e;
         }
     }
