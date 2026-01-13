@@ -12,8 +12,6 @@ use Illuminate\Queue\SerializesModels;
 class NewsletterSubscribed extends Mailable implements ShouldQueue
 {
 
-    public $queue = 'newsletter';
-
     use Queueable, SerializesModels;
 
     /**
