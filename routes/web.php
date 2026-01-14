@@ -9,6 +9,9 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+//
+use App\Http\Controllers\NewsletterController;
+//
 
 // Intercepta o subdominio intranet.ueap.edu.br e roteia para o painel /app do filament
 Route::domain(env('INTRANET_URL'))->group(function () {
@@ -105,3 +108,20 @@ Route::name('site.')->group(function () {
     });
 });
 
+##################
+## NEWSLETTER
+#####################
+
+//ROTA DO SUBSCRIBE
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.subscribe');
+
+//ROTA DO UNSUBSCRIBE
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.unsubscribe');
+
+//Rota do email em massa
+Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
+    ->name('newsletter.dispatch');
