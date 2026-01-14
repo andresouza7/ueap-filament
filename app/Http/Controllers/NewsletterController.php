@@ -76,8 +76,6 @@ class NewsletterController extends Controller
                 image_url: $post->image_url,
             ));
 
-        dd($items);
-
         // 2️⃣ Dispara o Job (NÃO chama handle)
         SendNewsletter::dispatch($items);
 
