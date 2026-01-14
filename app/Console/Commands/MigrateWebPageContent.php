@@ -38,8 +38,8 @@ class MigrateWebPageContent extends Command
                         'data' => [
                             'subtitle' => null,
                             'credits'  => null,
+                            'path' => [$path]
                         ],
-                        'path' => [$path]
                     ];
                 }
 

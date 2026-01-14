@@ -38,8 +38,8 @@ class MigrateWebPostContent extends Command
                         'data' => [
                             'subtitle' => $post->image_subtitle,
                             'credits'  => $post->image_credits,
+                            'path' => [$path]
                         ],
-                        'path' => [$path]
                     ];
                 }
 
