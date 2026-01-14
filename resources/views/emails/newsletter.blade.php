@@ -46,19 +46,45 @@
                 <td class="container">
                     @foreach($content as $post)
                         <div class="post-card">
-                            {{-- Lendo as propriedades do DTO --}}
+
+                            {{-- IMAGEM --}}
+                            @if(!empty($post->image_url))
+                                <table width="100%" role="presentation" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                                    <tr>
+                                        <td>
+                                            <img
+                                                src="{{ $post->image_url }}"
+                                                alt="{{ $post->title }}"
+                                                width="100%"
+                                                style="
+                                                    display: block;
+                                                    width: 100%;
+                                                    max-width: 550px;
+                                                    height: auto;
+                                                    border-radius: 3px;
+                                                "
+                                            >
+                                        </td>
+                                    </tr>
+                                </table>
+                            @endif
+
+                            {{-- META --}}
                             <div class="meta">
                                 [ PUBLICADO_EM: {{ $post->publishedAt }} ]
                             </div>
-                            
+
+                            {{-- TÍTULO --}}
                             <a href="{{ $post->url }}" class="post-title">
                                 {{ $post->title }}
                             </a>
-                            
+
+                            {{-- RESUMO --}}
                             <p class="post-excerpt">
                                 {{ $post->excerpt }}
                             </p>
 
+                            {{-- BOTÃO --}}
                             <table class="btn-table" role="presentation" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td>
@@ -68,6 +94,7 @@
                                     </td>
                                 </tr>
                             </table>
+
                         </div>
                     @endforeach
                 </td>

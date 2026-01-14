@@ -78,6 +78,7 @@ class NewsletterController extends Controller
                     ?? str($page->title)->limit(140),
                 url: url('/postagem/' . $page->slug),
                 publishedAt: $page->created_at->format('d/m/Y'),
+                image_url: $page->image_url,
             ));
 
         // 2️⃣ Dispara o Job (NÃO chama handle)

@@ -8,6 +8,7 @@ class NewsletterItem
         public string $title,
         public string $excerpt,
         public string $url,
-        public string $publishedAt
+        public string $publishedAt,
+        public ?string $image_url 
     ) {}
 }
