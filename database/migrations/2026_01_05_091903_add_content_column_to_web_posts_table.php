@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('web_posts', function (Blueprint $table) {
-            $table->json('content')->nullable();
+            $table->dropColumn('content');
         });
     }
 };
