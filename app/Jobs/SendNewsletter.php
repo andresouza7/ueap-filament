@@ -40,8 +40,7 @@ class SendNewsletter implements ShouldQueue
                 ->chunk(1, function ($subscribers) use (&$totalSent) {
                     foreach ($subscribers as $subscriber) {
                         try {
-                            // dd($this->items);
-  			 Log::info('Enviando para: ' . $subscriber->email);
+                            Log::info('Enviando para: ' . $subscriber->email);
                             Mail::to($subscriber->email)
                                 ->send(new NewsletterMail($this->items, $subscriber));
 

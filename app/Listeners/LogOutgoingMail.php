@@ -35,7 +35,7 @@ class LogOutgoingMail
         Log::debug('📧 EMAIL SEND INTERCEPTED', [
             'to' => $to,
             'subject' => $subject,
-            'body' => $body,
+            // 'body' => $body,
         ]);
     }
 }
