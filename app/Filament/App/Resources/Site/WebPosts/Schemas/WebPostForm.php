@@ -55,10 +55,8 @@ class WebPostForm
                     ->reorderable()
                     ->required(),
 
-                Grid::make(2)->schema([
-                    TextInput::make('subtitle')->label('Legenda'),
-                    TextInput::make('credits')->label('Fonte das Imagens'),
-                ]),
+                TextInput::make('subtitle')->label('Legenda'),
+                TextInput::make('credits')->label('Créditos / Autoria'),
             ]);
     }
 

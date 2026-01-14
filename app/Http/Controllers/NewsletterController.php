@@ -66,20 +66,17 @@ class NewsletterController extends Controller
             ->where('status', 'published')
             ->orderByDesc('created_at')
             ->limit(5)
-            ->get([
-                'slug',
-                'title',
-                'resume',
-                'created_at',
-            ])
-            ->map(fn ($page) => new NewsletterItem(
-                title: $page->title,
-                excerpt: $page->resume
-                    ?? str($page->title)->limit(140),
-                url: url('/postagem/' . $page->slug),
-                publishedAt: $page->created_at->format('d/m/Y'),
-                image_url: $page->image_url,
+            ->get()
+            ->map(fn ($post) => new NewsletterItem(
+                title: $post->title,
+                excerpt: $post->resume
+                    ?? str($post->title)->limit(140),
+                url: url('/postagem/' . $post->slug),
+                publishedAt: $post->created_at->format('d/m/Y'),
+                image_url: $post->image_url,
             ));
+
+        dd($items);
 
         // 2️⃣ Dispara o Job (NÃO chama handle)
         SendNewsletter::dispatch($items);
