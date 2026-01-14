@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::table('web_posts', function (Blueprint $table) {
             // Criando a coluna como bigInteger e nullable
             $table->foreignId('web_menu_id')->nullable()->after('web_category_id')->constrained();
-            
-            // Opcional: Se você quiser adicionar a restrição de chave estrangeira, descomente a linha abaixo:
-            // $table->foreign('web_menu_id')->references('id')->on('web_menus')->onDelete('set null');
+
+            $table->foreignId('web_category_id')->nullable()->change();
         });
     }
 
@@ -27,7 +26,11 @@ return new class extends Migration
     {
         Schema::table('web_posts', function (Blueprint $table) {
             // Removendo a coluna no rollback
+            $table->dropForeign(['web_menu_id']);
             $table->dropColumn('web_menu_id');
+
+            // Reverte a categoria para obrigatória (opcional, dependendo da sua regra)
+            $table->foreignId('web_category_id')->nullable(false)->change();
         });
     }
 };
