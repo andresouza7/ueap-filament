@@ -44,7 +44,7 @@
 
                 @php
                     $links = [
-                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'url' => '/documentos/calendar', 'color' => 'text-emerald-400'],
+                        ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'url' => '/calendario-academico', 'color' => 'text-emerald-400'],
                         ['icon' => 'fa-scale-balanced', 'label' => 'Legislação Ueap', 'url' => '/pagina/legislacao.html', 'color' => 'text-teal-400'],
                         ['icon' => 'fa-file-lines', 'label' => 'Instruções Normativas', 'url' => '/pagina/instrucoes_normativas.html', 'color' => 'text-emerald-400'],
                         ['icon' => 'fa-gavel', 'label' => 'Resoluções CONSU', 'url' => '/consu/resolucoes', 'color' => 'text-teal-400'],

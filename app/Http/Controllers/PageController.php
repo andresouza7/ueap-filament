@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ConsuAta;
 use App\Models\ConsuResolution;
 use App\Models\Document;
 use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -63,29 +61,29 @@ class PageController extends Controller
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
-            ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
-        $relatedPosts = WebPost::latest('id')->where('status', 'published')
-            ->whereHas('category', function ($query) use ($post) {
-                $query->where('name', $post->category->name);
-            })
-            ->take(4)->get();
-        $frequentPages = WebPost::where('status', 'published')->where('type', 'page')->orderBy('created_at', 'desc')->take(5)->get();
-
-        $categories = WebCategory::has('posts')
-            ->inRandomOrder()
-            ->take(6)
-            ->get();
-
 
         if ($post) {
             WebPost::withoutTimestamps(function () use ($post) {
                 $post->increment('hits', 1);
             });
 
-            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories', 'frequentPages'));
+            $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+                ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+
+            $relatedPosts = WebPost::latest('id')->where('status', 'published')
+                ->whereHas('category', function ($query) use ($post) {
+                    $query->where('name', $post->category->name);
+                })
+                ->take(4)->get();
+
+            $categories = WebCategory::has('posts')
+                ->inRandomOrder()
+                ->take(6)
+                ->get();
+
+            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
         } else {
-            return redirect()->route('site.home');
+            return abort(404);
         }
     }
 
@@ -93,12 +91,9 @@ class PageController extends Controller
     {
         $query = Document::where('type', 'calendar')->orderByDesc('year')->orderBy('title');
 
-        if ($request->name) {
-            $query->where('title', 'ilike', "%$request->name%");
-        }
-
-        if ($request->year) {
-            $query->where('year',  $request->year);
+        if ($request->search) {
+            $query->where('title', 'ilike', "%$request->search%")
+                ->orWhere('description', 'ilike', "%$request->search%");
         }
 
         $items = $query->paginate(25)->withQueryString();
