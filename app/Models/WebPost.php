@@ -29,6 +29,7 @@ class WebPost extends Model implements HasMedia
         'image_credits',
         'image_subtitle',
         'status',
+        'type'
     ];
 
     protected $appends = ['image_url'];

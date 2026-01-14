@@ -22,6 +22,7 @@ class CreateWebPage extends CreateRecord
         $data['user_created_id'] = Auth::id();
         $data['uuid'] = Str::uuid();
         $data['text'] = '';
+        $data['type'] = 'page';
 
         return $data;
     }

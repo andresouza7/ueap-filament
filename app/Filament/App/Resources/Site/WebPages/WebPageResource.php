@@ -47,6 +47,8 @@ class WebPageResource extends Resource
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Schema $schema): Schema
     {
         return $schema

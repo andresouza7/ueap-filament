@@ -19,16 +19,4 @@ class EditWebPost extends EditRecord
             DeleteAction::make(),
         ];
     }
-
-    protected function handleRecordUpdate(Model $record, array $data): Model
-    {
-        try {
-            //code...
-            $record->update($data);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-
-        return $record;
-    }
 }
