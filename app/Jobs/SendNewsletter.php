@@ -41,8 +41,9 @@ class SendNewsletter implements ShouldQueue
                     foreach ($subscribers as $subscriber) {
                         try {
                             // dd($this->items);
+  			 Log::info('Enviando para: ' . $subscriber->email);
                             Mail::to($subscriber->email)
-                                ->send(new NewsletterMail($this->items));
+                                ->send(new NewsletterMail($this->items, $subscriber));
 
                             $totalSent++;
 
