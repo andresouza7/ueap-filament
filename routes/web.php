@@ -116,3 +116,8 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     //Rota do email em massa
 Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
     ->name('newsletter.dispatch');
+
+    //ROTA DO UNSUBSCRIBE
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->name('newsletter.unsubscribe');
+

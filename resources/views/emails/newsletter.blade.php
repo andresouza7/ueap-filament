@@ -79,7 +79,10 @@
                         <strong>UNIVERSIDADE DO ESTADO DO AMAPÁ</strong><br>
                         SISTEMA DE DIVULGAÇÃO CIENTÍFICA E INSTITUCIONAL<br>
                         <br>
-                        Caso não deseje mais receber, <a href="#" class="unsub">remova aqui</a>.
+                        Caso não deseje mais receber, <a href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token) }}"
+                            class="unsub">
+                                remova aqui
+                            </a>
                     </p>
                 </td>
             </tr>

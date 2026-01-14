@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Mail\NewsletterSubscribed;
 use App\Models\WebPost;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class NewsletterController extends Controller
 {
@@ -25,6 +26,7 @@ class NewsletterController extends Controller
         $subscriber = Subscriber::create([
             'email' => $request->email,
             'active' => true,
+            'unsubscribe_token' => Str::uuid(),
         ]);
 
         // email de confirmação (ok ser síncrono ou queued)
@@ -34,6 +36,25 @@ class NewsletterController extends Controller
             ->to(url()->previous() . '#newsletter')
             ->with('success', 'Email cadastrado com sucesso!');
     }
+
+
+//método do unsubscribe
+    public function unsubscribe(string $token)
+    {
+        $subscriber = Subscriber::where('unsubscribe_token', $token)->first();
+
+        if (! $subscriber) {
+            return response()->view('newsletter.unsubscribe-invalid');
+        }
+
+        $subscriber->update([
+            'active' => false,
+        ]);
+
+        return response()->view('newsletter.unsubscribe-success');
+    }
+
+
 
     /**
      * Disparo do digest (admin / cron / botão)
