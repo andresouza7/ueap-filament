@@ -165,11 +165,26 @@ class FrequencySubmit extends Component implements HasForms, HasTable, HasSchema
                         ->rows(3),
 
                     Actions::make([
+                        // 🔹 Action principal
                         Action::make('Enviar')
                             ->action('submit')
-                            ->color('primary'),
-                    ]),
-                ])
+                            ->color('primary')
+                            ->icon('heroicon-o-paper-airplane'),
+
+                        // 🔹 Action de Tutorial
+                        Action::make('tutorial')
+                            ->label('Tutorial')
+                            ->icon('heroicon-o-play-circle')
+                            ->color('gray')
+                            ->outlined()
+                            ->url('#') // 👈 ISSO DESLIGA O LIVEWIRE
+                            ->extraAttributes([
+                                'onclick' => 'window.playPontoTutorial(); return false;',
+                            ]),
+
+                    ])
+                        ->columnSpanFull(),
+                ]),
         ]);
     }
 

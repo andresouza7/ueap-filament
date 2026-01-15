@@ -52,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
+         FilamentAsset::register([
+                    Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
+                    
+                ]);
+                
         Filament::serving(function () {
             $user = Auth::user();
 
@@ -64,10 +69,7 @@ class AppServiceProvider extends ServiceProvider
             }
             
             if ($user && !$user->skip_tutorial_ponto && request()->routeIs('filament.app.pages.dashboard')) {
-                FilamentAsset::register([
-                    Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
-                    
-                ]);
+               
             }
         });
 

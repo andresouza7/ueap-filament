@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/tutorial.js',
+                'resources/js/tutorial-ponto.js',
                 'resources/css/filament/app/theme.css'
             ],
             refresh: [
