@@ -52,11 +52,12 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
-         FilamentAsset::register([
-                    Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
-                    
-                ]);
-                
+        FilamentAsset::register([
+            // Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
+            Js::make('tutorial-ponto-script', asset('build/assets/tutorial-ponto-LlpAYkl0.js'))->module(),
+            Css::make('tutorial-script', asset('build/assets/driver-DB0Q8XAf.css')),
+        ]);
+
         Filament::serving(function () {
             $user = Auth::user();
 
@@ -66,10 +67,6 @@ class AppServiceProvider extends ServiceProvider
                     Js::make('tutorial-script', asset('build/assets/tutorial-BXecf3-O.js'))->module(),
                     Css::make('tutorial-script', asset('build/assets/tutorial-BmhU-YmB.css')),
                 ]);
-            }
-            
-            if ($user && !$user->skip_tutorial_ponto && request()->routeIs('filament.app.pages.dashboard')) {
-               
             }
         });
 
