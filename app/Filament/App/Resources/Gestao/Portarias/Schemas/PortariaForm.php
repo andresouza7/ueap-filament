@@ -12,6 +12,7 @@ use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -41,7 +42,8 @@ class PortariaForm
                         ->required()
                         ->maxLength(255),
                     DatePicker::make('created_at')
-                        ->label('Data'),
+                        ->label('Data')
+                        ->live(),
                     TextInput::make('origin')
                         ->hidden(fn() => Auth::user()->hasRole('consu'))
                         ->label('Origem')
@@ -59,6 +61,7 @@ class PortariaForm
                     Select::make('persons')
                         ->columnSpanFull()
                         ->label('Servidores')
+                        ->helperText('*Servidores interessados e/ou membros de comissão')
                         ->relationship(
                             name: 'persons',
                             titleAttribute: 'name',
@@ -78,6 +81,9 @@ class PortariaForm
     {
         return Repeater::make('impediments')
             ->label('Registrar Impedimento')
+            ->helperText('**Servidores que respondem a Processo Administrativo Disciplinar ou de Sindicância')
+            ->hint('Preencha a data da portaria para registar o impedimento')
+            ->disabled(fn(callable $get) => is_null($get('created_at')))
             ->table([
                 TableColumn::make('Descrição')
                     ->width('260px')
@@ -130,7 +136,6 @@ class PortariaForm
             ->maxItems(1)
             ->live()
             ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                // Obtém a data de criação do registro principal
                 $createdAt = \Carbon\Carbon::parse($get('created_at'));
 
                 foreach ($state as $key => $item) {

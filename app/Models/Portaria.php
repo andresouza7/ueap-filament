@@ -43,7 +43,8 @@ class Portaria extends Model
     ];
 
     protected $appends = [
-        'file_url'
+        'file_url',
+        'last_edit',
     ];
 
     public function getFileUrlAttribute()
@@ -51,6 +52,23 @@ class Portaria extends Model
         $path = 'documents/ordinances/' . $this->id . '.pdf';
 
         return Storage::exists($path) ? Storage::url($path) : null;
+    }
+
+    public function getLastEditAttribute(): ?array
+    {
+        $activity = $this->activities()
+            ->where('event', 'updated')
+            ->latest()
+            ->first();
+
+        if (! $activity) {
+            return null;
+        }
+
+        return [
+            'user' => $activity->causer,
+            'at'   => $activity->created_at,
+        ];
     }
 
     public function persons()
