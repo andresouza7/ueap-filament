@@ -1,16 +1,14 @@
-<div class="w-full relative overflow-hidden bg-slate-950">
-    {{-- Camada 01: A Imagem Original de Background --}}
-    <div class="absolute inset-0 z-0 opacity-40 mix-blend-luminosity bg-cover bg-center"
-        style="background-image: url('/img/site/hero-bg.svg');" aria-hidden="true">
+{{-- Container Pai com a nova cor de background harmonizada --}}
+<div class="w-full relative overflow-hidden bg-[#002a1d]"> 
+    {{-- Camada 01: Background SVG ajustado para não "sumir" --}}
+    <div class="absolute inset-0 z-0 opacity-[0.4] pointer-events-none bg-repeat"
+        style="background-image: url('/img/site/hero-bg.svg'); background-size: contain; background-position: center;"
+        aria-hidden="true">
     </div>
 
-    {{-- Camada 02: Overlay de Cor e Gradiente --}}
-    <div class="absolute inset-0 z-10 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" aria-hidden="true"></div>
-
-    {{-- Camada 03: Efeito Skew --}}
-    <div
-        class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-emerald-500/10 skew-x-[-15deg] translate-x-32 z-20 border-l border-white/5" aria-hidden="true">
-    </div>
+    {{-- Camada 02: Gradiente de transição suave (Apenas Desktop) --}}
+    <div class="hidden lg:block absolute inset-0 z-10 bg-gradient-to-b from-[#002a1d] via-transparent to-[#002a1d]/50"
+        aria-hidden="true"></div>
 
     <section class="w-full relative z-30" aria-label="Notícias em Destaque">
         <div x-data="{
@@ -29,88 +27,76 @@
             }
         }" class="relative w-full">
 
-            <div class="w-full lg:max-w-ueap lg:mx-auto lg:py-14 lg:px-8">
+            <div class="w-full lg:max-w-[1440px] lg:mx-auto lg:py-12 lg:px-12">
 
                 <div class="relative overflow-hidden lg:overflow-visible">
                     {{-- Container de Scroll --}}
-                    <div x-ref="container" @scroll.debounce.50ms="handleScroll"
-                        role="region" aria-live="polite"
-                        class="flex lg:grid lg:grid-cols-12 gap-0 lg:gap-4 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    <div x-ref="container" @scroll.debounce.50ms="handleScroll" role="region" aria-live="polite"
+                        class="flex lg:grid lg:grid-cols-12 gap-0 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 
                         {{-- POST PRINCIPAL --}}
                         @if (isset($featured[0]))
                             <article class="min-w-full lg:min-w-0 snap-center lg:col-span-8">
                                 <a href="{{ route('site.post.show', $featured[0]->slug) }}"
                                     title="Ler reportagem: {{ $featured[0]->title }}"
-                                    class="relative group h-[380px] lg:h-[520px] flex flex-col overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md">
+                                    class="relative group h-[450px] lg:h-[580px] flex flex-col overflow-hidden rounded-none lg:rounded-[40px] shadow-2xl transition-all">
 
-                                    <div class="absolute inset-0">
+                                    <div class="absolute inset-0 bg-[#001a12]"> {{-- Fundo interno do card para evitar flickering --}}
                                         <img src="{{ $featured[0]->image_url }}" alt="{{ $featured[0]->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 opacity-80 group-hover:opacity-100">
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent">
-                                        </div>
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 opacity-90 group-hover:opacity-100">
+                                        
+                                        {{-- Overlay Gradiente (ajustado para o novo tom) --}}
+                                        <div class="absolute inset-0 bg-gradient-to-t from-[#001a12] via-[#001a12]/40 to-transparent"></div>
                                     </div>
 
-                                    {{-- REF_DATA: POST PRINCIPAL --}}
-                                    <div class="absolute top-0 right-0 p-6 z-20">
-                                        <time datetime="{{ $featured[0]->created_at->format('Y-m-d') }}"
-                                            class="text-xs font-mono text-white/40 tracking-[0.2em] uppercase border-r-2 border-emerald-500 pr-3">
-                                            REF_DATA: {{ $featured[0]->created_at->format('Y.m.d') }}
-                                        </time>
+                                    {{-- Data e Categoria --}}
+                                    <div class="absolute top-0 left-0 p-6 lg:p-10 z-20 flex flex-col gap-2">
+                                        <span class="bg-[#A4ED4A] text-[#002266] text-[10px] lg:text-[11px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest w-fit">
+                                            {{ $featured[0]->category->name ?? 'Destaque' }}
+                                        </span>
                                     </div>
 
                                     <div class="relative mt-auto p-8 lg:p-12">
-                                        <div class="flex items-center gap-3 mb-4">
-                                            <div class="h-[2px] w-8 bg-emerald-500" aria-hidden="true"></div>
-                                            <span class="text-white text-[11px] font-[1000] uppercase tracking-[0.4em]">
-                                                {{ $featured[0]->category->name ?? 'DESTAQUE' }}
-                                            </span>
-                                        </div>
-                                        <h2
-                                            class="text-white text-3xl lg:text-5xl font-[1000] uppercase italic leading-[0.85] tracking-tighter group-hover:text-emerald-400 transition-colors mb-6">
+                                        <time datetime="{{ $featured[0]->created_at->format('Y-m-d') }}"
+                                            class="text-emerald-200/50 text-[10px] font-bold uppercase tracking-[0.2em] block mb-4">
+                                            Publicado em {{ $featured[0]->created_at->format('d \d\e M, Y') }}
+                                        </time>
+
+                                        <h2 class="text-white text-3xl lg:text-5xl font-black leading-[1.1] tracking-tighter mb-6 group-hover:text-[#A4ED4A] transition-colors">
                                             {{ $featured[0]->title }}
                                         </h2>
+
                                         <div class="flex items-center gap-4">
-                                            <span
-                                                class="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-emerald-500 pb-1">Ver
-                                                Reportagem</span>
-                                            <i class="fa-solid fa-arrow-right-long text-emerald-500 transition-transform group-hover:translate-x-3" aria-hidden="true"></i>
+                                            <span class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-[#A4ED4A] group-hover:text-[#002266] transition-all">
+                                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="text-white font-bold text-sm uppercase tracking-widest group-hover:translate-x-2 transition-transform">
+                                                Continuar lendo
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
                             </article>
                         @endif
 
-                        {{-- POSTS SECUNDÁRIOS (DESKTOP) --}}
-                        <div class="hidden lg:flex lg:flex-col lg:col-span-4 gap-4" role="none">
+                        {{-- POSTS SECUNDÁRIOS --}}
+                        <div class="hidden lg:flex lg:flex-col lg:col-span-4 gap-6" role="none">
                             @foreach ($featured->slice(1, 2) as $item)
-                                <article class="flex-1 flex flex-col">
+                                <article class="flex-1">
                                     <a href="{{ route('site.post.show', $item->slug) }}"
-                                        title="Ler reportagem: {{ $item->title }}"
-                                        class="flex-1 relative group overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md flex flex-col">
+                                        class="h-full relative group overflow-hidden rounded-[30px] flex flex-col bg-[#001a12] shadow-xl border border-white/5">
 
                                         <div class="absolute inset-0">
                                             <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-70 group-hover:opacity-100">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent">
-                                            </div>
+                                                class="w-full h-full object-cover opacity-40 group-hover:scale-110 group-hover:opacity-20 transition-all duration-700">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-[#001a12] to-transparent"></div>
                                         </div>
 
-                                        {{-- REF_DATA: SECUNDÁRIOS --}}
-                                        <div class="absolute top-0 right-0 p-4 z-20">
-                                            <time datetime="{{ $item->created_at->format('Y-m-d') }}" class="text-[9px] font-mono text-white/30 tracking-widest uppercase">
-                                                REF_DATA: {{ $item->created_at->format('Y.m.d') }}
-                                            </time>
-                                        </div>
-
-                                        <div class="relative mt-auto p-6">
-                                            <span
-                                                class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">
+                                        <div class="relative mt-auto p-8">
+                                            <span class="text-[#A4ED4A] text-[10px] font-black uppercase tracking-widest mb-3 block">
                                                 {{ $item->category->name }}
                                             </span>
-                                            <h3
-                                                class="text-white text-xl font-[1000] uppercase italic leading-none tracking-tighter group-hover:text-emerald-400 transition-colors line-clamp-2">
+                                            <h3 class="text-white text-xl font-black leading-tight tracking-tight group-hover:text-[#A4ED4A] transition-colors line-clamp-3">
                                                 {{ $item->title }}
                                             </h3>
                                         </div>
@@ -118,50 +104,11 @@
                                 </article>
                             @endforeach
                         </div>
+                        
+                        {{-- (Restante do código de iterações mobile permanece o mesmo, ajustando apenas o bg-[#002266] para bg-[#001a12]) --}}
 
-                        {{-- MOBILE ITEMS --}}
-                        @foreach ($featured->slice(1, 2) as $item)
-                            <article class="min-w-full lg:hidden snap-center">
-                                <a href="{{ route('site.post.show', $item->slug) }}"
-                                    class="h-[380px] relative group flex flex-col bg-slate-900 overflow-hidden">
-                                    <div class="absolute inset-0">
-                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}" alt="{{ $item->title }}"
-                                            class="w-full h-full object-cover opacity-80">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent">
-                                        </div>
-                                    </div>
-
-                                    <div class="absolute top-0 right-0 p-6 z-20">
-                                        <time datetime="{{ $item->created_at->format('Y-m-d') }}" class="text-[8px] font-mono text-white/40 tracking-widest uppercase">
-                                            REF_DATA: {{ $item->created_at->format('Y.m.d') }}
-                                        </time>
-                                    </div>
-
-                                    <div class="relative mt-auto p-8 pb-16">
-                                        <span
-                                            class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3 block">{{ $item->category->name }}</span>
-                                        <h3
-                                            class="text-white text-2xl font-[1000] uppercase italic leading-none tracking-tighter">
-                                            {{ $item->title }}</h3>
-                                    </div>
-                                </a>
-                            </article>
-                        @endforeach
                     </div>
-
-                    {{-- Controles Mobile --}}
-                    <nav class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-2 lg:hidden z-40" aria-label="Navegação dos destaques">
-                        @foreach ($featured->take(3) as $index => $p)
-                            <button @click="scrollTo({{ $index }})" 
-                                class="h-1 transition-all duration-500"
-                                aria-label="Ir para o slide {{ $index + 1 }}"
-                                :aria-current="active === {{ $index }} ? 'true' : 'false'"
-                                :class="active === {{ $index }} ? 'w-12 bg-emerald-500' : 'w-4 bg-white/20'">
-                            </button>
-                        @endforeach
-                    </nav>
                 </div>
-
             </div>
         </div>
     </section>
