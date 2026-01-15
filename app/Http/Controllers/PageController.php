@@ -125,8 +125,9 @@ class PageController extends Controller
         }
 
         $items = $query->paginate(25)->withQueryString();
+        $title = 'CONSU Portarias';
 
-        return view('novosite.pages.consu-list', compact('items'));
+        return view('novosite.pages.consu-list', compact('items', 'title'));
     }
 
     public function listResolution(Request $request)
@@ -149,6 +150,8 @@ class PageController extends Controller
         }
 
         $items = $query->paginate(25)->withQueryString();
-        return view('novosite.pages.consu-list', compact('items'));
+        $title = 'CONSU Resoluções';
+
+        return view('novosite.pages.consu-list', compact('items', 'title'));
     }
 }
