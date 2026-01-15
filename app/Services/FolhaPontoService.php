@@ -16,9 +16,18 @@ class FolhaPontoService
     ) {}
 
     protected array $months = [
-        1 => 'janeiro', 2 => 'fevereiro', 3 => 'março', 4 => 'abril',
-        5 => 'maio', 6 => 'junho', 7 => 'julho', 8 => 'agosto',
-        9 => 'setembro', 10 => 'outubro', 11 => 'novembro', 12 => 'dezembro',
+        1 => 'janeiro',
+        2 => 'fevereiro',
+        3 => 'março',
+        4 => 'abril',
+        5 => 'maio',
+        6 => 'junho',
+        7 => 'julho',
+        8 => 'agosto',
+        9 => 'setembro',
+        10 => 'outubro',
+        11 => 'novembro',
+        12 => 'dezembro',
     ];
 
     # ============================================================================
@@ -31,7 +40,7 @@ class FolhaPontoService
             ->where('year', $year)
             ->where('status', 'aprovado')
             ->pluck('month')
-            ->map(fn ($m) => (int) $m)
+            ->map(fn($m) => (int) $m)
             ->toArray();
     }
 
@@ -86,13 +95,21 @@ class FolhaPontoService
                 'tickets' => fn($q) => $q->where('year', $year),
                 'record'
             ])
-            ->when($search, fn($q) =>
-                $q->whereHas('person', fn($p) =>
+            ->when(
+                $search,
+                fn($q) =>
+                $q->whereHas(
+                    'person',
+                    fn($p) =>
                     $p->where('name', 'ilike', "%{$search}%")
                 )
             )
-            ->when($category, fn($q) =>
-                $q->whereHas('record', fn($p) =>
+            ->when(
+                $category,
+                fn($q) =>
+                $q->whereHas(
+                    'record',
+                    fn($p) =>
                     $p->where('category', $category)
                 )
             )
@@ -118,7 +135,7 @@ class FolhaPontoService
 
     public function isMonthPending(User $user, int $month): bool
     {
-        return !$this->getApprovedMonths($user, Carbon::now()->year, ) ? null :
+        return !$this->getApprovedMonths($user, Carbon::now()->year,) ? null :
             !in_array($month, $this->getApprovedMonths($user, Carbon::now()->year));
     }
 
@@ -133,6 +150,11 @@ class FolhaPontoService
         // Upload provisional
         $tempFolder = $this->drive->getOrCreateFolder('novos', env('GOOGLE_DRIVE_FOLDER_ID'));
         $uploaded = $this->drive->upload($file, $tempFolder);
+
+        if ($uploaded) {
+            // Compartilha arquivo com o próprio usuário que enviou
+            $this->drive->shareFileWithEmail($uploaded, Auth::user()->email);
+        }
 
         return Ticket::create([
             'user_id'      => $user->id,
@@ -163,7 +185,8 @@ class FolhaPontoService
 
         try {
             $ticket->user->notify(new TicketEvaluatedNotification($ticket));
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
 
         return $ticket;
     }

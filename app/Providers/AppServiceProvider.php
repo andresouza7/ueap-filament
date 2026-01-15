@@ -37,14 +37,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
+        Gate::before(function ($user, $ability, $arguments = []) {
             // Give full access to 'dinfo' users
             if ($user->hasRole('dinfo')) {
                 return true;
             }
 
-            // Restrict deletes to admin only
-            if ($ability === 'delete' && ! $user->hasRole('dinfo')) {
+            if ($ability === 'delete') {
+                $model = $arguments[0] ?? null;
+
+                // Allow deletes for a specific model/resource
+                if ($model instanceof \App\Models\CalendarOccurrence) {
+                    return null; // let policies decide
+                }
+
                 return false;
             }
 

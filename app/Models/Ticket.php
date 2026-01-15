@@ -20,7 +20,7 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function evaluador()
+    public function evaluator()
     {
         return $this->belongsTo(User::class, 'evaluator_id');
     }

@@ -1,129 +1,82 @@
 <x-filament-panels::page>
-
     @php
         $items = [
             [
-                'label' => 'Mapa de Férias',
-                'icon' => 'heroicon-o-map',
-                'color' => 'green',
-                'href' => route('filament.app.resources.gestao.mapa-ferias.index'),
-            ],
-            [
-                'label' => 'Ocorrências de Ponto',
-                'icon' => 'heroicon-o-exclamation-circle',
-                'color' => 'yellow',
-                'href' => route('filament.app.resources.gestao.calendar-occurrences.index'),
-            ],
-            [
-                'label' => 'Planilha de Pontos',
-                'icon' => 'heroicon-o-calendar',
-                'color' => 'red',
-                'href' => route('filament.app.pages.controle-ponto'),
-            ],
-            [
-                'label' => 'Encaminhamento de Ponto',
-                'icon' => 'heroicon-o-paper-airplane',
-                'color' => 'blue',
+                'label' => 'Recebimento de ponto',
+                'description' => 'Gestão de solicitações e validação de documentos.',
+                'icon' => 'heroicon-o-document-check',
                 'href' => route('filament.app.resources.gestao.tickets.index'),
             ],
             [
-                'label' => 'Registro manual de ponto',
+                'label' => 'Registro Manual',
+                'description' => 'Lançamento individual da folha de ponto do servidor.',
                 'icon' => 'heroicon-o-document-plus',
-                'color' => 'gray',
                 'href' => route('filament.app.pages.cadastro-ponto-urh'),
             ],
         ];
     @endphp
 
-    {{-- CONTAINER PRINCIPAL COM BORDA VISÍVEL NO DARK --}}
-    <div class="
-        rounded-xl shadow-lg overflow-hidden
-        dark:border
-        dark:border-gray-700/70 
-        dark:bg-[#1d2335]
-    ">
-
-        {{-- Banner com borda curva --}}
-        <div class="relative w-full h-56 md:h-96 overflow-hidden rounded-t-xl">
-            <img src="/img/bg-frequencia.jpg"
-                 class="absolute inset-0 w-full h-full object-cover object-center"
-                 alt="Banner">
-
-            {{-- Overlay claro/escuro --}}
-            <div class="absolute inset-0 bg-black/30 dark:bg-black/60"></div>
-
-            <div class="relative z-10 flex flex-col justify-center h-full px-4 md:px-8 pb-10">
-                <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow">
+    <div class="rounded-xl shadow-sm overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1d2335]">
+        
+        {{-- BANNER - Altura reduzida mas ainda dominante sobre a seção de baixo --}}
+        <div class="relative w-full h-80 md:h-[400px] overflow-hidden">
+            <img src="/img/bg-frequencia.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Banner">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1d2335] via-[#1d2335]/40 to-transparent"></div>
+            
+            <div class="absolute bottom-0 left-0 w-full p-8 md:p-10">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-lg">
                     Controle de Frequência
                 </h1>
-
-                <p class="text-white/90 text-base md:text-lg mt-2 max-w-2xl">
-                    Ferramentas de gestão de ponto e afastamentos
+                <p class="text-gray-200 text-base mt-2 max-w-xl font-medium drop-shadow-md">
+                    Gestão operacional do envio da folha de ponto
                 </p>
             </div>
         </div>
 
-        {{-- Conteúdo --}}
-        <div class="relative pt-6 pb-12 bg-transparent">
-            <div class="max-w-7xl mx-auto px-4">
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-2 md:p-4">
-
-                    {{-- COLUNA ESQUERDA --}}
-                    <aside class="md:col-span-1 space-y-4">
-                        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                            Sobre
-                        </h2>
-
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                            Aqui você encontra todas as funcionalidades relacionadas ao controle de frequência,
-                            férias e ocorrências funcionais.
-                            Utilize os módulos ao lado para acessar rapidamente cada seção.
-                        </p>
-                    </aside>
-
-                    {{-- COLUNA DIREITA — CARDS --}}
-                    <div class="md:col-span-2">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                            @foreach ($items as $item)
-                                @php
-                                    // Ajuste de cores no dark mode
-                                    $iconBg = "bg-{$item['color']}-100 dark:bg-[#2a3148]";
-                                    $iconTxt = "text-{$item['color']}-600 dark:text-{$item['color']}-300";
-                                @endphp
-
-                                <a href="{{ $item['href'] }}"
-                                   class="group 
-                                        bg-gray-50 
-                                        dark:bg-[#232a3d] 
-                                        rounded-xl p-4 
-                                        dark:border dark:border-gray-700/60
-                                        shadow hover:shadow-md
-                                        transition flex items-center gap-3">
-
-                                    {{-- Coluna esquerda: Ícone --}}
-                                    <div class="p-3 rounded-lg {{ $iconBg }}">
-                                        <x-dynamic-component
-                                            :component="$item['icon']"
-                                            class="w-6 h-6 {{ $iconTxt }}"
-                                        />
-                                    </div>
-
-                                    {{-- Coluna direita: Texto --}}
-                                    <span class="font-medium text-sm text-gray-700 dark:text-gray-100">
-                                        {{ $item['label'] }}
-                                    </span>
-                                </a>
-                            @endforeach
-
+        {{-- SEÇÃO DE AÇÕES - Expandida na largura e compacta na altura --}}
+        <div class="w-full p-6"> {{-- Largura total do container --}}
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                
+                @foreach ($items as $item)
+                    <a href="{{ $item['href'] }}" class="group relative flex flex-col gap-3 rounded-xl border border-gray-200 p-5 transition-all duration-300 hover:ring-2 hover:ring-primary-500 dark:border-gray-700/50 dark:bg-[#232a3d] dark:hover:bg-[#2a324b] shadow-sm">
+                        
+                        <div class="flex items-center justify-between">
+                            {{-- Ícone Compacto --}}
+                            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 text-gray-600 ring-1 ring-gray-200 transition-colors group-hover:bg-primary-500 group-hover:text-white dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700">
+                                <x-dynamic-component :component="$item['icon']" class="h-5 w-5" />
+                            </div>
+                            
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                                Módulo
+                            </span>
                         </div>
-                    </div>
 
-                </div>
+                        <div class="flex-1">
+                            <h2 class="text-base font-bold text-gray-900 dark:text-white transition-colors group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                                {{ $item['label'] }}
+                            </h2>
+                            <p class="mt-1 text-[12px] leading-tight text-gray-500 dark:text-gray-400">
+                                {{ $item['description'] }}
+                            </p>
+                        </div>
 
+                        <div class="flex items-center font-bold text-primary-600 dark:text-primary-400 text-[10px] uppercase tracking-[0.15em] pt-1">
+                            Acessar ferramenta
+                            <svg class="ml-1.5 h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </div>
+                    </a>
+                @endforeach
+
+            </div>
+
+            {{-- Rodapé --}}
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
+                <p class="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-400 dark:text-gray-600 text-center">
+                    Sistema Integrado de Recursos Humanos
+                </p>
             </div>
         </div>
     </div>
-
 </x-filament-panels::page>
