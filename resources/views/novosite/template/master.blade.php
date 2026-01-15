@@ -39,7 +39,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <div vw class="enabled">
-        <div vw-access-button class="active"></div>
+        <div vw-access-button class="active mt-[70px] lg:mt-0" ></div>
         <div vw-plugin-wrapper>
             <div class="vw-plugin-top-wrapper"></div>
         </div>
