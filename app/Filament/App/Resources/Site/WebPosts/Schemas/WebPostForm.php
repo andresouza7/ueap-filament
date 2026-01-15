@@ -17,6 +17,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class WebPostForm
@@ -50,9 +51,10 @@ class WebPostForm
                     ->multiple()
                     ->directory('test/web_posts')
                     ->minFiles(1)
-                    ->maxFiles(10)
+                    ->maxFiles(5)
                     ->image()
                     ->reorderable()
+                    ->deleteUploadedFileUsing(fn ($file) => Storage::disk('public')->delete($file))
                     ->required(),
 
                 TextInput::make('subtitle')->label('Legenda'),
