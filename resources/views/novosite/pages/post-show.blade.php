@@ -143,7 +143,7 @@
 
         {{-- BOTÃO MOBILE --}}
         @if ($post->web_menu)
-            <div class="lg:hidden fixed bottom-30 right-8 z-[60]">
+            <div class="lg:hidden fixed bottom-5 right-5 z-[60]">
                 <button @click="open = true"
                     class="bg-slate-900 text-white w-12 h-12 flex items-center justify-center border border-slate-700 active:scale-90 transition-all">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
