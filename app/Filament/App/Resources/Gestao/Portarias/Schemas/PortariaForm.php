@@ -71,6 +71,10 @@ class PortariaForm
                         ->searchable()
                         ->preload(),
 
+                    Checkbox::make('has_impediments')
+                        ->label('Possui impedimentos')
+                        ->live(),
+
                     self::getImpedimentSection()
 
                 ])->columns(2)
@@ -83,7 +87,8 @@ class PortariaForm
             ->label('Registrar Impedimento')
             ->helperText('**Servidores que respondem a Processo Administrativo Disciplinar ou de Sindicância')
             ->hint('Preencha a data da portaria para registar o impedimento')
-            ->disabled(fn(callable $get) => is_null($get('created_at')))
+            // ->disabled(fn(callable $get) => is_null($get('created_at')))
+            ->visible(fn(callable $get) => $get('has_impediments'))
             ->table([
                 TableColumn::make('Descrição')
                     ->width('260px')
@@ -132,7 +137,7 @@ class PortariaForm
                     ->required(),
             ])
             ->addActionLabel('Adicionar')
-            ->minItems(0)
+            ->minItems(1)
             ->maxItems(1)
             ->live()
             ->afterStateUpdated(function ($state, callable $set, callable $get) {
