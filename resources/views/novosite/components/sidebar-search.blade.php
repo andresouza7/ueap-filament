@@ -1,22 +1,17 @@
 @props([
     'value' => '',
     'name' => 'search',
-    'placeholder' => 'O que você procura?',
+    'placeholder' => 'O QUE VOCÊ PROCURA?',
 ])
 
-{{-- Adicionado role="search" para definir a região semântica de busca --}}
 <section {{ $attributes->merge(['class' => 'w-full group/search']) }} role="search" aria-labelledby="search-title">
-    {{-- Cabeçalho da Consulta --}}
-    <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-            {{-- aria-hidden="true" pois é apenas um detalhe visual --}}
-            <span class="flex h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" aria-hidden="true"></span>
-            <h3 id="search-title" class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900">
-                Realizar_Pesquisa
-            </h3>
-        </div>
-        {{-- Adicionado role="status" para que leitores de tela entendam como uma informação de estado --}}
-        <span class="text-[8px] font-mono text-slate-400 uppercase tracking-tighter bg-slate-100 px-1.5 py-0.5" role="note">SISTEMA_ATIVO</span>
+    {{-- HEADER ESTRUTURAL (DNA UEAP) --}}
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-[12px] bg-[#002266]"></div>
+        <h3 id="search-title" class="text-[13px] font-[1000] uppercase tracking-[0.4em] text-[#002266]">
+            Pesquisar_<span class="text-[#A4ED4A] italic">Portal</span>
+        </h3>
+        <div class="flex-1 h-[2px] bg-[#002266]/10"></div>
     </div>
 
     <form action="{{ route('site.post.list') }}" method="GET" class="relative">
@@ -24,46 +19,43 @@
             <input type="hidden" name="type" value="{{ request('type') }}">
         @endif
 
-        {{-- Container Industrial com Alinhamento Central --}}
-        <div class="relative bg-white border border-slate-200 transition-all duration-300 group-focus-within/search:border-slate-900">
+        {{-- INPUT CONTAINER COM BORDA PESADA --}}
+        <div class="relative bg-white border-[3px] border-[#002266] rounded-full shadow-[4px_4px_0px_0px_#002266] transition-all duration-300 group-focus-within/search:shadow-[6px_6px_0px_0px_#A4ED4A] group-focus-within/search:translate-x-[-2px] group-focus-within/search:translate-y-[-2px] overflow-hidden">
             
-            {{-- Cantoneiras de Foco - Ocultas para leitores de tela --}}
-            <div aria-hidden="true" class="absolute -top-[1px] -left-[1px] w-2 h-2 border-t border-l border-emerald-500 opacity-0 group-focus-within/search:opacity-100 transition-opacity"></div>
-            <div aria-hidden="true" class="absolute -bottom-[1px] -right-[1px] w-2 h-2 border-b border-r border-emerald-500 opacity-0 group-focus-within/search:opacity-100 transition-opacity"></div>
-
-            <div class="relative flex items-center h-12 overflow-hidden">
-                {{-- Prefixo de Prompt - Oculto pois é decorativo --}}
-                <div class="flex items-center h-full pl-4 pr-2" aria-hidden="true">
-                    <span class="text-[12px] font-mono font-bold text-slate-400 group-focus-within/search:text-emerald-600 transition-colors leading-none">>></span>
-                </div>
-
-                {{-- Campo de Texto - Adicionado aria-label para contexto direto --}}
+            <div class="relative flex items-center h-14">
+                {{-- CAMPO DE TEXTO --}}
                 <input type="text" 
                     name="{{ $name }}" 
                     id="{{ $name }}-input"
                     value="{{ $value }}" 
                     placeholder="{{ $placeholder }}"
                     aria-label="{{ $placeholder }}"
-                    class="flex-1 h-full bg-transparent pr-12 text-slate-900 
-                           placeholder:text-slate-300 focus:outline-none focus:ring-0
-                           text-[13px] font-medium tracking-tight leading-none">
+                    class="flex-1 h-full bg-transparent pl-8 pr-16 text-[#002266] 
+                           placeholder:text-[#002266]/30 focus:outline-none focus:ring-0
+                           text-[11px] font-[900] tracking-widest leading-none uppercase">
                 
-                {{-- Botão de Execução - Adicionado aria-label descritivo --}}
-                <button type="submit" 
-                    aria-label="Executar Pesquisa"
-                    class="absolute right-0 top-0 bottom-0 w-12 bg-slate-900 text-white hover:bg-emerald-600 transition-all flex items-center justify-center">
-                    <i class="fa-solid fa-magnifying-glass text-[10px]" aria-hidden="true"></i>
-                </button>
+                {{-- BOTÃO DE BUSCA - ESTILO "PILL" INTERNO --}}
+                <div class="absolute right-1.5 top-1.5 bottom-1.5">
+                    <button type="submit" 
+                        aria-label="Executar Pesquisa"
+                        class="h-full px-6 bg-[#002266] text-[#A4ED4A] rounded-full hover:bg-[#1d4ed8] transition-all flex items-center justify-center group-active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
 
-        {{-- Barra de Status Inferior --}}
-        <div class="mt-2 flex justify-between items-center px-1" aria-hidden="true">
-            <div class="flex gap-1">
-                <div class="w-1 h-1 bg-slate-200 group-focus-within/search:bg-emerald-500 transition-colors"></div>
-                <div class="w-1 h-1 bg-slate-200 group-focus-within/search:bg-emerald-500/60 transition-colors"></div>
+        {{-- STATUS INFERIOR COM GEOMETRIA --}}
+        <div class="mt-4 flex justify-between items-center px-4" aria-hidden="true">
+            <div class="flex gap-1.5 items-center">
+                <div class="w-3 h-3 bg-[#A4ED4A] border-2 border-[#002266] rotate-45 group-focus-within/search:bg-[#002266]"></div>
+                <div class="w-12 h-[2px] bg-[#002266]/10"></div>
             </div>
-            <span class="text-[7px] font-mono text-slate-400 uppercase tracking-widest">Aguardando_Entrada...</span>
+            <span class="text-[9px] font-[900] text-[#002266] uppercase tracking-[0.3em] opacity-40 group-focus-within/search:opacity-100 transition-opacity">
+                Aguardando_Input
+            </span>
         </div>
     </form>
 </section>

@@ -1,277 +1,162 @@
 @extends('novosite.template.master')
 
-@section('title', 'Publicações - UEAP')
+@section('title', 'Explorar Publicações - UEAP')
 
 @section('content')
     @php
         $url_atual = urlencode(url()->current());
     @endphp
 
-    {{-- ================= HEADER CYBER ================= --}}
-    <header class="bg-slate-950 border-b border-white/5 relative overflow-hidden" role="banner">
-        {{-- Efeito de Background Sutil --}}
-        <div class="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true"
-            style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 30px 30px;"></div>
+    {{-- ================= HEADER INDUSTRIAL ================= --}}
+    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
+        {{-- Layer de Fundo --}}
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12" style="-webkit-text-stroke: 3px white; color: transparent;">
+                NEWS_
+            </div>
+            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;"></div>
+        </div>
 
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-            <div class="max-w-4xl">
-                {{-- Badge de Seção Estilo Terminal --}}
-                <div class="flex items-center gap-3 mb-6">
-                    <span
-                        class="inline-flex items-center bg-emerald-500/10 text-emerald-400 text-[10px] font-black px-3 py-1 border border-emerald-500/20 uppercase tracking-[0.2em]">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse mr-2" aria-hidden="true"></span>
-                        Central de Conteúdo
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="max-w-5xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
+                        CENTRAL DE CONTEÚDO
                     </span>
-                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest" aria-hidden="true">// UEAP_DATABASE</span>
+                    <span class="text-white/20 font-mono text-xs tracking-tighter uppercase">// UEAP_DATABASE_SYSTEM</span>
                 </div>
 
-                {{-- Título da Página --}}
-                <h1 class="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4 italic uppercase">
-                    Explorar<br class="hidden md:block"> <span class="text-emerald-500">Publicações</span>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
+                    EXPLORAR<br>
+                    <span class="text-[#a4ed4a]">PUBLICAÇÕES</span>_
                 </h1>
 
-                <div
-                    class="flex flex-col gap-6 pt-6 md:flex-row md:items-center md:justify-between border-t border-white/5">
-                    {{-- Breadcrumb Técnico --}}
-                    <nav class="flex items-center gap-3" aria-label="Caminho de navegação">
-                        <div class="flex items-center gap-2">
-                            <a href="/"
-                                class="text-[10px] font-mono uppercase text-slate-500 hover:text-emerald-400 transition-colors">Início</a>
-                            <i class="fa-solid fa-chevron-right text-[8px] text-slate-700" aria-hidden="true"></i>
-                            <span class="text-[10px] font-mono uppercase text-slate-200" aria-current="page">Publicações</span>
-                        </div>
-                    </nav>
-
-                    {{-- Info Bar Estática --}}
-                    <div
-                        class="flex items-center gap-6 bg-emerald-500/5 px-4 py-2 border border-emerald-500/10 w-fit backdrop-blur-sm"
-                        role="status" aria-label="Status do banco de dados">
-                        {{-- Status Ativo --}}
-                        <div class="flex items-center gap-2">
-                            <div class="relative flex h-2 w-2" aria-hidden="true">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </div>
-                            <span
-                                class="text-[9px] font-mono text-emerald-500/80 uppercase tracking-widest font-bold">Server_Online</span>
-                        </div>
-
-                        {{-- Divisor sutil --}}
-                        <div class="h-3 w-px bg-white/10" aria-hidden="true"></div>
-
-                        {{-- Timestamp --}}
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-microchip text-slate-600 text-[10px]" aria-hidden="true"></i>
-                            <span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest">DB_Ver_2.0.26</span>
-                        </div>
+                {{-- Status Bar --}}
+                <div class="flex flex-wrap items-center gap-6 pt-8 border-t border-white/10">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-[#a4ed4a] animate-pulse"></span>
+                        <span class="text-[9px] font-black text-white/40 uppercase tracking-widest italic">Server: ONLINE</span>
+                    </div>
+                    <div class="text-[9px] font-black text-white/40 uppercase tracking-widest italic">
+                        TOTAL_ENTRADAS: <span class="text-[#a4ed4a]">{{ $posts->total() }}</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="bg-white py-12 relative" id="main-content">
+    <main class="bg-[#f8fafc] py-16">
         <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-                {{-- Listagem de Conteúdo --}}
+                {{-- COLUNA DA ESQUERDA --}}
                 <div class="lg:col-span-8">
 
-                    @php
-                        $currentType = request('type');
-                        $types = [
-                            ['label' => 'Notícias', 'value' => 'news', 'icon' => 'fa-newspaper'],
-                            ['label' => 'Eventos', 'value' => 'event', 'icon' => 'fa-calendar-check'],
-                            ['label' => 'Páginas', 'value' => 'page', 'icon' => 'fa-file-lines'],
-                        ];
-                    @endphp
-
+                    {{-- CAIXA DE BUSCA E FILTROS BRUTALISTA --}}
                     <div class="mb-12">
-                        {{-- 1. HEADER DE CONTEXTO --}}
-                        @if (isset($searchString) && $searchString)
-                            <div class="mb-8 relative pl-6 border-l-2 border-emerald-500" role="status" aria-live="polite">
-                                <div class="flex items-center gap-3 mb-1">
-                                    <span
-                                        class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-emerald-600 animate-pulse">
-                                        Exibindo_Resultados_Para
-                                    </span>
-                                    <span class="hidden md:block h-px w-12 bg-slate-200" aria-hidden="true"></span>
-                                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest">
-                                        {{ $posts->total() }} registros_encontrados
-                                    </span>
+                        <div class="bg-white border-[4px] border-[#001030] shadow-[8px_8px_0px_0px_#001030] p-2">
+                            <form action="{{ route('site.post.list') }}" method="GET" class="flex flex-col md:flex-row gap-2">
+                                @php $currentType = request('type'); @endphp
+                                @if ($currentType) <input type="hidden" name="type" value="{{ $currentType }}"> @endif
+
+                                {{-- Input Search --}}
+                                <div class="flex-1 bg-slate-50 flex items-center px-4 py-3 border-2 border-transparent focus-within:border-[#0055ff] transition-all">
+                                    <i class="fa-solid fa-search text-[#001030] mr-3 opacity-30"></i>
+                                    <div class="flex-1">
+                                        <label class="block text-[8px] font-black text-slate-400 uppercase mb-0.5">Query_Search</label>
+                                        <input type="text" name="search" value="{{ $searchString ?? '' }}" 
+                                            placeholder="BUSCAR NO REPOSITÓRIO..."
+                                            class="w-full bg-transparent text-sm font-black text-[#001030] focus:outline-none placeholder:text-slate-300 uppercase">
+                                    </div>
                                 </div>
-                                <h2
-                                    class="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter leading-none italic break-words">
-                                    <span class="text-slate-300 mr-2 font-light" aria-hidden="true">"</span>{{ $searchString }}<span
-                                        class="text-slate-300 ml-2 font-light" aria-hidden="true">"</span>
-                                </h2>
+
+                                {{-- Tipos de Filtro --}}
+                                <div class="flex gap-1">
+                                    @foreach ([['label' => 'NEWS', 'val' => 'news'], ['label' => 'EVENTOS', 'val' => 'event']] as $t)
+                                        <a href="{{ route('site.post.list', ['type' => $t['val']]) }}" 
+                                           class="flex items-center px-6 py-3 text-[10px] font-black transition-all border-2 {{ request('type') == $t['val'] ? 'bg-[#001030] text-[#a4ed4a] border-[#001030]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#001030] hover:text-[#001030]' }}">
+                                            {{ $t['label'] }}
+                                        </a>
+                                    @endforeach
+                                    <button type="submit" class="bg-[#a4ed4a] text-[#001030] px-6 py-3 text-[10px] font-black uppercase border-2 border-[#001030] hover:bg-[#001030] hover:text-[#a4ed4a] transition-all">
+                                        BUSCAR_
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        @if(request()->anyFilled(['search', 'type']))
+                            <div class="mt-4 flex justify-end">
+                                <a href="{{ route('site.post.list') }}" class="text-[9px] font-black text-red-500 uppercase italic hover:underline">
+                                    [X] RESET_FILTERS
+                                </a>
                             </div>
                         @endif
-
-                        {{-- 2. CAIXA DE COMANDO --}}
-                        <section aria-label="Filtros e busca">
-                            <div class="relative group">
-                                <div class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-slate-200 transition-colors group-focus-within:border-emerald-500 hidden md:block" aria-hidden="true"></div>
-                                <div class="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-slate-200 transition-colors group-focus-within:border-emerald-500 hidden md:block" aria-hidden="true"></div>
-
-                                <div class="bg-white border border-slate-200 p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-sm group-focus-within:shadow-md transition-shadow duration-300">
-                                    {{-- Input Principal --}}
-                                    <form action="{{ route('site.post.list') }}" method="GET" role="search"
-                                        class="flex-1 flex items-center bg-slate-50 px-4 py-3 md:py-4 relative overflow-hidden group/input border border-transparent focus-within:border-emerald-500/20 transition-all">
-
-                                        @if ($currentType)
-                                            <input type="hidden" name="type" value="{{ $currentType }}">
-                                        @endif
-
-                                        <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500 scale-y-0 group-focus-within/input:scale-y-100 transition-transform duration-300" aria-hidden="true"></div>
-
-                                        <i class="fa-solid fa-terminal text-emerald-500 mr-4 text-xs" aria-hidden="true"></i>
-
-                                        <div class="flex-1 flex flex-col">
-                                            <label for="search-input"
-                                                class="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-0.5">Executar_Busca</label>
-                                            <input type="text" name="search" id="search-input" value="{{ $searchString ?? '' }}"
-                                                placeholder="O QUE VOCÊ PROCURA?"
-                                                class="w-full bg-transparent text-sm focus:outline-none font-black text-slate-800 placeholder:text-slate-300 uppercase tracking-tight">
-                                        </div>
-
-                                        @if ($searchString)
-                                            <a href="{{ route('site.post.list', request()->except('search')) }}"
-                                                aria-label="Limpar busca"
-                                                class="ml-4 text-slate-300 hover:text-red-500 transition-colors">
-                                                <i class="fa-solid fa-circle-xmark text-sm"></i>
-                                            </a>
-                                        @endif
-                                    </form>
-
-                                    {{-- Filtros --}}
-                                    <nav class="grid grid-cols-3 md:flex items-stretch gap-1" aria-label="Filtrar por tipo">
-                                        @foreach ($types as $type)
-                                            @php
-                                                $isActive = $currentType == $type['value'];
-                                                $params = request()->query();
-                                                if ($isActive) {
-                                                    unset($params['type']);
-                                                } else {
-                                                    $params['type'] = $type['value'];
-                                                }
-                                            @endphp
-
-                                            <a href="{{ route('site.post.list', $params) }}"
-                                                aria-current="{{ $isActive ? 'page' : 'false' }}"
-                                                class="relative flex flex-col items-center justify-center py-3 px-2 md:px-6 md:min-w-[100px] transition-all duration-300 group/btn
-                                                {{ $isActive
-                                                    ? 'bg-slate-900 text-white'
-                                                    : 'bg-white text-slate-500 border border-slate-100 md:border-slate-200 hover:bg-emerald-50/50' }}">
-
-                                                <i class="fa-solid {{ $type['icon'] }} text-[11px] mb-1.5 {{ $isActive ? 'text-emerald-400' : 'text-slate-400' }}" aria-hidden="true"></i>
-                                                <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-center">{{ $type['label'] }}</span>
-
-                                                <div class="absolute top-0 inset-x-0 h-[2px] bg-emerald-500 transition-transform duration-300 {{ $isActive ? 'scale-x-100' : 'scale-x-0' }}" aria-hidden="true"></div>
-                                            </a>
-                                        @endforeach
-                                    </nav>
-                                </div>
-
-                                {{-- Footer de Status e Resultados --}}
-                                <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
-                                    <div class="flex items-center gap-4" aria-live="polite">
-                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">
-                                            @if (request('type'))
-                                                Exibindo <span class="text-emerald-600">{{ $posts->total() }}</span> resultados para {{ $currentType }}
-                                            @elseif(request('search'))
-                                                Exibindo <span class="text-emerald-600">{{ $posts->total() }}</span> resultados para "{{ request('search') }}"
-                                            @else
-                                                Status: <span class="text-emerald-500">Sistema_Ativo</span>
-                                            @endif
-                                        </p>
-                                        <span class="hidden sm:block text-slate-200 text-xs" aria-hidden="true">|</span>
-                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">
-                                            Total_Entradas: <span class="text-slate-900">{{ $posts->total() }}</span>
-                                        </p>
-                                    </div>
-
-                                    @if (request()->anyFilled(['search', 'type']))
-                                        <a href="{{ route('site.post.list') }}"
-                                            class="group flex items-center gap-2 text-[9px] font-black text-red-500 uppercase tracking-widest">
-                                            <span class="h-px w-4 bg-red-200 group-hover:w-6 transition-all" aria-hidden="true"></span>
-                                            Limpar_Filtros
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </section>
                     </div>
 
-                    {{-- Listagem Principal --}}
-                    <div class="space-y-3" role="feed">
+                    {{-- LISTAGEM DE POSTS --}}
+                    <div class="space-y-8">
                         @forelse ($posts as $item)
-                            <article
-                                class="group relative flex flex-col sm:flex-row gap-6 p-4 border border-transparent hover:border-slate-100 hover:bg-slate-50/50 transition-all duration-300">
-
-                                {{-- Imagem com Frame Técnico --}}
-                                <div class="relative shrink-0 w-full sm:w-64 h-44 overflow-hidden bg-slate-100">
-                                    <div class="absolute inset-0 z-10 border-[10px] border-transparent group-hover:border-white/20 transition-all" aria-hidden="true"></div>
-                                    <a href="{{ route('site.post.show', $item->slug) }}" class="block h-full" aria-label="Leia mais sobre: {{ $item->title }}">
-                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
-                                            alt="" {{-- Vazio pois o título já está no link e no H2 --}}
-                                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110">
-                                    </a>
-                                    <div class="absolute bottom-0 left-0 bg-slate-950 text-white font-mono text-[9px] px-2 py-1 z-20">
-                                        <time datetime="{{ $item->created_at->format('Y-m-d') }}">
-                                            {{ $item->created_at->format('d.M.Y') }}
-                                        </time>
-                                    </div>
-                                </div>
-
-                                {{-- Conteúdo --}}
-                                <div class="flex-1 min-w-0 py-2">
-                                    <div class="flex items-center gap-3 mb-3">
-                                        <span class="text-[9px] font-mono font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2">
-                                            <span class="sr-only">Categoria:</span> // {{ $item->categories->first()->name ?? 'Geral' }}
-                                        </span>
-                                        <span class="h-px flex-1 bg-slate-100" aria-hidden="true"></span>
+                            <article class="group bg-white border-[3px] border-[#001030] hover:shadow-[12px_12px_0px_0px_#a4ed4a] transition-all duration-300 overflow-hidden">
+                                <div class="flex flex-col md:flex-row">
+                                    {{-- Thumbnail --}}
+                                    <div class="md:w-64 h-48 shrink-0 bg-[#001030] overflow-hidden relative">
+                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}" 
+                                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 opacity-80 group-hover:opacity-100">
+                                        <div class="absolute top-0 left-0 bg-[#a4ed4a] text-[#001030] font-black text-[9px] px-2 py-1 uppercase">
+                                            {{ $item->created_at->format('d/m/y') }}
+                                        </div>
                                     </div>
 
-                                    <a href="{{ route('site.post.show', $item->slug) }}" class="block mb-3">
-                                        <h2 class="text-xl font-black text-slate-900 leading-tight group-hover:text-emerald-600 transition-colors uppercase tracking-tight italic">
-                                            {{ $item->title }}
-                                        </h2>
-                                    </a>
+                                    {{-- Content --}}
+                                    <div class="p-6 flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <span class="text-[9px] font-black text-[#0055ff] uppercase tracking-widest mb-2 block">
+                                                // {{ $item->categories->first()->name ?? 'Geral' }}
+                                            </span>
+                                            <h3 class="text-xl font-black text-[#001030] uppercase italic leading-none mb-3 group-hover:text-[#0055ff] transition-colors">
+                                                {{ $item->title }}
+                                            </h3>
+                                            {{-- Descrição em minúsculas para legibilidade --}}
+                                            <p class="text-slate-600 text-sm leading-relaxed font-medium normal-case line-clamp-2">
+                                                {{ $item->resume ?? Str::limit(strip_tags($item->text), 140) }}
+                                            </p>
+                                        </div>
 
-                                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-4 font-medium">
-                                        {{ $item->resume ?? Str::limit(clean_text(html_entity_decode(strip_tags($item->text))), 120) }}
-                                    </p>
-
-                                    <a href="{{ route('site.post.show', $item->slug) }}"
-                                        aria-hidden
-                                        class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-950 transition-all">
-                                        ACESSAR_CONTEÚDO
-                                        <i class="fa-solid fa-arrow-right-long transition-transform group-hover:translate-x-2" aria-hidden="true"></i>
-                                    </a>
+                                        <div class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center">
+                                            <a href="{{ route('site.post.show', $item->slug) }}" 
+                                               class="text-[10px] font-black text-[#001030] uppercase tracking-widest flex items-center gap-2 group/link">
+                                                LER_CONTEÚDO_COMPLETO
+                                                <i class="fa-solid fa-arrow-right-long text-[#a4ed4a] group-hover/link:translate-x-2 transition-transform"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </article>
                         @empty
-                            <div class="py-20 text-center border border-dashed border-slate-200 bg-slate-50/50" role="alert">
-                                <i class="fa-solid fa-box-open text-slate-200 text-4xl mb-4" aria-hidden="true"></i>
-                                <p class="text-slate-400 text-xs font-mono uppercase tracking-widest">Error 404: No_Data_Found</p>
+                            <div class="py-20 text-center border-[4px] border-dashed border-slate-200 bg-white">
+                                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest italic">No_Records_Found_In_Database</span>
                             </div>
                         @endforelse
                     </div>
 
                     @if ($posts->hasPages())
-                        <nav class="pt-12" aria-label="Paginação">
+                        <div class="pt-16">
                             {{ $posts->links('novosite.components.post-paginator') }}
-                        </nav>
+                        </div>
                     @endif
                 </div>
 
-                {{-- Sidebar --}}
-                <aside class="lg:col-span-4" role="complementary">
+                {{-- SIDEBAR --}}
+                <aside class="lg:col-span-4">
                     <div class="sticky top-8 space-y-8">
                         @include('novosite.components.sidebar-newsletter')
-                        @include('novosite.components.sidebar-categories', ['categories' => $categories])
+                        
+                        {{-- Widget Estilizado --}}
+                        <div class="bg-[#001030] border-l-[8px] border-[#a4ed4a] p-8">
+                            <h4 class="text-white font-black uppercase italic tracking-tighter text-xl mb-4">CATEGORIAS_</h4>
+                            @include('novosite.components.sidebar-categories', ['categories' => $categories])
+                        </div>
                     </div>
                 </aside>
             </div>

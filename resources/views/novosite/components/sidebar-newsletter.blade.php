@@ -1,77 +1,65 @@
-{{-- Adicionado aria-labelledby para dar contexto à seção --}}
+@props([])
+
 <section class="w-full group" aria-labelledby="newsletter-title">
-    {{-- Título Harmonizado --}}
-    <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-            {{-- Decorativo: oculto --}}
-            <span class="flex h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" aria-hidden="true"></span>
-            <h3 id="newsletter-title" class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900">
-                Newsletter
-            </h3>
-        </div>
-        <span class="text-[8px] font-mono text-slate-400 uppercase tracking-tighter bg-slate-100 px-1.5 py-0.5 border border-slate-200" aria-hidden="true">SUB_04</span>
+    {{-- HEADER ESTRUTURAL (DNA UEAP) --}}
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-[12px] bg-[#002266]"></div>
+        <h3 id="newsletter-title" class="text-[13px] font-[1000] uppercase tracking-[0.4em] text-[#002266]">
+            NEWS_<span class="text-[#A4ED4A] italic">LETTER</span>
+        </h3>
+        <div class="flex-1 h-[2px] bg-[#002266]/10"></div>
     </div>
 
-    {{-- Conteúdo Cyber --}}
-    <div class="relative bg-slate-50 border border-slate-200 p-6 overflow-hidden">
-        {{-- Detalhes Decorativos - Ocultos --}}
-        <div class="absolute top-0 right-0 w-8 h-8 bg-slate-200 lg:bg-slate-200/50 [clip-path:polygon(100%_0,0_0,100%_100%)]" aria-hidden="true"></div>
-        <div class="absolute bottom-0 left-0 w-2 h-10 bg-emerald-500/20" aria-hidden="true"></div>
-
+    {{-- CARD IMPACTO MÁXIMO --}}
+    <div class="relative bg-[#A4ED4A] border-[4px] border-[#002266] rounded-[2.5rem] p-8 shadow-[8px_8px_0px_0px_#002266]">
+        
         <div class="relative z-10">
-            <h4 class="text-xl font-[1000] text-slate-900 leading-none tracking-tighter uppercase italic mb-2">
-                Fique por <span class="text-emerald-600 not-italic">dentro.</span>
+            {{-- Título Gigante e Esmagado --}}
+            <h4 class="text-4xl font-[1000] text-[#002266] leading-[0.85] tracking-[-0.05em] uppercase italic mb-4">
+                FIQUE POR <br> <span class="bg-[#002266] text-[#A4ED4A] px-2 not-italic">DENTRO_</span>
             </h4>
             
-            <div class="flex items-center gap-2 mb-4">
-                {{-- Role status indica uma informação de estado do sistema --}}
-                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest leading-none" role="status">Status: Ready_to_sync</span>
-            </div>
-
-            <p class="text-[12px] text-slate-500 leading-snug mb-6 font-medium italic border-l border-slate-300 pl-3">
-                O resumo essencial do que acontece na UEAP, toda semana diretamente no seu e-mail.
+            <p class="text-[14px] text-[#002266] leading-tight mb-8 font-[900] uppercase tracking-tighter">
+                O resumo essencial do que acontece na UEAP, toda semana no seu e-mail.
             </p>
 
-            {{-- Adicionado aria-label ao form para descrever sua finalidade --}}
-            <form class="flex flex-col gap-2" aria-label="Inscrição em informativo por e-mail">
-                {{-- Input Estilizado --}}
+            <form class="flex flex-col gap-4" aria-label="Inscrição em informativo">
+                {{-- Input com borda pesada --}}
                 <div class="relative w-full">
-                    {{-- O @ é decorativo, ocultamos --}}
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-300 font-mono" aria-hidden="true">@</div>
-                    
-                    {{-- Adicionado label SR-ONLY para acessibilidade total --}}
-                    <label for="newsletter_email" class="sr-only">Seu endereço de e-mail</label>
                     <input type="email" 
                         id="newsletter_email"
                         name="email"
                         required
-                        placeholder="USUARIO@UEAP.EDU.BR"
-                        class="w-full bg-white border border-slate-200 rounded-none pl-8 pr-4 py-3 text-xs text-slate-900 
-                        placeholder:text-slate-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all font-mono">
+                        placeholder="NOME@EXEMPLO.COM"
+                        class="w-full bg-white border-[3px] border-[#002266] rounded-2xl px-5 py-4 text-[12px] text-[#002266] 
+                        placeholder:text-[#002266]/40 focus:outline-none focus:bg-[#002266] focus:text-[#A4ED4A] transition-all font-[900] uppercase tracking-widest shadow-inner">
                 </div>
 
-                {{-- Botão de Ação Industrial --}}
+                {{-- Botão "Soco na Cara" --}}
                 <button type="submit"
-                    class="relative w-full bg-slate-900 text-white py-4 text-[11px] font-black uppercase tracking-[0.3em] 
-                    rounded-none overflow-hidden transition-all duration-300 hover:bg-slate-800 active:scale-[0.98]">
+                    class="relative w-full bg-[#002266] text-[#A4ED4A] py-5 text-[14px] font-[1000] uppercase tracking-[0.3em] 
+                    rounded-2xl border-b-[6px] border-[#001133] hover:border-b-0 hover:translate-y-[2px] active:translate-y-[4px] transition-all group/btn">
                     
-                    {{-- Efeito de brilho - Oculto --}}
-                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" aria-hidden="true"></div>
-                    
-                    <span class="relative flex items-center justify-center gap-2">
-                        {{-- Texto amigável para leitores de tela caso o sublinhado confunda --}}
-                        <span class="sr-only">Assinar Informativo</span>
-                        <span aria-hidden="true">Assinar_Informativo</span>
-                        <i class="fa-solid fa-arrow-right text-[9px] text-emerald-400" aria-hidden="true"></i>
+                    <span class="relative flex items-center justify-center gap-3">
+                        INSCREVER_AGORA
+                        <div class="w-6 h-6 bg-[#A4ED4A] text-[#002266] rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path d="M12 4v16m8-8H4"/></svg>
+                        </div>
                     </span>
                 </button>
             </form>
         </div>
 
-        {{-- Metadata de rodapé - Oculto por ser puramente estético/clutter --}}
-        <div class="mt-4 flex justify-between items-center opacity-40" aria-hidden="true">
-            <span class="text-[7px] font-mono text-slate-400 uppercase">Encr_Protocol: v2.0</span>
-            <span class="text-[7px] font-mono text-slate-400 uppercase">UEAP_INTEL</span>
+        {{-- Pattern de Fundo (Simulando o grid da imagem) --}}
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#002266 1px, transparent 0); background-size: 20px 20px;"></div>
+    </div>
+
+    {{-- Info de Sistema no Rodapé --}}
+    <div class="mt-4 flex justify-between items-center px-2">
+        <span class="text-[9px] font-black text-[#002266] uppercase tracking-[0.5em]">SYSTEM_READY</span>
+        <div class="flex gap-2">
+            <div class="w-3 h-3 bg-[#002266] rotate-45"></div>
+            <div class="w-3 h-3 bg-[#A4ED4A] border-2 border-[#002266] rotate-45"></div>
         </div>
     </div>
 </section>

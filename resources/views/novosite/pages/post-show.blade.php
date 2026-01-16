@@ -6,243 +6,157 @@
 
     @php $url_atual = urlencode(url()->current()); @endphp
 
-    {{-- ================= HEADER INDUSTRIAL HYBRID PREMIUM ================= --}}
-    <header class="relative overflow-hidden border-b border-slate-200 bg-[#f1f5f9]">
+    {{-- ================= HEADER CONDENSADO: GEOMETRIA AVANÇADA ================= --}}
+    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
 
-        {{-- EFEITO PONTILHADO - Oculto para leitores de tela --}}
-        <div class="absolute inset-0 opacity-[0.05] pointer-events-none" aria-hidden="true"
-            style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"></div>
+        {{-- LAYER DE FUNDO: GEOMETRIA ESTRUTURAL --}}
+        <div class="absolute inset-0 pointer-events-none z-0">
+            {{-- Texto de Fundo (Stroke) - Posicionado na diagonal --}}
+            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12"
+                style="-webkit-text-stroke: 3px white; color: transparent;">
+                {{ $post->category->name }}
+            </div>
 
-        {{-- Background Skew - Decorativo --}}
-        <div aria-hidden="true"
-            class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-slate-300/40 skew-x-[-12deg] translate-x-20 z-0 border-l-4 border-emerald-500/20 shadow-[-10px_0_30px_rgba(0,0,0,0.03)]">
-            <span
-                class="absolute left-4 top-10 -rotate-90 text-[8px] font-mono text-slate-400 tracking-[0.5em] uppercase whitespace-nowrap">
-                System_Ref: {{ rand(1000, 9999) }}
-            </span>
+            {{-- Retângulo 12px: Cruzando o canto inferior esquerdo --}}
+            <div
+                class="absolute -bottom-24 -left-20 w-[500px] h-[300px] border-[12px] border-[#0055ff]/10 rounded-[120px] -rotate-12">
+            </div>
+
+            {{-- Retângulo 8px: No canto superior direito --}}
+            <div
+                class="absolute -top-20 right-20 w-[300px] h-[300px] border-[8px] border-[#a4ed4a]/15 rounded-full rotate-45">
+            </div>
+
+            {{-- Pontos Neon com gradiente de opacidade --}}
+            <div class="absolute inset-0 opacity-20 [mask-image:linear-gradient(to_bottom,white,transparent)]"
+                style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;">
+            </div>
         </div>
 
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-14 relative z-10">
-            <div class="max-w-4xl relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="max-w-5xl">
 
-                {{-- Categoria & Tipo + Badge de Status --}}
-                <div class="flex flex-wrap items-center gap-3 mb-4 lg:mb-8">
-                    <a href="{{ route('site.post.list', ['category' => $post->category->slug]) }}"
-                        aria-label="Categoria: {{ $post->category->name }}"
-                        class="flex items-center bg-slate-900 px-3 py-1 ring-1 ring-emerald-500/30 hover:ring-emerald-500 transition-all group">
-                        <span
-                            class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.15em] group-hover:text-emerald-400">
-                            {{ $post->category->name }}
-                        </span>
-                    </a>
-
-                    {{-- Status de Conexão --}}
-                    <div class="flex items-center gap-1.5 bg-emerald-500/10 px-2 py-1 border border-emerald-500/20" 
-                         role="status" aria-label="Postagem Ativa">
-                        <span class="relative flex h-1.5 w-1.5">
-                            <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                        </span>
-                        <span
-                            class="text-[8px] font-mono text-emerald-600 font-bold tracking-widest uppercase">Live_Post</span>
-                    </div>
-
-                    <span class="hidden sm:block w-1 h-1 bg-slate-300 rounded-full" aria-hidden="true"></span>
-
+                {{-- Badge e Categoria --}}
+                <div class="flex items-center gap-4 mb-6">
                     <span
-                        class="text-[10px] lg:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] italic font-mono">
-                        {{ $post->type }}
+                        class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
+                        {{ $post->category->name }}
                     </span>
+                    <span class="text-white/20 font-mono text-xs tracking-tighter">// {{ strtoupper($post->type) }}</span>
                 </div>
 
-                {{-- Título --}}
-                <h1 class="text-3xl sm:text-4xl lg:text-6xl font-[1000] text-slate-900 leading-[1.1] lg:leading-[0.95] tracking-tighter uppercase italic mb-8">
-                    {{ $post->title }}<span class="text-emerald-500 not-italic" aria-hidden="true">.</span>
+                {{-- Título Curto e Grosso --}}
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
+                    {{ $post->title }}<span class="text-[#a4ed4a]">.</span>
                 </h1>
 
-                {{-- Barra Inferior (Metadados + Share) --}}
-                <div class="pt-6 lg:pt-10 mt-6 lg:mt-10 border-t border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-8">
-
-                    {{-- Bloco de Metadados (Data Panel) --}}
-                    <div class="flex items-stretch gap-0 bg-slate-200/40 border border-slate-300 overflow-hidden w-full lg:w-fit shadow-sm" role="group" aria-label="Informações da publicação">
-                        {{-- Módulo 01: Timestamp --}}
-                        <div class="relative flex-1 lg:flex-none flex flex-col justify-between p-3 border-r border-slate-300 lg:min-w-[130px] bg-white/20">
-                            <div class="absolute top-0 left-0 w-4 h-[2px] bg-emerald-500" aria-hidden="true"></div>
-                            <span class="text-[7px] font-black text-slate-500 uppercase tracking-[0.4em] font-mono mb-2">Publicado</span>
-                            <div class="flex items-center gap-2">
-                                <div class="w-1.5 h-3 bg-slate-900" aria-hidden="true"></div>
-                                <time datetime="{{ $post->created_at->toW3cString() }}"
-                                    class="text-[12px] sm:text-[13px] font-[1000] text-slate-900 uppercase font-mono tracking-tighter leading-none">
-                                    {{ $post->created_at->format('d.M.y') }}
-                                </time>
-                            </div>
-                        </div>
-
-                        {{-- Módulo 02: Acessos --}}
-                        <div class="relative flex-1 lg:flex-none flex flex-col justify-between p-3 bg-white/40 lg:min-w-[120px]">
-                            <div class="absolute top-0 right-0 w-6 h-6 overflow-hidden text-slate-300" aria-hidden="true">
-                                <div class="absolute top-0 right-0 w-full h-[1px] bg-current rotate-45 translate-x-3 translate-y-1"></div>
-                            </div>
-                            <span class="text-[7px] font-black text-slate-500 uppercase tracking-[0.4em] font-mono mb-2">Acessos</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[12px] sm:text-[13px] font-[1000] text-slate-900 uppercase font-mono tracking-tighter leading-none">
-                                    {{ number_format($post->hits, 0, ',', '.') }}
-                                </span>
-                            </div>
-                        </div>
-
-                        {{-- Módulo 03: Status Tag --}}
-                        <div class="bg-slate-900 flex items-center justify-center px-2 border-l border-slate-900" aria-hidden="true">
-                            <span class="text-[7px] font-bold text-white uppercase [writing-mode:vertical-lr] rotate-180 tracking-[0.2em] font-mono">
-                                LOG
-                            </span>
+                {{-- Dashboard Stats --}}
+                <div class="flex flex-wrap items-center gap-x-12 gap-y-6 pt-8 border-t border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-8 bg-[#0055ff]"></div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Publicado</span>
+                            <time
+                                class="text-white text-xl font-black italic">{{ $post->created_at->format('d/m/Y') }}</time>
                         </div>
                     </div>
 
-                    {{-- Bloco de Share --}}
-                    <nav class="flex items-center justify-between lg:justify-end gap-4 w-full lg:w-auto bg-slate-200/20 lg:bg-transparent p-2 lg:p-0 border border-slate-200 lg:border-0" aria-label="Compartilhar nas redes sociais">
-                        <span class="text-[8px] font-black text-slate-500 uppercase tracking-[0.4em] font-mono pl-2 lg:pl-0">
-                            COMPARTILHAR
-                        </span>
-
-                        <div class="flex items-center bg-slate-900 border border-slate-900 overflow-hidden shadow-lg ring-1 ring-white/10 flex-none">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url_atual }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Compartilhar no Facebook"
-                                class="w-10 h-10 flex items-center justify-center text-white/70 hover:bg-white hover:text-black transition-colors border-r border-white/5">
-                                <i class="fa-brands fa-facebook-f text-xs" aria-hidden="true"></i>
-                            </a>
-                            <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Compartilhar no WhatsApp"
-                                class="w-10 h-10 flex items-center justify-center text-white/70 hover:bg-white hover:text-black transition-colors border-r border-white/5">
-                                <i class="fa-brands fa-whatsapp text-sm" aria-hidden="true"></i>
-                            </a>
-                            <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Compartilhar no X (Twitter)"
-                                class="w-10 h-10 flex items-center justify-center text-white/70 hover:bg-white hover:text-black transition-colors">
-                                <i class="fa-brands fa-x-twitter text-xs" aria-hidden="true"></i>
-                            </a>
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-8 bg-[#a4ed4a]"></div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Visualizações</span>
+                            <span
+                                class="text-white text-xl font-black italic">{{ number_format($post->hits, 0, ',', '.') }}</span>
                         </div>
-                    </nav>
+                    </div>
+
+                    {{-- Share --}}
+                    <div class="ml-auto flex items-center gap-3">
+                        <a href="https://api.whatsapp.com/send?text={{ $url_atual }}"
+                            class="w-12 h-12 flex items-center justify-center bg-[#25D366] text-white rounded-2xl hover:bg-white hover:text-[#25D366] transition-all shadow-xl">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}"
+                            class="w-12 h-12 flex items-center justify-center bg-white text-[#001030] rounded-2xl hover:bg-[#001030] hover:text-white transition-all shadow-xl">
+                            <i class="fa-brands fa-x-twitter text-lg"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    {{-- ================= CONTENT AREA ================= --}}
-    <section x-data="{ open: false }" class="w-full py-16 lg:py-24 relative" aria-labelledby="conteudo-principal">
-        <h2 id="conteudo-principal" class="sr-only">Corpo da Postagem</h2>
+    {{-- ================= CONTEÚDO EDITORIAL ================= --}}
+    <section class="bg-white py-16 lg:py-24 relative overflow-hidden">
 
-        {{-- BOTÃO MOBILE --}}
-        @if ($post->web_menu)
-            <div class="lg:hidden fixed bottom-5 right-5 z-[60]">
-                <button @click="open = true" aria-haspopup="true" :aria-expanded="open" aria-label="Abrir menu de navegação lateral"
-                    class="bg-slate-900 text-white w-12 h-12 flex items-center justify-center border border-slate-700 active:scale-90 transition-all">
-                    <i class="fa-solid fa-bars-staggered text-lg" aria-hidden="true"></i>
-                </button>
-            </div>
+        {{-- Forma geométrica "fantasma" no fundo da seção branca --}}
+        <div
+            class="absolute -right-40 top-40 w-[600px] h-[600px] border-[1px] border-slate-100 rounded-full pointer-events-none">
+        </div>
 
-            {{-- DRAWER OVERLAY --}}
-            <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200" @click="open = false"
-                class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[70] lg:hidden">
-            </div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
 
-            {{-- DRAWER PANEL --}}
-            <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
-                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
-                x-transition:leave-end="translate-x-full"
-                role="dialog" aria-modal="true" aria-label="Menu de Navegação Lateral"
-                class="fixed top-0 right-0 w-[260px] h-full bg-white z-[80] lg:hidden flex flex-col border-l border-slate-200">
-
-                <div class="flex items-center justify-between p-4 border-b border-slate-900 bg-slate-50">
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900">Índice</span>
-                    <button @click="open = false" aria-label="Fechar menu" class="text-slate-900 hover:text-emerald-600 transition-colors p-2">
-                        <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
-                    </button>
-                </div>
-
-                <div class="flex-1 overflow-y-auto bg-white custom-scrollbar">
-                    <nav class="flex flex-col">
-                        @foreach (optional($post->web_menu)->items()->where('status', 'published')->orderBy('position')->get() ?? [] as $item)
-                            @php $isActive = request()->url() == $item->url; @endphp
-                            <a href="{{ $item->url }}"
-                                @if($isActive) aria-current="page" @endif
-                                class="flex items-center justify-between px-6 py-3.5 border-b border-slate-50 transition-colors
-                               {{ $isActive ? 'bg-slate-50 text-emerald-600' : 'text-slate-900 active:bg-slate-50' }}">
-
-                                <span class="text-[11px] font-bold uppercase tracking-wider {{ $isActive ? 'italic font-[1000]' : '' }}">
-                                    {{ $item->name }}
-                                </span>
-
-                                @if ($isActive)
-                                    <div class="w-1.5 h-1.5 bg-emerald-500 rotate-45" aria-hidden="true"></div>
-                                @else
-                                    <i class="fa-solid fa-chevron-right text-[8px] text-slate-300" aria-hidden="true"></i>
-                                @endif
-                            </a>
-                        @endforeach
-                    </nav>
-                </div>
-
-                <div class="p-4 border-t border-slate-100 bg-slate-50/50">
-                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">UEAP © {{ date('Y') }}</span>
-                </div>
-            </div>
-        @endif
-
-        <div class="max-w-[1290px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-                {{-- MAIN CONTENT --}}
+                {{-- Matéria --}}
                 <main class="lg:col-span-8">
-                    <article class="article-body prose prose-slate max-w-none 
-                        prose-headings:uppercase prose-headings:italic prose-headings:font-[1000] prose-headings:tracking-tighter
-                        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 flex flex-col gap-10">
+                    <article
+                        class="prose prose-slate prose-xl max-w-none 
+                        prose-headings:text-[#001030] prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:italic
+                        prose-p:text-slate-600 prose-p:leading-relaxed prose-p:mb-10
+                        prose-strong:text-[#0055ff] prose-strong:font-black
+                        prose-img:rounded-[60px] prose-img:shadow-[0_40px_80px_-20px_rgba(0,16,48,0.2)] prose-img:p-2 prose-img:bg-white prose-img:border prose-img:border-slate-100">
 
                         @foreach ($post->content ?? [] as $block)
-                            @include('novosite.components.post-block-renderer', ['block' => $block])
+                            <div class="mb-14">
+                                @include('novosite.components.post-block-renderer', ['block' => $block])
+                            </div>
                         @endforeach
                     </article>
 
-                    {{-- Divisor e Data de Atualização --}}
-                    <footer class="mt-16">
-                        <div class="h-1 w-full bg-slate-900" aria-hidden="true"></div>
-
-                        <div class="flex items-center justify-between py-4">
-                            <div class="flex items-center gap-3">
-                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900">
-                                    Última Atualização
-                                </span>
-                                <span class="h-[1px] w-8 bg-slate-200" aria-hidden="true"></span>
-                                <time datetime="{{ $post->updated_at->toW3cString() }}" class="text-[13px] font-bold text-slate-500 italic tracking-tight">
-                                    {{ $post->updated_at->format('d') }} de {{ $post->updated_at->translatedFormat('F') }}
-                                    de {{ $post->updated_at->format('Y') }} — {{ $post->updated_at->format('H:i') }}
-                                </time>
-                            </div>
-                        </div>
+                    {{-- Linha de Fechamento de 12px --}}
+                    <footer class="mt-24 pt-12 border-t-[12px] border-[#001030] flex justify-between items-center">
+                        <span class="text-xs font-black uppercase text-[#001030] tracking-[0.4em]">Fim do Informativo</span>
+                        <span class="text-[10px] font-bold text-slate-400 italic">Atualizado em
+                            {{ $post->updated_at->format('d/m/Y H:i') }}</span>
                     </footer>
 
-                    {{-- Seção Related Posts --}}
-                    <section class="mt-10" aria-labelledby="posts-relacionados">
-                        <h3 id="posts-relacionados" class="sr-only">Postagens Relacionadas</h3>
+                    {{-- SEÇÃO RELACIONADOS INTEGRADA --}}
+                    <div class="mt-32">
                         @include('novosite.components.post-relacionados', ['posts' => $relatedPosts])
-                    </section>
+                    </div>
                 </main>
 
-                {{-- SIDEBAR --}}
-                <aside class="hidden lg:block lg:col-span-4 relative h-full">
-                    @if ($post->web_menu)
-                        @include('novosite.components.post-navigation', ['menu' => $post->web_menu])
-                    @else
+                {{-- Sidebar --}}
+                <aside class="lg:col-span-4">
+                    <div class="sticky top-10 space-y-16">
+                        @if ($post->web_menu)
+                            <nav class="space-y-3">
+                                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em] mb-8">Nesta
+                                    Seção</h4>
+                                @foreach (optional($post->web_menu)->items()->where('status', 'published')->orderBy('position')->get() ?? [] as $item)
+                                    @php $isActive = request()->url() == $item->url; @endphp
+                                    <a href="{{ $item->url }}"
+                                        class="group flex items-center justify-between p-6 rounded-[35px] border-2 transition-all
+                                       {{ $isActive ? 'bg-[#001030] border-[#001030] text-white shadow-2xl' : 'bg-slate-50 border-transparent text-[#001030] hover:border-[#a4ed4a] hover:bg-white' }}">
+                                        <span
+                                            class="text-[11px] font-black uppercase tracking-widest">{{ $item->name }}</span>
+                                        <div
+                                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all {{ $isActive ? 'bg-[#a4ed4a]' : 'bg-white shadow-sm group-hover:bg-[#a4ed4a]' }}">
+                                            <i class="fa-solid fa-arrow-up-right text-[10px] text-[#001030]"></i>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </nav>
+                        @endif
+
                         <div class="space-y-12">
                             @include('novosite.components.sidebar-search')
                             @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
                             @include('novosite.components.sidebar-newsletter')
                             @include('novosite.components.sidebar-categories', ['categories' => $categories])
                         </div>
-                    @endif
+                    </div>
                 </aside>
             </div>
         </div>

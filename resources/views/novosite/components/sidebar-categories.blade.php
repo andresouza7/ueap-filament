@@ -2,38 +2,44 @@
     'categories' => [],
 ])
 
-{{-- Adicionado aria-labelledby para contextualizar a seção de categorias --}}
-<section aria-labelledby="sidebar-categories-title">
-    {{-- Header Padrão Sidebar --}}
-    <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-2">
-        <div class="flex items-center gap-2">
-            {{-- Decorativo: oculto para leitores de tela --}}
-            <span class="flex h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" aria-hidden="true"></span>
-            <h3 id="sidebar-categories-title" class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900">
-                Assuntos
-            </h3>
-        </div>
-        {{-- Oculto: termo técnico puramente estético --}}
-        <span
-            class="text-[8px] font-mono text-slate-400 uppercase tracking-tighter bg-slate-100 px-1.5 py-0.5 border border-slate-200"
-            aria-hidden="true">TAGS_DB</span>
+<section class="w-full" aria-labelledby="sidebar-categories-title">
+    {{-- HEADER ESTRUTURAL (DNA UEAP) --}}
+    <div class="flex items-center gap-3 mb-6">
+        {{-- O Retângulo de 12px da identidade --}}
+        <div class="w-8 h-[10px] bg-[#002266]"></div>
+        <h3 id="sidebar-categories-title" class="text-[12px] font-[900] uppercase tracking-[0.3em] text-[#002266]">
+            Explorar_<span class="text-[#A4ED4A] italic">Tags</span>
+        </h3>
+        <div class="flex-1 h-[1px] bg-slate-100"></div>
     </div>
 
-    {{-- Tags com Design Sharp e Industrial --}}
-    {{-- Adicionado role="list" para que o navegador anuncie "Lista com X itens" --}}
-    <nav class="flex flex-wrap gap-2" role="list">
+    {{-- Tags Estilo Pílula UEAP --}}
+    <nav class="flex flex-wrap gap-x-2 gap-y-3" role="list">
         @foreach ($categories as $category)
-            {{-- Cada item dentro de uma lista deve ter role="listitem" para semântica correta --}}
             <div role="listitem">
                 <a href="{{ route('site.post.list', ['category' => $category->slug]) }}"
                     aria-label="Ver postagens sobre {{ $category->name }}"
-                    class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-[1px] 
-                           text-[10px] font-black text-slate-500 uppercase tracking-[0.1em]
-                           hover:bg-emerald-600 hover:text-white hover:border-emerald-600 
-                           transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    class="group relative inline-flex items-center px-4 py-1.5 bg-white border-2 border-[#002266] rounded-full 
+                           text-[10px] font-black text-[#002266] uppercase tracking-widest
+                           hover:bg-[#002266] hover:text-[#A4ED4A] transition-all duration-300">
+                    
+                    {{-- Detalhe interno que aparece no hover --}}
+                    <span class="mr-1.5 opacity-0 group-hover:opacity-100 transition-opacity">#</span>
+                    
                     {{ $category->name }}
+
+                    {{-- Dot decorativo estilo UEAP --}}
+                    <span class="ml-2 w-1 h-1 bg-[#A4ED4A] rounded-full group-hover:bg-white"></span>
                 </a>
             </div>
         @endforeach
     </nav>
+
+    {{-- Footer da Seção --}}
+    <div class="mt-6 flex items-center gap-2">
+        <div class="w-full h-[1px] bg-slate-50"></div>
+        <span class="text-[8px] font-black text-slate-300 uppercase tracking-[0.4em] whitespace-nowrap">
+            Index_Ref_026
+        </span>
+    </div>
 </section>

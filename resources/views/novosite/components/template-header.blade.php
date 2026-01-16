@@ -2,6 +2,7 @@
     $menus = \App\Models\WebMenu::where('status', 'published')
         ->whereHas('menu_place', fn($q) => $q->where('slug', 'principal'))
         ->orderBy('position')
+        ->take(6)
         ->get();
 @endphp
 
@@ -9,171 +10,144 @@
     [x-cloak] { display: none !important; }
     .no-scroll { overflow: hidden !important; }
 
-    /* Novo Dropdown UEAP 2026 */
+    /* Dropdown de Alto Nível */
     .dropdown-ueap {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 34, 102, 0.15);
-        border: 1px solid rgba(0, 85, 255, 0.05);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.25);
+        border-radius: 0 0 8px 8px;
+        border-top: 4px solid #002266;
     }
 
-    /* Animação suave para o modal */
-    .modal-enter { animation: modalFade 0.3s ease-out; }
-    @keyframes modalFade {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
+    /* Linha de progresso no hover */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #A4ED4A;
+        transition: width 0.3s ease;
     }
+    .nav-link:hover::after { width: 100%; }
 </style>
 
 <header x-data="{ mobileMenu: false, searchModal: false }" 
         @keydown.window.escape="mobileMenu = false; searchModal = false"
         x-effect="mobileMenu || searchModal ? document.body.classList.add('no-scroll') : document.body.classList.remove('no-scroll')"
-        class="relative w-full font-sans">
+        class="relative w-full z-[100] bg-white antialiased">
 
-    {{-- BARRA DE SISTEMAS (TOP BAR) --}}
-    <section aria-label="Links institucionais"
-        class="bg-[#002266] text-blue-100/60 text-[10px] font-black uppercase tracking-widest py-2.5 relative z-[80]">
-        <div class="max-w-[1440px] mx-auto px-4 lg:px-12 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 bg-[#A4ED4A] rounded-full animate-pulse"></span>
-                <span>Portal Oficial</span>
+    {{-- TOP BAR - O contraste que faltava (Cinza Profissional) --}}
+    <section class="bg-gray-100 border-b border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] py-2">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-[#002266] rounded-full"></span>
+                    Portal Institucional
+                </span>
             </div>
-            <nav class="flex gap-4 md:gap-6">
-                <a href="https://sigaa.ueap.edu.br/sigaa/" class="hover:text-[#A4ED4A] transition-colors">SIGAA</a>
-                <a href="http://transparencia.ueap.edu.br/" class="hover:text-[#A4ED4A] transition-colors">Transparência</a>
-                <a href="https://servicedesk.ueap.edu.br/" class="hover:text-[#A4ED4A] transition-colors">Suporte</a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#" class="hover:text-[#002266] transition-colors">Acesso à Informação</a>
+                <a href="#" class="hover:text-[#002266] transition-colors font-black">SIGAA</a>
+                <a href="#" class="hover:text-[#002266] transition-colors">Webmail</a>
             </nav>
         </div>
     </section>
 
     {{-- NAV PRINCIPAL --}}
-    <nav class="relative z-[60] bg-white border-b border-slate-100 shadow-sm" aria-label="Menu Principal">
-        <div class="max-w-[1440px] mx-auto px-4 lg:px-12 relative">
-            <div class="flex justify-between items-center h-20 lg:h-28">
-
-                {{-- LOGO --}}
-                <a href="/" class="flex items-center gap-3 shrink-0 group z-20" aria-label="Ir para a página inicial">
-                    <img src="/img/site/logo.png" alt="Logotipo UEAP" class="h-12 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105">
-                    <div class="flex flex-col border-l-2 border-[#0055FF]/10 pl-3">
-                        <span class="text-3xl lg:text-4xl font-black text-[#002266] tracking-tighter leading-none">
-                            UE<span class="text-[#0055FF]">AP</span>
-                        </span>
-                        <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">
-                            Universidade do Estado <br> <span class="text-[#0055FF]">do Amapá</span>
-                        </span>
-                    </div>
-                </a>
-
-                {{-- MENU DESKTOP --}}
-                <ul class="hidden lg:flex items-center gap-1 ml-auto h-full">
-                    @foreach ($menus as $menu)
-                        <li class="relative group h-full flex items-center" x-data="{ open: false }" 
-                            @mouseenter="open = true" @mouseleave="open = false" 
-                            @focusin="open = true" @focusout="open = false">
-
-                            <button type="button" 
-                                    class="px-4 py-2 rounded-full text-[12px] font-black text-[#002266] uppercase tracking-tight transition-all hover:bg-[#0055FF]/5 hover:text-[#0055FF]"
-                                    :aria-expanded="open" aria-haspopup="true">
-                                {{ $menu->name }}
-                            </button>
-
-                            @if ($menu->items->count())
-                                <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200"
-                                     x-transition:enter-start="opacity-0 translate-y-2"
-                                     class="absolute left-0 top-[70%] w-64 dropdown-ueap p-4 z-50">
-                                    <ul class="space-y-1">
-                                        @foreach ($menu->items as $item)
-                                            <li>
-                                                <a href="{{ $item->url }}"
-                                                   class="block px-4 py-2.5 rounded-xl text-[11px] font-bold text-slate-600 uppercase hover:bg-[#A4ED4A] hover:text-[#002266] transition-colors">
-                                                    {{ $item->name }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
-
-                {{-- BOTÕES DE AÇÃO --}}
-                <div class="flex items-center gap-3 ml-6">
-                    <button @click="searchModal = true" aria-label="Abrir busca"
-                            class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-[#002266] hover:bg-[#0055FF] hover:text-white transition-all focus:ring-4 focus:ring-[#0055FF]/20">
-                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                    </button>
-                    
-                    <button @click="mobileMenu = true" aria-label="Abrir menu"
-                            class="lg:hidden w-12 h-12 rounded-2xl bg-[#002266] text-white flex items-center justify-center shadow-lg shadow-blue-900/20">
-                        <i class="fa-solid fa-bars-staggered" aria-hidden="true"></i>
-                    </button>
+    <nav class="bg-white border-b border-slate-200 h-20 lg:h-24 flex items-center">
+        <div class="max-w-[1440px] mx-auto w-full px-6 lg:px-12 flex justify-between items-center">
+            
+            {{-- LOGO UNIFICADA --}}
+            <a href="/" class="flex items-center gap-5 group">
+                <img src="/img/site/logo.png" alt="UEAP" class="h-12 lg:h-16 w-auto">
+                <div class="flex flex-col border-l-2 border-slate-200 pl-5">
+                    <span class="text-3xl lg:text-4xl font-black text-[#002266] tracking-tighter leading-none">UEAP</span>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1">Universidade do Estado do Amapá</span>
                 </div>
+            </a>
+
+            {{-- MENU DESKTOP - Condensado e imponente --}}
+            <ul class="hidden lg:flex items-center gap-2 h-full">
+                @foreach ($menus as $menu)
+                    <li class="relative group h-full flex items-center" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        <button class="nav-link relative px-4 py-2 text-[12px] font-black text-[#334155] uppercase tracking-[0.15em] hover:text-[#002266] transition-colors">
+                            {{ $menu->name }}
+                        </button>
+
+                        @if ($menu->items->count())
+                            <div x-show="open" x-cloak x-transition class="absolute left-0 top-full w-72 dropdown-ueap p-4 z-50">
+                                <div class="grid gap-1">
+                                    @foreach ($menu->items as $item)
+                                        <a href="{{ $item->url }}" class="flex items-center gap-3 px-3 py-3 rounded hover:bg-slate-50 group/link">
+                                            <span class="w-2 h-2 rounded-full border-2 border-slate-300 group-hover/link:bg-[#A4ED4A] group-hover/link:border-[#A4ED4A] transition-all"></span>
+                                            <span class="text-[11px] font-black text-slate-500 group-hover/link:text-[#002266] uppercase tracking-widest">{{ $item->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+
+            {{-- BOTÕES --}}
+            <div class="flex items-center gap-4">
+                <button @click="searchModal = true" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-100 text-[#002266] hover:bg-[#002266] hover:text-white transition-all">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <button @click="mobileMenu = true" class="lg:hidden w-12 h-12 flex items-center justify-center bg-[#002266] text-white rounded-lg">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    {{-- MENU MOBILE (NOVO DESIGN) --}}
+    {{-- MODAL PESQUISA --}}
     <template x-teleport="body">
-        <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[1000] lg:hidden">
-            {{-- Overlay --}}
-            <div class="absolute inset-0 bg-[#002266]/95 backdrop-blur-md" @click="mobileMenu = false"></div>
-            
-            <nav class="relative w-full h-full p-6 flex flex-col" role="dialog" aria-modal="true" aria-label="Menu Mobile">
-                <div class="flex justify-between items-center mb-12">
-                    <span class="text-[#A4ED4A] font-black text-xs tracking-widest uppercase">Navegação</span>
-                    <button @click="mobileMenu = false" class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
+        <div x-show="searchModal" x-cloak class="fixed inset-0 z-[500] flex items-center justify-center p-6">
+            <div class="absolute inset-0 bg-[#002266]/90 backdrop-blur-md" @click="searchModal = false"></div>
+            <div class="w-full max-w-3xl relative z-10">
+                <div class="flex justify-end mb-4">
+                    <button @click="searchModal = false" class="text-white/50 hover:text-white text-4xl">&times;</button>
                 </div>
+                <form action="#" method="GET" class="relative">
+                    <input type="text" placeholder="BUSCAR NO PORTAL..." autofocus
+                           class="w-full bg-transparent border-b-4 border-white/20 focus:border-[#A4ED4A] px-0 py-6 text-3xl lg:text-5xl font-black text-white placeholder:text-white/20 outline-none transition-all">
+                    <button class="absolute right-0 top-1/2 -translate-y-1/2 text-[#A4ED4A]">
+                        <i class="fa-solid fa-arrow-right-long text-4xl"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </template>
 
-                <div class="flex-1 space-y-4 overflow-y-auto">
+    {{-- MENU MOBILE --}}
+    <template x-teleport="body">
+        <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[600] lg:hidden bg-[#002266] flex flex-col">
+            <div class="p-8 flex justify-between items-center border-b border-white/10">
+                <span class="text-4xl font-black text-white tracking-tighter">UEAP</span>
+                <button @click="mobileMenu = false" class="text-white text-4xl">&times;</button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-8">
+                <nav class="space-y-6">
                     @foreach ($menus as $menu)
                         <div x-data="{ open: false }">
-                            <button @click="open = !open" 
-                                    class="w-full flex justify-between items-center text-left py-4 border-b border-white/10">
-                                <span class="text-2xl font-black text-white uppercase tracking-tighter" :class="open ? 'text-[#A4ED4A]' : ''">
-                                    {{ $menu->name }}
-                                </span>
-                                <i class="fa-solid" :class="open ? 'fa-minus' : 'fa-plus'" class="text-[#A4ED4A]"></i>
+                            <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                                <span class="text-xl font-bold text-white uppercase tracking-widest" :class="open ? 'text-[#A4ED4A]' : ''">{{ $menu->name }}</span>
+                                <i class="fa-solid fa-chevron-down text-[#A4ED4A] transition-transform" :class="open ? 'rotate-180' : ''"></i>
                             </button>
-                            <div x-show="open" x-collapse class="pl-4 py-2 space-y-4">
+                            <div x-show="open" x-collapse class="mt-4 ml-4 space-y-4 border-l border-white/10 pl-4">
                                 @foreach ($menu->items as $item)
-                                    <a href="{{ $item->url }}" class="block text-blue-100/60 font-bold uppercase text-sm tracking-wide">
+                                    <a href="{{ $item->url }}" class="block text-white/70 font-bold text-sm tracking-widest hover:text-[#A4ED4A]">
                                         {{ $item->name }}
                                     </a>
                                 @endforeach
                             </div>
                         </div>
                     @endforeach
-                </div>
-            </nav>
-        </div>
-    </template>
-
-    {{-- MODAL PESQUISA (MODERNO) --}}
-    <template x-teleport="body">
-        <div x-show="searchModal" x-cloak class="fixed inset-0 z-[1000] flex items-start justify-center p-4 pt-20 md:pt-32">
-            <div class="absolute inset-0 bg-[#002266]/90 backdrop-blur-xl" @click="searchModal = false"></div>
-            
-            <div class="w-full max-w-3xl bg-white rounded-[40px] p-8 md:p-12 relative z-10 modal-enter shadow-2xl">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 id="search-title" class="text-[#002266] font-black text-sm uppercase tracking-[0.3em]">
-                        O que você procura?
-                    </h2>
-                    <button @click="searchModal = false" class="text-slate-400 hover:text-[#002266] font-bold text-xs">
-                        [ FECHAR ]
-                    </button>
-                </div>
-
-                <form action="{{ route('site.post.list') }}" method="GET" class="relative">
-                    <input type="text" name="search" placeholder="Buscar notícias, editais..." autofocus
-                           class="w-full bg-slate-50 border-none rounded-3xl px-8 py-6 text-xl md:text-3xl font-black text-[#002266] focus:ring-4 focus:ring-[#0055FF]/10 placeholder:text-slate-300">
-                    
-                    <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-[#0055FF] text-white rounded-2xl flex items-center justify-center hover:bg-[#A4ED4A] hover:text-[#002266] transition-all">
-                        <i class="fa-solid fa-arrow-right text-xl"></i>
-                    </button>
-                </form>
+                </nav>
             </div>
         </div>
     </template>

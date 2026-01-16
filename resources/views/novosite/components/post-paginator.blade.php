@@ -14,7 +14,7 @@
                 <a href="{{ $paginator->previousPageUrl() }}" 
                    rel="prev" 
                    aria-label="Página anterior"
-                   class="flex-1 md:flex-none text-center px-3 py-2 border border-emerald-500/30 text-emerald-600 text-[10px] uppercase font-black hover:bg-emerald-500 hover:text-white transition-all">
+                   class="flex-1 md:flex-none text-center px-3 py-2 border border-[#001030] text-[#001030] text-[10px] uppercase font-black hover:bg-[#001030] hover:text-[#a4ed4a] transition-all">
                     [ ANTERIOR ]
                 </a>
             @endif
@@ -25,7 +25,7 @@
                     <a href="{{ $paginator->nextPageUrl() }}" 
                        rel="next" 
                        aria-label="Próxima página"
-                       class="w-full block text-center px-3 py-2 border border-emerald-500/30 text-emerald-600 text-[10px] uppercase font-black hover:bg-emerald-500 hover:text-white transition-all">
+                       class="w-full block text-center px-3 py-2 border border-[#001030] text-[#001030] text-[10px] uppercase font-black hover:bg-[#001030] hover:text-[#a4ed4a] transition-all">
                         [ PRÓXIMO ]
                     </a>
                 @else
@@ -38,25 +38,25 @@
         </div>
 
         {{-- Container de Páginas --}}
-        <div class="flex flex-wrap items-center justify-center bg-slate-50 px-2 py-1 border border-slate-200 w-full md:w-auto">
+        <div class="flex flex-wrap items-center justify-center bg-[#001030] px-2 py-1 border-b-2 border-[#a4ed4a] w-full md:w-auto">
             @foreach ($elements as $element)
                 @if (is_string($element))
-                    <span class="px-2 text-slate-400 text-[10px]" aria-hidden="true">{{ $element }}</span>
+                    <span class="px-2 text-white/30 text-[10px]" aria-hidden="true">{{ $element }}</span>
                 @endif
 
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <span class="relative px-3 py-1 text-emerald-600 text-sm lg:text-base font-[1000] italic tracking-tighter" 
+                            <span class="relative px-3 py-1 text-[#a4ed4a] text-sm lg:text-base font-[1000] italic tracking-tighter" 
                                   aria-current="page" 
                                   aria-label="Página atual, Página {{ $page }}">
                                 {{ sprintf('%02d', $page) }}
-                                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-emerald-500" aria-hidden="true"></span>
+                                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#a4ed4a]" aria-hidden="true"></span>
                             </span>
                         @else
                             <a href="{{ $url }}" 
                                aria-label="Ir para página {{ $page }}"
-                               class="px-3 py-1 text-slate-400 hover:text-emerald-600 text-sm lg:text-base font-bold transition-colors">
+                               class="px-3 py-1 text-white/50 hover:text-[#a4ed4a] text-sm lg:text-base font-bold italic transition-colors">
                                 {{ sprintf('%02d', $page) }}
                             </a>
                         @endif
@@ -71,7 +71,7 @@
                 <a href="{{ $paginator->nextPageUrl() }}" 
                    rel="next" 
                    aria-label="Próxima página"
-                   class="px-3 py-2 border border-emerald-500/30 text-emerald-600 text-[10px] uppercase font-black hover:bg-emerald-500 hover:text-white transition-all">
+                   class="px-3 py-2 border border-[#001030] text-[#001030] text-[10px] uppercase font-black hover:bg-[#001030] hover:text-[#a4ed4a] transition-all">
                     [ PRÓXIMO ]
                 </a>
             @else
@@ -84,7 +84,7 @@
 
         {{-- Info Técnica --}}
         <div class="hidden xl:block text-[9px] text-slate-400 uppercase tracking-[0.2em]" role="status">
-            TOTAL_REGISTROS: <span class="text-slate-900 font-bold">{{ $paginator->total() }}</span>
+            TOTAL_REGISTROS: <span class="text-[#001030] font-black italic">{{ $paginator->total() }}</span>
         </div>
     </nav>
 @endif
