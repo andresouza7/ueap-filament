@@ -3,7 +3,7 @@
 
     {{-- Camada 01: Background SVG sutil --}}
     <div class="absolute inset-0 z-0 opacity-[0.2] pointer-events-none bg-repeat"
-        style="background-image: url('/img/site/hero-bg.svg'); background-size: contain; background-position: center;"
+        style="background-image: url('/img/site/hero-bg.svg'); background-size: contain; background-position: -170%;"
         aria-hidden="true">
     </div>
 
