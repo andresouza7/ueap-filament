@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
+
+
 
 // Intercepta o subdominio intranet.ueap.edu.br e roteia para o painel /app do filament
 Route::domain(env('INTRANET_URL'))->group(function () {
@@ -69,9 +72,9 @@ Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])-
 Route::get('tutorial-ponto/complete', [ManagerController::class, 'completeTutorialPonto'])->name('tutorial-ponto.complete');
 
 // Redirecionamento para login no painel app do filament. necesário definir essa rota pois há mais de um painel
-Route::get('/login', function () {
-    return redirect()->route('filament.app.auth.login');
-})->name('login');
+// Route::get('/login', function () {
+//     return redirect()->route('filament.app.auth.login');
+// })->name('login');
 
 // Rotas do site institucional
 Route::name('site.')->group(function () {
@@ -112,3 +115,10 @@ Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
 //     });
 // });
 
+// Exibir o formulário
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')
+    ->middleware('guest');
+
+// Processar o login com limite de 5 tentativas por minuto
+Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('throttle:5,1');

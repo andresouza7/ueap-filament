@@ -14,13 +14,11 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Activitylog\Facades\CauserResolver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // logs user logins and registration attempts
+        Event::listen(Login::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Logout::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Registered::class, [LogAuthEvent::class, 'handle']);
+        Event::listen(Failed::class, [LogAuthEvent::class, 'handle']);
+
         Gate::before(function ($user, $ability, $arguments = []) {
             // Give full access to 'dinfo' users
             if ($user->hasRole('dinfo')) {

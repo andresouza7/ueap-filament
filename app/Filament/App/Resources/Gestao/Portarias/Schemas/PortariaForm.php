@@ -87,7 +87,7 @@ class PortariaForm
             ->label('Registrar Impedimento')
             ->helperText('**Servidores que respondem a Processo Administrativo Disciplinar ou de Sindicância')
             ->hint('Preencha a data da portaria para registar o impedimento')
-            // ->disabled(fn(callable $get) => is_null($get('created_at')))
+            ->disabled(fn(callable $get) => is_null($get('created_at')))
             ->visible(fn(callable $get) => $get('has_impediments'))
             ->table([
                 TableColumn::make('Descrição')
