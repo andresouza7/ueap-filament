@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="h-full overflow-x-hidden">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Login | Intranet UEAP</title>
-    {{-- <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        body,
-        html {
-            overflow-x: hidden;
-            height: 100%;
-            background-color: #007263;
-        }
-    </style>
+    @vite(['resources/css/login.css'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased h-full overflow-x-hidden bg-[#007263]">
 
     <main class="flex flex-col lg:flex-row w-full min-h-screen">
 
