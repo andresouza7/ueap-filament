@@ -35,12 +35,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // logs user logins and registration attempts
+        // ========= REGISTRA LOGS DE ATIVIDADE PARA AUDITORIA 
         Event::listen(Login::class, [LogAuthEvent::class, 'handle']);
         Event::listen(Logout::class, [LogAuthEvent::class, 'handle']);
         Event::listen(Registered::class, [LogAuthEvent::class, 'handle']);
         Event::listen(Failed::class, [LogAuthEvent::class, 'handle']);
 
+        // ========= CONCEDE PERMISSÕES DE SUPER ADMIN 
         Gate::before(function ($user, $ability, $arguments = []) {
             // Give full access to 'dinfo' users
             if ($user->hasRole('dinfo')) {
@@ -62,6 +63,7 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
+        // ========= IMPORTA ARQUIVOS CSS E JS CUSTOMIZADOS PARA O CONTEXTO DO FILAMENT
         FilamentAsset::register([
             // Js::make('tutorial-ponto-script', Vite::asset('resources/js/tutorial-ponto.js'))->module(),
             Js::make('tutorial-ponto-script', asset('build/assets/tutorial-ponto-LlpAYkl0.js'))->module(),
@@ -80,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        // ========= CONFIGURA OS COMPONENTES DO FILAMENT PARA QUE OCUPEM A LARGURA TOTAL DA TELA
         Fieldset::configureUsing(fn(Fieldset $fieldset) => $fieldset
             ->columnSpanFull());
 
