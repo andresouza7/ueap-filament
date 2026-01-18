@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Login | Intranet UEAP</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {{-- <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body,
         html {
@@ -37,7 +38,8 @@
                     </p>
 
                     <div class="flex flex-col items-start gap-4 pt-2 w-64">
-                        <img src="/img/logo-white.png" alt="UEAP" class="h-8 w-auto grayscale opacity-70 hover:opacity-100 transition-opacity">
+                        <img src="/img/logo-white.png" alt="UEAP"
+                            class="h-8 w-auto grayscale opacity-70 hover:opacity-100 transition-opacity">
                         <div class="flex flex-col">
                             <span class="text-white/40 text-[10px] font-bold uppercase tracking-[0.4em] leading-tight">
                                 Universidade do Estado
@@ -80,24 +82,24 @@
                     @csrf
                     <div class="space-y-2">
                         @if ($errors->any())
-                        <div
-                            class="mb-6 p-4 rounded-2xl bg-red-50/50 border border-red-100 flex items-start space-x-3 animate-in fade-in slide-in-from-top-2 duration-300">
-                            <div class="flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-circle-exclamation text-red-500 text-sm"></i>
-                            </div>
+                            <div
+                                class="mb-6 p-4 rounded-2xl bg-red-50/50 border border-red-100 flex items-start space-x-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                                <div class="flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-circle-exclamation text-red-500 text-sm"></i>
+                                </div>
 
-                            <div class="flex-1">
-                                <h3
-                                    class="text-[11px] font-black uppercase tracking-wider text-red-700 leading-none mb-1">
-                                    Falha na Autenticação
-                                </h3>
-                                <p
-                                    class="text-[10px] font-bold text-red-600/80 uppercase tracking-tight leading-snug">
-                                    As credenciais informadas são inválidas ou não possuem permissão de acesso.
-                                    Verifique seus dados e tente novamente.
-                                </p>
+                                <div class="flex-1">
+                                    <h3
+                                        class="text-[11px] font-black uppercase tracking-wider text-red-700 leading-none mb-1">
+                                        Falha na Autenticação
+                                    </h3>
+                                    <p
+                                        class="text-[10px] font-bold text-red-600/80 uppercase tracking-tight leading-snug">
+                                        As credenciais informadas são inválidas ou não possuem permissão de acesso.
+                                        Verifique seus dados e tente novamente.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                         @endif
 
                         <label

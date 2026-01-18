@@ -7,7 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ManagerController extends Controller
+// Gerenciamento de requisições excepcionais que não são viáveis pelo filament
+
+class IntranetController extends Controller
 {
     private function getMonthName($monthNumber)
     {
@@ -70,22 +72,14 @@ class ManagerController extends Controller
         // Formatando o nome do arquivo
         $filename = "fp_" . strtolower($this->getMonthName($month)) . "_{$year}_{$firstName}_{$lastName}";
 
-        return view('manager.frequency-print', compact('user', 'month', 'year', 'type', 'occurrences', 'occurrences_user', 'filename'));
+        return view('intranet.frequency-print', compact('user', 'month', 'year', 'type', 'occurrences', 'occurrences_user', 'filename'));
     }
 
-    public function completeTutorial(Request $request)
+    public function completeWelcomeTutorial(Request $request)
     {
         $user = $request->user();
 
         $user->skip_tutorial = true;
-        $user->save();
-    }
-
-    public function completeTutorialPonto(Request $request)
-    {
-        $user = $request->user();
-
-        $user->skip_tutorial_ponto = true;
         $user->save();
     }
 }

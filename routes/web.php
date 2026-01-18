@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\IntranetController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ConsuController;
 use App\Http\Controllers\GoogleController;
@@ -9,19 +9,22 @@ use App\Http\Controllers\OldPageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 
 
-
-// Intercepta o subdominio intranet.ueap.edu.br e roteia para o painel /app do filament
+// Intercepta o subdominio da intranet
 Route::domain(env('INTRANET_URL'))->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('filament.app.pages.dashboard');
-    });
+    // Roteia para o painel /app do filament
+    Route::get('/', fn() => to_route('filament.app.pages.dashboard'));
+
+    // Rota para impressão da folha de ponto na view blade, não renderizado pelo filament
+    Route::get('/frequency', [IntranetController::class, 'frequencyPrint'])->name('frequency.print');
+
+    // Marca o tutorial de boas vindas da intranet como completo
+    Route::get('tutorial/complete', [IntranetController::class, 'completeWelcomeTutorial'])->name('tutorial.complete');
 });
 
-// Intercepta o subdominio transparencia.ueap.edu.br e roteia para as rotas a seguir
+// Intercepta o subdominio da transparencia
 Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function () {
     //Route::name('transparency.')->prefix('/portal-transparencia')->group(function () {
     Route::get('/',                     [TransparencyController::class, 'home'])->name('home');
@@ -63,19 +66,6 @@ Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function ()
 
 // ===== Daqui para baixo Intercepta todas as requisições que não caírem nos subdomínios =====
 
-// Rota para impressão da folha de ponto na view blade, não renderizado pelo filament
-Route::get('/frequency', [ManagerController::class, 'frequencyPrint'])->name('frequency.print');
-
-// Marca o tutorial de boas vindas da intranet como completo
-Route::get('tutorial/complete', [ManagerController::class, 'completeTutorial'])->name('tutorial.complete');
-
-Route::get('tutorial-ponto/complete', [ManagerController::class, 'completeTutorialPonto'])->name('tutorial-ponto.complete');
-
-// Redirecionamento para login no painel app do filament. necesário definir essa rota pois há mais de um painel
-// Route::get('/login', function () {
-//     return redirect()->route('filament.app.auth.login');
-// })->name('login');
-
 // Rotas do site institucional
 Route::name('site.')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
@@ -94,10 +84,6 @@ Route::name('site.')->group(function () {
     Route::get('/busca', [SearchController::class, 'index'])->name('search');
 });
 
-// Rotas de call back da autenticação OAuth2
-Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
-Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
-
 // Route::name('novosite.')->prefix('/novo')->group(function () {
 //     Route::get('/',                         [PageController::class, 'home'])->name('home');
 //     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
@@ -115,10 +101,14 @@ Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
 //     });
 // });
 
-// Exibir o formulário
+// Exibir tela de login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')
     ->middleware('guest');
 
 // Processar o login com limite de 5 tentativas por minuto
 Route::post('/login', [AuthController::class, 'login'])
     ->middleware('throttle:5,1');
+
+// Rotas de call back da autenticação OAuth2
+Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
+Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);

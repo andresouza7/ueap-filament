@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function showLoginForm()
     {
-        return view('filament.login'); // Altere para o caminho da sua view
+        return view('intranet.login');
     }
 
     /**
