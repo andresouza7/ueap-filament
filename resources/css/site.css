@@ -6,33 +6,33 @@
 
 @theme {
   /* 🎨 UEAP Institutional Colors */
-  --color-ueap-primary: #054e3d;   /* Deep Green */
-  --color-ueap-secondary: #facc15; /* Gold/Yellow */
-  --color-ueap-text: #1e293b;      /* Slate 800 */
-  --color-ueap-light: #f3f4f6;     /* Light Gray */
+  --color-ueap-primary: #054e3d;   /* Deep Green - Authority */
+  --color-ueap-secondary: #facc15; /* Gold/Yellow - Accent */
+  --color-ueap-text: #1e293b;      /* Slate 800 - Readability */
+  --color-ueap-light: #f8fafc;     /* Slate 50 - Backgrounds */
 
-  /* Aliases for convenience/backward compatibility if needed, but prefer ueap-* */
+  /* Aliases */
   --color-primary: var(--color-ueap-primary);
   --color-accent: var(--color-ueap-secondary);
 
-  /* 🖋️ Font family */
-  --font-sans: Inter, sans-serif;
+  /* 🖋️ Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Merriweather', serif;
 
-  /* 📱 Screens (breakpoints) */
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1290px;
-
-  /* 📏 Custom max-width token */
+  /* 📏 Layout */
   --spacing-ueap: 1366px;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   color: var(--color-ueap-text);
   background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings - Institutional Style */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
 }
 
 /* Institutional Table Styles */
@@ -42,103 +42,80 @@ table {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
-  font-size: 0.875rem; /* 14px */
-}
-
-table th,
-table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
-  text-align: left;
+  font-size: 0.9rem;
 }
 
 table th {
-  font-weight: 600;
-  color: var(--color-ueap-primary);
-  border-bottom: 2px solid var(--color-ueap-primary);
+  padding: 1rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--color-ueap-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+table td {
+  padding: 1rem;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f0;
+  color: var(--color-ueap-text);
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+table tr:nth-child(even) {
+  background-color: #f8fafc;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+table tr:hover {
+  background-color: #f1f5f9;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Article Body - Institutional Style */
+/* Article Body - Elegant & Readable */
 .article-body {
-    @apply text-slate-700 leading-relaxed text-base;
-}
-
-.article-body *:not(figure, figure *) {
-    /* Reset styles but keep hierarchy */
-    max-width: 100%;
+    @apply text-slate-700 text-lg leading-relaxed;
 }
 
 .article-body p {
-    @apply mb-4 text-slate-700 leading-relaxed text-base;
+    @apply mb-6;
 }
 
-.article-body h1, 
-.article-body h2, 
-.article-body h3,
-.article-body h4 {
-    @apply mt-8 mb-4 font-bold text-ueap-primary leading-tight;
+.article-body h2 {
+    @apply text-3xl font-serif font-bold text-ueap-primary mt-12 mb-6 pb-4 border-b border-gray-100;
 }
 
-.article-body h1 { @apply text-3xl; }
-.article-body h2 { @apply text-2xl pb-2 border-b border-gray-200; }
-.article-body h3 { @apply text-xl; }
-.article-body h4 { @apply text-lg; }
+.article-body h3 {
+    @apply text-2xl font-serif font-bold text-slate-800 mt-10 mb-4;
+}
 
-.article-body ul, 
+.article-body ul {
+    @apply list-disc ml-6 mb-6 marker:text-ueap-secondary space-y-2;
+}
+
 .article-body ol {
-    @apply ml-6 mb-4 space-y-1;
+    @apply list-decimal ml-6 mb-6 marker:text-ueap-primary font-bold space-y-2;
 }
-
-.article-body ul { @apply list-disc marker:text-ueap-secondary; }
-.article-body ol { @apply list-decimal marker:text-ueap-primary; }
 
 .article-body li {
-    @apply pl-1;
-}
-
-.article-body strong {
-    @apply font-bold text-slate-900;
+    @apply pl-2 font-normal;
 }
 
 .article-body blockquote {
-    @apply my-8 pl-4 border-l-4 border-ueap-secondary italic text-slate-600 bg-gray-50 py-2 pr-4 rounded-r;
+    @apply my-10 pl-8 border-l-4 border-ueap-secondary italic text-xl text-slate-600 font-serif leading-loose;
 }
 
 .article-body a {
-    @apply font-semibold text-ueap-primary underline decoration-ueap-secondary/50 underline-offset-2 transition-colors;
-}
-
-.article-body a:hover {
-    @apply text-ueap-primary decoration-ueap-secondary;
+    @apply font-bold text-ueap-primary underline decoration-ueap-secondary decoration-2 underline-offset-4 hover:bg-ueap-secondary hover:text-ueap-primary transition-all;
 }
 
 .article-body img {
-    @apply rounded-lg shadow-md my-6 h-auto max-w-full;
+    @apply rounded-xl shadow-lg my-10 w-full object-cover;
 }
 
 .article-body figure {
-    @apply my-6;
+    @apply my-10;
 }
 
 .article-body figcaption {
-    @apply text-sm text-center text-gray-500 mt-2 italic;
+    @apply text-sm text-center text-slate-500 mt-3 font-serif italic;
 }

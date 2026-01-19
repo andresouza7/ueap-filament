@@ -23,7 +23,7 @@
 <header x-data="{ mobileMenu: false, searchModal: false }" 
         @keydown.window.escape="mobileMenu = false; searchModal = false"
         x-effect="mobileMenu || searchModal ? document.body.classList.add('no-scroll') : document.body.classList.remove('no-scroll')"
-        class="relative w-full z-[100] bg-white antialiased shadow-sm">
+        class="relative w-full z-[100] bg-white antialiased shadow-sm font-sans">
 
     {{-- TOP BAR --}}
     <section class="bg-gray-50 border-b border-gray-200 text-slate-600 text-[11px] font-medium py-2">
@@ -50,8 +50,8 @@
             <a href="/" class="flex items-center gap-4 group">
                 <img src="/img/site/logo.png" alt="UEAP" class="h-12 lg:h-14 w-auto">
                 <div class="flex flex-col border-l border-gray-300 pl-4">
-                    <span class="text-2xl lg:text-3xl font-bold text-ueap-primary tracking-tight leading-none">UEAP</span>
-                    <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mt-1">Universidade do Estado do Amapá</span>
+                    <span class="text-2xl lg:text-3xl font-serif font-bold text-ueap-primary tracking-tight leading-none">UEAP</span>
+                    <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mt-1 font-sans">Universidade do Estado do Amapá</span>
                 </div>
             </a>
 
@@ -103,7 +103,7 @@
                 </div>
                 <form action="{{ route('site.post.list') }}" method="GET" class="relative">
                     <input type="text" name="search" placeholder="O que você procura?" autofocus
-                           class="w-full bg-transparent border-b-2 border-white/20 focus:border-ueap-secondary px-0 py-4 text-2xl lg:text-4xl font-bold text-white placeholder:text-white/30 outline-none transition-all">
+                           class="w-full bg-transparent border-b-2 border-white/20 focus:border-ueap-secondary px-0 py-4 text-2xl lg:text-4xl font-bold text-white placeholder:text-white/30 outline-none transition-all font-serif">
                     <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2 text-ueap-secondary hover:text-white transition-colors">
                         <i class="fa-solid fa-arrow-right text-2xl"></i>
                     </button>
@@ -114,9 +114,9 @@
 
     {{-- MENU MOBILE --}}
     <template x-teleport="body">
-        <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[600] lg:hidden bg-ueap-primary flex flex-col">
+        <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[600] lg:hidden bg-ueap-primary flex flex-col font-sans">
             <div class="p-6 flex justify-between items-center border-b border-white/10">
-                <span class="text-2xl font-bold text-white tracking-tight">UEAP</span>
+                <span class="text-2xl font-serif font-bold text-white tracking-tight">UEAP</span>
                 <button @click="mobileMenu = false" class="text-white text-3xl">&times;</button>
             </div>
             <div class="flex-1 overflow-y-auto p-6">
