@@ -35,7 +35,7 @@ class FrequencyEmit extends Component implements HasForms
 
         $this->form->fill([
             'type' => 0,
-            'month' => date('m') - 1,
+            'month' => date('m') - 1 < 1 ? 12 : date('m') - 1,
             'year' => date('Y')
         ]);
     }
