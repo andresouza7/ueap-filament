@@ -8,115 +8,74 @@
         $searchNumber = request('number');
         $searchYear = request('year');
 
-        // Lógica de Título para o Header Estilo Post
+        // Split title safely
         $parts = explode(' ', $title, 2);
         $first = $parts[0] ?? 'Publicações';
         $second = $parts[1] ?? 'Oficiais';
     @endphp
 
-    {{-- ================= HEADER INDUSTRIAL (PADRÃO POST) ================= --}}
-    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
-
-        {{-- LAYER DE FUNDO --}}
-        <div class="absolute inset-0 pointer-events-none z-0">
-            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12"
-                style="-webkit-text-stroke: 3px white; color: transparent;">
-                CONSU
-            </div>
-            <div
-                class="absolute -bottom-24 -left-20 w-[500px] h-[300px] border-[12px] border-[#0055ff]/10 rounded-[120px] -rotate-12">
-            </div>
-            <div class="absolute inset-0 opacity-20"
-                style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;">
-            </div>
+    <x-novosite.components.page-header
+        :title="$title"
+        subtitle="Conselho Universitário"
+        :breadcrumb="[
+            ['label' => 'Institucional', 'url' => '#'],
+            ['label' => 'CONSU', 'url' => '#']
+        ]"
+    >
+        <div class="flex items-center gap-2 text-white/60 text-sm mt-4 font-medium">
+            <i class="fa-solid fa-database"></i>
+            <span>Base de Dados Oficial: {{ $items->total() }} documentos disponíveis</span>
         </div>
+    </x-novosite.components.page-header>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="max-w-5xl">
-                {{-- Badge --}}
-                <div class="flex items-center gap-4 mb-6">
-                    <span
-                        class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
-                        CONSELHO UNIVERSITÁRIO
-                    </span>
-                    <span class="text-white/20 font-mono text-xs tracking-tighter">// ARQUIVO_DE_RESOLUCOES</span>
-                </div>
-
-                {{-- Título --}}
-                <h1
-                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
-                    {{ $first }}<br>
-                    <span class="text-[#a4ed4a]">{{ $second }}</span>_
-                </h1>
-
-                {{-- Dashboard Stats --}}
-                <div class="flex flex-wrap items-center gap-x-12 gap-y-6 pt-8 border-t border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#0055ff]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Base de Dados</span>
-                            <span class="text-white text-xl font-black italic">CONSU_V2.0</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#a4ed4a]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Documentos</span>
-                            <span class="text-white text-xl font-black italic">{{ $items->total() }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <main class="bg-[#f8fafc] py-16">
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="bg-gray-50 py-12 lg:py-16">
+        <div class="max-w-ueap mx-auto px-4 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
                 {{-- COLUNA DA ESQUERDA --}}
                 <div class="lg:col-span-8">
 
                     {{-- FILTROS DE BUSCA --}}
-                    <div class="mb-12">
+                    <div class="mb-10">
                         <form action="{{ url()->current() }}" method="GET"
-                            class="bg-white border-[4px] border-[#001030] shadow-[8px_8px_0px_0px_#001030] p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                            class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+
+                            <h3 class="text-ueap-primary font-bold mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-filter"></i> Filtrar Documentos
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                                 <div class="md:col-span-6">
-                                    <label
-                                        class="block text-[10px] font-black text-[#001030] uppercase tracking-widest mb-2">Palavra-Chave</label>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Palavra-Chave</label>
                                     <input type="text" name="name" value="{{ $searchName }}"
                                         placeholder="Ex: Regimento Interno..."
-                                        class="w-full bg-slate-50 border-2 border-slate-200 p-3 text-sm font-bold text-[#001030] focus:border-[#0055ff] focus:outline-none transition-colors">
+                                        class="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm focus:border-ueap-primary focus:outline-none transition-colors">
                                 </div>
                                 <div class="md:col-span-3">
-                                    <label
-                                        class="block text-[10px] font-black text-[#001030] uppercase tracking-widest mb-2">Número</label>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Número</label>
                                     <input type="number" name="number" value="{{ $searchNumber }}" placeholder="000"
-                                        class="w-full bg-slate-50 border-2 border-slate-200 p-3 text-sm font-bold text-[#001030] focus:border-[#0055ff] focus:outline-none">
+                                        class="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm focus:border-ueap-primary focus:outline-none">
                                 </div>
                                 <div class="md:col-span-3">
-                                    <label
-                                        class="block text-[10px] font-black text-[#001030] uppercase tracking-widest mb-2">Ano</label>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Ano</label>
                                     <input type="number" name="year" value="{{ $searchYear }}"
                                         placeholder="{{ date('Y') }}"
-                                        class="w-full bg-slate-50 border-2 border-slate-200 p-3 text-sm font-bold text-[#001030] focus:border-[#0055ff] focus:outline-none">
+                                        class="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm focus:border-ueap-primary focus:outline-none">
                                 </div>
                             </div>
 
-                            <div
-                                class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-slate-100 pt-6">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">
-                                    [ {{ $items->total() }} registros encontrados ]
+                            <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-gray-50">
+                                <span class="text-xs font-semibold text-slate-400">
+                                    {{ $items->total() }} registros encontrados
                                 </span>
-                                <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-3">
                                     @if ($searchName || $searchNumber || $searchYear)
                                         <a href="{{ url()->current() }}"
-                                            class="text-[10px] font-black text-red-500 uppercase hover:underline">Limpar_Busca</a>
+                                            class="text-xs font-bold text-red-500 hover:text-red-700 uppercase">Limpar Busca</a>
                                     @endif
                                     <button type="submit"
-                                        class="bg-[#001030] text-[#a4ed4a] px-8 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-[#0055ff] hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
-                                        FILTRAR_RESULTADOS
+                                        class="bg-ueap-primary text-white px-6 py-2 rounded text-xs font-bold uppercase tracking-wider hover:bg-ueap-primary/90 transition-all shadow-sm">
+                                        Filtrar
                                     </button>
                                 </div>
                             </div>
@@ -124,79 +83,64 @@
                     </div>
 
                     {{-- LISTAGEM OTIMIZADA --}}
-                    <div class="space-y-6">
+                    <div class="space-y-4">
                         @forelse ($items as $item)
-                            <article
-                                class="group bg-white border-[3px] border-[#001030] hover:shadow-[12px_12px_0px_0px_#a4ed4a] transition-all duration-300 overflow-hidden">
-                                <div class="flex flex-col md:flex-row">
-                                    {{-- Info lateral do documento --}}
-                                    <div
-                                        class="bg-[#001030] md:w-40 p-4 flex flex-row md:flex-col justify-between items-center md:justify-center gap-2 shrink-0">
-                                        <span class="text-[#a4ed4a] text-lg font-black italic">№ {{ $item->number }}</span>
-                                        <span
-                                            class="text-white/40 text-[10px] font-black tracking-tighter italic border-t border-white/10 pt-2 w-full text-center hidden md:block">
-                                            ANO_{{ $item->year }}
-                                        </span>
+                            <article class="group bg-white rounded-lg border border-gray-100 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col sm:flex-row">
+                                {{-- Info Lateral --}}
+                                <div class="bg-gray-50 sm:w-32 p-4 flex flex-row sm:flex-col justify-between items-center sm:justify-center gap-2 border-b sm:border-b-0 sm:border-r border-gray-100 shrink-0">
+                                    <span class="text-ueap-primary text-lg font-bold">№ {{ $item->number }}</span>
+                                    <span class="text-slate-400 text-[10px] font-bold uppercase tracking-wider sm:border-t sm:border-gray-200 sm:pt-2 w-full text-center">
+                                        {{ $item->year }}
+                                    </span>
+                                </div>
+
+                                {{-- Conteúdo --}}
+                                <div class="p-5 flex-1 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+                                    <div class="flex-1">
+                                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                            Publicado em {{ $item->created_at?->format('d/m/Y') }}
+                                        </div>
+                                        <h3 class="text-base font-bold text-slate-800 leading-tight mb-2 group-hover:text-ueap-primary transition-colors">
+                                            {{ $item->name ?? 'Documento Oficial' }}
+                                        </h3>
+                                        <p class="text-slate-600 text-sm leading-relaxed">
+                                            {{ $item->description }}
+                                        </p>
                                     </div>
 
-                                    {{-- Conteúdo --}}
-                                    <div class="p-6 flex-1 flex flex-col md:flex-row justify-between gap-6">
-                                        <div class="max-w-xl">
-                                            <div
-                                                class="text-[10px] font-black text-[#0055ff] uppercase tracking-widest mb-1">
-                                                Publicado em {{ $item->created_at?->format('d/m/Y') }}
-                                            </div>
-                                            {{-- Nome do documento: Impactante --}}
-                                            <h3
-                                                class="text-xl font-black text-[#001030] italic leading-none mb-3 group-hover:text-[#0055ff] transition-colors">
-                                                {{ $item->name ?? 'Documento Oficial' }}
-                                            </h3>
-                                            {{-- Descrição: Legível e Minúscula --}}
-                                            <p class="text-slate-600 text-sm leading-relaxed normal-case font-medium">
-                                                {{ $item->description }}
-                                            </p>
-                                        </div>
-
-                                        <div class="flex items-center">
-                                            <a href="{{ $item->file_url ?? '#' }}" target="_blank"
-                                                class="w-full md:w-auto flex items-center justify-center gap-3 bg-white border-2 border-[#001030] text-[#001030] px-6 py-4 text-[10px] font-[1000] uppercase tracking-widest hover:bg-[#001030] hover:text-[#a4ed4a] transition-all group/btn">
-                                                <i class="fa-solid fa-file-pdf text-lg"></i>
-                                                VER_PDF
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <a href="{{ $item->file_url ?? '#' }}" target="_blank"
+                                        class="shrink-0 flex items-center gap-2 bg-white border border-gray-200 text-slate-700 px-4 py-2 rounded text-xs font-bold uppercase tracking-wide hover:border-ueap-primary hover:text-ueap-primary transition-all">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                        PDF
+                                    </a>
                                 </div>
                             </article>
                         @empty
-                            <div class="py-20 text-center border-[4px] border-dashed border-slate-200 bg-white">
-                                <span
-                                    class="text-sm font-black text-slate-300 uppercase tracking-widest">Nenhum_Registro_Encontrado</span>
+                            <div class="py-16 text-center border-2 border-dashed border-gray-200 rounded-lg bg-gray-50">
+                                <i class="fa-regular fa-folder-open text-4xl text-gray-300 mb-4"></i>
+                                <span class="block text-sm font-bold text-slate-500">Nenhum registro encontrado</span>
                             </div>
                         @endforelse
                     </div>
 
                     @if ($items->hasPages())
-                        <div class="pt-16">
+                        <div class="pt-12">
                             {{ $items->links('novosite.components.post-paginator') }}
                         </div>
                     @endif
                 </div>
 
                 {{-- SIDEBAR --}}
-                <aside class="lg:col-span-4">
-                    <div class="sticky top-8 space-y-8">
-                        @include('novosite.components.sidebar-newsletter')
-                        {{-- Widget Extra Industrial --}}
-                        <div class="bg-[#001030] p-8 relative overflow-hidden">
-                            <div class="relative z-10">
-                                <h4 class="text-[#a4ed4a] font-black uppercase italic tracking-tighter mb-4">
-                                    Informação_Técnica</h4>
-                                <p class="text-white/60 text-[11px] leading-relaxed uppercase font-bold">
-                                    Esta seção contém as resoluções e decisões oficiais do Conselho Universitário da UEAP.
-                                </p>
-                            </div>
-                            <div class="absolute -bottom-4 -right-4 text-white/5 text-6xl font-black italic select-none">
-                                CONSU</div>
+                <aside class="lg:col-span-4 space-y-8">
+                    @include('novosite.components.sidebar-newsletter')
+
+                    <div class="bg-ueap-primary rounded-xl p-8 text-white relative overflow-hidden">
+                         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+                        <div class="relative z-10">
+                            <h4 class="text-ueap-secondary font-bold uppercase text-sm tracking-wider mb-2">Informação Técnica</h4>
+                            <p class="text-white/80 text-sm leading-relaxed">
+                                Esta seção contém as resoluções e decisões oficiais do Conselho Universitário da UEAP, disponíveis para consulta pública.
+                            </p>
                         </div>
                     </div>
                 </aside>

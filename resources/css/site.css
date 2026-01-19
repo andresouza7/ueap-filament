@@ -5,18 +5,15 @@
 @source '../**/*.js';
 
 @theme {
-  /* 🎨 Base Colors */
-  --color-primary: #054e3d;
-  --color-accent-yellow: #facc15;
-  --color-contrast-light: #f3f4f6;
+  /* 🎨 UEAP Institutional Colors */
+  --color-ueap-primary: #054e3d;   /* Deep Green */
+  --color-ueap-secondary: #facc15; /* Gold/Yellow */
+  --color-ueap-text: #1e293b;      /* Slate 800 */
+  --color-ueap-light: #f3f4f6;     /* Light Gray */
 
-  /* 🎨 Custom Color Group (ueap.*) */
-  --color-ueap-green: #16a34a;
-  /* green-600 */
-  --color-ueap-dark: #14532d;
-  /* green-900 */
-  --color-ueap-light: #dcfce7;
-  /* green-100 */
+  /* Aliases for convenience/backward compatibility if needed, but prefer ueap-* */
+  --color-primary: var(--color-ueap-primary);
+  --color-accent: var(--color-ueap-secondary);
 
   /* 🖋️ Font family */
   --font-sans: Inter, sans-serif;
@@ -34,42 +31,35 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  color: var(--color-ueap-text);
+  background-color: #ffffff;
 }
 
+/* Institutional Table Styles */
 table {
   border-collapse: collapse;
-  width: auto !important;
-  /* permite expandir além do container */
-  min-width: 100% !important;
-  /* nunca menor que o container */
-  table-layout: auto !important;
-  /* deixa o browser calcular as larguras */
-  display: block;
-  /* permite scroll horizontal */
-  overflow-x: auto;
-  /* ativa o scroll */
+  width: 100%;
   max-width: 100%;
-  /* não ultrapassa o container */
-  line-height: 1.2rem;
-  font-size: 13px;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  font-size: 0.875rem; /* 14px */
 }
 
-/* células */
 table th,
 table td {
-  min-width: 120px;
-  /* impede colunas minúsculas */
-  padding: 6px 8px;
-  white-space: normal;
-  /* quebra linha normal */
-  word-break: break-word;
-  /* quebra palavras grandes */
-  overflow: visible;
-  /* não esconder conteúdo */
-  box-sizing: border-box;
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: left;
 }
 
-/* Custom scrollbar for a premium feel */
+table th {
+  font-weight: 600;
+  color: var(--color-ueap-primary);
+  border-bottom: 2px solid var(--color-ueap-primary);
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -87,69 +77,68 @@ table td {
   background: #94a3b8;
 }
 
-/* pagina post-show */
+/* Article Body - Institutional Style */
 .article-body {
-    /* Reseta a base para garantir consistência */
-    @apply text-slate-600 leading-relaxed text-base;
+    @apply text-slate-700 leading-relaxed text-base;
 }
 
-/* Mata estilos do banco, EXCETO o que está dentro do figcaption */
 .article-body *:not(figure, figure *) {
-    color: inherit !important;
-    font-size: 16px !important;
-    font-family: inherit !important;
-    background-color: transparent !important;
-    box-sizing: border-box;
+    /* Reset styles but keep hierarchy */
+    max-width: 100%;
 }
 
-/* Agora suas classes (que passei na resposta anterior) aplicam o estilo correto */
 .article-body p {
-    @apply mb-4 text-slate-600 leading-relaxed text-base;
+    @apply mb-4 text-slate-700 leading-relaxed text-base;
 }
 
-/* Títulos: Identidade do Header (Peso 1000 + Itálico + Tracking) */
 .article-body h1, 
 .article-body h2, 
-.article-body h3 {
-    @apply mt-12 mb-6 font-[1000] text-slate-900 uppercase italic tracking-tighter leading-[1.1];
+.article-body h3,
+.article-body h4 {
+    @apply mt-8 mb-4 font-bold text-ueap-primary leading-tight;
 }
 
-.article-body h2 { @apply text-2xl md:text-3xl; }
-.article-body h3 { @apply text-xl md:text-2xl; }
+.article-body h1 { @apply text-3xl; }
+.article-body h2 { @apply text-2xl pb-2 border-b border-gray-200; }
+.article-body h3 { @apply text-xl; }
+.article-body h4 { @apply text-lg; }
 
-/* Listas: Limpas e Técnicas */
 .article-body ul, 
 .article-body ol {
-    @apply ml-5 mb-2 space-y-2;
+    @apply ml-6 mb-4 space-y-1;
 }
 
-.article-body ul { @apply list-disc; }
-.article-body ol { @apply list-decimal; }
+.article-body ul { @apply list-disc marker:text-ueap-secondary; }
+.article-body ol { @apply list-decimal marker:text-ueap-primary; }
 
 .article-body li {
-    @apply pl-2;
+    @apply pl-1;
 }
 
-/* Negrito: Contraste Máximo */
 .article-body strong {
-    @apply font-black text-slate-900;
+    @apply font-bold text-slate-900;
 }
 
-/* Citações: Brutalista (Sem arredondamentos) */
 .article-body blockquote {
-    @apply my-12 p-8 bg-slate-50 border-l-8 border-emerald-500 italic text-slate-800 text-xl font-bold uppercase tracking-tight;
+    @apply my-8 pl-4 border-l-4 border-ueap-secondary italic text-slate-600 bg-gray-50 py-2 pr-4 rounded-r;
 }
 
-/* Links: Identidade Esmeralda */
 .article-body a {
-    @apply relative font-semibold leading-loose text-slate-900 transition-all duration-300;
-    /* Cria uma linha customizada com borda inferior */
-    border-bottom: 2px solid theme('colors.emerald.100');
-    text-decoration: none !important;
+    @apply font-semibold text-ueap-primary underline decoration-ueap-secondary/50 underline-offset-2 transition-colors;
 }
 
 .article-body a:hover {
-    @apply text-emerald-600;
-    border-bottom-color: theme('colors.emerald.500');
+    @apply text-ueap-primary decoration-ueap-secondary;
 }
-/* fim pagina post show */
+
+.article-body img {
+    @apply rounded-lg shadow-md my-6 h-auto max-w-full;
+}
+
+.article-body figure {
+    @apply my-6;
+}
+
+.article-body figcaption {
+    @apply text-sm text-center text-gray-500 mt-2 italic;
+}

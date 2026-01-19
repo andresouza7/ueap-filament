@@ -13,90 +13,98 @@ class PageController extends Controller
 {
     public function home()
     {
-        $featured = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
-        $posts = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
-        $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
+        $featured = WebPost::where('type', 'news')
+            ->where('status', 'published')
+            ->where('featured', true)
+            ->orderByDesc('created_at')
+            ->take(3)
+            ->get();
+
+        $posts = WebPost::where('type', 'news')
+            ->where('status', 'published')
+            ->where('featured', false)
+            ->orderByDesc('created_at')
+            ->take(8)
+            ->get();
+
+        $events = WebPost::where('type', 'event')
+            ->where('status', 'published')
+            ->orderByDesc('created_at')
+            ->take(4)
+            ->get();
 
         return view('novosite.pages.home', compact('featured', 'posts', 'events'));
     }
 
     public function postList(Request $request)
     {
-        $searchString = $request->input('search');
-        $postType = $request->input('type');
-        $categorySlug = $request->query('category');
+        $posts = WebPost::where('status', 'published')
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'ilike', "%{$search}%")
+                        ->orWhere('content', 'ilike', "%{$search}%");
+                });
+            })
+            ->when($request->input('type'), fn($q, $type) => $q->where('type', $type))
+            ->when($request->query('category'), function ($q, $slug) {
+                $q->whereHas('category', fn($q2) => $q2->where('slug', $slug));
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
 
-        $query = WebPost::where('status', 'published');
-
-        if ($searchString) {
-            $query->where('title', 'ilike', "%$searchString%")
-                ->orWhere('content', 'ilike', "%$searchString%");
-        }
-
-        if ($postType) {
-            $query->where('type', $postType);
-        }
-
-        if ($categorySlug) {
-            $query->whereHas('category', function ($q) use ($categorySlug) {
-                $q->where('slug', $categorySlug);
-            });
-        }
-
-        // if ($searchString) {
-        //     $query->search($searchString);
-        // }
-
-        $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
         $categories = WebCategory::has('posts')
             ->inRandomOrder()
             ->take(6)
             ->get();
 
-        return view('novosite.pages.post-list', compact('posts', 'categories', 'searchString'));
+        return view('novosite.pages.post-list', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'searchString' => $request->input('search')
+        ]);
     }
 
     public function postShow($slug)
     {
-        $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
+        $post = WebPost::where('slug', $slug)->where('status', 'published')->firstOrFail();
 
-        if ($post) {
-            WebPost::withoutTimestamps(function () use ($post) {
-                $post->increment('hits', 1);
-            });
+        WebPost::withoutTimestamps(fn() => $post->increment('hits'));
 
-            $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
-                ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+        $latestPosts = WebPost::where('status', 'published')
+            ->where('type', 'news')
+            ->orderByDesc('created_at')
+            ->orderByDesc('hits')
+            ->take(4)
+            ->get();
 
-            $relatedPosts = WebPost::latest('id')->where('status', 'published')
-                ->whereHas('category', function ($query) use ($post) {
-                    $query->where('name', $post->category->name);
-                })
-                ->take(4)->get();
+        $relatedPosts = WebPost::latest('id')
+            ->where('status', 'published')
+            ->whereHas('category', fn($q) => $q->where('name', $post->category->name))
+            ->take(4)
+            ->get();
 
-            $categories = WebCategory::has('posts')
-                ->inRandomOrder()
-                ->take(6)
-                ->get();
+        $categories = WebCategory::has('posts')
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
 
-            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
-        } else {
-            return abort(404);
-        }
+        return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
     }
 
     public function calendarList(Request $request)
     {
-        $query = Document::where('type', 'calendar')->orderByDesc('year')->orderBy('title');
-
-        if ($request->search) {
-            $query->where('title', 'ilike', "%$request->search%")
-                ->orWhere('description', 'ilike', "%$request->search%");
-        }
-
-        $items = $query->paginate(25)->withQueryString();
+        $items = Document::where('type', 'calendar')
+            ->orderByDesc('year')
+            ->orderBy('title')
+            ->when($request->search, function ($q, $search) {
+                $q->where(function ($sub) use ($search) {
+                    $sub->where('title', 'ilike', "%{$search}%")
+                        ->orWhere('description', 'ilike', "%{$search}%");
+                });
+            })
+            ->paginate(25)
+            ->withQueryString();
 
         return view('novosite.pages.calendar-list', compact('items'));
     }
@@ -106,52 +114,46 @@ class PageController extends Controller
     #################################
     public function listOrdinance(Request $request)
     {
-        $query = Portaria::where('origin', 'CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'number' => 'nullable|integer',
+            'year' => 'nullable|integer',
+        ]);
 
-        if ($request->name) {
-            $request->validate(['name' => 'string|max:255']);
-            $query
-                ->where('description', 'ilike', "%$request->name%");
-        }
+        $items = Portaria::where('origin', 'CONSU')
+            ->orderBy('year', 'DESC')
+            ->orderBy('number', 'DESC')
+            ->when($request->name, fn($q, $n) => $q->where('description', 'ilike', "%{$n}%"))
+            ->when($request->number, fn($q, $n) => $q->where('number', $n))
+            ->when($request->year, fn($q, $y) => $q->where('year', $y))
+            ->paginate(25)
+            ->withQueryString();
 
-        if ($request->number) {
-            $request->validate(['number' => 'integer']);
-            $query->where('number',  $request->number);
-        }
-
-        if ($request->year) {
-            $request->validate(['year' => 'integer']);
-            $query->where('year',  $request->year);
-        }
-
-        $items = $query->paginate(25)->withQueryString();
-        $title = 'CONSU Portarias';
-
-        return view('novosite.pages.consu-list', compact('items', 'title'));
+        return view('novosite.pages.consu-list', [
+            'items' => $items,
+            'title' => 'CONSU Portarias'
+        ]);
     }
 
     public function listResolution(Request $request)
     {
-        $query = ConsuResolution::orderBy('year', 'DESC')->orderBy('number', 'DESC');
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'number' => 'nullable|integer',
+            'year' => 'nullable|integer',
+        ]);
 
-        if ($request->name) {
-            $request->validate(['name' => 'string|max:255']);
-            $query->where('name', 'ilike', "%$request->name%");
-        }
+        $items = ConsuResolution::orderBy('year', 'DESC')
+            ->orderBy('number', 'DESC')
+            ->when($request->name, fn($q, $n) => $q->where('name', 'ilike', "%{$n}%"))
+            ->when($request->number, fn($q, $n) => $q->where('number', $n))
+            ->when($request->year, fn($q, $y) => $q->where('year', $y))
+            ->paginate(25)
+            ->withQueryString();
 
-        if ($request->number) {
-            $request->validate(['number' => 'integer']);
-            $query->where('number',  $request->number);
-        }
-
-        if ($request->year) {
-            $request->validate(['year' => 'integer']);
-            $query->where('year',  $request->year);
-        }
-
-        $items = $query->paginate(25)->withQueryString();
-        $title = 'CONSU Resoluções';
-
-        return view('novosite.pages.consu-list', compact('items', 'title'));
+        return view('novosite.pages.consu-list', [
+            'items' => $items,
+            'title' => 'CONSU Resoluções'
+        ]);
     }
 }
