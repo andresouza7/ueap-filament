@@ -37,7 +37,7 @@ function styleFilamentPanel(Panel $panel): Panel
             'secondary' => Color::Zinc,
         ])
         ->assets([
-            Css::make('filament-stylesheet', resource_path('css/filament.css'))
+            Css::make('filament-stylesheet', resource_path('css/filament-dark-theme.css'))
         ]);
 }
 
