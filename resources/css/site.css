@@ -5,11 +5,18 @@
 @source '../**/*.js';
 
 @theme {
-  /* 🎨 UEAP Institutional Colors */
-  --color-ueap-primary: #054e3d;   /* Deep Green - Authority */
-  --color-ueap-secondary: #facc15; /* Gold/Yellow - Accent */
-  --color-ueap-text: #1e293b;      /* Slate 800 - Readability */
-  --color-ueap-light: #f8fafc;     /* Slate 50 - Backgrounds */
+  /* 🎨 UEAP Government Palette */
+  --color-ueap-primary: #054e3d;   /* Official Green */
+  --color-ueap-primary-hover: #043e30;
+
+  --color-ueap-secondary: #facc15; /* Accent Gold */
+  --color-ueap-secondary-hover: #eab308;
+
+  --color-ueap-text: #1e293b;      /* Slate 800 - Main Text */
+  --color-ueap-text-muted: #64748b; /* Slate 500 - Muted Text */
+
+  --color-ueap-bg-light: #f8fafc;  /* Slate 50 - Light BG */
+  --color-ueap-bg-white: #ffffff;  /* White */
 
   /* Aliases */
   --color-primary: var(--color-ueap-primary);
@@ -17,7 +24,6 @@
 
   /* 🖋️ Typography */
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: 'Merriweather', serif;
 
   /* 📏 Layout */
   --spacing-ueap: 1366px;
@@ -26,54 +32,51 @@
 body {
   font-family: var(--font-sans);
   color: var(--color-ueap-text);
-  background-color: #ffffff;
+  background-color: var(--color-ueap-bg-white);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Headings - Institutional Style */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ueap-primary);
 }
 
-/* Institutional Table Styles */
+/* Clean Tables */
 table {
-  border-collapse: collapse;
   width: 100%;
-  max-width: 100%;
+  border-collapse: collapse;
   margin-bottom: 1rem;
-  background-color: transparent;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 table th {
-  padding: 1rem;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  color: #fff;
-  background-color: var(--color-ueap-primary);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.75rem;
-}
-
-table td {
-  padding: 1rem;
-  vertical-align: top;
-  border-bottom: 1px solid #e2e8f0;
-  color: var(--color-ueap-text);
-}
-
-table tr:nth-child(even) {
+  color: var(--color-ueap-text-muted);
+  border-bottom: 2px solid #e2e8f0;
   background-color: #f8fafc;
 }
 
-table tr:hover {
-  background-color: #f1f5f9;
+table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
 }
 
-/* Article Body - Elegant & Readable */
+table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Article Typography (Prose-like) */
 .article-body {
-    @apply text-slate-700 text-lg leading-relaxed;
+    @apply text-slate-700 text-base leading-7;
 }
 
 .article-body p {
@@ -81,41 +84,37 @@ table tr:hover {
 }
 
 .article-body h2 {
-    @apply text-3xl font-serif font-bold text-ueap-primary mt-12 mb-6 pb-4 border-b border-gray-100;
+    @apply text-2xl font-bold text-ueap-primary mt-10 mb-4 pb-2 border-b border-gray-100;
 }
 
 .article-body h3 {
-    @apply text-2xl font-serif font-bold text-slate-800 mt-10 mb-4;
+    @apply text-xl font-bold text-slate-800 mt-8 mb-3;
 }
 
 .article-body ul {
-    @apply list-disc ml-6 mb-6 marker:text-ueap-secondary space-y-2;
+    @apply list-disc ml-6 mb-6 space-y-1 marker:text-ueap-secondary;
 }
 
 .article-body ol {
-    @apply list-decimal ml-6 mb-6 marker:text-ueap-primary font-bold space-y-2;
-}
-
-.article-body li {
-    @apply pl-2 font-normal;
+    @apply list-decimal ml-6 mb-6 space-y-1 marker:text-ueap-primary marker:font-bold;
 }
 
 .article-body blockquote {
-    @apply my-10 pl-8 border-l-4 border-ueap-secondary italic text-xl text-slate-600 font-serif leading-loose;
+    @apply my-8 pl-6 border-l-4 border-ueap-secondary italic text-slate-600 bg-gray-50 py-4 pr-4 rounded-r-lg;
 }
 
 .article-body a {
-    @apply font-bold text-ueap-primary underline decoration-ueap-secondary decoration-2 underline-offset-4 hover:bg-ueap-secondary hover:text-ueap-primary transition-all;
+    @apply font-medium text-ueap-primary underline underline-offset-2 decoration-ueap-secondary/50 hover:decoration-ueap-secondary transition-all;
 }
 
 .article-body img {
-    @apply rounded-xl shadow-lg my-10 w-full object-cover;
+    @apply rounded-lg border border-gray-100 shadow-sm my-8 w-full h-auto;
 }
 
 .article-body figure {
-    @apply my-10;
+    @apply my-8;
 }
 
 .article-body figcaption {
-    @apply text-sm text-center text-slate-500 mt-3 font-serif italic;
+    @apply text-sm text-center text-slate-500 mt-2;
 }

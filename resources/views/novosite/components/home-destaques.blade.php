@@ -1,81 +1,85 @@
-{{-- HERO SECTION: INSTITUCIONAL E IMPONENTE --}}
-<div class="relative bg-ueap-primary">
-    {{-- Background Pattern --}}
-    <div class="absolute inset-0 opacity-10 pointer-events-none"
-         style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 32px 32px;"></div>
+{{-- HERO SECTION --}}
+<section class="bg-gray-50 py-12 border-b border-gray-200">
+    <div class="max-w-ueap mx-auto px-4 lg:px-8">
 
-    <div class="max-w-ueap mx-auto px-4 lg:px-8 py-12 lg:py-20 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
-        <div class="grid grid-cols-12 gap-8 lg:gap-16 items-start">
+            {{-- MAIN FEATURE (Left - 8 cols) --}}
+            <div class="lg:col-span-8">
+                @if (isset($featured[0]))
+                    <a href="{{ route('site.post.show', $featured[0]->slug) }}" class="group block relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+                        <img src="{{ $featured[0]->image_url }}" alt="{{ $featured[0]->title }}"
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
 
-            {{-- DESTAQUE PRINCIPAL (Esquerda - Maior) --}}
-            @if (isset($featured[0]))
-                <div class="col-span-12 lg:col-span-8">
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="h-px w-12 bg-ueap-secondary"></span>
-                        <span class="text-ueap-secondary text-xs font-bold uppercase tracking-[0.2em]">Destaque Institucional</span>
-                    </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-                    <a href="{{ route('site.post.show', $featured[0]->slug) }}" class="group block relative rounded-2xl overflow-hidden shadow-2xl">
-                        <div class="aspect-[16/9] lg:aspect-[16/10] w-full relative">
-                            <img src="{{ $featured[0]->image_url }}" alt="{{ $featured[0]->title }}"
-                                 class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
-
-                            {{-- Gradient Overlay --}}
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90"></div>
-
-                            <div class="absolute bottom-0 left-0 p-8 lg:p-12 w-full">
-                                <span class="inline-block bg-ueap-secondary text-ueap-primary text-[10px] font-black uppercase px-3 py-1 mb-4 rounded-sm tracking-widest">
-                                    {{ $featured[0]->category->name }}
-                                </span>
-                                <h2 class="text-3xl lg:text-5xl font-serif font-bold text-white leading-[1.1] mb-4 group-hover:text-ueap-secondary transition-colors">
-                                    {{ $featured[0]->title }}
-                                </h2>
-                                <p class="text-white/80 text-sm lg:text-lg max-w-2xl line-clamp-2 font-sans font-light">
-                                    {{ $featured[0]->resume }}
-                                </p>
-                            </div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <span class="inline-block bg-ueap-secondary text-ueap-primary text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide">
+                                {{ $featured[0]->category->name ?? 'Destaque' }}
+                            </span>
+                            <h2 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-2 group-hover:text-ueap-secondary transition-colors">
+                                {{ $featured[0]->title }}
+                            </h2>
+                            <p class="text-white/80 line-clamp-2 max-w-2xl text-sm lg:text-base font-medium">
+                                {{ $featured[0]->resume }}
+                            </p>
                         </div>
                     </a>
-                </div>
-            @endif
+                @endif
+            </div>
 
-            {{-- MENU DE ACESSO RÁPIDO (Direita) --}}
-            <aside class="col-span-12 lg:col-span-4 flex flex-col h-full pt-12 lg:pt-0">
-                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-xl">
-                    <h3 class="text-white font-serif font-bold text-2xl mb-2">Serviços Digitais</h3>
-                    <p class="text-white/50 text-xs uppercase tracking-widest mb-8 font-sans">Acesso Rápido</p>
+            {{-- SIDEBAR / SECONDARY (Right - 4 cols) --}}
+            <div class="lg:col-span-4 flex flex-col gap-6">
 
-                    <nav class="space-y-1">
+                {{-- Quick Access Box --}}
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex-1">
+                    <h3 class="text-lg font-bold text-ueap-primary mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+                        <i class="fa-solid fa-bolt text-ueap-secondary"></i>
+                        Acesso Rápido
+                    </h3>
+
+                    <nav class="space-y-2">
                         @php
-                            $links = [
-                                ['icon' => 'fa-calendar-days', 'label' => 'Calendário Acadêmico', 'url' => '/documentos/calendar'],
-                                ['icon' => 'fa-file-lines', 'label' => 'Atos e Legislação', 'url' => '#'],
-                                ['icon' => 'fa-gavel', 'label' => 'Conselho Superior', 'url' => '/consu/resolucoes'],
-                                ['icon' => 'fa-handshake', 'label' => 'Licitações', 'url' => '#'],
-                                ['icon' => 'fa-users', 'label' => 'Processos Seletivos', 'url' => 'https://processoseletivo.ueap.edu.br'],
-                                ['icon' => 'fa-graduation-cap', 'label' => 'Portal do Aluno', 'url' => 'https://sigaa.ueap.edu.br'],
+                            $quickLinks = [
+                                ['label' => 'Calendário Acadêmico', 'icon' => 'fa-calendar', 'url' => '/documentos/calendar'],
+                                ['label' => 'Editais e Concursos', 'icon' => 'fa-file-contract', 'url' => '#'],
+                                ['label' => 'Portal do Aluno', 'icon' => 'fa-user-graduate', 'url' => 'https://sigaa.ueap.edu.br'],
+                                ['label' => 'Portal do Professor', 'icon' => 'fa-chalkboard-user', 'url' => '#'],
+                                ['label' => 'Biblioteca Online', 'icon' => 'fa-book', 'url' => '#'],
                             ];
                         @endphp
 
-                        @foreach ($links as $link)
-                            <a href="{{ $link['url'] }}" class="group flex items-center justify-between p-4 rounded-xl hover:bg-white transition-all duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-ueap-secondary group-hover:bg-ueap-primary group-hover:text-white transition-colors">
+                        @foreach ($quickLinks as $link)
+                            <a href="{{ $link['url'] }}" class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 group border border-transparent hover:border-gray-100 transition-all">
+                                <div class="flex items-center gap-3 text-slate-700 font-medium">
+                                    <div class="w-8 h-8 rounded-full bg-ueap-primary/5 flex items-center justify-center text-ueap-primary text-xs group-hover:bg-ueap-primary group-hover:text-white transition-colors">
                                         <i class="fa-solid {{ $link['icon'] }}"></i>
                                     </div>
-                                    <span class="text-white font-bold text-sm group-hover:text-ueap-primary transition-colors font-sans">{{ $link['label'] }}</span>
+                                    {{ $link['label'] }}
                                 </div>
-                                <i class="fa-solid fa-arrow-right text-white/20 group-hover:text-ueap-primary transition-colors"></i>
+                                <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-ueap-primary transition-colors"></i>
                             </a>
                         @endforeach
                     </nav>
                 </div>
-            </aside>
 
+                {{-- Secondary Featured (If exists) --}}
+                @if(isset($featured[1]))
+                    <a href="{{ route('site.post.show', $featured[1]->slug) }}" class="relative h-48 rounded-2xl overflow-hidden group block shadow-sm">
+                        <img src="{{ $featured[1]->image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-5">
+                            <span class="text-ueap-secondary text-[10px] font-bold uppercase tracking-wider block mb-1">
+                                {{ $featured[1]->category->name }}
+                            </span>
+                            <h3 class="text-white font-bold leading-snug text-lg group-hover:underline decoration-ueap-secondary underline-offset-4">
+                                {{ $featured[1]->title }}
+                            </h3>
+                        </div>
+                    </a>
+                @endif
+
+            </div>
         </div>
     </div>
-
-    {{-- Decorative Bottom Wave/Border --}}
-    <div class="h-4 bg-ueap-secondary w-full relative z-20"></div>
-</div>
+</section>
