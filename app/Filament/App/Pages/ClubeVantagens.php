@@ -17,4 +17,9 @@ class ClubeVantagens extends Page
     protected static string | \UnitEnum | null $navigationGroup = 'Social';
 
     protected static ?int $navigationSort = 5;
+
+    public function mount(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'clube_vantagens', 'read');
+    }
 }

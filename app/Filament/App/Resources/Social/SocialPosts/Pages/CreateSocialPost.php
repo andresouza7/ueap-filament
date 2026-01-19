@@ -29,4 +29,9 @@ class CreateSocialPost extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'postagem_institucional', 'create', "SocialPost:{$this->record->id}");
+    }
 }

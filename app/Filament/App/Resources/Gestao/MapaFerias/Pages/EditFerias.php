@@ -17,4 +17,9 @@ class EditFerias extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function afterSave(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'mapa_ferias', 'edit', "MapaFerias:{$this->record->id}");
+    }
 }

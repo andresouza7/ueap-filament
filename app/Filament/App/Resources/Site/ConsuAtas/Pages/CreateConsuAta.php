@@ -39,4 +39,9 @@ class CreateConsuAta extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_site', 'create', class_basename($this->record) . ":{$this->record->id}");
+    }
 }

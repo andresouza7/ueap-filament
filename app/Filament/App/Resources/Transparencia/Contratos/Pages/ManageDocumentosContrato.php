@@ -78,6 +78,7 @@ class ManageDocumentosContrato extends ManageRelatedRecords
                     })
                     ->after(function (Model $record, array $data) {
                         $record->storeFileWithModelId($data['file'], 'documents/bids');
+                        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'create', class_basename($record) . ":{$record->id}");
                     }),
             ])
             ->recordActions([

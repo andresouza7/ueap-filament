@@ -59,4 +59,10 @@ class OrdinancesRelationManager extends RelationManager
     {
         return false;
     }
+
+    public function mount(...$args): void
+    {
+        parent::mount(...$args);
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'cadastro_portarias', 'read', "User:{$this->ownerRecord->login}");
+    }
 }

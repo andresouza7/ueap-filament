@@ -28,8 +28,9 @@ class AgendamentoSaude extends Page implements HasForms
     public ?array $data = [];
     public $url;
 
-    public function mount() {
-         $urls = [
+    public function mount()
+    {
+        $urls = [
             'medicina' => 'https://calendar.app.google/Zei5k72M4L7L5MTn8',
             'fisioterapia' => 'https://calendar.app.google/VsNkFep5rKL4R3RJ8',
             'nutricao' => 'https://calendar.app.google/SyApG2aWiQKoR2Ca8',
@@ -72,7 +73,9 @@ class AgendamentoSaude extends Page implements HasForms
 
     public function handleRecordCreation(array $data): void
     {
-        HealthAppointment::create($data);
+        $record = HealthAppointment::create($data);
+
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'agendamento_saude', 'create', "HealthAppointment:{$record->id}");
     }
 
     protected function getSavedNotification(): ?Notification
