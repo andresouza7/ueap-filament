@@ -55,6 +55,8 @@ class FrequencyEmit extends Component implements HasForms
         $url = route('frequency.print', $data); // Assuming the route exists
 
         // Dispatch a browser event to open a new tab
+        \App\Events\ServiceAccessed::dispatch(Auth::user(), 'folha_ponto', 'create');
+
         return $this->dispatch('open-new-tab', $url);
     }
 

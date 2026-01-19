@@ -22,4 +22,9 @@ class CreateRegistroPreco extends CreateRecord
 
         return $data;
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'create', class_basename($this->record) . ":{$this->record->id}");
+    }
 }

@@ -27,4 +27,9 @@ class CreateFerias extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'mapa_ferias', 'create', "MapaFerias:{$this->record->id}");
+    }
 }

@@ -22,4 +22,9 @@ class CreateWebMenu extends CreateRecord
 
         return $data;
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_site', 'create', class_basename($this->record) . ":{$this->record->id}");
+    }
 }

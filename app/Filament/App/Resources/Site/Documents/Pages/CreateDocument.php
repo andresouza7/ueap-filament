@@ -22,4 +22,9 @@ class CreateDocument extends CreateRecord
 
         return $record;
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_site', 'create', class_basename($this->record) . ":{$this->record->id}");
+    }
 }

@@ -96,10 +96,10 @@ class DocumentsRelationManager extends RelationManager
 
                         return $data;
                     })
-                    ->after(
-                        fn(Model $record, array $data) =>
-                        $record->storeFileWithModelId($data['file'], 'documents/general')
-                    ),
+                    ->after(function (Model $record, array $data) {
+                        $record->storeFileWithModelId($data['file'], 'documents/general');
+                        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'create', class_basename($record) . ":{$record->id}");
+                    }),
             ])
             ->recordActions([
                 EditAction::make(),

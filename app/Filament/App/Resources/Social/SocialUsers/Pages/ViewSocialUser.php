@@ -9,6 +9,17 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewSocialUser extends ViewRecord
 {
     protected static string $resource = SocialUserResource::class;
+
+    public function mount(int | string $record): void
+    {
+        parent::mount($record);
+
+        if (auth()->check()) {
+            $service = $this->record->id !== auth()->id() ? 'consulta_servidores' : 'dados_pessoais';
+
+            \App\Events\ServiceAccessed::dispatch(auth()->user(), $service, 'read', "User:{$this->record->login}");
+        }
+    }
     protected ?string $heading = 'Perfil do Usuário';
     // protected ?string $subheading = 'Informações funcionais e documentos deste usuário.';
 

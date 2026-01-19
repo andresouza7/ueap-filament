@@ -16,4 +16,10 @@ class ViewProtocolProcess extends ViewRecord
             // Actions\EditAction::make(),
         ];
     }
+
+    public function mount(int | string $record): void
+    {
+        parent::mount($record);
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'consulta_protocolo', 'read', "ProtocolProcess:{$this->record->id}");
+    }
 }

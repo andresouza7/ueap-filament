@@ -20,7 +20,7 @@ class CreateQuadroDespesa extends CreateRecord
         return $data;
     }
 
-     protected function handleRecordCreation(array $data): Model
+    protected function handleRecordCreation(array $data): Model
     {
         $record = static::getModel()::create($data);
 
@@ -32,5 +32,10 @@ class CreateQuadroDespesa extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'create', class_basename($this->record) . ":{$this->record->id}");
     }
 }

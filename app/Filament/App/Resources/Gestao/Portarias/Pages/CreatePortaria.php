@@ -35,4 +35,9 @@ class CreatePortaria extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function afterCreate(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'cadastro_portarias', 'create', "Portaria:{$this->record->id}");
+    }
 }

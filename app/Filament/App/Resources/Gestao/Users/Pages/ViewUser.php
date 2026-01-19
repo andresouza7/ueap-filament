@@ -11,6 +11,15 @@ class ViewUser extends ViewRecord
 {
     protected static string $resource = UserResource::class;
 
+    public function mount(int | string $record): void
+    {
+        parent::mount($record);
+
+        if ($this->record->id === auth()->id()) {
+            \App\Events\ServiceAccessed::dispatch(auth()->user(), 'dados_pessoais', 'read', "User:{$this->record->id}");
+        }
+    }
+
     protected function getHeaderActions(): array
     {
         return [

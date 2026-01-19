@@ -54,4 +54,10 @@ class CalendarOccurrencesRelationManager extends RelationManager
                 // Tables\Actions\EditAction::make(),
             ]);
     }
+
+    public function mount(...$args): void
+    {
+        parent::mount(...$args);
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'mapa_ferias', 'read', "User:{$this->ownerRecord->login}");
+    }
 }
