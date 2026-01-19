@@ -50,7 +50,7 @@ class FrequencyOccurrences extends Component implements HasForms, HasTable, HasA
     {
         return $table
             ->heading('Minhas Ocorrências de Ponto')
-            ->description('Gerencie as alterações de expediente na sua folha de ponto.')
+            ->description('Clique na ocorrência para editar ou deletar.')
             ->recordTitleAttribute('description')
             ->query(CalendarOccurrence::query()->where('user_id', Auth::id())->where('type', 3))
             ->defaultSort('start_date', 'desc')

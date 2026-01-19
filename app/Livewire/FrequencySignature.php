@@ -35,7 +35,7 @@ class FrequencySignature extends Component implements HasForms
         $data = $this->form->getState();
 
         if (true) {
-      
+
             // Notificação de sucesso
             Notification::make()
                 ->title('Assinatura cadastrada com sucesso.')
@@ -72,7 +72,7 @@ class FrequencySignature extends Component implements HasForms
                             ->action('saveSignature'),
                     ]),
                 ])
-                    // ->heading('Configurar Assinatura')
+                    ->heading('Assinatura')
                     ->description('Carregue uma imagem da sua assinatura para usar na folha de ponto.')
             ])
             ->statePath('attachment');
