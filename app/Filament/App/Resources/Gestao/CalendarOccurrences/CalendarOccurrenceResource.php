@@ -63,6 +63,7 @@ class CalendarOccurrenceResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('type', 1)->whereYear('start_date', Carbon::now()->year);
+            ->where('type', 1);
+        // ->whereYear('start_date', Carbon::now()->year);
     }
 }
