@@ -102,7 +102,8 @@ class DocumentsRelationManager extends RelationManager
                     }),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->after(fn($record) => \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'update', class_basename($record) . ":{$record->id}")),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),

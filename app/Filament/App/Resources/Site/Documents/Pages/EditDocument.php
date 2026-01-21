@@ -27,6 +27,6 @@ class EditDocument extends EditRecord
 
     public function getTitle(): string | Htmlable
     {
-       return $this->getRecord()->name;
+        return $this->getRecord()->name;
     }
 }

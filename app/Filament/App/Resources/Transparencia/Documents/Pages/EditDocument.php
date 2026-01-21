@@ -11,6 +11,11 @@ class EditDocument extends EditRecord
 {
     protected static string $resource = DocumentResource::class;
 
+    protected function afterSave(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'update', class_basename($this->record) . ":{$this->record->id}");
+    }
+
     protected function getHeaderActions(): array
     {
         return [

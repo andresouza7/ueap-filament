@@ -84,7 +84,8 @@ class ManageDocumentosLicitacao extends ManageRelatedRecords
             ])
             ->recordActions([
                 // Tables\Actions\ViewAction::make(),
-                EditAction::make(),
+                EditAction::make()
+                    ->after(fn($record) => \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_transparencia', 'update', class_basename($record) . ":{$record->id}")),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),

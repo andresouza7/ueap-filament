@@ -56,4 +56,9 @@ class EditWebPage extends EditRecord
     {
         return $this->getResource()::getUrl('edit', ['record' => $this->record->id]);
     }
+
+    protected function afterSave(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_site', 'update', class_basename($this->record) . ":{$this->record->id}");
+    }
 }

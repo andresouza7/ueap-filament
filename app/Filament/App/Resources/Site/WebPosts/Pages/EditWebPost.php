@@ -26,4 +26,9 @@ class EditWebPost extends EditRecord
 
         return $data;
     }
+
+    protected function afterSave(): void
+    {
+        \App\Events\ServiceAccessed::dispatch(auth()->user(), 'publicacao_site', 'update', class_basename($this->record) . ":{$this->record->id}");
+    }
 }
