@@ -37,7 +37,6 @@ class MapaFeriasResource extends Resource
     public static function table(Table $table): Table
     {
         return MapaFeriasTable::configure($table);
-           
     }
 
     public static function getRelations(): array
@@ -59,6 +58,7 @@ class MapaFeriasResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('type', 2)->whereYear('start_date', '>=', Carbon::now()->year);
+            ->where('type', 2)->orderBy('start_date', 'desc');
+        // ->whereYear('start_date', '>=', Carbon::now()->year);
     }
 }
