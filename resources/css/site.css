@@ -5,35 +5,30 @@
 @source '../**/*.js';
 
 @theme {
-  /* 🎨 Base Colors */
-  --color-primary: #054e3d;
-  --color-accent-yellow: #facc15;
-  --color-contrast-light: #f3f4f6;
+  /* Cores Institucionais UEAP */
+  --color-ueap-blue: #00388D;
+  --color-ueap-blue-dark: #00255E;
+  --color-ueap-blue-light: #2A62B3;
+  --color-ueap-green: #84CC16;
+  --color-ueap-yellow: #FACC15;
+  --color-ueap-cyan: #06B6D4;
 
-  /* 🎨 Custom Color Group (ueap.*) */
-  --color-ueap-green: #16a34a;
-  /* green-600 */
-  --color-ueap-dark: #14532d;
-  /* green-900 */
-  --color-ueap-light: #dcfce7;
-  /* green-100 */
+  /* Tipografia */
+  --font-display: "Roboto Condensed", sans-serif;
+  --font-sans: "Inter", sans-serif;
 
-  /* 🖋️ Font family */
-  --font-sans: Inter, sans-serif;
-
-  /* 📱 Screens (breakpoints) */
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1290px;
-
-  /* 📏 Custom max-width token */
-  --spacing-ueap: 1366px;
+  /* Ajustes de Raio (opcional, seguindo a estética dos banners) */
+  --radius-ueap: 0.75rem;
+  
 }
 
-body {
-  font-family: 'Inter', sans-serif;
+@layer base {
+  body {
+    @apply font-sans bg-gray-50 text-gray-900;
+  }
+  h1, h2, h3, .font-impact {
+    @apply font-display uppercase tracking-tight;
+  }
 }
 
 table {

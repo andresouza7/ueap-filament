@@ -1,136 +1,162 @@
-{{-- SEÇÃO MURAL DE NOTÍCIAS - 6 CARDS + BACKGROUND BRUTALISTA RESTAURADO --}}
-<section class="py-24 lg:py-48 bg-slate-100 relative overflow-hidden" aria-label="Notícias e Atualidades">
-
-    {{-- LAYER 0: GEOMETRIA ESTRUTURAL (Restauração das Formas e Texto Gigante) --}}
+<section class="py-10 lg:py-16 bg-gray-50 relative overflow-hidden" aria-label="Notícias e Atualidades">
+    {{-- EFEITO DE BACKGROUND INSTITUCIONAL --}}
     <div class="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-        {{-- Texto Gigante de Fundo --}}
-        <div class="absolute top-10 left-10 text-[200px] lg:text-[400px] font-black leading-none select-none opacity-[0.03] uppercase tracking-tighter text-[#001a4d]"
-            style="-webkit-text-stroke: 4px #001a4d; color: transparent;">
-            Mundo
-        </div>
-
-        {{-- Retângulos Decorativos Restaurados --}}
+        {{-- Geometria em Azul UEAP sutil --}}
         <div
-            class="absolute top-[15%] right-[-5%] w-[600px] h-[400px] border-[8px] border-[#001a4d]/5 rounded-[100px] rotate-[15deg]">
-        </div>
-        <div
-            class="absolute bottom-[10%] left-[-10%] w-[800px] h-[500px] border-[12px] border-[#A4ED4A]/10 rounded-[150px] -rotate-6">
-        </div>
-
-        {{-- Padrão de Pontos Halftone --}}
-        <div class="absolute inset-0 opacity-[0.1]"
-            style="background-image: radial-gradient(#0055FF 1px, transparent 1px); background-size: 40px 40px;">
-        </div>
-
-        {{-- Glow de Fundo --}}
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#A4ED4A]/5 blur-[180px] rounded-full">
+            class="absolute -top-[5%] -left-[10%] w-[80%] lg:w-[55%] h-[25%] lg:h-[85%] bg-ueap-blue/5 -skew-x-12 border-r-4 border-ueap-blue/10 shadow-[40px_0_70px_-30px_rgba(0,0,0,0.02)] transition-all duration-500">
+            <div class="absolute inset-0 opacity-[0.1]"
+                style="background-image: linear-gradient(to right, #00388D 1px, transparent 1px), linear-gradient(to bottom, #00388D 1px, transparent 1px);
+                        background-size: 40px 40px;
+                        mask-image: linear-gradient(to right, black 10%, transparent 85%), linear-gradient(to bottom, black 10%, transparent 85%);
+                        -webkit-mask-image: linear-gradient(to right, black 10%, transparent 85%), linear-gradient(to bottom, black 10%, transparent 85%);">
+            </div>
         </div>
     </div>
 
-    <div class="max-w-[1440px] mx-auto px-4 lg:px-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 lg:px-12 relative z-10">
 
-        {{-- HEADER EDITORIAL BRUTALISTA (Restaurado) --}}
-        <div class="relative mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-            <div class="max-w-4xl">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="h-[1px] w-20 bg-[#001a4d]"></span>
-                    <span class="font-black text-[10px] text-[#001a4d] uppercase tracking-[0.5em]">Informativo
-                        Institucional</span>
-                </div>
-                <h2
-                    class="text-7xl lg:text-[10rem] font-black text-[#001a4d] tracking-tighter uppercase leading-[0.75]">
-                    Notícias <br><span class="text-transparent"
-                        style="-webkit-text-stroke: 2px #001a4d;">UEAP</span><span class="text-[#A4ED4A]">.</span>
-                </h2>
+        {{-- Header Editorial --}}
+        <div class="relative flex flex-col mb-8 lg:mb-12">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="h-[3px] w-8 lg:w-12 bg-ueap-green" aria-hidden="true"></span>
+                <span
+                    class="text-ueap-blue-dark font-sans text-[10px] lg:text-[11px] uppercase tracking-[0.4em] font-black">Destaques
+                    Acadêmicos</span>
             </div>
 
-            <a href="{{ route('site.post.list', ['type' => 'news']) }}"
-                class="group relative inline-flex items-center gap-6 bg-[#001a4d] text-white px-12 py-6 rounded-2xl font-black hover:bg-[#A4ED4A] hover:text-[#001a4d] transition-all shadow-[0_20px_60px_rgba(0,26,77,0.2)] uppercase text-xs tracking-widest overflow-hidden">
-                <span class="relative z-10">Ver Todas</span>
-                <i
-                    class="fa-solid fa-arrow-right-long relative z-10 group-hover:translate-x-2 transition-transform"></i>
-            </a>
+            <div class="flex flex-wrap items-end justify-between pb-4 lg:pb-6 gap-y-4 relative">
+                <h2
+                    class="text-4xl lg:text-7xl font-display font-black text-ueap-blue-dark tracking-tighter uppercase leading-none italic">
+                    Notícias<span class="text-ueap-green not-italic ml-1" aria-hidden="true">_</span>
+                </h2>
+
+                <a href="{{ route('site.post.list', ['type' => 'news']) }}" aria-label="Ver todas as notícias"
+                    class="group flex items-center gap-3 lg:gap-4 text-ueap-blue-dark font-black hover:text-ueap-green transition-all uppercase text-[10px] lg:text-[11px] tracking-widest shrink-0">
+                    <span class="relative">Ver Todo o Acervo
+                        <span
+                            class="absolute -bottom-1 left-0 w-full h-[2px] bg-ueap-green scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </span>
+                    <div
+                        class="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center border-2 border-ueap-blue-dark group-hover:border-ueap-green group-hover:bg-ueap-green group-hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor font-bold">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </a>
+
+                {{-- Linha de Divisão --}}
+                <div class="absolute bottom-0 right-0 h-[2px] w-[60%] lg:w-[45%] bg-gradient-to-l from-ueap-blue/20 to-transparent"
+                    aria-hidden="true"></div>
+            </div>
         </div>
 
-        {{-- GRID DE 6 NOTÍCIAS (DESIGN DE CARDS IGUAIS) --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14 mb-32">
-            @foreach ($posts->take(6) as $post)
-                <article
-                    class="group relative flex flex-col bg-white rounded-[55px] p-5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] border border-slate-100 transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)]">
+        <div class="grid grid-cols-12 gap-y-12 lg:gap-x-16">
 
-                    {{-- Imagem --}}
-                    <div class="relative aspect-[16/11] overflow-hidden rounded-[45px] mb-8 shadow-sm">
-                        <img src="{{ $post->image_url }}" alt="{{ $post->title }}"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-
-                        {{-- Badge Categoria --}}
-                        <div class="absolute top-6 left-6">
-                            <span
-                                class="bg-[#001a4d] text-[#A4ED4A] px-5 py-2.5 rounded-xl text-[9px] font-[1000] uppercase tracking-widest shadow-2xl">
-                                {{ $post->category->name ?? 'Update' }}
-                            </span>
-                        </div>
-                    </div>
-
-                    {{-- Conteúdo do Card --}}
-                    <div class="px-4 pb-6 flex flex-col flex-1">
-                        <time
-                            class="text-[#0055FF] font-black uppercase tracking-[0.2em] text-[10px] mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 bg-[#A4ED4A] rounded-full"></span>
-                            {{ $post->created_at->translatedFormat('d M Y') }}
-                        </time>
-
-                        <a href="{{ route('site.post.show', $post->slug) }}" class="flex-1">
-                            <h3
-                                class="text-2xl lg:text-3xl font-[1000] text-[#001a4d] leading-[1.1] tracking-tighter mb-6 group-hover:text-[#0055FF] transition-colors line-clamp-3 italic">
-                                {{ $post->title }}
-                            </h3>
-                        </a>
-
-                        {{-- Footer do Card --}}
-                        <div class="pt-6 border-t border-slate-50 flex justify-between items-center">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ler
-                                Reportagem_</span>
-                            <div
-                                class="w-12 h-12 rounded-full bg-slate-50 group-hover:bg-[#A4ED4A] flex items-center justify-center transition-all">
-                                <i class="fa-solid fa-arrow-up-right text-[12px] text-[#001a4d]"></i>
+            {{-- Coluna Esquerda: O Destaque Principal --}}
+            <div class="col-span-12 lg:col-span-7 flex flex-col">
+                @foreach ($posts->take(1) as $post)
+                    <article class="group relative flex flex-col h-full">
+                        <div class="relative w-full aspect-[16/9] overflow-hidden bg-ueap-blue-dark shadow-xl">
+                            <img src="{{ $post->image_url }}" alt="{{ $post->title }}"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                            <div class="absolute bottom-0 left-0 bg-ueap-green px-4 py-2 lg:px-6">
+                                <span
+                                    class="text-ueap-blue-dark text-[10px] lg:text-[11px] font-black uppercase tracking-widest italic">
+                                    {{ $post->category->name ?? 'Destaque' }}
+                                </span>
                             </div>
                         </div>
-                    </div>
-                </article>
-            @endforeach
-        </div>
 
-        {{-- NEWSLETTER (Harmonizada em Faixa) --}}
-        <div id="newsletter" class="relative">
-            <div class="bg-[#001a4d] rounded-[60px] lg:rounded-[80px] p-10 lg:p-20 relative overflow-hidden shadow-2xl">
-                <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-[#0055FF] rounded-full opacity-10"></div>
+                        <div class="mt-6 lg:mt-8 flex flex-col">
+                            <div class="flex items-center gap-3 lg:gap-4 mb-4 text-[11px] font-bold text-gray-400">
+                                <time datetime="{{ $post->created_at->format('Y-m-d') }}"
+                                    class="text-ueap-blue-dark uppercase tracking-widest">
+                                    <span class="text-ueap-green" aria-hidden="true">//</span>
+                                    {{ $post->created_at->translatedFormat('d.M.Y') }}
+                                </time>
+                                <span class="w-8 h-px bg-gray-200" aria-hidden="true"></span>
+                                <span class="uppercase tracking-widest font-black text-ueap-blue">Notícia
+                                    Principal</span>
+                            </div>
 
-                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
-                    <div class="max-w-xl">
-                        <h5
-                            class="text-white text-4xl lg:text-6xl font-black uppercase tracking-tighter leading-[0.85] mb-4">
-                            Assine a <br><span class="text-[#A4ED4A]">Newsletter.</span>
-                        </h5>
-                        <p class="text-blue-200/40 font-bold text-xs uppercase tracking-[0.3em]">A UEAP direto na sua
-                            caixa de entrada_</p>
-                    </div>
-
-                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="w-full lg:max-w-md">
-                        @csrf
-                        <div class="flex flex-col gap-4">
-                            <input type="email" name="email" placeholder="SEU MELHOR E-MAIL" required
-                                class="w-full bg-white/5 border-2 border-white/10 focus:border-[#A4ED4A] focus:bg-white/10 rounded-3xl text-white text-sm font-bold px-8 py-6 outline-none transition-all">
-                            <button type="submit"
-                                class="w-full bg-[#A4ED4A] text-[#001a4d] py-6 rounded-3xl font-black uppercase text-xs tracking-widest hover:brightness-110 transition-all shadow-xl">
-                                Confirmar Cadastro_
-                            </button>
+                            <a href="{{ route('site.post.show', $post->slug) }}">
+                                <h3
+                                    class="text-3xl lg:text-5xl font-display font-black text-ueap-blue-dark leading-[0.9] tracking-tighter mb-5 group-hover:text-ueap-green transition-colors uppercase italic">
+                                    {{ $post->title }}
+                                </h3>
+                            </a>
+                            <p
+                                class="text-gray-600 text-sm lg:text-base leading-relaxed max-w-2xl border-l-4 border-ueap-green pl-6 py-1 line-clamp-3">
+                                {{ Str::limit(strip_tags($post->text), 220) }}
+                            </p>
                         </div>
-                    </form>
+                    </article>
+                @endforeach
+            </div>
+
+            {{-- Coluna Direita: Lista de Recentes --}}
+            <div class="col-span-12 lg:col-span-5 flex flex-col h-full" role="region" aria-label="Notícias recentes">
+                <div class="flex flex-col space-y-2">
+                    @foreach ($posts->skip(1)->take(4) as $post)
+                        <article
+                            class="group flex items-center gap-4 lg:gap-6 py-5 transition-all hover:bg-white hover:shadow-sm px-4 border-b border-gray-100">
+                            <span
+                                class="font-display text-gray-200 text-xl lg:text-2xl font-black group-hover:text-ueap-green transition-all"
+                                aria-hidden="true">
+                                {{ str_pad($loop->iteration + 1, 2, '0', STR_PAD_LEFT) }}
+                            </span>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[9px] font-black text-ueap-blue uppercase tracking-widest mb-1">
+                                    {{ $post->category->name ?? 'Informativo' }}</div>
+                                <a href="{{ route('site.post.show', $post->slug) }}">
+                                    <h4
+                                        class="text-sm lg:text-base font-display font-bold text-ueap-blue-dark leading-tight group-hover:text-ueap-green transition-all uppercase italic tracking-tighter line-clamp-2">
+                                        {{ $post->title }}
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="shrink-0 w-14 h-14 lg:w-16 lg:h-16 overflow-hidden bg-gray-100 rounded">
+                                <img src="{{ $post->image_url }}" alt=""
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                {{-- Newsletter Reformulada --}}
+                <div id="newsletter" class="mt-8 lg:mt-auto">
+                    <div class="bg-ueap-blue-dark p-6 lg:p-8 relative overflow-hidden shadow-xl rounded-lg">
+                        <div class="absolute right-0 top-0 w-24 h-full bg-ueap-green/10 skew-x-[-20deg] translate-x-12"
+                            aria-hidden="true"></div>
+
+                        <h5
+                            class="text-white text-xl lg:text-2xl font-display font-black uppercase italic tracking-tighter mb-1 relative z-10">
+                            Informativo <span class="text-ueap-green">UEAP</span>
+                        </h5>
+                        <p
+                            class="text-blue-200/60 font-sans text-[10px] uppercase tracking-widest mb-6 relative z-10 font-bold">
+                            Assine nosso boletim acadêmico</p>
+
+                        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="relative z-10">
+                            @csrf
+                            <input type="email" name="email" placeholder="SEU MELHOR E-MAIL" required
+                                class="w-full bg-white/10 border border-white/20 text-white text-xs font-bold tracking-widest px-5 py-4 focus:ring-2 focus:ring-ueap-green outline-none transition-all placeholder:text-blue-200/30">
+
+                            <button type="submit"
+                                class="absolute right-0 top-0 bottom-0 px-6 bg-ueap-green text-ueap-blue-dark hover:bg-white transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </section>

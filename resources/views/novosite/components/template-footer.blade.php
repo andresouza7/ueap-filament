@@ -1,39 +1,78 @@
-{{-- FOOTER: IDENTIDADE UEAP 2026 --}}
-<footer class="bg-[#002266] text-white pt-16 md:pt-28 pb-10 relative overflow-hidden" role="contentinfo">
-    
-    {{-- Elementos Decorativos de Fundo --}}
-    <div aria-hidden="true" class="absolute inset-0 pointer-events-none opacity-10">
-        <div class="absolute top-0 left-0 w-full h-full" 
-             style="background-image: radial-gradient(#A4ED4A 1px, transparent 1px); background-size: 40px 40px;"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-[#A4ED4A] rounded-full blur-[120px]"></div>
+{{-- FOOTER COM IDENTIDADE UEAP --}}
+<footer class="bg-ueap-blue-dark text-white pt-10 md:pt-20 pb-8 relative overflow-hidden" role="contentinfo">
+    {{-- Camada visual decorativa - Skew mantido --}}
+    <div aria-hidden="true"
+        class="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none">
     </div>
 
-    <div class="max-w-[1440px] mx-auto px-4 md:px-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-12 relative z-10">
 
         @php
             $footerMenu = [
-                ['title' => 'Institucional', 'links' => ['Sobre a UEAP' => '/pagina/historia.html', 'Reitoria' => '/pagina/reitoria.html', 'Pró-Reitorias' => '/pagina/pro_reitorias.html', 'Campi e Polos' => '#']],
-                ['title' => 'Acadêmico', 'links' => ['Graduação' => '#', 'Pós-Graduação' => '#', 'Extensão' => '#', 'EAD' => '#']],
-                ['title' => 'Serviços', 'links' => ['Biblioteca' => '/pagina/biblioteca.html', 'Portal do Aluno' => 'https://sigaa.ueap.edu.br/sigaa/', 'Calendário' => '/documentos/calendar']],
-                ['title' => 'Comunidade', 'links' => ['Notícias' => '/postagens?type=news', 'Editais' => 'https://processoseletivo.ueap.edu.br', 'Eventos' => '/postagens?type=event']],
-                ['title' => 'Transparência', 'links' => ['Dados Abertos' => '#', 'Licitações' => '#', 'Ouvidoria' => 'https://ouvamapa.portal.ap.gov.br/'], 'wide' => true],
+                [
+                    'title' => 'Institucional',
+                    'links' => [
+                        'Sobre a UEAP' => '/pagina/historia.html',
+                        'Reitoria' => '/pagina/reitoria.html',
+                        'Pró-Reitorias' => '/pagina/pro_reitorias.html',
+                        'Conselhos' => '#',
+                        'Campi e Polos' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Cursos',
+                    'links' => [
+                        'Graduação' => '#',
+                        'Pós-Graduação' => '#',
+                        'Extensão' => '#',
+                        'EAD' => '#',
+                    ],
+                ],
+                [
+                    'title' => 'Ensino',
+                    'links' => [
+                        'Biblioteca' => '/pagina/biblioteca.html',
+                        'Portal do Aluno' => 'https://sigaa.ueap.edu.br/sigaa/',
+                        'Calendário' => '/documentos/calendar',
+                    ],
+                ],
+                [
+                    'title' => 'Comunidade',
+                    'links' => [
+                        'Notícias' => '/postagens?type=news',
+                        'Eventos' => '/postagens?type=event',
+                        'Editais' => 'https://processoseletivo.ueap.edu.br',
+                    ],
+                ],
+                [
+                    'title' => 'Transparência',
+                    'links' => [
+                        'Dados Abertos' => '#',
+                        'Licitações' => 'https://transparencia.ueap.edu.br/licitacoes',
+                        'Ouvidoria (e-SIC)' => 'https://ouvamapa.portal.ap.gov.br/',
+                    ],
+                    'wide' => true,
+                ],
             ];
         @endphp
 
         {{-- GRID DE LINKS --}}
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-20">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 md:gap-8 mb-12 md:mb-20">
             @foreach ($footerMenu as $section)
-                <nav aria-label="Menu {{ $section['title'] }}">
-                    <div class="flex items-center gap-2 mb-6" aria-hidden="true">
-                        <span class="w-3 h-3 bg-[#A4ED4A] rounded-full"></span>
-                        <h4 class="text-[12px] font-black uppercase tracking-[0.2em] text-[#A4ED4A]">
+                <nav class="{{ $section['wide'] ?? false ? 'col-span-2 lg:col-span-1' : '' }}"
+                    aria-label="Menu {{ $section['title'] }}">
+                    <div class="flex items-center gap-2 mb-4" aria-hidden="true">
+                        <span class="w-4 h-[2px] bg-ueap-green"></span>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-ueap-green">
                             {{ $section['title'] }}
                         </h4>
                     </div>
-                    <ul class="space-y-3">
+                    <h4 class="sr-only">{{ $section['title'] }}</h4>
+
+                    <ul class="space-y-2 text-[12px] md:text-sm text-blue-100/60 font-medium">
                         @foreach ($section['links'] as $label => $url)
                             <li>
-                                <a href="{{ $url }}" class="text-sm text-blue-100/70 hover:text-white hover:translate-x-1 inline-block transition-all focus:ring-2 focus:ring-[#A4ED4A] focus:outline-none rounded">
+                                <a href="{{ $url }}" class="hover:text-ueap-green transition-colors">
                                     {{ $label }}
                                 </a>
                             </li>
@@ -44,75 +83,168 @@
         </div>
 
         {{-- INFO PRINCIPAL --}}
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 border-t border-white/10 pt-16 mb-20">
-            
-            <div class="relative group">
-                <div class="mb-4 inline-flex bg-[#A4ED4A] text-[#002266] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                    Universidade Pública Estadual
+        <div
+            class="flex flex-col md:flex-row justify-between items-center md:items-center gap-12 border-t border-white/5 pt-16 mb-16 relative">
+
+            {{-- Bloco Institucional --}}
+            <div class="max-w-xl relative group w-full md:w-auto">
+                {{-- Sigla Fantasma --}}
+                <span aria-hidden="true"
+                    class="absolute -top-10 -left-4 text-[120px] font-black text-white/[0.03] leading-none pointer-events-none select-none hidden md:block">
+                    UEAP
+                </span>
+
+                {{-- Badge --}}
+                <div class="flex items-center gap-3 mb-6" aria-hidden="true">
+                    <span
+                        class="px-2 py-0.5 bg-ueap-green/10 border border-ueap-green/20 text-ueap-green text-[10px] font-black uppercase tracking-[0.2em]">
+                        Desde 2006
+                    </span>
+                    <div class="h-[1px] flex-1 bg-gradient-to-r from-ueap-green/40 to-transparent"></div>
                 </div>
-                <h3 class="text-7xl md:text-9xl font-black text-white tracking-[ -0.05em] leading-[0.8] mb-4">
-                    UE<span class="text-[#A4ED4A]">AP</span>
-                </h3>
-                <p class="text-blue-100/60 font-bold text-lg max-w-md leading-tight">
-                    Educação que transforma, ciência que desenvolve o nosso Amapá.
-                </p>
+
+                <div class="relative z-10">
+                    <span
+                        class="block text-6xl md:text-8xl font-black text-ueap-green tracking-tighter leading-[0.8] mb-2 drop-shadow-2xl">
+                        UEAP
+                    </span>
+
+                    <h3
+                        class="text-white text-xl md:text-2xl font-black uppercase tracking-[0.05em] leading-tight mb-6">
+                        Universidade do Estado <br class="hidden md:block"> do Amapá
+                    </h3>
+
+                    <div class="flex gap-4 items-start">
+                        <div class="w-1 h-12 bg-ueap-green/30 mt-1" aria-hidden="true"></div>
+                        <p class="text-blue-100/60 text-sm md:text-base leading-relaxed font-medium max-w-sm">
+                            Promovendo educação de qualidade e <span class="text-white">desenvolvimento
+                                sustentável</span> para a região amazônica.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            {{-- Selo e-MEC --}}
+            {{-- Selo MEC --}}
             <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/NTcwMQ=="
-                target="_blank" rel="noopener"
-                aria-label="Verificar cadastro da UEAP no Portal e-MEC (abre em nova aba)"
-                class="group relative bg-white p-4 rounded-[30px] shadow-2xl transition-transform hover:scale-105 focus:ring-4 focus:ring-[#A4ED4A] focus:outline-none">
-                <div class="flex items-center gap-4">
-                    <img src="/img/site/banner_mec.png" alt="Selo e-MEC" class="w-20 h-20 object-contain">
-                    <div class="pr-4">
-                        <p class="text-[10px] font-black uppercase text-[#002266]">Portal e-MEC</p>
-                        <p class="text-xs text-slate-500 font-bold italic">Instituição Credenciada</p>
+                target="_blank" rel="noopener noreferrer" class="group block w-full md:w-auto">
+                <div
+                    class="flex flex-row md:flex-col lg:flex-row items-center justify-between md:justify-center gap-6 bg-white/[0.02] md:bg-transparent p-4 md:p-0 rounded-lg">
+
+                    <div class="text-left md:text-center lg:text-right order-1 md:order-2 lg:order-1">
+                        <p class="text-[10px] sm:text-sm font-black uppercase tracking-[0.2em] text-ueap-green mb-2">
+                            Portal e-MEC
+                        </p>
+                        <p class="text-[12px] sm:text-base text-blue-200/60 font-bold leading-tight">
+                            Consulte o cadastro oficial da <span class="text-white">UEAP</span><br
+                                class="hidden lg:block"> no sistema.
+                        </p>
+                    </div>
+
+                    <div
+                        class="relative w-24 h-24 md:w-32 md:h-32 bg-white rounded-sm shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-1 transition-all duration-500 transform group-hover:scale-105 order-2 md:order-1 lg:order-2 flex-shrink-0">
+                        <div class="w-full h-full flex items-center justify-center overflow-hidden bg-white">
+                            <img class="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-700"
+                                src="/img/site/banner_mec.png" alt="Selo e-MEC">
+                        </div>
                     </div>
                 </div>
             </a>
         </div>
 
         {{-- ENDEREÇOS --}}
-        <section class="mb-20" aria-labelledby="footer-campi">
-            <h5 id="footer-campi" class="text-[11px] font-black uppercase tracking-[0.3em] text-[#A4ED4A] mb-8 flex items-center gap-3">
-                Unidades e Campi
+        <section class="mb-12" aria-labelledby="footer-enderecos-title">
+            <h5 id="footer-enderecos-title"
+                class="text-[10px] font-black uppercase tracking-[0.3em] text-ueap-green/60 mb-6 flex items-center gap-3">
+                <span class="w-8 h-[1px] bg-ueap-green/30" aria-hidden="true"></span>
+                Nossos endereços
             </h5>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-0 md:gap-y-10 md:gap-x-12">
                 @php
-                    $campi = [
-                        ['n' => 'Campus I (Sede)', 'e' => 'Av. Presidente Vargas, 650 - Centro'],
-                        ['n' => 'Campus Laranjal do Jari', 'e' => 'Rua Projetada, s/n - Jari'],
-                        ['n' => 'Campus Amapá', 'e' => 'Av. Desidério Antônio, 470'],
+                    $enderecos = [
+                        [
+                            'nome' => 'Campus I',
+                            'end' => 'Av. Presidente Vargas, 650 - Centro',
+                            'icon' => 'fa-location-dot',
+                        ],
+                        [
+                            'nome' => 'Território dos Lagos',
+                            'end' => 'Av. Desidério Antônio, 470 - Amapá-AP',
+                            'icon' => 'fa-building-user',
+                        ],
+                        [
+                            'nome' => 'Administrativo',
+                            'end' => 'Rua Tiradentes, 284 - Centro',
+                            'icon' => 'fa-building-user',
+                        ],
+                        [
+                            'nome' => 'Anexo Graziela',
+                            'end' => 'Av. Duque de Caxias, 60 - Centro',
+                            'icon' => 'fa-building-columns',
+                        ],
+                        ['nome' => 'NTE', 'end' => 'Av. 13 de Setembro, 2081 - Buritizal', 'icon' => 'fa-flask'],
+                        [
+                            'nome' => 'Campus III',
+                            'end' => 'Av. Mendonça Furtado - Centro',
+                            'icon' => 'fa-graduation-cap',
+                        ],
                     ];
                 @endphp
-                @foreach ($campi as $c)
-                    <div class="p-6 rounded-[24px] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                        <h6 class="text-[#A4ED4A] font-black uppercase text-xs mb-2">{{ $c['n'] }}</h6>
-                        <p class="text-blue-100/60 text-xs leading-snug">{{ $c['e'] }}</p>
+
+                @foreach ($enderecos as $item)
+                    <div class="group border-b border-white/5 md:border-0 last:border-0">
+                        <div class="flex items-center gap-4 py-4 md:py-0 md:mb-4 cursor-pointer md:cursor-default"
+                            role="button" tabindex="0"
+                            onclick="if(window.innerWidth < 768) { this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.chevron-icon')?.classList.toggle('rotate-180'); }">
+
+                            <div class="w-9 h-9 flex-shrink-0 relative" aria-hidden="true">
+                                <div
+                                    class="absolute inset-0 bg-ueap-green/10 border border-ueap-green/20 group-hover:bg-ueap-green group-hover:border-ueap-green transition-all duration-500">
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-ueap-green group-hover:text-white transition-colors duration-500">
+                                    <i class="fa-solid {{ $item['icon'] }} text-[11px]"></i>
+                                </div>
+                            </div>
+
+                            <div class="flex-1">
+                                <h5
+                                    class="text-[11px] font-bold text-white uppercase tracking-[0.15em] transition-colors group-hover:text-ueap-green">
+                                    {{ $item['nome'] }}
+                                </h5>
+                                <p
+                                    class="hidden md:block text-[12px] text-blue-100/40 font-medium leading-tight mt-1.5 max-w-[350px]">
+                                    {{ $item['end'] }}
+                                </p>
+                            </div>
+
+                            <div class="md:hidden chevron-icon transition-transform duration-300" aria-hidden="true">
+                                <i class="fa-solid fa-chevron-down text-[9px] text-blue-100/20"></i>
+                            </div>
+                        </div>
+
+                        {{-- Conteúdo Mobile Oculto --}}
+                        <div class="hidden md:hidden pb-5 pl-[52px]">
+                            <p class="text-[11px] text-blue-100/40 leading-snug font-medium">{{ $item['end'] }}</p>
+                        </div>
                     </div>
                 @endforeach
             </div>
         </section>
 
-        {{-- BARRA FINAL --}}
-        <div class="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <div>
-                <p class="text-[10px] font-black uppercase tracking-widest text-blue-100/40">
-                    © 2026 UEAP | PRODAP - Centro de Gestão de Tecnologia da Informação
-                </p>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                <a href="#" aria-label="YouTube" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-red-600 transition-all">
-                    <i class="fa-brands fa-youtube text-xl"></i>
+        {{-- BOTTOM --}}
+        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-blue-100/30 text-[9px] font-black uppercase tracking-[0.2em] text-center md:text-left">
+                © 2026 UEAP — Todos os direitos reservados.
+            </p>
+            <div class="flex gap-4">
+                <a href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ" target="_blank"
+                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-green transition-all text-blue-100/40 hover:text-white">
+                    <i class="fa-brands fa-youtube text-sm"></i>
                 </a>
-                <a href="#" aria-label="Instagram" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gradient-to-tr from-purple-500 to-pink-500 transition-all">
-                    <i class="fa-brands fa-instagram text-xl"></i>
-                </a>
-                <a href="#" aria-label="Subir ao topo" class="ml-4 w-12 h-12 rounded-[15px] bg-[#A4ED4A] flex items-center justify-center text-[#002266] hover:-translate-y-2 transition-transform">
-                    <i class="fa-solid fa-arrow-up"></i>
+                <a href="https://www.instagram.com/ueapoficial/" target="_blank"
+                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-green transition-all text-blue-100/40 hover:text-white">
+                    <i class="fa-brands fa-instagram text-sm"></i>
                 </a>
             </div>
         </div>

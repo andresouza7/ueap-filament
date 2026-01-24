@@ -5,11 +5,12 @@
     </div>
 
     {{-- Camada 02: Overlay de Cor e Gradiente --}}
-    <div class="absolute inset-0 z-10 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-0 z-10 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" aria-hidden="true">
+    </div>
 
     {{-- Camada 03: Efeito Skew --}}
-    <div
-        class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-emerald-500/10 skew-x-[-15deg] translate-x-32 z-20 border-l border-white/5" aria-hidden="true">
+    <div class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-emerald-500/10 skew-x-[-15deg] translate-x-32 z-20 border-l border-white/5"
+        aria-hidden="true">
     </div>
 
     <section class="w-full relative z-30" aria-label="Notícias em Destaque">
@@ -33,8 +34,7 @@
 
                 <div class="relative overflow-hidden lg:overflow-visible">
                     {{-- Container de Scroll --}}
-                    <div x-ref="container" @scroll.debounce.50ms="handleScroll"
-                        role="region" aria-live="polite"
+                    <div x-ref="container" @scroll.debounce.50ms="handleScroll" role="region" aria-live="polite"
                         class="flex lg:grid lg:grid-cols-12 gap-0 lg:gap-4 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 
                         {{-- POST PRINCIPAL --}}
@@ -75,7 +75,8 @@
                                             <span
                                                 class="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-emerald-500 pb-1">Ver
                                                 Reportagem</span>
-                                            <i class="fa-solid fa-arrow-right-long text-emerald-500 transition-transform group-hover:translate-x-3" aria-hidden="true"></i>
+                                            <i class="fa-solid fa-arrow-right-long text-emerald-500 transition-transform group-hover:translate-x-3"
+                                                aria-hidden="true"></i>
                                         </div>
                                     </div>
                                 </a>
@@ -93,13 +94,15 @@
                                         <div class="absolute inset-0">
                                             <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
                                                 class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-70 group-hover:opacity-100">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent">
+                                            <div
+                                                class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent">
                                             </div>
                                         </div>
 
                                         {{-- REF_DATA: SECUNDÁRIOS --}}
                                         <div class="absolute top-0 right-0 p-4 z-20">
-                                            <time datetime="{{ $item->created_at->format('Y-m-d') }}" class="text-[9px] font-mono text-white/30 tracking-widest uppercase">
+                                            <time datetime="{{ $item->created_at->format('Y-m-d') }}"
+                                                class="text-[9px] font-mono text-white/30 tracking-widest uppercase">
                                                 REF_DATA: {{ $item->created_at->format('Y.m.d') }}
                                             </time>
                                         </div>
@@ -125,14 +128,15 @@
                                 <a href="{{ route('site.post.show', $item->slug) }}"
                                     class="h-[380px] relative group flex flex-col bg-slate-900 overflow-hidden">
                                     <div class="absolute inset-0">
-                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}" alt="{{ $item->title }}"
-                                            class="w-full h-full object-cover opacity-80">
+                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
+                                            alt="{{ $item->title }}" class="w-full h-full object-cover opacity-80">
                                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent">
                                         </div>
                                     </div>
 
                                     <div class="absolute top-0 right-0 p-6 z-20">
-                                        <time datetime="{{ $item->created_at->format('Y-m-d') }}" class="text-[8px] font-mono text-white/40 tracking-widest uppercase">
+                                        <time datetime="{{ $item->created_at->format('Y-m-d') }}"
+                                            class="text-[8px] font-mono text-white/40 tracking-widest uppercase">
                                             REF_DATA: {{ $item->created_at->format('Y.m.d') }}
                                         </time>
                                     </div>
@@ -150,10 +154,10 @@
                     </div>
 
                     {{-- Controles Mobile --}}
-                    <nav class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-2 lg:hidden z-40" aria-label="Navegação dos destaques">
+                    <nav class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-2 lg:hidden z-40"
+                        aria-label="Navegação dos destaques">
                         @foreach ($featured->take(3) as $index => $p)
-                            <button @click="scrollTo({{ $index }})" 
-                                class="h-1 transition-all duration-500"
+                            <button @click="scrollTo({{ $index }})" class="h-1 transition-all duration-500"
                                 aria-label="Ir para o slide {{ $index + 1 }}"
                                 :aria-current="active === {{ $index }} ? 'true' : 'false'"
                                 :class="active === {{ $index }} ? 'w-12 bg-emerald-500' : 'w-4 bg-white/20'">
