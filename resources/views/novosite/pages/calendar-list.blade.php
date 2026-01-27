@@ -1,152 +1,161 @@
 @extends('novosite.template.master')
 
-@section('title', 'Documentos e Publicações - UEAP')
+@section('title', 'Calendário Acadêmico - UEAP')
 
 @section('content')
     @php
         $search = request('search');
     @endphp
 
-    {{-- ================= HEADER INDUSTRIAL (PADRÃO POST) ================= --}}
-    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
+    {{-- HEADER PADRÃO (IGUAL POST-SHOW) --}}
+    <header class="relative overflow-hidden bg-slate-50 border-b border-slate-300">
+        {{-- textura --}}
+        <div class="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 30px 30px;"></div>
 
-        {{-- LAYER DE FUNDO: GEOMETRIA ESTRUTURAL --}}
-        <div class="absolute inset-0 pointer-events-none z-0">
-            {{-- Texto de Fundo (Stroke) --}}
-            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12"
-                style="-webkit-text-stroke: 3px white; color: transparent;">
-                DOCUMENTOS
-            </div>
-
-            {{-- Retângulo 12px --}}
-            <div class="absolute -bottom-24 -left-20 w-[500px] h-[300px] border-[12px] border-[#0055ff]/10 rounded-[120px] -rotate-12"></div>
-
-            {{-- Pontos Neon --}}
-            <div class="absolute inset-0 opacity-20 [mask-image:linear-gradient(to_bottom,white,transparent)]"
-                style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;">
-            </div>
+        {{-- skew decorativo --}}
+        <div aria-hidden="true"
+            class="hidden lg:block absolute right-0 top-0 w-[32%] h-full bg-slate-200/70 
+               skew-x-[-12deg] translate-x-24 border-l border-ueap-green/30">
+            <span class="absolute left-6 top-10 -rotate-90 text-[9px] font-mono tracking-[0.4em] text-slate-400 uppercase">
+                UEAP_DOC
+            </span>
         </div>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="max-w-5xl">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+            <div class="max-w-4xl">
 
-                {{-- Badge e Seção --}}
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
-                        REPOSITÓRIO
+                {{-- categoria / tipo / status --}}
+                <div class="flex flex-wrap items-center gap-4 mb-4">
+                    <span class="px-4 py-1.5 bg-[#00388d] text-white text-[11px] font-bold uppercase tracking-wider">
+                        Repositório
                     </span>
-                    <span class="text-white/20 font-mono text-xs tracking-tighter">// ARQUIVOS_OFICIAIS</span>
+
+                    <span class="text-[11px] font-mono uppercase tracking-widest text-slate-500">
+                        Documentos
+                    </span>
+
+                    <div class="flex items-center gap-1.5 text-ueap-green">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full bg-ueap-green opacity-60"></span>
+                            <span class="relative inline-flex h-2 w-2 bg-ueap-green"></span>
+                        </span>
+                    </div>
                 </div>
 
-                {{-- Título Curto e Grosso --}}
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
-                    Calendário<br>Acadêmico<span class="text-[#a4ed4a]">_</span>
+                {{-- título --}}
+                <h1
+                    class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#00388d] uppercase leading-tight tracking-tight mb-6">
+                    Calendário Acadêmico<span class="text-ueap-green">.</span>
                 </h1>
 
-                {{-- Dashboard Stats (Sem Share) --}}
-                <div class="flex flex-wrap items-center gap-x-12 gap-y-6 pt-8 border-t border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#0055ff]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Sincronização</span>
-                            <span class="text-white text-xl font-black italic">DATABASE_LIVE</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#a4ed4a]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Total_Arquivos</span>
-                            <span class="text-white text-xl font-black italic">{{ $items->total() }}</span>
-                        </div>
+                {{-- Barra final inferior --}}
+                <div class="flex items-center justify-between pt-6 border-t border-slate-300">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                            Arquivos Oficiais
+                        </span>
+                        <div class="h-1 w-12 bg-ueap-green"></div>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
 
-    {{-- ================= CONTEÚDO DA PÁGINA ================= --}}
-    <main class="bg-[#f8fafc] py-16" id="main-content">
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <main class="bg-white py-16" id="main-content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
                 {{-- COLUNA DA ESQUERDA --}}
                 <div class="lg:col-span-8">
 
-                    {{-- PESQUISA ESTILO "INPUT BOX" --}}
-                    <div class="mb-12">
-                        <form action="{{ url()->current() }}" method="GET" class="relative" role="search">
-                            <div class="bg-white border-[4px] border-[#001030] p-2 flex flex-col md:flex-row items-stretch gap-2 shadow-[8px_8px_0px_0px_#001030] focus-within:shadow-[8px_8px_0px_0px_#A4ED4A] transition-all">
-                                <div class="flex-1 flex items-center px-4 py-4">
-                                    <div class="flex-1">
-                                        <label for="search-input" class="block text-[9px] font-black text-[#001030]/40 uppercase tracking-widest mb-1">Filtrar_Documentos</label>
-                                        <input type="text" name="search" id="search-input" value="{{ $search }}"
-                                            placeholder="DIGITE O TERMO DE BUSCA..."
-                                            class="w-full bg-transparent text-sm font-black text-[#001030] focus:outline-none uppercase tracking-widest placeholder:text-[#001030]/20">
-                                    </div>
+                    {{-- FILTRO --}}
+                    <div class="mb-10 bg-slate-50 p-6 border border-slate-200">
+                        <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <label for="search-input"
+                                    class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filtrar
+                                    Documentos</label>
+                                <div
+                                    class="flex items-center bg-white border border-slate-300 px-4 py-3 focus-within:border-[#00388d] transition-colors">
+                                    <i class="fa-solid fa-search text-slate-400 mr-3"></i>
+                                    <input type="text" name="search" id="search-input" value="{{ $search }}"
+                                        placeholder="DIGITE O NOME DO ARQUIVO..."
+                                        class="w-full bg-transparent text-sm font-bold text-[#00388d] focus:outline-none placeholder:text-slate-400 uppercase tracking-wide">
                                 </div>
+                            </div>
+                            <div class="flex items-end">
                                 <button type="submit"
-                                    class="bg-[#001030] text-[#A4ED4A] px-10 py-4 text-[12px] font-[1000] uppercase tracking-[0.3em] hover:bg-[#002266] transition-colors">
-                                    BUSCAR_AGORA
+                                    class="w-full md:w-auto px-8 py-3 bg-[#00388d] text-white font-black text-[10px] uppercase tracking-widest hover:bg-ueap-blue transition-colors">
+                                    BUSCAR
                                 </button>
                             </div>
                         </form>
                     </div>
 
                     {{-- LISTAGEM DE ARQUIVOS --}}
-                    <div class="space-y-6" role="list">
+                    <div class="space-y-4" role="list">
                         @forelse ($items as $item)
-                            <article class="group bg-white border-[3px] border-[#001030] p-8 rounded-[2rem] hover:shadow-[10px_10px_0px_0px_#A4ED4A] transition-all duration-300 relative overflow-hidden" role="listitem">
-                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                            <article
+                                class="group bg-white border border-slate-200 p-6 hover:border-ueap-green transition-all duration-300 relative"
+                                role="listitem">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                     <div class="flex-1">
-                                        <div class="flex items-center gap-3 mb-3">
-                                            <span class="text-[10px] font-black text-[#001030] bg-[#A4ED4A] px-2 py-0.5 uppercase tracking-tighter">
-                                                DOC_V.01
-                                            </span>
-                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                                ID: #{{ $item->id }}
-                                            </span>
-                                        </div>
+                                        <div class="flex items-start gap-4">
+                                            {{-- Ícone do Arquivo --}}
+                                            <div
+                                                class="shrink-0 w-12 h-12 bg-slate-50 flex items-center justify-center text-red-600 border border-slate-200">
+                                                <i class="fa-solid fa-file-pdf text-2xl"></i>
+                                            </div>
 
-                                        <h2 class="text-2xl font-[1000] text-[#001030] uppercase italic tracking-tighter mb-4 group-hover:text-[#0055ff] transition-colors leading-none">
-                                            {{ $item->title }}
-                                        </h2>
+                                            <div class="flex flex-col">
+                                                <h2
+                                                    class="text-lg font-black text-[#00388d] leading-tight group-hover:text-ueap-green transition-colors mb-2 uppercase tracking-tight">
+                                                    {{ $item->title }}
+                                                </h2>
 
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-2 h-2 bg-[#A4ED4A] rounded-full"></div>
-                                            <span class="text-[10px] font-black text-[#001030] uppercase tracking-[0.2em]">
-                                                DATA: {{ $item->created_at?->format('d.m.Y') }}
-                                            </span>
+                                                <div
+                                                    class="flex items-center gap-4 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                                                    <div class="flex items-center gap-1.5">
+                                                        <i class="fa-regular fa-calendar"></i>
+                                                        {{ $item->created_at?->format('d/m/Y') }}
+                                                    </div>
+                                                    <span class="w-1 h-1 bg-slate-300"></span>
+                                                    <span>ID: #{{ $item->id }}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="shrink-0">
+                                    <div class="shrink-0 pl-16 md:pl-0">
                                         <a href="{{ $item->file_url }}" target="_blank"
-                                            class="inline-flex items-center justify-center gap-4 bg-[#001030] text-[#A4ED4A] px-8 py-5 text-[11px] font-[1000] uppercase tracking-[0.2em] rounded-full hover:bg-[#0055ff] transition-all shadow-xl">
-                                            <i class="fa-solid fa-download text-sm"></i>
-                                            BAIXAR_PDF
+                                            class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-50 border border-slate-200 text-[#00388d] font-black text-[10px] uppercase tracking-widest hover:bg-ueap-green hover:text-white hover:border-ueap-green transition-colors">
+                                            <span>BAIXAR PDF</span>
+                                            <i class="fa-solid fa-download"></i>
                                         </a>
                                     </div>
                                 </div>
                             </article>
                         @empty
-                            <div class="py-24 text-center border-[4px] border-dashed border-[#001030]/10 bg-white rounded-[3rem]">
-                                <p class="text-[#001030] text-xs font-black uppercase tracking-[0.3em]">Nenhum arquivo encontrado.</p>
+                            <div class="py-16 text-center bg-slate-50 border border-slate-200">
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Nenhum arquivo
+                                    encontrado.</p>
                             </div>
                         @endforelse
                     </div>
 
                     {{-- PAGINAÇÃO --}}
                     @if (method_exists($items, 'hasPages') && $items->hasPages())
-                        <div class="pt-16">
-                            {{ $items->links() }}
+                        <div class="pt-12">
+                            {{ $items->links('novosite.components.post-paginator') }}
                         </div>
                     @endif
                 </div>
 
                 {{-- SIDEBAR --}}
                 <aside class="lg:col-span-4" role="complementary">
-                    <div class="sticky top-8 space-y-10">
+                    <div class="sticky top-28 space-y-12">
                         @include('novosite.components.sidebar-search')
                         @include('novosite.components.sidebar-newsletter')
                     </div>

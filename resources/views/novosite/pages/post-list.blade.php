@@ -7,135 +7,155 @@
         $url_atual = urlencode(url()->current());
     @endphp
 
-    {{-- ================= HEADER INDUSTRIAL ================= --}}
-    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
-        {{-- Layer de Fundo --}}
-        <div class="absolute inset-0 pointer-events-none z-0">
-            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12" style="-webkit-text-stroke: 3px white; color: transparent;">
-                NEWS_
-            </div>
-            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;"></div>
+    {{-- HEADER PADRÃO (IGUAL POST-SHOW) --}}
+    <header class="relative overflow-hidden bg-slate-50 border-b border-slate-300">
+        {{-- textura --}}
+        <div class="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+        {{-- skew decorativo --}}
+        <div aria-hidden="true"
+            class="hidden lg:block absolute right-0 top-0 w-[32%] h-full bg-slate-200/70 
+               skew-x-[-12deg] translate-x-24 border-l border-ueap-green/30">
+            <span class="absolute left-6 top-10 -rotate-90 text-[9px] font-mono tracking-[0.4em] text-slate-400 uppercase">
+                UEAP_DOC
+            </span>
         </div>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="max-w-5xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
-                        CENTRAL DE CONTEÚDO
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+            <div class="max-w-4xl">
+
+                {{-- categoria / tipo / status --}}
+                <div class="flex flex-wrap items-center gap-4 mb-4">
+                    <span class="px-4 py-1.5 bg-[#00388d] text-white text-[11px] font-bold uppercase tracking-wider">
+                        Conteúdo
                     </span>
-                    <span class="text-white/20 font-mono text-xs tracking-tighter uppercase">// UEAP_DATABASE_SYSTEM</span>
+
+                    <span class="text-[11px] font-mono uppercase tracking-widest text-slate-500">
+                        Explore
+                    </span>
+
+                    <div class="flex items-center gap-1.5 text-ueap-green">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full bg-ueap-green opacity-60"></span>
+                            <span class="relative inline-flex h-2 w-2 bg-ueap-green"></span>
+                        </span>
+                    </div>
                 </div>
 
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
-                    EXPLORAR<br>
-                    <span class="text-[#a4ed4a]">PUBLICAÇÕES</span>_
+                {{-- título --}}
+                <h1
+                    class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#00388d] uppercase leading-tight tracking-tight mb-6">
+                    Explorar Publicações<span class="text-ueap-green">.</span>
                 </h1>
 
-                {{-- Status Bar --}}
-                <div class="flex flex-wrap items-center gap-6 pt-8 border-t border-white/10">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 bg-[#a4ed4a] animate-pulse"></span>
-                        <span class="text-[9px] font-black text-white/40 uppercase tracking-widest italic">Server: ONLINE</span>
-                    </div>
-                    <div class="text-[9px] font-black text-white/40 uppercase tracking-widest italic">
-                        TOTAL_ENTRADAS: <span class="text-[#a4ed4a]">{{ $posts->total() }}</span>
+                {{-- Barra final inferior (Simulando o padrão do post-show) --}}
+                <div class="flex items-center justify-between pt-6 border-t border-slate-300">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                            Últimas Atualizações
+                        </span>
+                        <div class="h-1 w-12 bg-ueap-green"></div>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
 
-    <main class="bg-[#f8fafc] py-16">
-        <div class="max-w-ueap mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <main class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
                 {{-- COLUNA DA ESQUERDA --}}
                 <div class="lg:col-span-8">
 
-                    {{-- CAIXA DE BUSCA E FILTROS BRUTALISTA --}}
-                    <div class="mb-12">
-                        <div class="bg-white border-[4px] border-[#001030] shadow-[8px_8px_0px_0px_#001030] p-2">
-                            <form action="{{ route('site.post.list') }}" method="GET" class="flex flex-col md:flex-row gap-2">
-                                @php $currentType = request('type'); @endphp
-                                @if ($currentType) <input type="hidden" name="type" value="{{ $currentType }}"> @endif
+                    {{-- CAIXA DE BUSCA E FILTROS --}}
+                    <div class="mb-12 bg-slate-50 p-6 border border-slate-200">
+                        <form action="{{ route('site.post.list') }}" method="GET" class="flex flex-col gap-6">
+                            @php $currentType = request('type'); @endphp
+                            @if ($currentType)
+                                <input type="hidden" name="type" value="{{ $currentType }}">
+                            @endif
 
-                                {{-- Input Search --}}
-                                <div class="flex-1 bg-slate-50 flex items-center px-4 py-3 border-2 border-transparent focus-within:border-[#0055ff] transition-all">
-                                    <i class="fa-solid fa-search text-[#001030] mr-3 opacity-30"></i>
-                                    <div class="flex-1">
-                                        <label class="block text-[8px] font-black text-slate-400 uppercase mb-0.5">Query_Search</label>
-                                        <input type="text" name="search" value="{{ $searchString ?? '' }}" 
-                                            placeholder="BUSCAR NO REPOSITÓRIO..."
-                                            class="w-full bg-transparent text-sm font-black text-[#001030] focus:outline-none placeholder:text-slate-300 uppercase">
-                                    </div>
-                                </div>
+                            {{-- Input Search --}}
+                            <div
+                                class="flex items-center bg-white border border-slate-300 px-4 py-3 focus-within:border-[#00388d] transition-colors">
+                                <i class="fa-solid fa-search text-slate-400 mr-3"></i>
+                                <input type="text" name="search" value="{{ $searchString ?? '' }}"
+                                    placeholder="BUSCAR POR TERMO..."
+                                    class="w-full bg-transparent text-sm font-bold text-[#00388d] focus:outline-none placeholder:text-slate-400 uppercase tracking-wide">
+                            </div>
 
-                                {{-- Tipos de Filtro --}}
-                                <div class="flex gap-1">
-                                    @foreach ([['label' => 'NEWS', 'val' => 'news'], ['label' => 'EVENTOS', 'val' => 'event']] as $t)
-                                        <a href="{{ route('site.post.list', ['type' => $t['val']]) }}" 
-                                           class="flex items-center px-6 py-3 text-[10px] font-black transition-all border-2 {{ request('type') == $t['val'] ? 'bg-[#001030] text-[#a4ed4a] border-[#001030]' : 'bg-white text-slate-400 border-slate-100 hover:border-[#001030] hover:text-[#001030]' }}">
+                            {{-- Tipos de Filtro --}}
+                            <div class="flex flex-wrap items-center justify-between gap-4">
+                                <div class="flex gap-2">
+                                    <a href="{{ route('site.post.list') }}"
+                                        class="px-4 py-2 text-[10px] font-black uppercase tracking-wider transition-colors {{ !request('type') ? 'bg-[#00388d] text-white' : 'bg-white border border-slate-200 text-slate-500 hover:text-[#00388d] hover:border-[#00388d]' }}">
+                                        TODOS
+                                    </a>
+                                    @foreach ([['label' => 'NOTÍCIAS', 'val' => 'news'], ['label' => 'EVENTOS', 'val' => 'event']] as $t)
+                                        <a href="{{ route('site.post.list', ['type' => $t['val']]) }}"
+                                            class="px-4 py-2 text-[10px] font-black uppercase tracking-wider transition-colors {{ request('type') == $t['val'] ? 'bg-[#00388d] text-white' : 'bg-white border border-slate-200 text-slate-500 hover:text-[#00388d] hover:border-[#00388d]' }}">
                                             {{ $t['label'] }}
                                         </a>
                                     @endforeach
-                                    <button type="submit" class="bg-[#a4ed4a] text-[#001030] px-6 py-3 text-[10px] font-black uppercase border-2 border-[#001030] hover:bg-[#001030] hover:text-[#a4ed4a] transition-all">
-                                        BUSCAR_
-                                    </button>
                                 </div>
-                            </form>
-                        </div>
-                        
-                        @if(request()->anyFilled(['search', 'type']))
-                            <div class="mt-4 flex justify-end">
-                                <a href="{{ route('site.post.list') }}" class="text-[9px] font-black text-red-500 uppercase italic hover:underline">
-                                    [X] RESET_FILTERS
-                                </a>
+                                <button type="submit"
+                                    class="px-6 py-2 bg-ueap-green text-white font-black text-[10px] uppercase tracking-wider hover:bg-ueap-blue transition-colors">
+                                    APLICAR FILTROS
+                                </button>
                             </div>
-                        @endif
+                        </form>
                     </div>
 
                     {{-- LISTAGEM DE POSTS --}}
-                    <div class="space-y-8">
+                    <div class="space-y-12">
                         @forelse ($posts as $item)
-                            <article class="group bg-white border-[3px] border-[#001030] hover:shadow-[12px_12px_0px_0px_#a4ed4a] transition-all duration-300 overflow-hidden">
-                                <div class="flex flex-col md:flex-row">
-                                    {{-- Thumbnail --}}
-                                    <div class="md:w-64 h-48 shrink-0 bg-[#001030] overflow-hidden relative">
-                                        <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}" 
-                                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 opacity-80 group-hover:opacity-100">
-                                        <div class="absolute top-0 left-0 bg-[#a4ed4a] text-[#001030] font-black text-[9px] px-2 py-1 uppercase">
-                                            {{ $item->created_at->format('d/m/y') }}
-                                        </div>
+                            <article
+                                class="group flex flex-col md:flex-row gap-6 md:items-start border-b border-slate-100 pb-12 last:border-0 last:pb-0">
+                                {{-- Thumbnail --}}
+                                <a href="{{ route('site.post.show', $item->slug) }}"
+                                    class="shrink-0 md:w-64 aspect-[16/10] overflow-hidden bg-slate-100 relative border border-slate-200">
+                                    <img src="{{ 'https://picsum.photos/seed/' . $item->id . '/600/400' }}"
+                                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                                </a>
+
+                                {{-- Content --}}
+                                <div class="flex-1 flex flex-col items-start">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span
+                                            class="text-[10px] font-black text-white bg-[#00388d] px-2 py-0.5 uppercase tracking-wider">
+                                            {{ $item->categories->first()->name ?? 'Geral' }}
+                                        </span>
+                                        <time class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                            {{ $item->created_at->format('d/m/Y') }}
+                                        </time>
                                     </div>
 
-                                    {{-- Content --}}
-                                    <div class="p-6 flex-1 flex flex-col justify-between">
-                                        <div>
-                                            <span class="text-[9px] font-black text-[#0055ff] uppercase tracking-widest mb-2 block">
-                                                // {{ $item->categories->first()->name ?? 'Geral' }}
-                                            </span>
-                                            <h3 class="text-xl font-black text-[#001030] uppercase italic leading-none mb-3 group-hover:text-[#0055ff] transition-colors">
-                                                {{ $item->title }}
-                                            </h3>
-                                            {{-- Descrição em minúsculas para legibilidade --}}
-                                            <p class="text-slate-600 text-sm leading-relaxed font-medium normal-case line-clamp-2">
-                                                {{ $item->resume ?? Str::limit(strip_tags($item->text), 140) }}
-                                            </p>
-                                        </div>
+                                    <h3
+                                        class="text-xl md:text-2xl font-black text-[#00388d] leading-tight mb-3 uppercase tracking-tight">
+                                        <a href="{{ route('site.post.show', $item->slug) }}"
+                                            class="group-hover:text-ueap-green transition-colors">
+                                            {{ $item->title }}
+                                        </a>
+                                    </h3>
 
-                                        <div class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center">
-                                            <a href="{{ route('site.post.show', $item->slug) }}" 
-                                               class="text-[10px] font-black text-[#001030] uppercase tracking-widest flex items-center gap-2 group/link">
-                                                LER_CONTEÚDO_COMPLETO
-                                                <i class="fa-solid fa-arrow-right-long text-[#a4ed4a] group-hover/link:translate-x-2 transition-transform"></i>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <p
+                                        class="text-slate-600 text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-4 font-normal">
+                                        {{ $item->resume ?? Str::limit(strip_tags($item->text), 160) }}
+                                    </p>
+
+                                    <a href="{{ route('site.post.show', $item->slug) }}"
+                                        class="text-[10px] font-black text-[#00388d] uppercase tracking-widest hover:text-ueap-green transition-colors flex items-center gap-2 border-b-2 border-transparent hover:border-ueap-green pb-0.5">
+                                        LER MATÉRIA
+                                    </a>
                                 </div>
                             </article>
                         @empty
-                            <div class="py-20 text-center border-[4px] border-dashed border-slate-200 bg-white">
-                                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest italic">No_Records_Found_In_Database</span>
+                            <div class="py-20 text-center bg-slate-50 border border-slate-200">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Nenhuma publicação
+                                    encontrada</span>
                             </div>
                         @endforelse
                     </div>
@@ -149,14 +169,10 @@
 
                 {{-- SIDEBAR --}}
                 <aside class="lg:col-span-4">
-                    <div class="sticky top-8 space-y-8">
+                    <div class="sticky top-28 space-y-12">
+                        @include('novosite.components.sidebar-search')
+                        @include('novosite.components.sidebar-categories', ['categories' => $categories])
                         @include('novosite.components.sidebar-newsletter')
-                        
-                        {{-- Widget Estilizado --}}
-                        <div class="bg-[#001030] border-l-[8px] border-[#a4ed4a] p-8">
-                            <h4 class="text-white font-black uppercase italic tracking-tighter text-xl mb-4">CATEGORIAS_</h4>
-                            @include('novosite.components.sidebar-categories', ['categories' => $categories])
-                        </div>
                     </div>
                 </aside>
             </div>
