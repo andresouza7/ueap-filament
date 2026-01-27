@@ -1,166 +1,129 @@
-{{-- Container principal agora em fundo claro (Gray-50 ou White) --}}
-<div class="w-full relative overflow-hidden bg-gray-50 border-b border-gray-200">
+{{-- SEÇÃO DESTAQUES + ACESSO RÁPIDO (LAYOUT UEAP FINAL) --}}
+<section class="w-full bg-white py-10 lg:py-16" aria-label="Destaques e Acesso Rápido">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    {{-- Camada 01: Background com Textura Sutil (Ajustada para fundo claro) --}}
-    <div class="absolute inset-0 z-0 opacity-10 mix-blend-multiply bg-cover bg-center"
-        style="background-image: url('/img/site/hero-bg.svg');" aria-hidden="true">
-    </div>
+        {{-- 01. GRID DE DESTAQUES (ALTURA 500PX - TEXTO DENTRO) --}}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2 h-auto lg:h-[500px] mb-16">
 
-    {{-- Camada 02: Overlay Suave (Transição do fundo claro para o conteúdo) --}}
-    <div class="absolute inset-0 z-10 bg-gradient-to-r from-gray-50 via-gray-50/40 to-transparent" aria-hidden="true">
-    </div>
+            {{-- POST PRINCIPAL (8 COLUNAS) --}}
+            @if (isset($featured[0]))
+                <article class="lg:col-span-8 h-[400px] lg:h-full relative group overflow-hidden bg-ueap-blue-dark">
+                    <a href="{{ route('site.post.show', $featured[0]->slug) }}" class="block h-full w-full">
+                        <img src="{{ $featured[0]->image_url }}" alt="{{ $featured[0]->title }}"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100">
 
-    {{-- Camada 03: Efeito Skew (Agora em Azul UEAP sutil para fundo claro) --}}
-    <div class="hidden lg:block absolute right-0 top-0 w-1/3 h-full bg-ueap-blue/5 skew-x-[-15deg] translate-x-32 z-20 border-l border-ueap-blue/10"
-        aria-hidden="true">
-    </div>
-
-    <section class="w-full relative z-30" aria-label="Notícias em Destaque">
-        <div x-data="{
-            active: 0,
-            scrollTo(index) {
-                const container = this.$refs.container;
-                const width = container.offsetWidth;
-                container.scrollTo({ left: width * index, behavior: 'smooth' });
-                this.active = index;
-            },
-            handleScroll() {
-                const container = this.$refs.container;
-                if (window.innerWidth < 1024) {
-                    this.active = Math.round(container.scrollLeft / container.offsetWidth);
-                }
-            }
-        }" class="relative w-full">
-
-            <div class="w-full lg:max-w-7xl lg:mx-auto lg:py-14 lg:px-8">
-
-                <div class="relative overflow-hidden lg:overflow-visible">
-                    {{-- Container de Scroll --}}
-                    <div x-ref="container" @scroll.debounce.50ms="handleScroll" role="region" aria-live="polite"
-                        class="flex lg:grid lg:grid-cols-12 gap-0 lg:gap-4 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-
-                        {{-- POST PRINCIPAL (COLUNA 8) --}}
-                        @if (isset($featured[0]))
-                            <article class="min-w-full lg:min-w-0 snap-center lg:col-span-8">
-                                <a href="{{ route('site.post.show', $featured[0]->slug) }}"
-                                    title="Ler reportagem: {{ $featured[0]->title }}"
-                                    class="relative group h-[420px] lg:h-[550px] flex flex-col overflow-hidden border border-gray-200 bg-white shadow-xl">
-
-                                    <div class="absolute inset-0">
-                                        <img src="{{ $featured[0]->image_url }}" alt="{{ $featured[0]->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
-                                        {{-- Overlay interno do card permanece escuro para garantir leitura do texto branco --}}
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-ueap-blue-dark via-ueap-blue-dark/20 to-transparent">
-                                        </div>
-                                    </div>
-
-                                    {{-- DATA: POST PRINCIPAL (Azul escuro sobre o fundo claro do container pai) --}}
-                                    <div class="absolute top-0 right-0 p-6 z-20">
-                                        <time datetime="{{ $featured[0]->created_at->format('Y-m-d') }}"
-                                            class="text-[10px] font-mono text-white/80 tracking-[0.2em] uppercase border-r-2 border-ueap-green pr-3">
-                                            {{ $featured[0]->created_at->format('d.m.Y') }}
-                                        </time>
-                                    </div>
-
-                                    <div class="relative mt-auto p-8 lg:p-12">
-                                        <div class="flex items-center gap-3 mb-4">
-                                            <div class="h-[3px] w-10 bg-ueap-green" aria-hidden="true"></div>
-                                            <span class="text-white text-[11px] font-black uppercase tracking-[0.4em]">
-                                                {{ $featured[0]->category->name ?? 'DESTAQUE' }}
-                                            </span>
-                                        </div>
-                                        <h2
-                                            class="text-white text-3xl lg:text-6xl font-display font-black uppercase italic leading-[0.85] tracking-tighter group-hover:text-ueap-green transition-colors mb-8">
-                                            {{ $featured[0]->title }}
-                                        </h2>
-                                        <div class="flex items-center gap-4">
-                                            <span
-                                                class="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-ueap-green pb-1 transition-all group-hover:pr-4">
-                                                Ver Reportagem
-                                            </span>
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="h-5 w-5 text-ueap-green transition-transform group-hover:translate-x-3"
-                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-                        @endif
-
-                        {{-- POSTS SECUNDÁRIOS (COLUNA 4 - DESKTOP) --}}
-                        <div class="hidden lg:flex lg:flex-col lg:col-span-4 gap-4" role="none">
-                            @foreach ($featured->slice(1, 2) as $item)
-                                <article class="flex-1 flex flex-col">
-                                    <a href="{{ route('site.post.show', $item->slug) }}"
-                                        title="Ler reportagem: {{ $item->title }}"
-                                        class="flex-1 relative group overflow-hidden border border-gray-200 bg-white shadow-md flex flex-col">
-
-                                        <div class="absolute inset-0">
-                                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 opacity-90 group-hover:opacity-100">
-                                            <div
-                                                class="absolute inset-0 bg-gradient-to-t from-ueap-blue-dark/90 to-transparent">
-                                            </div>
-                                        </div>
-
-                                        <div class="relative mt-auto p-6">
-                                            <span
-                                                class="text-ueap-green text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">
-                                                {{ $item->category->name }}
-                                            </span>
-                                            <h3
-                                                class="text-white text-xl font-display font-black uppercase italic leading-none tracking-tighter group-hover:text-ueap-green transition-colors line-clamp-2">
-                                                {{ $item->title }}
-                                            </h3>
-                                        </div>
-                                    </a>
-                                </article>
-                            @endforeach
+                        {{-- Overlay de Proteção do Texto --}}
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#00255E] via-[#00255E]/40 to-transparent">
                         </div>
 
-                        {{-- MOBILE ITEMS --}}
-                        @foreach ($featured->slice(1, 2) as $item)
-                            <article class="min-w-full lg:hidden snap-center">
-                                <a href="{{ route('site.post.show', $item->slug) }}"
-                                    class="h-[420px] relative group flex flex-col bg-white overflow-hidden">
-                                    <div class="absolute inset-0">
-                                        <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                                            class="w-full h-full object-cover">
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-ueap-blue-dark via-ueap-blue-dark/40 to-transparent">
-                                        </div>
-                                    </div>
+                        <div class="absolute bottom-0 p-8 lg:p-12 w-full">
+                            <span
+                                class="bg-ueap-green text-ueap-blue-dark font-black text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-5 inline-block">
+                                {{ $featured[0]->category->name ?? 'Destaque' }}
+                            </span>
+                            <h2
+                                class="text-white text-3xl lg:text-5xl font-black leading-[0.9] tracking-tighter mb-5 transition-colors group-hover:text-ueap-green">
+                                {{ $featured[0]->title }}
+                            </h2>
+                            <p class="text-blue-100 text-sm font-bold max-w-2xl line-clamp-2 leading-relaxed">
+                                {{ Str::limit(strip_tags($featured[0]->text), 160) }}
+                            </p>
+                        </div>
+                    </a>
+                </article>
+            @endif
 
-                                    <div class="relative mt-auto p-8 pb-16 text-white">
-                                        <span
-                                            class="text-ueap-green text-[10px] font-black uppercase tracking-[0.2em] mb-3 block">
-                                            {{ $item->category->name }}
-                                        </span>
-                                        <h3
-                                            class="text-3xl font-display font-black uppercase italic leading-none tracking-tighter">
-                                            {{ $item->title }}
-                                        </h3>
-                                    </div>
-                                </a>
-                            </article>
-                        @endforeach
-                    </div>
+            {{-- POSTS SECUNDÁRIOS (4 COLUNAS) --}}
+            <div class="lg:col-span-4 flex flex-col gap-2 h-auto lg:h-full">
+                @foreach ($featured->slice(1, 2) as $item)
+                    <article class="flex-1 relative group overflow-hidden bg-ueap-blue-dark">
+                        <a href="{{ route('site.post.show', $item->slug) }}" class="block h-full w-full">
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
+                                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-90">
 
-                    {{-- Controles Mobile (Ajustados para fundo claro) --}}
-                    <nav class="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-2 lg:hidden z-40">
-                        @foreach ($featured->take(3) as $index => $p)
-                            <button @click="scrollTo({{ $index }})" class="h-1.5 transition-all duration-500"
-                                :class="active === {{ $index }} ? 'w-16 bg-ueap-blue' : 'w-6 bg-ueap-blue/20'">
-                            </button>
-                        @endforeach
-                    </nav>
-                </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-[#00255E] via-transparent to-transparent">
+                            </div>
 
+                            <div class="absolute bottom-0 p-6 w-full">
+                                <span
+                                    class="text-ueap-green text-[9px] font-black uppercase tracking-widest mb-2 block">
+                                    {{ $item->category->name }}
+                                </span>
+                                <h3
+                                    class="text-white text-xl font-black leading-tight tracking-tighter group-hover:text-ueap-green transition-colors line-clamp-2">
+                                    {{ $item->title }}
+                                </h3>
+                            </div>
+                        </a>
+                    </article>
+                @endforeach
             </div>
         </div>
-    </section>
-</div>
+
+        {{-- 02. BARRA DE ACESSO RÁPIDO (DISTANCIADA COM PADDING ANTERIOR) --}}
+        <div class="relative">
+            {{-- Identificador de Seção --}}
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-[11px] font-black uppercase tracking-[0.4em] text-ueap-blue-dark/40">Sistemas e
+                    serviços</span>
+                <div class="flex-1 h-px bg-gray-100"></div>
+            </div>
+
+            <nav class="bg-ueap-blue-dark border-t-4 border-ueap-green shadow-xl">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-white/10">
+                    @php
+                        $quicklinks = [
+                            [
+                                'icon' => 'fa-calendar-days',
+                                'label' => 'Calendário acadêmico',
+                                'url' => route('site.post.list'),
+                            ],
+                            [
+                                'icon' => 'fa-scale-balanced',
+                                'label' => 'Legislação e normas',
+                                'url' => '/pagina/legislacao.html',
+                            ],
+                            [
+                                'icon' => 'fa-file-invoice',
+                                'label' => 'Instruções normativas',
+                                'url' => '/pagina/instrucoes_normativas.html',
+                            ],
+                            ['icon' => 'fa-gavel', 'label' => 'Resoluções consu', 'url' => '/consu/resolucoes'],
+                            [
+                                'icon' => 'fa-hand-holding-dollar',
+                                'label' => 'Portal de licitações',
+                                'url' => 'https://transparencia.ueap.edu.br/licitacoes',
+                            ],
+                            [
+                                'icon' => 'fa-users-viewfinder',
+                                'label' => 'Processos seletivos',
+                                'url' => '/pagina/area-processos-seletivos.html',
+                            ],
+                        ];
+                    @endphp
+
+                    @foreach ($quicklinks as $link)
+                        <a href="{{ $link['url'] }}"
+                            class="group flex flex-col lg:flex-row items-center gap-4 py-6 px-6 transition-all hover:bg-white/5 border-b lg:border-b-0 border-white/5">
+
+                            {{-- Ícone Quadrado Travado --}}
+                            <div
+                                class="w-12 h-12 shrink-0 flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-ueap-green transition-all shadow-inner">
+                                <i
+                                    class="fa-solid {{ $link['icon'] }} text-blue-200 group-hover:text-ueap-blue-dark text-xl"></i>
+                            </div>
+
+                            {{-- Label Sólida --}}
+                            <span
+                                class="text-[13px] font-black text-blue-100 uppercase tracking-tighter leading-tight text-center lg:text-left transition-colors">
+                                {{ $link['label'] }}
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
+            </nav>
+        </div>
+
+    </div>
+</section>

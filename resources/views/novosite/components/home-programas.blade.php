@@ -1,101 +1,89 @@
-{{-- SECTION 02: PROGRAMAS & BOLSAS --}}
-<section class="relative bg-white py-12 md:py-32 overflow-hidden" aria-labelledby="titulo-programas">
+{{-- SECTION 02: PROGRAMAS & BOLSAS - DESIGN SÓLIDO E RETO --}}
+<section class="relative bg-white py-16 md:py-24 border-b border-gray-100 overflow-hidden"
+    aria-labelledby="titulo-programas">
 
-    {{-- Background: Pontilhado com cor da UEAP --}}
-    <div class="absolute inset-0 pointer-events-none opacity-[0.1]" aria-hidden="true"
-        style="background-image: radial-gradient(#00388D 1px, transparent 1px); 
-                background-size: 24px 24px;
-                mask-image: linear-gradient(to bottom, transparent, black 80%);
-                -webkit-mask-image: linear-gradient(to bottom, transparent, black 80%);">
+    {{-- Background Técnico Sutil --}}
+    <div class="absolute inset-0 pointer-events-none opacity-[0.03]" aria-hidden="true"
+        style="background-image: radial-gradient(#00255E 1px, transparent 1px); background-size: 32px 32px;">
     </div>
 
-    <div class="max-w-ueap relative z-10 mx-auto px-4 md:px-10">
+    <div class="max-w-7xl relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
 
-        {{-- Header --}}
-        <div class="flex items-center gap-4 md:gap-8 mb-8 md:mb-16">
-            <h3 id="titulo-programas"
-                class="text-3xl md:text-6xl font-[1000] text-ueap-blue-dark uppercase tracking-tighter leading-none italic">
-                Programas <span class="text-ueap-green not-italic">&</span> Bolsas
-            </h3>
-            <div class="flex-1 h-px bg-gray-100 relative hidden md:block" aria-hidden="true">
-                <span
-                    class="absolute right-0 -top-3 font-mono text-[9px] text-ueap-blue/30 tracking-[0.5em] uppercase">Setor_Academico</span>
+        {{-- Header Sólido --}}
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div class="max-w-2xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="h-1.5 w-10 bg-ueap-green" aria-hidden="true"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-ueap-blue-dark/50">
+                        Assistência Estudantil
+                    </span>
+                </div>
+                <h3 id="titulo-programas"
+                    class="text-4xl md:text-6xl font-black text-ueap-blue-dark tracking-tighter uppercase leading-[0.9]">
+                    Programas <span class="text-ueap-green">&</span> Bolsas
+                </h3>
+            </div>
+            <div class="md:text-right border-l-4 md:border-l-0 md:border-r-4 border-ueap-green pl-6 md:pl-0 md:pr-6">
+                <p class="text-gray-500 text-sm font-bold leading-tight uppercase tracking-wider max-w-xs">
+                    Desenvolvimento acadêmico, científico e apoio à permanência estudantil.
+                </p>
             </div>
         </div>
 
         @php
             $programas = [
-                ['sigla' => 'PIBID', 'desc' => 'Iniciação à Docência', 'url' => '/pagina/pibid.html'],
-                ['sigla' => 'PRP', 'desc' => 'Residência Pedagógica', 'url' => '/pagina/prp.html'],
-                ['sigla' => 'PROACE', 'desc' => 'Ações Comunitárias', 'url' => '/pagina/proace.html'],
-                ['sigla' => 'PROAPE', 'desc' => 'Apoio Pedagógico', 'url' => '/pagina/proape.html'],
-                ['sigla' => 'PROBICT', 'desc' => 'Bolsas de C&T', 'url' => '/pagina/probict.html'],
-                ['sigla' => 'MONITORIA', 'desc' => 'Apoio Acadêmico', 'url' => '/pagina/promonitoria.html'],
-                ['sigla' => 'PIBIC', 'desc' => 'Iniciação Científica', 'url' => '/pagina/pibic.html'],
-                ['sigla' => 'PIBT', 'desc' => 'Inovação Tecnológica', 'url' => '/pagina/pibt.html'],
+                ['sigla' => 'Pibid', 'desc' => 'Iniciação à Docência', 'url' => '/pagina/pibid.html'],
+                ['sigla' => 'Prp', 'desc' => 'Residência Pedagógica', 'url' => '/pagina/prp.html'],
+                ['sigla' => 'Proace', 'desc' => 'Ações Comunitárias', 'url' => '/pagina/proace.html'],
+                ['sigla' => 'Proape', 'desc' => 'Apoio Pedagógico', 'url' => '/pagina/proape.html'],
+                ['sigla' => 'Probict', 'desc' => 'Bolsas de C&T', 'url' => '/pagina/probict.html'],
+                ['sigla' => 'Monitoria', 'desc' => 'Apoio Acadêmico', 'url' => '/pagina/promonitoria.html'],
+                ['sigla' => 'Pibic', 'desc' => 'Iniciação Científica', 'url' => '/pagina/pibic.html'],
+                ['sigla' => 'Pibt', 'desc' => 'Inovação Tecnológica', 'url' => '/pagina/pibt.html'],
             ];
         @endphp
 
-        {{-- Grid: Layout original mantido --}}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-px bg-gray-200 border border-gray-200 shadow-2xl"
+        {{-- Grid Brutalista (Bordas Retas e Gap Técnico) --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200 shadow-2xl"
             role="list">
             @foreach ($programas as $index => $p)
                 <div role="listitem" class="contents">
-                    <a href="{{ $p['url'] }}" aria-label="Programa {{ $p['sigla'] }}: {{ $p['desc'] }}"
-                        class="group relative block bg-white p-4 md:p-8 transition-all duration-500 overflow-hidden">
+                    <a href="{{ $p['url'] }}"
+                        class="group relative block bg-white p-8 transition-all duration-300 hover:bg-ueap-blue-dark overflow-hidden">
 
-                        {{-- Indicador Lateral (Verde UEAP) --}}
-                        <div aria-hidden="true"
-                            class="absolute left-0 top-0 h-full w-0 bg-ueap-green transition-all duration-300 group-hover:w-[4px]">
+                        {{-- Detalhe Inferior Verde (Hover) --}}
+                        <div
+                            class="absolute bottom-0 left-0 h-1 w-0 bg-ueap-green group-hover:w-full transition-all duration-500">
                         </div>
 
-                        <div class="relative z-10 flex items-center justify-between gap-4">
-
-                            <div class="flex items-center gap-4 md:block">
-                                {{-- ID numérico --}}
+                        <div class="relative z-10 flex flex-col justify-between h-36">
+                            <div class="flex justify-between items-start">
                                 <span aria-hidden="true"
-                                    class="text-[9px] md:text-[10px] font-mono font-black text-ueap-blue/20 group-hover:text-ueap-green transition-colors uppercase md:block md:mb-12">
-                                    #{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                    class="text-[10px] font-mono font-black text-gray-300 group-hover:text-ueap-green transition-colors">
+                                    [{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}]
                                 </span>
-
-                                <div class="flex flex-col gap-1 sm:gap-0">
-                                    <h4
-                                        class="text-xl md:text-3xl font-[1000] text-ueap-blue-dark tracking-tighter group-hover:text-ueap-green transition-colors leading-none uppercase">
-                                        {{ $p['sigla'] }}
-                                    </h4>
-                                    <p
-                                        class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-tight group-hover:text-gray-600 transition-colors md:mt-2">
-                                        {{ $p['desc'] }}
-                                    </p>
+                                <div
+                                    class="w-8 h-8 flex items-center justify-center bg-gray-50 group-hover:bg-ueap-green transition-colors">
+                                    <i
+                                        class="fa-solid fa-arrow-right text-ueap-blue-dark text-xs transition-transform group-hover:-rotate-45"></i>
                                 </div>
                             </div>
 
-                            {{-- Seta de Ação --}}
-                            <div aria-hidden="true"
-                                class="relative flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-sm border border-gray-100 bg-gray-50/50 group-hover:bg-ueap-green group-hover:border-ueap-green group-hover:rotate-45 transition-all duration-500">
-                                <i
-                                    class="fa-solid fa-arrow-right text-[10px] text-gray-400 group-hover:text-white group-hover:-rotate-45 transition-all"></i>
+                            <div class="flex flex-col gap-1">
+                                <h4
+                                    class="text-3xl font-black text-ueap-blue-dark uppercase tracking-tighter group-hover:text-white transition-colors leading-none">
+                                    {{ strtoupper($p['sigla']) }}
+                                </h4>
+                                <p
+                                    class="text-[10px] text-gray-400 font-bold uppercase tracking-widest group-hover:text-ueap-green/80 transition-colors">
+                                    {{ $p['desc'] }}
+                                </p>
                             </div>
-                        </div>
-
-                        {{-- Overlay sutil no Hover --}}
-                        <div aria-hidden="true"
-                            class="absolute inset-0 bg-gradient-to-tr from-ueap-green/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
                     </a>
                 </div>
             @endforeach
         </div>
 
-        {{-- Footer --}}
-        <div class="mt-8 md:mt-16 flex justify-between items-center px-2" aria-hidden="true">
-            <div class="flex items-center gap-2 px-3 py-1 bg-gray-50 border border-gray-100">
-                <span class="h-1.5 w-1.5 rounded-full bg-ueap-green animate-pulse"></span>
-                <span class="text-[9px] font-mono font-bold uppercase text-ueap-blue/50">Editais_UEAP</span>
-            </div>
-            <div class="text-[9px] font-mono font-bold uppercase text-ueap-blue/20 tracking-[0.3em]">
-                UEAP_SYS_2026
-            </div>
-        </div>
     </div>
 </section>
