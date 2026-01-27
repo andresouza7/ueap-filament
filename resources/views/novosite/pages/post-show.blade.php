@@ -171,6 +171,9 @@
                             @include('novosite.components.sidebar-search')
                             @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
                             @include('novosite.components.sidebar-newsletter')
+                            @include('novosite.components.sidebar-categories', [
+                                'categories' => $categories,
+                            ])
 
                         </div>
                     </div>

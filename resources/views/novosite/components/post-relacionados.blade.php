@@ -2,69 +2,67 @@
     'posts' => [],
 ])
 
-<section class="w-full py-12" aria-labelledby="reproduction-heading">
-    {{-- HEADER ESTRUTURAL (DNA UEAP) --}}
-    <div class="flex items-center gap-4 mb-12">
-        {{-- O Bloco de 12px da identidade --}}
-        <div class="w-12 h-[12px] bg-[#002266]"></div>
-        <h3 id="reproduction-heading" class="text-[14px] font-[900] uppercase tracking-[0.3em] text-[#002266]">
-            Veja_<span class="text-[#A4ED4A] italic">Também</span>
-        </h3>
-        <div class="flex-1 h-[1px] bg-slate-100"></div>
+<section class="w-full py-8" aria-labelledby="reproduction-heading">
+    {{-- HEADER --}}
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-gray-200">
+        <div>
+            <h3 id="reproduction-heading"
+                class="text-2xl lg:text-3xl font-black text-ueap-blue-dark leading-none tracking-tighter uppercase pl-4 border-l-4 border-ueap-green">
+                Relacionados
+            </h3>
+        </div>
+
+        <div class="hidden md:block">
+            <a href="{{ route('site.post.list') }}"
+                class="text-ueap-blue-dark font-bold text-[10px] uppercase tracking-widest hover:text-ueap-green transition-colors">
+                Ver todo o acervo →
+            </a>
+        </div>
     </div>
 
-    {{-- GRID CONDENSADO (4 COLUNAS) --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+    {{-- GRID --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         @foreach ($posts->take(4) as $item)
-            <article class="group relative flex flex-col">
-                
-                {{-- CONTAINER DA IMAGEM COM GEOMETRIA --}}
-                <a href="{{ route('site.post.show', $item->slug) }}" class="relative block mb-5">
-                    {{-- Moldura decorativa atrás que aparece no hover --}}
-                    <div class="absolute -top-2 -left-2 w-full h-full border-[2px] border-[#A4ED4A] rounded-[24px] opacity-0 group-hover:opacity-100 transition-all duration-300 -z-10"></div>
-                    
-                    <div class="aspect-video rounded-[22px] overflow-hidden bg-slate-200 border border-slate-100 shadow-sm">
-                        <img src="{{ $item->image_url ?? 'https://picsum.photos/seed/'.$item->id.'/400/225' }}" 
-                             alt="" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+            <article class="group">
+                <a href="{{ route('site.post.show', $item->slug) }}" class="block h-full flex flex-col">
+
+                    {{-- Imagem --}}
+                    <div class="relative overflow-hidden bg-gray-100 mb-4 aspect-[16/10]">
+                        <img src="{{ $item->image_url ?? 'https://picsum.photos/seed/' . $item->id . '/400/225' }}"
+                            alt=""
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                        <div class="absolute top-3 left-3">
+                            <span
+                                class="bg-ueap-blue-dark/90 backdrop-blur-sm text-white text-[9px] font-bold px-2 py-1 uppercase tracking-widest">
+                                {{ $item->categories->first()->name ?? 'Geral' }}
+                            </span>
+                        </div>
                     </div>
 
-                    {{-- Selo de Categoria (Estilo Sticker) --}}
-                    <div class="absolute -bottom-2 left-4 bg-[#002266] text-[#A4ED4A] text-[9px] font-black px-3 py-1 uppercase tracking-tighter shadow-md">
-                        {{ $item->categories->first()->name ?? 'GERAL' }}
-                    </div>
-                </a>
+                    {{-- Conteúdo --}}
+                    <div class="flex-1 flex flex-col">
+                        <time
+                            class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-ueap-green"></span>
+                            {{ $item->created_at ? $item->created_at->format('d M, Y') : 'Recente' }}
+                        </time>
 
-                {{-- TEXTO --}}
-                <div class="flex flex-col gap-2 px-1">
-                    {{-- Título: Bold, Lowercase, Limpo --}}
-                    <a href="{{ route('site.post.show', $item->slug) }}">
-                        <h4 class="text-[16px] font-bold text-[#002266] leading-[1.2] lowercase tracking-tight group-hover:text-[#0055FF] transition-colors">
+                        <h4
+                            class="text-lg font-bold text-ueap-blue-dark leading-tight group-hover:text-ueap-green transition-colors mb-2">
                             {{ $item->title }}
                         </h4>
-                    </a>
-
-                    {{-- Info Técnica --}}
-                    <div class="flex items-center gap-2 mt-1">
-                        <div class="w-4 h-[2px] bg-[#A4ED4A]"></div>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            publicado_em_{{ $item->created_at ? $item->created_at->format('d.m') : '15.01' }}
-                        </span>
                     </div>
-                </div>
+                </a>
             </article>
         @endforeach
     </div>
 
-    {{-- FECHAMENTO DA SEÇÃO --}}
-    <div class="mt-16 flex items-center justify-between border-t border-slate-100 pt-8">
-        <div class="flex gap-1">
-            <div class="w-8 h-2 bg-[#002266] rounded-full"></div>
-            <div class="w-2 h-2 bg-[#A4ED4A] rounded-full"></div>
-            <div class="w-2 h-2 bg-slate-100 rounded-full"></div>
-        </div>
-        <a href="{{ route('site.post.list') }}" class="text-[10px] font-black uppercase tracking-widest text-[#002266] hover:text-[#A4ED4A] transition-colors">
-            Explorar_Todas_Notícias →
+    {{-- Mobile View More --}}
+    <div class="mt-8 md:hidden text-center">
+        <a href="{{ route('site.post.list') }}"
+            class="text-ueap-blue-dark font-bold text-[10px] uppercase tracking-widest border-b border-ueap-blue-dark pb-0.5 hover:text-ueap-green hover:border-ueap-green transition-colors">
+            Ver todo o acervo →
         </a>
     </div>
 </section>
