@@ -6,155 +6,172 @@
 
     @php $url_atual = urlencode(url()->current()); @endphp
 
-    {{-- ================= HEADER CONDENSADO: GEOMETRIA AVANÇADA ================= --}}
-    <header class="relative bg-[#001030] py-14 lg:py-20 overflow-hidden border-b-[10px] border-[#a4ed4a]">
+    <header class="relative overflow-hidden bg-slate-50 border-b border-slate-300">
 
-        {{-- LAYER DE FUNDO: GEOMETRIA ESTRUTURAL --}}
-        <div class="absolute inset-0 pointer-events-none z-0">
-            {{-- Texto de Fundo (Stroke) - Posicionado na diagonal --}}
-            <div class="absolute -top-10 -right-20 text-[150px] lg:text-[220px] font-black leading-none select-none opacity-[0.05] uppercase tracking-tighter text-white whitespace-nowrap -rotate-12"
-                style="-webkit-text-stroke: 3px white; color: transparent;">
-                {{ $post->category->name }}
-            </div>
+        {{-- textura --}}
+        <div class="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 30px 30px;"></div>
 
-            {{-- Retângulo 12px: Cruzando o canto inferior esquerdo --}}
-            <div
-                class="absolute -bottom-24 -left-20 w-[500px] h-[300px] border-[12px] border-[#0055ff]/10 rounded-[120px] -rotate-12">
-            </div>
-
-            {{-- Retângulo 8px: No canto superior direito --}}
-            <div
-                class="absolute -top-20 right-20 w-[300px] h-[300px] border-[8px] border-[#a4ed4a]/15 rounded-full rotate-45">
-            </div>
-
-            {{-- Pontos Neon com gradiente de opacidade --}}
-            <div class="absolute inset-0 opacity-20 [mask-image:linear-gradient(to_bottom,white,transparent)]"
-                style="background-image: radial-gradient(#a4ed4a 1.5px, transparent 1.5px); background-size: 32px 32px;">
-            </div>
+        {{-- skew decorativo --}}
+        <div aria-hidden="true"
+            class="hidden lg:block absolute right-0 top-0 w-[32%] h-full bg-slate-200/70 
+               skew-x-[-12deg] translate-x-24 border-l border-ueap-green/30">
+            <span class="absolute left-6 top-10 -rotate-90 text-[9px] font-mono tracking-[0.4em] text-slate-400 uppercase">
+                UEAP_DOC
+            </span>
         </div>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="max-w-5xl">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+            <div class="max-w-4xl">
 
-                {{-- Badge e Categoria --}}
-                <div class="flex items-center gap-4 mb-6">
-                    <span
-                        class="bg-[#a4ed4a] text-[#001030] text-[10px] font-black px-4 py-1 uppercase tracking-widest shadow-[0_10px_30px_rgba(164,237,74,0.4)]">
+                {{-- categoria / tipo / status --}}
+                <div class="flex flex-wrap items-center gap-4 mb-4">
+                    <a href="{{ route('site.post.list', ['category' => $post->category->slug]) }}"
+                        class="px-4 py-1.5 bg-[#00388d] text-white text-[11px] font-bold uppercase tracking-wider">
                         {{ $post->category->name }}
+                    </a>
+
+                    <span class="text-[11px] font-mono uppercase tracking-widest text-slate-500">
+                        {{ $post->type }}
                     </span>
-                    <span class="text-white/20 font-mono text-xs tracking-tighter">// {{ strtoupper($post->type) }}</span>
+
+                    <div class="flex items-center gap-1.5 text-ueap-green">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full bg-ueap-green opacity-60"></span>
+                            <span class="relative inline-flex h-2 w-2 bg-ueap-green"></span>
+                        </span>
+                        {{-- <span class="text-[10px] font-mono uppercase tracking-widest">live</span> --}}
+                    </div>
                 </div>
 
-                {{-- Título Curto e Grosso --}}
+                {{-- título --}}
                 <h1
-                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase italic mb-10">
-                    {{ $post->title }}<span class="text-[#a4ed4a]">.</span>
+                    class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#00388d] uppercase leading-tight tracking-tight mb-6">
+                    {{ $post->title }}<span class="text-ueap-green">.</span>
                 </h1>
 
-                {{-- Dashboard Stats --}}
-                <div class="flex flex-wrap items-center gap-x-12 gap-y-6 pt-8 border-t border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#0055ff]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Publicado</span>
-                            <time
-                                class="text-white text-xl font-black italic">{{ $post->created_at->format('d/m/Y') }}</time>
-                        </div>
-                    </div>
+                {{-- metadados + share --}}
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pt-6 border-t border-slate-300">
 
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-8 bg-[#a4ed4a]"></div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Visualizações</span>
+                    {{-- bloco de dados (Ajustado para não quebrar no mobile) --}}
+                    <div
+                        class="flex items-stretch border border-slate-300 bg-white divide-x divide-slate-300 font-mono text-[#00388d] w-full lg:w-fit">
+
+                        {{-- data --}}
+                        <div class="flex-1 lg:flex-none px-4 py-2 lg:min-w-[140px]">
+                            <span class="block text-[9px] uppercase tracking-widest text-slate-400 mb-1">
+                                Publicação
+                            </span>
+                            <time class="text-xs lg:text-sm font-bold tracking-tight">
+                                {{ $post->created_at->format('d.m.Y') }}
+                            </time>
+                        </div>
+
+                        {{-- hits --}}
+                        <div class="flex-1 lg:flex-none px-4 py-2 lg:min-w-[120px] bg-slate-50">
+                            <span class="block text-[9px] uppercase tracking-widest text-slate-400 mb-1">
+                                Acessos
+                            </span>
+                            <span class="text-xs lg:text-sm font-bold tracking-tight">
+                                {{ number_format($post->hits, 0, ',', '.') }}
+                            </span>
+                        </div>
+
+                        {{-- tag lateral --}}
+                        <div class="bg-[#00388d] px-2.5 flex items-center justify-center shrink-0">
                             <span
-                                class="text-white text-xl font-black italic">{{ number_format($post->hits, 0, ',', '.') }}</span>
+                                class="text-[9px] font-bold text-white uppercase tracking-[0.3em] [writing-mode:vertical-lr] rotate-180">
+                                UEAP
+                            </span>
                         </div>
                     </div>
 
-                    {{-- Share --}}
-                    <div class="ml-auto flex items-center gap-3">
-                        <a href="https://api.whatsapp.com/send?text={{ $url_atual }}"
-                            class="w-12 h-12 flex items-center justify-center bg-[#25D366] text-white rounded-2xl hover:bg-white hover:text-[#25D366] transition-all shadow-xl">
-                            <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}"
-                            class="w-12 h-12 flex items-center justify-center bg-white text-[#001030] rounded-2xl hover:bg-[#001030] hover:text-white transition-all shadow-xl">
-                            <i class="fa-brands fa-x-twitter text-lg"></i>
-                        </a>
-                    </div>
+                    {{-- share (Ajustado alinhamento mobile) --}}
+                    <nav class="flex items-center justify-between lg:justify-end gap-4 w-full lg:w-auto">
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                            Compartilhar
+                        </span>
+
+                        <div class="flex border border-[#00388d] shrink-0">
+                            <a href="https://api.whatsapp.com/send?text={{ $url_atual }}" target="_blank"
+                                class="w-10 h-10 flex items-center justify-center text-[#00388d] hover:bg-ueap-green hover:text-white transition-colors">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ $url_atual }}" target="_blank"
+                                class="w-10 h-10 flex items-center justify-center text-[#00388d] hover:bg-ueap-green hover:text-white transition-colors border-l border-[#00388d]">
+                                <i class="fa-brands fa-x-twitter text-[11px]"></i>
+                            </a>
+                        </div>
+                    </nav>
+
                 </div>
             </div>
         </div>
     </header>
 
-    {{-- ================= CONTEÚDO EDITORIAL ================= --}}
-    <section class="bg-white py-16 lg:py-24 relative overflow-hidden">
 
-        {{-- Forma geométrica "fantasma" no fundo da seção branca --}}
-        <div
-            class="absolute -right-40 top-40 w-[600px] h-[600px] border-[1px] border-slate-100 rounded-full pointer-events-none">
-        </div>
+    {{-- ================= ÁREA DE CONTEÚDO ================= --}}
+    <section x-data="{ open: false }" class="w-full py-16 lg:py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-
-                {{-- Matéria --}}
+                {{-- MAIN CONTENT --}}
                 <main class="lg:col-span-8">
                     <article
-                        class="prose prose-slate prose-xl max-w-none 
-                        prose-headings:text-[#001030] prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:italic
-                        prose-p:text-slate-600 prose-p:leading-relaxed prose-p:mb-10
-                        prose-strong:text-[#0055ff] prose-strong:font-black
-                        prose-img:rounded-[60px] prose-img:shadow-[0_40px_80px_-20px_rgba(0,16,48,0.2)] prose-img:p-2 prose-img:bg-white prose-img:border prose-img:border-slate-100">
+                        class="article-body prose prose-slate max-w-none 
+                        prose-headings:uppercase prose-headings:font-black prose-headings:text-[#00388d] prose-headings:tracking-tighter
+                        prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-[#00388d]
+                        prose-img:rounded-none prose-img:border-l-[6px] prose-img:border-ueap-green">
 
                         @foreach ($post->content ?? [] as $block)
-                            <div class="mb-14">
+                            <div class="mb-10">
                                 @include('novosite.components.post-block-renderer', ['block' => $block])
                             </div>
                         @endforeach
                     </article>
 
-                    {{-- Linha de Fechamento de 12px --}}
-                    <footer class="mt-24 pt-12 border-t-[12px] border-[#001030] flex justify-between items-center">
-                        <span class="text-xs font-black uppercase text-[#001030] tracking-[0.4em]">Fim do Informativo</span>
-                        <span class="text-[10px] font-bold text-slate-400 italic">Atualizado em
-                            {{ $post->updated_at->format('d/m/Y H:i') }}</span>
+                    {{-- Rodapé Industrial --}}
+                    <footer class="mt-20">
+                        <div class="h-1 w-full bg-[#00388d]"></div>
+                        <div class="flex items-center justify-between py-6">
+                            <span
+                                class="text-[10px] font-black uppercase tracking-[0.3em] text-[#00388d]">Informativo_Finalizado</span>
+                            <time class="text-[11px] font-bold text-slate-400 italic">
+                                Atualizado: {{ $post->updated_at->format('d/m/Y H:i') }}
+                            </time>
+                        </div>
                     </footer>
 
-                    {{-- SEÇÃO RELACIONADOS INTEGRADA --}}
-                    <div class="mt-32">
+                    {{-- Relacionados --}}
+                    <div class="mt-20 pt-16 border-t border-slate-100">
                         @include('novosite.components.post-relacionados', ['posts' => $relatedPosts])
                     </div>
                 </main>
 
-                {{-- Sidebar --}}
-                <aside class="lg:col-span-4">
-                    <div class="sticky top-10 space-y-16">
+                {{-- SIDEBAR FORMAL --}}
+                <aside class="hidden lg:block lg:col-span-4 relative">
+                    <div class="sticky top-28 space-y-12">
                         @if ($post->web_menu)
-                            <nav class="space-y-3">
-                                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em] mb-8">Nesta
+                            <nav class="flex flex-col border-l-4 border-[#00388d] bg-slate-50 p-6">
+                                <h4 class="text-[10px] font-black text-[#00388d] uppercase tracking-[0.4em] mb-6">Índice de
                                     Seção</h4>
-                                @foreach (optional($post->web_menu)->items()->where('status', 'published')->orderBy('position')->get() ?? [] as $item)
-                                    @php $isActive = request()->url() == $item->url; @endphp
-                                    <a href="{{ $item->url }}"
-                                        class="group flex items-center justify-between p-6 rounded-[35px] border-2 transition-all
-                                       {{ $isActive ? 'bg-[#001030] border-[#001030] text-white shadow-2xl' : 'bg-slate-50 border-transparent text-[#001030] hover:border-[#a4ed4a] hover:bg-white' }}">
-                                        <span
-                                            class="text-[11px] font-black uppercase tracking-widest">{{ $item->name }}</span>
-                                        <div
-                                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all {{ $isActive ? 'bg-[#a4ed4a]' : 'bg-white shadow-sm group-hover:bg-[#a4ed4a]' }}">
-                                            <i class="fa-solid fa-arrow-up-right text-[10px] text-[#001030]"></i>
-                                        </div>
-                                    </a>
-                                @endforeach
+                                <div class="flex flex-col gap-1">
+                                    @foreach (optional($post->web_menu)->items()->where('status', 'published')->orderBy('position')->get() ?? [] as $item)
+                                        @php $isActive = request()->url() == $item->url; @endphp
+                                        <a href="{{ $item->url }}"
+                                            class="p-3 text-[11px] font-bold uppercase transition-all {{ $isActive ? 'bg-[#00388d] text-white' : 'text-slate-600 hover:bg-white hover:text-[#00388d]' }}">
+                                            {{ $item->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
                             </nav>
                         @endif
 
-                        <div class="space-y-12">
+                        <div class="space-y-10">
                             @include('novosite.components.sidebar-search')
                             @include('novosite.components.sidebar-news', ['posts' => $latestPosts])
                             @include('novosite.components.sidebar-newsletter')
-                            @include('novosite.components.sidebar-categories', ['categories' => $categories])
+
                         </div>
                     </div>
                 </aside>

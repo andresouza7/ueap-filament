@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {{-- 01. GRID DE DESTAQUES (ALTURA 500PX - TEXTO DENTRO) --}}
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2 h-auto lg:h-[500px] mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2 h-auto lg:h-[500px] mb-10">
 
             {{-- POST PRINCIPAL (8 COLUNAS) --}}
             @if (isset($featured[0]))
@@ -65,8 +65,8 @@
         <div class="relative">
             {{-- Identificador de Seção --}}
             <div class="flex items-center gap-3 mb-6">
-                <span class="text-[11px] font-black uppercase tracking-[0.4em] text-ueap-blue-dark/40">Sistemas e
-                    serviços</span>
+                <span class="text-[11px] font-black uppercase tracking-[0.4em] text-ueap-blue-dark/40">Acesso
+                    Rápido</span>
                 <div class="flex-1 h-px bg-gray-100"></div>
             </div>
 

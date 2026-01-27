@@ -1,5 +1,4 @@
 @php
-    // Limitando a 6 itens para manter a harmonia visual
     $menus = \App\Models\WebMenu::where('status', 'published')
         ->whereHas('menu_place', fn($q) => $q->where('slug', 'principal'))
         ->orderBy('position')
@@ -22,7 +21,7 @@
     {{-- NAVEGAÇÃO PRINCIPAL --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
 
-        {{-- LOGO (FILTRO PARA FICAR TODO BRANCO) --}}
+        {{-- LOGO --}}
         <a href="/" class="h-10 lg:h-12 flex items-center group">
             <img src="{{ asset('img/nova_logo_white.png') }}" alt="Logo UEAP"
                 class="h-full w-auto transition-all duration-300 brightness-0 invert opacity-100 group-hover:opacity-80">
@@ -33,7 +32,6 @@
             @foreach ($menus as $menu)
                 <div class="relative h-full flex items-center" x-data="{ open: false }" @mouseenter="open = true"
                     @mouseleave="open = false">
-
                     <button
                         class="px-4 py-2 text-[11px] font-black uppercase tracking-widest transition-colors flex items-center gap-1.5"
                         :class="open ? 'text-ueap-green' : 'text-white hover:text-ueap-green'">
@@ -48,27 +46,27 @@
                         @endif
                     </button>
 
-                    {{-- DROPDOWN --}}
                     @if ($menu->items->count())
                         <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200"
                             x-transition:enter-start="opacity-0 translate-y-4"
                             x-transition:enter-end="opacity-100 translate-y-0"
-                            class="absolute top-[85%] left-0 w-64 bg-white text-ueap-blue-dark shadow-2xl border-t-4 border-ueap-green py-4 rounded-b-lg">
-                            @foreach ($menu->items as $item)
-                                <a href="{{ $item->url }}"
-                                    class="block px-6 py-2.5 text-[11px] font-bold uppercase tracking-tight hover:bg-gray-50 hover:text-ueap-blue transition-all border-l-4 border-transparent hover:border-ueap-green">
-                                    {{ $item->name }}
-                                </a>
-                            @endforeach
+                            class="absolute top-[85%] left-0 w-64 bg-white text-ueap-blue-dark shadow-2xl border-t-4 border-ueap-green rounded-none z-50 overflow-hidden">
+                            <div class="max-h-[500px] overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-ueap-green">
+                                @foreach ($menu->items as $item)
+                                    <a href="{{ $item->url }}"
+                                        class="block px-6 py-2.5 text-[11px] font-bold uppercase tracking-tight hover:bg-gray-50 hover:text-ueap-blue transition-all border-l-4 border-transparent hover:border-ueap-green">
+                                        {{ $item->name }}
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
                     @endif
                 </div>
             @endforeach
 
-            {{-- BUSCA --}}
+            {{-- BUSCA DESKTOP --}}
             <button @click="searchModal = true"
-                class="ml-4 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-ueap-green hover:text-ueap-blue-dark rounded-full transition-all duration-300 group"
-                title="Pesquisar">
+                class="ml-4 w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-ueap-green hover:text-ueap-blue-dark rounded-none transition-all duration-300 group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -77,23 +75,37 @@
             </button>
         </nav>
 
-        {{-- MOBILE TOGGLE --}}
-        <button @click="mobileMenu = true"
-            class="lg:hidden p-3 bg-ueap-green text-ueap-blue-dark rounded-xl shadow-lg active:scale-95 transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-        </button>
+        {{-- CONTROLES MOBILE (BUSCA + MENU) --}}
+        <div class="flex items-center gap-2 lg:hidden">
+            {{-- BOTÃO BUSCA MOBILE --}}
+            <button @click="searchModal = true"
+                class="w-11 h-11 flex items-center justify-center bg-white/5 text-white rounded-none border border-white/10 active:bg-ueap-green active:text-ueap-blue-dark transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+
+            {{-- BOTÃO MENU MOBILE --}}
+            <button @click="mobileMenu = true"
+                class="w-11 h-11 flex items-center justify-center bg-ueap-green text-ueap-blue-dark rounded-none shadow-lg active:scale-95 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
     </div>
 
     {{-- MENU MOBILE FULLSCREEN --}}
     <template x-if="mobileMenu">
-        <div class="fixed inset-0 z-[100] bg-ueap-blue-dark flex flex-col p-8 overflow-y-auto" x-transition>
+        <div class="fixed inset-0 z-[100] bg-ueap-blue-dark flex flex-col p-8 overflow-y-auto rounded-none"
+            x-transition>
             <div class="flex justify-between items-center mb-12">
                 <img src="{{ asset('img/nova_logo_white.png') }}" class="h-10 brightness-0 invert">
                 <button @click="mobileMenu = false"
-                    class="w-12 h-12 flex items-center justify-center bg-white/5 rounded-full text-white">
+                    class="w-12 h-12 flex items-center justify-center bg-white/5 rounded-none text-white border border-white/10">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -117,7 +129,7 @@
                             </svg>
                         </button>
                         <div x-show="open" x-collapse
-                            class="bg-black/20 flex flex-col rounded-xl overflow-hidden mt-2">
+                            class="bg-black/20 flex flex-col rounded-none overflow-hidden mt-2 border-l-2 border-ueap-green">
                             @foreach ($menu->items as $item)
                                 <a href="{{ $item->url }}"
                                     class="px-8 py-4 text-sm font-bold text-blue-100 border-b border-white/5 active:bg-ueap-green active:text-ueap-blue-dark transition-colors">{{ $item->name }}</a>
@@ -129,27 +141,33 @@
         </div>
     </template>
 
-    {{-- MODAL DE BUSCA --}}
+    {{-- MODAL DE BUSCA AJUSTADO --}}
     <template x-if="searchModal">
         <div class="fixed inset-0 z-[110] flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-ueap-blue-dark/95 backdrop-blur-md" @click="searchModal = false"></div>
-            <div class="relative w-full max-w-2xl bg-white p-10 shadow-3xl rounded-3xl overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-2 bg-ueap-green"></div>
+            {{-- Overlay --}}
+            <div class="absolute inset-0 bg-ueap-blue-dark/90 backdrop-blur-sm" @click="searchModal = false"></div>
 
-                <div class="flex justify-between items-center mb-8">
-                    <h3 class="text-ueap-blue-dark font-black uppercase tracking-widest text-sm">O que você procura na
-                        UEAP?</h3>
+            {{-- Container do Modal --}}
+            <div class="relative w-full max-w-xl bg-white p-8 shadow-2xl rounded-none border-t-4 border-ueap-green">
+
+                {{-- Header do Modal --}}
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-ueap-blue-dark font-bold uppercase tracking-widest text-xs">Pesquisar no Portal
+                    </h3>
                     <button @click="searchModal = false"
-                        class="text-gray-400 hover:text-red-500 font-bold transition-colors">Fechar (Esc)</button>
+                        class="text-gray-400 hover:text-gray-600 text-[10px] uppercase font-bold transition-colors">
+                        Fechar
+                    </button>
                 </div>
 
-                <form action="{{ route('site.post.list') }}" method="GET">
-                    <input type="text" name="search" autofocus placeholder="Digite o termo da busca..."
-                        class="w-full border-b-4 border-ueap-blue py-6 text-3xl font-bold text-ueap-blue-dark focus:outline-none placeholder:text-gray-100 transition-colors">
+                {{-- Formulário com botão à direita --}}
+                <form action="{{ route('site.post.list') }}" method="GET" class="flex flex-col items-end">
+                    <input type="text" name="search" autofocus placeholder="O que você procura?"
+                        class="w-full border-b border-gray-200 py-3 text-lg font-normal text-ueap-blue-dark focus:outline-none focus:border-ueap-blue transition-colors placeholder:text-gray-300 rounded-none">
 
                     <button type="submit"
-                        class="mt-10 w-full bg-ueap-blue-dark text-ueap-green font-black py-5 rounded-xl uppercase tracking-widest hover:bg-ueap-green hover:text-ueap-blue-dark transition-all shadow-xl active:scale-95">
-                        Realizar Pesquisa
+                        class="mt-6 px-10 py-3 bg-ueap-blue-dark text-white font-medium text-xs uppercase tracking-widest hover:bg-ueap-green hover:text-ueap-blue-dark transition-all rounded-none">
+                        Pesquisar
                     </button>
                 </form>
             </div>
