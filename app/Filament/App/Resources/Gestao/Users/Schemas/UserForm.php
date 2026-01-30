@@ -30,7 +30,7 @@ class UserForm
                     ])
             ]);
     }
-    
+
     private static function getUserTab()
     {
         return Tab::make('Usuário')
@@ -54,7 +54,6 @@ class UserForm
                     ->searchable()
                     ->preload(),
                 Select::make('effective_role_id')
-                    ->required()
                     ->label('Cargo Efetivo')
                     ->relationship('effective_role', 'description')
                     ->searchable()
@@ -69,6 +68,7 @@ class UserForm
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->searchable()
+                    ->helperText('*Informar apenas para liberar funcionalidades de gestão ou publicação de documentos')
                     ->preload(),
             ]);
     }
