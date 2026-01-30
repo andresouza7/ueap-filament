@@ -6,7 +6,7 @@
                 Emitir Ponto
             </x-filament::tabs.item>
 
-            @if (now()->gte('2026-02-01') ||
+            @if (now()->gte('2026-02-02') ||
                     auth()->user()->hasAnyRole(['urh', 'dinfo']))
                 <x-filament::tabs.item @click="tab = 'tab2'" :alpine-active="'tab === \'tab2\''">
                     Enviar Ponto
