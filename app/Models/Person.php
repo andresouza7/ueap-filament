@@ -39,6 +39,11 @@ class Person extends Model
         return $this->hasOne(User::class, 'person_id');
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'person_id');
+    }
+
     public function ordinances()
     {
         return $this->belongsToMany(

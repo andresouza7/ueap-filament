@@ -62,12 +62,30 @@ class FolhaPontoService
     protected function moveTicketFileToFinalFolder(Ticket $ticket): void
     {
         $yearFolder = $this->drive->getOrCreateFolder($ticket->year, env('GOOGLE_DRIVE_FOLDER_ID'));
-        $userFolder = $this->drive->getOrCreateFolder($ticket->user->person->name, $yearFolder);
+
+        $folderName = $ticket->user->person->name;
+
+        if ($ticket->user->person->users()->count() > 1) {
+            $folderName .= ' - ' . explode(' ', trim($ticket->user->effective_role->description))[0];
+        }
+
+        $userFolder = $this->drive->getOrCreateFolder($folderName, $yearFolder);
 
         $this->drive->moveFileById(
             fileId: $ticket->file_id,
             destinationFolderId: $userFolder,
-            name: $this->months[$ticket->month]
+            name: $ticket->user->login . ' - ' . $this->months[$ticket->month]
+        );
+    }
+
+    protected function moveTicketFileToRejectedFolder(Ticket $ticket): void
+    {
+        $rejeitadosFolder = $this->drive->getOrCreateFolder('rejeitados', env('GOOGLE_DRIVE_FOLDER_ID'));
+
+        $this->drive->moveFileById(
+            fileId: $ticket->file_id,
+            destinationFolderId: $rejeitadosFolder,
+            name: $ticket->user->login . ' - ' . $this->months[$ticket->month]
         );
     }
 
@@ -179,6 +197,8 @@ class FolhaPontoService
     {
         if ($status === 'aprovado') {
             $this->moveTicketFileToFinalFolder($ticket);
+        } elseif ($status === 'rejeitado') {
+            $this->moveTicketFileToRejectedFolder($ticket);
         }
 
         $ticket = $this->updateTicketEvaluation($ticket, $status, $notes);
