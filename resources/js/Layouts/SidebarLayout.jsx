@@ -2,11 +2,15 @@ import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
 import DefaultSidebar from '@/Components/Site/DefaultSidebar';
 
-const SidebarLayout = ({ children, menu, recentNews }) => {
+const SidebarLayout = ({ children, menu, recentNews, header }) => {
     return (
         <SiteLayout>
             <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
-
+                {header && (
+                    <div className="mb-12 w-full">
+                        {header}
+                    </div>
+                )}
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Main Content Area */}
                     <main className="lg:w-2/3">
