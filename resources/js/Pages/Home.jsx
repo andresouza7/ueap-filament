@@ -5,10 +5,15 @@ import NewsSection from '@/Components/Site/NewsSection';
 import StudentAssistanceSection from '@/Components/Site/StudentAssistanceSection';
 import EventsSection from '@/Components/Site/EventsSection';
 
+import QuickAccessSection from '@/Components/Site/QuickAccessSection';
+import HeroSection from '@/Components/Site/HeroSection';
+
 const Home = ({ featured, posts, events }) => {
   return (
     <SiteLayout>
+      {/* <HeroSection featured={featured} /> */}
       <AlternativeHeroSection featured={featured} />
+      <QuickAccessSection />
       <NewsSection posts={posts} />
       <StudentAssistanceSection />
       <EventsSection events={events} />

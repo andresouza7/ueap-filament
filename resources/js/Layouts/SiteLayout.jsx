@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Search, Instagram, Youtube } from 'lucide-react';
 import { Link, router } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import AIChatbot from '@/Components/Site/AIChatbot';
 
 const SearchModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -162,6 +163,8 @@ const SiteLayout = ({ children }) => {
                     </div>
                 </div>
             </footer>
+
+            <AIChatbot />
         </div>
     );
 };
