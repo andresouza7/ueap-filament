@@ -2,15 +2,15 @@ import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
 import DefaultSidebar from '@/Components/Site/DefaultSidebar';
 
-const SidebarLayout = ({ children, menu, recentNews, header }) => {
+const SidebarLayout = ({ children, menu, recentNews, header, bottom }) => {
     return (
         <SiteLayout>
-            <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
-                {header && (
-                    <div className="mb-12 w-full">
-                        {header}
-                    </div>
-                )}
+            {header && (
+                <div className="w-full mb-12">
+                    {header}
+                </div>
+            )}
+            <div className="max-w-7xl mx-auto px-4 py-6 md:py-12">
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Main Content Area */}
                     <main className="lg:w-2/3">
@@ -33,6 +33,12 @@ const SidebarLayout = ({ children, menu, recentNews, header }) => {
                         )}
                     </aside>
                 </div>
+
+                {bottom && (
+                    <div className="w-full">
+                        {bottom}
+                    </div>
+                )}
             </div>
         </SiteLayout>
     );

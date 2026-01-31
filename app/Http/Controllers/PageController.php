@@ -30,7 +30,7 @@ class PageController extends Controller
         $postType = $request->input('type');
         $categorySlug = $request->query('category');
 
-        $query = WebPost::where('status', 'published');
+        $query = WebPost::where('status', 'published')->with('category');
 
         if ($searchString) {
             $query->where('title', 'ilike', "%$searchString%")
@@ -76,6 +76,7 @@ class PageController extends Controller
                 ->whereHas('category', function ($query) use ($post) {
                     $query->where('name', $post->category->name);
                 })
+                ->with(['category'])
                 ->take(4)->get();
 
             $categories = WebCategory::has('posts')

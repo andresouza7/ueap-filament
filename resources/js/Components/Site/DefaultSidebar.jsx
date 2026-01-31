@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Clock, Mail, Send } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 const DefaultSidebar = ({ recentNews = [] }) => {
+    const [term, setTerm] = useState('');
+
+    const handleSearch = () => {
+        if (term.trim()) {
+            window.location.href = route('site.post.list', { search: term });
+        }
+    };
+
     return (
         <div className="space-y-12">
             {/* Pesquisa */}
@@ -13,8 +21,13 @@ const DefaultSidebar = ({ recentNews = [] }) => {
                         type="text"
                         placeholder="O que você procura?"
                         className="w-full pl-4 pr-10 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#A3E635] transition-colors"
+                        value={term}
+                        onChange={(e) => setTerm(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     />
-                    <Search className="absolute right-3 top-3 text-gray-300" size={18} />
+                    <button onClick={handleSearch} className="absolute right-3 top-3 text-gray-300 hover:text-[#0052CC] transition-colors">
+                        <Search size={18} />
+                    </button>
                 </div>
             </div>
 

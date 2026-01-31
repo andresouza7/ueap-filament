@@ -36,9 +36,9 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
                 <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
                     <Link href={route('site.home')} className="hover:text-[#0052CC] transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
                     <ChevronRight size={12} />
-                    <span className="text-[#0052CC]">Portal de Notícias</span>
+                    <span className="text-[#0052CC]">Publicações</span>
                 </nav>
-                <h2 className="text-4xl md:text-5xl font-bold text-[#0052CC] uppercase tracking-tighter mb-2">Arquivo de Notícias</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-[#0052CC] uppercase tracking-tighter mb-2">Explorar Publicações</h2>
                 <div className="h-1.5 w-20 bg-[#A3E635]"></div>
             </div>
 
@@ -96,7 +96,7 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
                                         <Calendar size={12} className="text-[#A3E635]" /> {new Date(item.created_at).toLocaleDateString()}
                                     </span>
                                 </div>
-                                <h3 className="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight uppercase tracking-tighter">
+                                <h3 className="text-xl md:text-2xl font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight uppercase tracking-tighter line-clamp-4">
                                     {item.title}
                                 </h3>
                                 <div className="mt-5 flex items-center gap-2 text-[10px] font-bold text-[#0052CC] group-hover:gap-4 transition-all uppercase tracking-widest">

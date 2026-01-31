@@ -38,7 +38,7 @@ const EventsSection = ({ events = [] }) => {
                         ))}
                     </div>
                     <div className="mt-8 pt-4 border-t border-gray-100">
-                        <a href="#" className="inline-flex items-center gap-2 text-[10px] font-bold text-[#0052CC] uppercase tracking-[0.2em] hover:text-[#A3E635] transition-colors group">
+                        <a href={route('site.post.list', { type: 'event' })} className="inline-flex items-center gap-2 text-[10px] font-bold text-[#0052CC] uppercase tracking-[0.2em] hover:text-[#A3E635] transition-colors group">
                             VER TODOS OS EVENTOS <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                         </a>
                     </div>

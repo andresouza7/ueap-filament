@@ -10,7 +10,7 @@ const NewsSection = ({ posts = [] }) => {
                     <h2 className="text-3xl font-bold text-[#0052CC] uppercase tracking-tighter">Notícias Recentes</h2>
                     <p className="text-gray-400 font-bold text-[10px] mt-1 tracking-[0.2em] uppercase">Comunicados e Atualizações</p>
                 </div>
-                <a href={route('site.post.list')} className="text-[#0052CC] font-bold uppercase text-xs tracking-widest flex items-center gap-2 group relative pb-1">
+                <a href={route('site.post.list', { type: 'news' })} className="text-[#0052CC] font-bold uppercase text-xs tracking-widest flex items-center gap-2 group relative pb-1">
                     Ver todas notícias
                     <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#A3E635] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
