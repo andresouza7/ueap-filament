@@ -6,6 +6,7 @@ const SidebarLayout = ({ children, menu, recentNews }) => {
     return (
         <SiteLayout>
             <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
+
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Main Content Area */}
                     <main className="lg:w-2/3">

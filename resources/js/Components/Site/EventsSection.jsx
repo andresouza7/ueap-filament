@@ -9,30 +9,38 @@ const EventsSection = ({ events = [] }) => {
 
                 {/* Coluna de Eventos */}
                 <div>
-                    <div className="flex items-center gap-4 mb-14">
+                    <div className="flex items-center gap-4 mb-12">
                         <Calendar className="text-[#0052CC]" size={32} />
                         <h3 className="text-3xl font-bold text-[#0052CC] uppercase tracking-tighter">Eventos & Ações</h3>
                     </div>
-                    <div className="space-y-12">
-                        {events.map((event, i) => (
-                            <a href={route('site.post.show', event.slug)} key={event.id || i} className="flex flex-col sm:flex-row gap-8 group cursor-pointer border-b border-gray-100 pb-10 last:border-0">
+                    <div className="flex flex-col gap-10">
+                        {events.slice(0, 3).map((event, i) => (
+                            <a href={route('site.post.show', event.slug)} key={event.id || i} className="flex flex-col sm:flex-row gap-6 group cursor-pointer border-b border-gray-100 pb-8 last:border-0 last:pb-0">
                                 {event.image_url ? (
-                                    <div className="w-full sm:w-44 h-28 overflow-hidden shrink-0 shadow-lg bg-gray-200">
+                                    <div className="w-full sm:w-40 h-28 overflow-hidden shrink-0 shadow-sm bg-gray-200">
                                         <img src={event.image_url} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={event.title} />
                                     </div>
                                 ) : (
-                                    <div className="w-full sm:w-44 h-28 bg-[#0052CC] shrink-0 flex items-center justify-center p-4 text-center">
+                                    <div className="w-full sm:w-40 h-28 bg-[#0052CC] shrink-0 flex items-center justify-center p-4 text-center">
                                         <span className="text-white font-bold text-[10px] uppercase tracking-widest opacity-40 italic">PUBLICAÇÃO INSTITUCIONAL</span>
                                     </div>
                                 )}
                                 <div className="flex flex-col justify-center">
-                                    <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight mb-2 uppercase">{event.title}</h4>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 group-hover:text-gray-600">
-                                        <Info size={14} /> MAIS INFORMAÇÕES NA PÁGINA
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                        <Calendar size={12} className="text-[#A3E635]" />
+                                        {event.created_at ? new Date(event.created_at).toLocaleDateString() : 'DATA INDEFINIDA'}
                                     </p>
+                                    <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight uppercase line-clamp-3">
+                                        {event.title}
+                                    </h4>
                                 </div>
                             </a>
                         ))}
+                    </div>
+                    <div className="mt-8 pt-4 border-t border-gray-100">
+                        <a href="#" className="inline-flex items-center gap-2 text-[10px] font-bold text-[#0052CC] uppercase tracking-[0.2em] hover:text-[#A3E635] transition-colors group">
+                            VER TODOS OS EVENTOS <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        </a>
                     </div>
                 </div>
 
@@ -40,22 +48,16 @@ const EventsSection = ({ events = [] }) => {
                 <div className="space-y-16">
                     <div>
                         <h3 className="text-3xl font-bold text-[#0052CC] uppercase tracking-tighter mb-10">
-                            Plataformas Digitais
+                            Canais de Atendimento
                         </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <a href="#" className="flex items-center justify-between p-6 bg-white border border-gray-100 hover:border-[#A3E635] hover:shadow-lg transition-all group">
-                                <div className="flex items-center gap-4">
-                                    <FileText className="text-[#0052CC]" size={20} />
-                                    <span className="font-bold text-[10px] uppercase tracking-[0.2em]">Carta de Serviços</span>
-                                </div>
-                                <ChevronRight size={18} className="text-gray-200 group-hover:text-[#0052CC] transition-colors" />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <a href="#" className="flex flex-col items-center justify-center p-8 bg-white border border-gray-100 hover:border-[#A3E635] hover:shadow-xl hover:-translate-y-1 transition-all group text-center gap-4 rounded-sm">
+                                <FileText className="text-[#0052CC] group-hover:scale-110 transition-transform duration-300" size={32} />
+                                <span className="font-bold text-xs uppercase tracking-[0.2em] text-[#0052CC]">Carta de Serviços</span>
                             </a>
-                            <a href="#" className="flex items-center justify-between p-6 bg-white border border-gray-100 hover:border-[#A3E635] hover:shadow-lg transition-all group">
-                                <div className="flex items-center gap-4">
-                                    <MessageSquare className="text-[#0052CC]" size={20} />
-                                    <span className="font-bold text-[10px] uppercase tracking-[0.2em]">Ouvidoria</span>
-                                </div>
-                                <ChevronRight size={18} className="text-gray-200 group-hover:text-[#0052CC] transition-colors" />
+                            <a href="#" className="flex flex-col items-center justify-center p-8 bg-white border border-gray-100 hover:border-[#A3E635] hover:shadow-xl hover:-translate-y-1 transition-all group text-center gap-4 rounded-sm">
+                                <MessageSquare className="text-[#0052CC] group-hover:scale-110 transition-transform duration-300" size={32} />
+                                <span className="font-bold text-xs uppercase tracking-[0.2em] text-[#0052CC]">Ouvidoria</span>
                             </a>
                         </div>
                     </div>

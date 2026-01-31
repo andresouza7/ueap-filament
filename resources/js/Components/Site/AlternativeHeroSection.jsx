@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronRight, ArrowUpRight } from 'lucide-react';
 import { route } from 'ziggy-js';
+import QuickAccessSection from '@/Components/Site/QuickAccessSection';
 
 const AlternativeHeroSection = ({ featured = [] }) => {
     // Adapter for props to match the layout's expectations if necessary
@@ -31,8 +32,14 @@ const AlternativeHeroSection = ({ featured = [] }) => {
 
     return (
         /* SEÇÃO NOTÍCIAS DESTAQUE (DESIGN CLEAN/COMPACTO) */
-        <section className="relative overflow-hidden pt-14 pb-0 z-10 bg-[#F5F9FF]">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className="relative overflow-hidden py-20 z-10 bg-gradient-to-b from-[#F5F9FF] to-gray-50">
+
+
+            {/* Geometric Hollow Shapes (Side Decorations) */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] border-[4px] border-[#A3E635] rounded-full opacity-20 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] border-[4px] border-[#0052CC] rounded-[3rem] rotate-45 opacity-10 pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 h-auto lg:h-[550px] items-stretch bg-gray-900 shadow-xl ml-1 mr-1 lg:mx-0">
 
                     {/* COLUNA ESQUERDA: Maior (66% / col-span-4) */}
@@ -90,6 +97,8 @@ const AlternativeHeroSection = ({ featured = [] }) => {
                     </div>
                 </div>
             </div>
+
+            <QuickAccessSection />
         </section>
     );
 };
