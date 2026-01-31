@@ -8,6 +8,7 @@ use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PageController extends Controller
 {
@@ -16,10 +17,11 @@ class PageController extends Controller
         $featured = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
         $posts = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', false)->orderByDesc('created_at')->take(8)->get();
+            ->where('featured', false)->orderByDesc('created_at')->take(3)->get();
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
 
-        return view('novosite.pages.home', compact('featured', 'posts', 'events'));
+        return Inertia::render('Home', compact('featured', 'posts', 'events'));
+        // return view('novosite.pages.home', compact('featured', 'posts', 'events'));
     }
 
     public function postList(Request $request)
@@ -45,17 +47,17 @@ class PageController extends Controller
             });
         }
 
-        // if ($searchString) {
-        //     $query->search($searchString);
-        // }
-
         $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+
         $categories = WebCategory::has('posts')
             ->inRandomOrder()
             ->take(6)
             ->get();
 
-        return view('novosite.pages.post-list', compact('posts', 'categories', 'searchString'));
+        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+            ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+
+        return Inertia::render('PostList', compact('posts', 'categories', 'searchString', 'latestPosts'));
     }
 
     public function postShow($slug)
@@ -81,7 +83,8 @@ class PageController extends Controller
                 ->take(6)
                 ->get();
 
-            return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
+            return Inertia::render('PostShow', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
+            // return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
         } else {
             return abort(404);
         }
