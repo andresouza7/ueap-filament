@@ -7,7 +7,7 @@ import AIChatbot from '@/Components/Site/AIChatbot';
 const SearchModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     return (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
             <div className="absolute inset-0 bg-[#003D99]/90 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose}></div>
             <div className="relative w-full max-w-3xl bg-white shadow-2xl rounded-sm overflow-hidden animate-in zoom-in-95 duration-300">
                 <div className="flex items-center p-6 border-b border-gray-100">
@@ -30,7 +30,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
 const TopBar = () => (
     <div className="bg-[#0052CC] text-white py-1.5 px-6 border-b border-white/5">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
             {/* Texto alinhado à esquerda conforme solicitado */}
             <span className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
 
@@ -46,13 +46,13 @@ const TopBar = () => (
 );
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b-4 border-[#A3E635]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-between h-20">
                 <div className="flex items-center">
                     <Link href={route('site.home')} className="flex items-center gap-4 transition-all hover:translate-x-1 group text-left">
                         <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
-                        <div className="border-l border-gray-100 pl-4">
+                        <div className="-ml-4">
                             {/* Fonte Inter aplicada e cores ajustadas para quebrar o excesso de azul */}
                             <h1 className="text-[#0052CC] font-black text-2xl leading-none uppercase tracking-tighter group-hover:text-[#003D99] transition-colors font-sans">
                                 UEAP
@@ -78,7 +78,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0052CC] p-2">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
                 </div>
             </div>
-        </div>
+        </div >
         {isMenuOpen && (
             <div className="lg:hidden bg-white border-t border-gray-100 p-6 space-y-4 animate-in slide-in-from-top-4 text-left">
                 {navLinks.map((link) => (
@@ -86,7 +86,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
                 ))}
             </div>
         )}
-    </nav>
+    </nav >
 );
 
 const SiteLayout = ({ children }) => {

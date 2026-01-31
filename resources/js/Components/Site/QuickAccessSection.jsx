@@ -12,14 +12,18 @@ const QuickAccessSection = () => {
     ];
 
     return (
-        /* SEÇÃO ACESSO RÁPIDO */
-        <section className="bg-gray-50 border-b border-gray-100 py-12 font-sans">
+        /* SEÇÃO ACESSO RÁPIDO (BARRA BRANCA COM DETALHE LIME) */
+        <section className="font-sans pb-14 relative z-20 bg-[#F5F9FF]">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className="bg-white shadow-xl border-t-4 border-[#A3E635] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
                     {quickAccessLinks.map((link, idx) => (
-                        <a key={idx} href="#" className="bg-white p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#A3E635] transition-all group flex flex-col items-center text-center">
-                            <div className="mb-4 text-[#0052CC] group-hover:text-[#A3E635] group-hover:scale-110 transition-all duration-300">{link.icon}</div>
-                            <span className="text-[10px] font-bold text-gray-500 group-hover:text-[#0052CC] uppercase tracking-widest leading-tight transition-colors">{link.label}</span>
+                        <a key={idx} href="#" className="group p-6 flex flex-col items-center justify-center text-center hover:bg-blue-50/50 transition-all duration-300 border-r border-gray-100 last:border-r-0 lg:last:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r lg:[&:nth-child(2)]:border-r [&:nth-child(3)]:border-r-0 lg:[&:nth-child(3)]:border-r md:[&:nth-child(3)]:border-r">
+                            <div className="mb-3 text-[#0052CC] group-hover:scale-110 group-hover:text-[#A3E635] transition-all duration-300 transform">
+                                {link.icon}
+                            </div>
+                            <span className="text-[10px] font-bold text-gray-600 group-hover:text-[#0052CC] uppercase tracking-widest leading-tight transition-colors">
+                                {link.label}
+                            </span>
                         </a>
                     ))}
                 </div>
