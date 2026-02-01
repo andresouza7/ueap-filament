@@ -59,13 +59,12 @@ const TopBar = () => (
             {/* Texto alinhado à esquerda conforme solicitado */}
             <span className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
 
-            <div className="flex gap-5 items-center">
-                <a href="#" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Transparência</a>
-                <a href="#" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Intranet</a>
-                <a href="#" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Ambiente do Aluno</a>
-                {/* Divisória removida conforme solicitado */}
-                <a href="#" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Service Desk</a>
-            </div>
+            <nav className="flex gap-4 items-center">
+                <a href="https://sigaa.ueap.edu.br/sigaa/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">SIGAA</a>
+                <a href="http://intranet.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Intranet</a>
+                <a href="http://transparencia.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Transparência</a>
+                <a href="https://servicedesk.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Service Desk</a>
+            </nav>
         </div>
     </div>
 );

@@ -8,6 +8,7 @@ use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -101,6 +102,10 @@ class PageController extends Controller
         }
     }
 
+    #################################
+    ## DOCUMENTS LIST
+    #################################
+
     public function calendarList(Request $request)
     {
         $query = Document::where('type', 'calendar')->orderByDesc('year')->orderBy('title');
@@ -112,20 +117,28 @@ class PageController extends Controller
 
         $items = $query->paginate(25)->withQueryString();
 
-        return view('novosite.pages.calendar-list', compact('items'));
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'date' => $item->created_at->format('d/m/Y'),
+                'url' => $item->file_url,
+            ];
+        });
+
+        return Inertia::render('DocumentList', [
+            'title' => 'Calendário Acadêmico',
+            'documents' => $items,
+        ]);
     }
 
-    #################################
-    ## CONSU
-    #################################
     public function listOrdinance(Request $request)
     {
         $query = Portaria::where('origin', 'CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
 
-        if ($request->name) {
-            $request->validate(['name' => 'string|max:255']);
-            $query
-                ->where('description', 'ilike', "%$request->name%");
+        if ($request->search || $request->name) { // Support both new unified search and legacy param
+            $term = $request->search ?? $request->name;
+            $query->where('description', 'ilike', "%$term%");
         }
 
         if ($request->number) {
@@ -141,16 +154,29 @@ class PageController extends Controller
         $items = $query->paginate(25)->withQueryString();
         $title = 'CONSU Portarias';
 
-        return view('novosite.pages.consu-list', compact('items', 'title'));
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => "Portaria Nº {$item->number}/{$item->year}" . ($item->description ? " - " . Str::limit($item->description, 100) : ""),
+                'category' => 'PORTARIA',
+                'date' => (string)$item->number . '/' . (string)$item->year,
+                'url' => $item->file_url,
+            ];
+        });
+
+        return Inertia::render('DocumentList', [
+            'title' => $title,
+            'documents' => $items
+        ]);
     }
 
     public function listResolution(Request $request)
     {
         $query = ConsuResolution::orderBy('year', 'DESC')->orderBy('number', 'DESC');
 
-        if ($request->name) {
-            $request->validate(['name' => 'string|max:255']);
-            $query->where('name', 'ilike', "%$request->name%");
+        if ($request->search || $request->name) { // Support both new unified search and legacy param
+            $term = $request->search ?? $request->name;
+            $query->where('name', 'ilike', "%$term%");
         }
 
         if ($request->number) {
@@ -166,6 +192,19 @@ class PageController extends Controller
         $items = $query->paginate(25)->withQueryString();
         $title = 'CONSU Resoluções';
 
-        return view('novosite.pages.consu-list', compact('items', 'title'));
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->name ?? "Resolução Nº {$item->number}/{$item->year}",
+                'category' => 'RESOLUÇÃO',
+                'date' => (string)$item->number . '/' . (string)$item->year,
+                'url' => $item->file_url,
+            ];
+        });
+
+        return Inertia::render('DocumentList', [
+            'title' => $title,
+            'documents' => $items
+        ]);
     }
 }

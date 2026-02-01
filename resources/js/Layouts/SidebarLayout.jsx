@@ -1,6 +1,9 @@
 import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
-import DefaultSidebar from '@/Components/Site/DefaultSidebar';
+import SidebarSearch from '@/Components/Site/SidebarSearch';
+import SidebarNews from '@/Components/Site/SidebarNews';
+import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
+import SidebarCategories from '@/Components/Site/SidebarCategories';
 
 const SidebarLayout = ({ children, menu, recentNews, header, bottom }) => {
     return (
@@ -29,7 +32,12 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom }) => {
                                 </div>
                             </div>
                         ) : (
-                            <DefaultSidebar recentNews={recentNews} />
+                            <div className="space-y-12">
+                                <SidebarSearch />
+                                <SidebarNews recentNews={recentNews} />
+                                <SidebarNewsletter />
+                                <SidebarCategories />
+                            </div>
                         )}
                     </aside>
                 </div>
