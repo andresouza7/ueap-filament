@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Search, Instagram, Youtube } from 'lucide-react';
+import { Menu, X, Search, Instagram, Youtube, ChevronDown } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import AIChatbot from '@/Components/Site/AIChatbot';
@@ -57,7 +57,7 @@ const TopBar = () => (
     <div className="bg-[#0052CC] text-white py-1.5 px-6 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
             {/* Texto alinhado à esquerda conforme solicitado */}
-            <span className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
+            <span className="hidden md:inline-block text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
 
             <nav className="flex gap-4 items-center">
                 <a href="https://sigaa.ueap.edu.br/sigaa/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">SIGAA</a>
@@ -77,6 +77,47 @@ const resolveUrl = (url) => {
     }
     // Caso contrário, assume que é um path interno sem / inicial e adiciona
     return `/${url}`;
+};
+
+const MobileMenuItem = ({ item }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const hasSubMenu = item.sub_itens && item.sub_itens.length > 0;
+
+    return (
+        <div className="border-b border-gray-100 last:border-0">
+            <div className="flex items-center justify-between py-3">
+                {hasSubMenu ? (
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="flex-1 flex items-center justify-between text-left text-sm font-black text-[#0052CC] uppercase tracking-widest"
+                    >
+                        {item.name}
+                        <ChevronDown size={16} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                ) : (
+                    <a href={resolveUrl(item.url)} className="block w-full text-sm font-black text-[#0052CC] uppercase tracking-widest">
+                        {item.name}
+                    </a>
+                )}
+            </div>
+
+            {hasSubMenu && (
+                <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100 mb-4' : 'max-h-0 opacity-0'}`}>
+                    <div className="flex flex-col gap-3 pl-4 border-l-2 border-[#A3E635] ml-1">
+                        {item.sub_itens.map(subItem => (
+                            <a
+                                key={subItem.id}
+                                href={resolveUrl(subItem.url)}
+                                className="text-xs font-bold text-gray-600 hover:text-[#0052CC] uppercase tracking-widest block py-1"
+                            >
+                                {subItem.name}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 };
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
@@ -141,20 +182,16 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                     <div className="h-6 w-px bg-gray-200 relative z-30"></div>
                     <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
                 </div>
-                <div className="flex lg:hidden items-center">
+                <div className="flex lg:hidden items-center gap-4">
+                    <button onClick={onSearchOpen} className="text-[#0052CC] p-2 relative z-30"><Search size={22} /></button>
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0052CC] p-2 relative z-30">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
                 </div>
             </div>
         </div >
         {isMenuOpen && (
-            <div className="lg:hidden bg-white border-t border-gray-100 p-6 space-y-4 animate-in slide-in-from-top-4 text-left relative z-20">
+            <div className="lg:hidden bg-white border-t border-gray-100 p-6 animate-in slide-in-from-top-4 text-left relative z-20 h-[calc(100vh-80px)] overflow-y-auto">
                 {menus && menus.items && menus.items.map((item) => (
-                    <div key={item.id} className="space-y-2">
-                        <span className="block w-full text-left text-sm font-black text-[#0052CC] uppercase tracking-widest">{item.name}</span>
-                        {item.sub_itens && item.sub_itens.map(subItem => (
-                            <a key={subItem.id} href={resolveUrl(subItem.url)} className="block pl-4 text-xs font-bold text-gray-600 hover:text-[#0052CC] uppercase tracking-widest">{subItem.name}</a>
-                        ))}
-                    </div>
+                    <MobileMenuItem key={item.id} item={item} />
                 ))}
             </div>
         )}
