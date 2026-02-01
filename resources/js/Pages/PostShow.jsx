@@ -71,32 +71,35 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
     };
 
     const headerContent = (
-        <div className="animate-fade-in-up bg-white border-b border-gray-100 w-full">
-            <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        <div className="animate-fade-in-up bg-gradient-to-r from-[#0052CC] to-[#003d99] border-b border-white/10 w-full relative overflow-hidden">
+            {/* Decoration */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 py-12 md:py-20 relative z-10">
                 {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-8">
-                    <a href={route('site.home')} className="hover:text-[#0052CC] transition-colors">Início</a>
-                    <span className="text-gray-300">/</span>
-                    <span className="text-[#0052CC]">{newsData.category}</span>
+                <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/60 mb-8">
+                    <a href={route('site.home')} className="hover:text-white transition-colors">Início</a>
+                    <span className="text-white/40">/</span>
+                    <span className="text-white">{newsData.category}</span>
                 </nav>
 
-                <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
-                    <span className="inline-block px-3 py-1 bg-[#A3E635] text-[#0052CC] text-[10px] font-black uppercase rounded-none tracking-[0.2em]">
+                <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <span className="inline-block px-3 py-1 bg-[#A3E635] text-[#0052CC] text-[10px] font-black uppercase rounded-none tracking-[0.2em] shadow-md">
                         {newsData.category}
                     </span>
-                    <button onClick={generateAISummary} className="flex items-center gap-2 px-4 py-1.5 bg-[#0052CC] text-white text-[10px] font-bold uppercase rounded-none shadow-lg hover:bg-[#A3E635] hover:text-[#0052CC] transition-all">
+                    <button onClick={generateAISummary} className="flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase rounded-none hover:bg-white hover:text-[#0052CC] transition-all backdrop-blur-sm">
                         {loadingSummary ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} {summary ? "✨ Atualizado" : "✨ Resumo IA"}
                     </button>
                 </div>
 
-                <h1 className="text-2xl md:text-5xl font-black text-[#0052CC] mb-6 leading-[1.1] uppercase tracking-tighter max-w-4xl group-hover:text-[#003D99] transition-colors">
+                <h1 className="text-3xl md:text-5xl font-black text-white mb-8 leading-[1.1] uppercase tracking-tighter max-w-5xl drop-shadow-md">
                     {newsData.title}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-8 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    <div className="flex items-center gap-2 border-r border-gray-200 pr-8 last:border-0"><Calendar size={14} className="text-[#A3E635]" /> {newsData.date}</div>
-                    <div className="flex items-center gap-2 border-r border-gray-200 pr-8 last:border-0"><Eye size={14} className="text-[#A3E635]" /> {newsData.views}</div>
-                    <button className="ml-auto flex items-center gap-2 text-[#0052CC] hover:text-[#A3E635] transition-colors"><Share2 size={14} /> Compartilhar</button>
+                <div className="flex flex-wrap items-center gap-8 text-[10px] font-bold text-white/80 uppercase tracking-widest border-t border-white/10 pt-8">
+                    <div className="flex items-center gap-2 border-r border-white/10 pr-8 last:border-0"><Calendar size={14} className="text-[#A3E635]" /> {newsData.date}</div>
+                    <div className="flex items-center gap-2 border-r border-white/10 pr-8 last:border-0"><Eye size={14} className="text-[#A3E635]" /> {newsData.views}</div>
+                    <button className="ml-auto flex items-center gap-2 text-white hover:text-[#A3E635] transition-colors"><Share2 size={14} /> Compartilhar</button>
                 </div>
             </div>
         </div>

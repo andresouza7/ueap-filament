@@ -7,6 +7,7 @@ use App\Models\Document;
 use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
+use App\Models\WebBanner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -15,14 +16,18 @@ class PageController extends Controller
 {
     public function home()
     {
+        $banners = WebBanner::orderByDesc('created_at')->take(3)->get();
+
+        $featuredCount = $banners->count() > 0 ? 2 : 3;
+
         $featured = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', true)->orderByDesc('created_at')->take(3)->get();
+            ->where('featured', true)->orderByDesc('created_at')->take($featuredCount)->get();
+
         $posts = WebPost::where('type', 'news')->where('status', 'published')
             ->where('featured', false)->orderByDesc('created_at')->take(3)->get();
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
 
-        return Inertia::render('Home', compact('featured', 'posts', 'events'));
-        // return view('novosite.pages.home', compact('featured', 'posts', 'events'));
+        return Inertia::render('Home', compact('featured', 'posts', 'events', 'banners'));
     }
 
     public function postList(Request $request)

@@ -17,11 +17,11 @@ const EventsSection = ({ events = [] }) => {
                         {events.slice(0, 3).map((event, i) => (
                             <a href={route('site.post.show', event.slug)} key={event.id || i} className="flex flex-col sm:flex-row gap-6 group cursor-pointer border-b border-gray-100 pb-8 last:border-0 last:pb-0">
                                 {event.image_url ? (
-                                    <div className="w-full sm:w-40 h-28 overflow-hidden shrink-0 shadow-sm bg-gray-200">
-                                        <img src={event.image_url} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={event.title} />
+                                    <div className="w-full sm:w-40 h-48 sm:h-28 overflow-hidden shrink-0 shadow-sm bg-gray-200">
+                                        <img src={event.image_url} className="w-full h-full object-cover transition-all duration-700" alt={event.title} />
                                     </div>
                                 ) : (
-                                    <div className="w-full sm:w-40 h-28 bg-[#0052CC] shrink-0 flex items-center justify-center p-4 text-center">
+                                    <div className="w-full sm:w-40 h-48 sm:h-28 bg-[#0052CC] shrink-0 flex items-center justify-center p-4 text-center">
                                         <span className="text-white font-bold text-[10px] uppercase tracking-widest opacity-40 italic">PUBLICAÇÃO INSTITUCIONAL</span>
                                     </div>
                                 )}

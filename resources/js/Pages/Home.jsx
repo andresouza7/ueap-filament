@@ -7,15 +7,15 @@ import EventsSection from '@/Components/Site/EventsSection';
 
 import HeroSection from '@/Components/Site/HeroSection';
 
-const Home = ({ featured, posts, events }) => {
+const Home = ({ featured, posts, events, banners }) => {
   return (
     <SiteLayout>
       {/* <HeroSection featured={featured} /> */}
-      <AlternativeHeroSection featured={featured} />
+      <AlternativeHeroSection featured={featured} banners={banners} />
 
       <NewsSection posts={posts} />
-      <StudentAssistanceSection />
       <EventsSection events={events} />
+      <StudentAssistanceSection />
     </SiteLayout>
   );
 };

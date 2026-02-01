@@ -1,9 +1,9 @@
-import React from 'react';
-import { ChevronRight, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronRight, ArrowUpRight, ChevronLeft } from 'lucide-react';
 import { route } from 'ziggy-js';
 import QuickAccessSection from '@/Components/Site/QuickAccessSection';
 
-const AlternativeHeroSection = ({ featured = [] }) => {
+const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
     // Adapter for props to match the layout's expectations if necessary
     // or just use featured directly.
     const highlights = featured.length > 0 ? featured : [
@@ -28,47 +28,133 @@ const AlternativeHeroSection = ({ featured = [] }) => {
     ];
 
     const mainHighlight = highlights[0];
-    const secondaryHighlights = highlights.slice(1, 3);
+    const secondaryHighlights = (banners && banners.length > 0) ? highlights.slice(0, 2) : highlights.slice(1, 3);
+
+    // Carousel State
+    const [currentBanner, setCurrentBanner] = useState(0);
+
+    // Auto-play carousel
+    useEffect(() => {
+        if (banners.length > 1) {
+            const interval = setInterval(() => {
+                setCurrentBanner((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+            }, 5000);
+            return () => clearInterval(interval);
+        }
+    }, [banners]);
+
+    const nextBanner = (e) => {
+        e.preventDefault();
+        setCurrentBanner((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevBanner = (e) => {
+        e.preventDefault();
+        setCurrentBanner((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
+    };
 
     return (
         /* SEÇÃO NOTÍCIAS DESTAQUE (DESIGN CLEAN/COMPACTO) */
-        <section className="relative overflow-hidden py-20 z-10 bg-gradient-to-b from-[#F5F9FF] to-gray-50">
+        <section className="relative overflow-hidden py-0 md:py-20 z-10 bg-gradient-to-b from-[#F5F9FF] to-gray-50">
 
 
             {/* Geometric Hollow Shapes (Side Decorations) */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] border-[4px] border-[#A3E635] rounded-full opacity-20 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] border-[4px] border-[#0052CC] rounded-[3rem] rotate-45 opacity-10 pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
 
-            <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 h-auto lg:h-[550px] items-stretch bg-gray-900 shadow-xl ml-1 mr-1 lg:mx-0">
+            <div className="max-w-7xl mx-auto px-0 lg:px-4 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 lg:h-[550px] items-stretch bg-gray-900 shadow-xl mx-0">
 
-                    {/* COLUNA ESQUERDA: Maior (66% / col-span-4) */}
-                    <a
-                        href={route('site.post.show', mainHighlight.slug || '#')}
-                        className="lg:col-span-4 relative overflow-hidden group cursor-pointer h-full block shadow-sm hover:shadow-2xl transition-all duration-500"
-                    >
-                        <img
-                            src={mainHighlight.image_url}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 brightness-75 group-hover:brightness-50"
-                            alt={mainHighlight.title}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    {/* COLUNA ESQUERDA: BANNERS ou NOTÍCIA DESTAQUE (66% / col-span-4) */}
+                    <div className="lg:col-span-4 relative overflow-hidden h-[250px] lg:h-full block group">
+                        {banners && banners.length > 0 ? (
+                            <div className="relative w-full h-full">
+                                {banners.map((banner, index) => (
+                                    <div
+                                        key={banner.id}
+                                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentBanner ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                                    >
+                                        <a href={banner.url || '#'} className="block w-full h-full">
+                                            <img
+                                                src={banner.image_url}
+                                                alt={banner.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            {/* Gradiente e Texto Opcional no Banner */}
+                                            {/* Gradiente e Texto Opcional no Banner - Overlay Unificado */}
+                                            <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 z-10"></div>
+                                            {(banner.title || banner.description) && (
+                                                <div className="absolute bottom-0 left-0 p-8 md:p-12 z-20">
+                                                    {banner.description && (
+                                                        <span className="text-[#A3E635] font-bold uppercase tracking-widest text-xs mb-2 block">{banner.description}</span>
+                                                    )}
+                                                    {banner.title && (
+                                                        <h2 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter shadow-black drop-shadow-lg">{banner.title}</h2>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </a>
+                                    </div>
+                                ))}
 
-                        <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end text-left z-10">
-                            <span className="bg-[#A3E635] text-[#0052CC] inline-flex w-fit items-center justify-center px-3 py-1 font-bold text-[10px] md:text-xs mb-4 uppercase tracking-[0.2em] shadow-lg transform group-hover:-translate-y-1 transition-transform">
-                                {mainHighlight.category?.name || "DESTAQUE"}
-                            </span>
-                            <h2 className="text-white text-2xl md:text-5xl font-black mb-6 tracking-tighter leading-tight uppercase drop-shadow-xl max-w-3xl group-hover:text-[#A3E635] transition-colors">
-                                {mainHighlight.title}
-                            </h2>
-                            <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-[#A3E635] transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-[#A3E635] pb-1">
-                                LER MATÉRIA COMPLETA <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
+                                {/* Controls */}
+                                {banners.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={prevBanner}
+                                            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-black/30 hover:bg-[#0052CC] text-white rounded-full transition-colors backdrop-blur-sm"
+                                        >
+                                            <ChevronLeft size={24} />
+                                        </button>
+                                        <button
+                                            onClick={nextBanner}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-black/30 hover:bg-[#0052CC] text-white rounded-full transition-colors backdrop-blur-sm"
+                                        >
+                                            <ChevronRight size={24} />
+                                        </button>
+
+                                        {/* Indicators */}
+                                        <div className="absolute bottom-6 right-6 z-30 flex gap-2">
+                                            {banners.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setCurrentBanner(idx)}
+                                                    className={`h-1.5 transition-all duration-300 rounded-full ${idx === currentBanner ? 'w-8 bg-[#A3E635]' : 'w-2 bg-white/50 hover:bg-white'}`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </div>
-                        </div>
-                    </a>
+                        ) : (
+                            <a
+                                href={route('site.post.show', mainHighlight.slug || '#')}
+                                className="relative overflow-hidden group cursor-pointer h-full block shadow-sm hover:shadow-2xl transition-all duration-500"
+                            >
+                                <img
+                                    src={mainHighlight.image_url}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 brightness-75 group-hover:brightness-50"
+                                    alt={mainHighlight.title}
+                                />
+                                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+
+                                <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end text-left z-10">
+                                    <span className="bg-[#A3E635] text-[#0052CC] inline-flex w-fit items-center justify-center px-3 py-1 font-bold text-[10px] md:text-xs mb-4 uppercase tracking-[0.2em] shadow-lg transform group-hover:-translate-y-1 transition-transform">
+                                        {mainHighlight.category?.name || "DESTAQUE"}
+                                    </span>
+                                    <h2 className="text-white text-2xl md:text-5xl font-black mb-6 tracking-tighter leading-tight uppercase drop-shadow-xl max-w-3xl group-hover:text-[#A3E635] transition-colors">
+                                        {mainHighlight.title}
+                                    </h2>
+                                    <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-[#A3E635] transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-[#A3E635] pb-1">
+                                        LER MATÉRIA COMPLETA <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </a>
+                        )}
+                    </div>
 
                     {/* COLUNA DIREITA: Menor (33% / col-span-2) */}
-                    <div className="lg:col-span-2 flex flex-col gap-0 h-full overflow-hidden">
+                    <div className="lg:col-span-2 flex flex-col gap-0 h-[400px] lg:h-full overflow-hidden">
                         {secondaryHighlights.map((item, idx) => (
                             <a
                                 key={item.id || idx}
@@ -80,7 +166,7 @@ const AlternativeHeroSection = ({ featured = [] }) => {
                                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700 brightness-75 group-hover:brightness-50"
                                     alt={item.title}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                                 <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
                                     <span className="text-[#A3E635] text-[10px] font-bold uppercase mb-2 block tracking-widest drop-shadow-md">
                                         {item.category?.name || "NOTÍCIA"}

@@ -1,24 +1,20 @@
 import React from 'react';
+import { BookOpen, GraduationCap, Users, Info, FlaskConical, Mic, Search, Cpu } from 'lucide-react';
 
 const StudentAssistanceSection = () => {
     const programasAssistencia = [
-        { sigla: 'PIBID', desc: 'INICIAÇÃO À DOCÊNCIA', url: '#' },
-        { sigla: 'PRP', desc: 'RESIDÊNCIA PEDAGÓGICA', url: '#' },
-        { sigla: 'PROACE', desc: 'AÇÕES COMUNITÁRIAS', url: '#' },
-        { sigla: 'PROAPE', desc: 'APOIO PEDAGÓGICO', url: '#' },
-        { sigla: 'PROBICT', desc: 'BOLSAS DE C&T', url: '#' },
-        { sigla: 'MONITORIA', desc: 'APOIO ACADÊMICO', url: '#' },
-        { sigla: 'PIBIC', desc: 'INICIAÇÃO CIENTÍFICA', url: '#' },
-        { sigla: 'PIBT', desc: 'INOVAÇÃO TECNOLÓGICA', url: '#' },
+        { sigla: 'PIBID', desc: 'Iniciação à Docência', url: '/pagina/pibid.html', icon: <BookOpen size={28} /> },
+        { sigla: 'PRP', desc: 'Residência Pedagógica', url: '/pagina/prp.html', icon: <GraduationCap size={28} /> },
+        { sigla: 'PROACE', desc: 'Ações Comunitárias', url: '/pagina/proace.html', icon: <Users size={28} /> },
+        { sigla: 'PROAPE', desc: 'Apoio Pedagógico', url: '/pagina/proape.html', icon: <Info size={28} /> },
+        { sigla: 'PROBICT', desc: 'Bolsas de C&T', url: '/pagina/probict.html', icon: <FlaskConical size={28} /> },
+        { sigla: 'MONITORIA', desc: 'Apoio Acadêmico', url: '/pagina/promonitoria.html', icon: <Mic size={28} /> },
+        { sigla: 'PIBIC', desc: 'Iniciação Científica', url: '/pagina/pibic.html', icon: <Search size={28} /> },
+        { sigla: 'PIBT', desc: 'Inovação Tecnológica', url: '/pagina/pibt.html', icon: <Cpu size={28} /> },
     ];
 
     return (
-        <section className="relative py-32 border-y border-gray-200 overflow-hidden bg-gradient-to-b from-[#F5F9FF] to-gray-50">
-
-
-            {/* Decorative Green Accent */}
-            <div className="absolute top-0 right-0 w-96 h-96 border-[2px] border-[#A3E635] rounded-full opacity-10 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
-            <div className="absolute top-10 right-10 w-64 h-64 bg-[#A3E635] rounded-full mix-blend-multiply filter blur-[80px] opacity-10 pointer-events-none"></div>
+        <section className="relative py-32 border-y border-gray-200 overflow-hidden bg-gray-50">
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20 relative">
@@ -39,11 +35,14 @@ const StudentAssistanceSection = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     {programasAssistencia.map((p, idx) => (
-                        <a key={idx} href={p.url} className="bg-white p-8 shadow-md rounded-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start justify-center">
-                            <h3 className="text-2xl font-black text-[#0052CC] mb-2 tracking-tighter">{p.sigla}</h3>
-                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest group-hover:text-gray-800 transition-colors">{p.desc}</p>
+                        <a key={idx} href={p.url} className="bg-white p-6 md:p-8 shadow-md rounded-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start justify-center relative overflow-hidden h-full">
+                            <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-100 transition-opacity duration-300 text-[#0052CC]">
+                                {React.cloneElement(p.icon, { size: 24, className: 'group-hover:rotate-12 transition-transform duration-500' })}
+                            </div>
+                            <h3 className="text-xl md:text-2xl font-black text-[#0052CC] mb-2 tracking-tighter relative z-10">{p.sigla}</h3>
+                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest group-hover:text-gray-800 transition-colors relative z-10 leading-tight">{p.desc}</p>
                         </a>
                     ))}
                 </div>

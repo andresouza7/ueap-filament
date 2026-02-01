@@ -29,8 +29,8 @@ class WebBanner extends Model
     public function getImageUrlAttribute()
     {
         $path = 'web/banners/' . $this->id . '.jpg';
-        
-        return Storage::exists($path) ? Storage::url($path) : null;
+
+        return Storage::exists($path) ? Storage::url($path) : "https://picsum.photos/seed/{$this->id}/1200/600";
     }
 
     // protected static function booted()
