@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, Search, Instagram, Youtube } from 'lucide-react';
-import { Link, router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import AIChatbot from '@/Components/Site/AIChatbot';
 
@@ -70,12 +70,23 @@ const TopBar = () => (
     </div>
 );
 
-const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+const resolveUrl = (url) => {
+    if (!url) return '#';
+    // Se começar com http, //, #, /, mailto ou tel, mantem original
+    if (/^(http:\/\/|https:\/\/|\/\/|#|\/|mailto:|tel:)/.test(url)) {
+        return url;
+    }
+    // Caso contrário, assume que é um path interno sem / inicial e adiciona
+    return `/${url}`;
+};
+
+const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
+    <nav className="sticky top-0 z-50">
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-50 z-20 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 relative">
             <div className="flex justify-between h-20">
                 <div className="flex items-center">
-                    <Link href={route('site.home')} className="flex items-center gap-4 transition-all hover:translate-x-1 group text-left">
+                    <Link href={route('site.home')} className="flex items-center gap-4 transition-all hover:translate-x-1 group text-left relative z-30">
                         <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
                         <div className="-ml-4">
                             {/* Fonte Inter aplicada e cores ajustadas para quebrar o excesso de azul */}
@@ -90,24 +101,61 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
                     </Link>
                 </div>
                 <div className="hidden lg:flex items-center space-x-8">
-                    {navLinks.map((link) => (
-                        <a key={link.name} href={link.href} className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative group">
-                            {link.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
-                        </a>
-                    ))}
-                    <div className="h-6 w-px bg-gray-200"></div>
-                    <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2"><Search size={20} /></button>
+                    {menus && menus.items && menus.items.length > 0 ? menus.items.map((item) => {
+                        const hasSubMenu = item.sub_itens && item.sub_itens.length > 0;
+                        return (
+                            <div key={item.id} className="relative group h-full flex items-center">
+                                {hasSubMenu ? (
+                                    <>
+                                        <button className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 z-30">
+                                            {item.name}
+                                            <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
+                                        </button>
+
+                                        <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block animate-in fade-in slide-in-from-top-2 z-10">
+                                            {item.sub_itens.map(subItem => (
+                                                <a
+                                                    key={subItem.id}
+                                                    href={resolveUrl(subItem.url)}
+                                                    className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-[#0052CC] hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-[#A3E635]"
+                                                >
+                                                    {subItem.name}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <a
+                                        href={resolveUrl(item.url)}
+                                        className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 z-30 flex items-center"
+                                    >
+                                        {item.name}
+                                        <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
+                                    </a>
+                                )}
+                            </div>
+                        );
+                    }) : (
+                        <span className="text-xs text-gray-400 relative z-30">Carregando menu...</span>
+                    )}
+
+                    <div className="h-6 w-px bg-gray-200 relative z-30"></div>
+                    <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
                 </div>
                 <div className="flex lg:hidden items-center">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0052CC] p-2">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0052CC] p-2 relative z-30">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
                 </div>
             </div>
         </div >
         {isMenuOpen && (
-            <div className="lg:hidden bg-white border-t border-gray-100 p-6 space-y-4 animate-in slide-in-from-top-4 text-left">
-                {navLinks.map((link) => (
-                    <a key={link.name} href={link.href} className="block w-full text-left text-sm font-bold text-gray-800 hover:text-[#0052CC] uppercase tracking-widest">{link.name}</a>
+            <div className="lg:hidden bg-white border-t border-gray-100 p-6 space-y-4 animate-in slide-in-from-top-4 text-left relative z-20">
+                {menus && menus.items && menus.items.map((item) => (
+                    <div key={item.id} className="space-y-2">
+                        <span className="block w-full text-left text-sm font-black text-[#0052CC] uppercase tracking-widest">{item.name}</span>
+                        {item.sub_itens && item.sub_itens.map(subItem => (
+                            <a key={subItem.id} href={resolveUrl(subItem.url)} className="block pl-4 text-xs font-bold text-gray-600 hover:text-[#0052CC] uppercase tracking-widest">{subItem.name}</a>
+                        ))}
+                    </div>
                 ))}
             </div>
         )}
@@ -117,14 +165,9 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, navLinks, onSearchOpen }) => (
 const SiteLayout = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const { menus } = usePage().props;
 
-    const navLinks = [
-        { name: 'A Universidade', href: '#' },
-        { name: 'Cursos', href: '#' },
-        { name: 'Pesquisa & Inovação', href: '#' },
-        { name: 'Extensão', href: '#' },
-        { name: 'Transparência', href: '#' },
-    ];
+    console.log(menus)
 
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden flex flex-col">
@@ -135,7 +178,7 @@ const SiteLayout = ({ children }) => {
             <NavBar
                 isMenuOpen={isMenuOpen}
                 setIsMenuOpen={setIsMenuOpen}
-                navLinks={navLinks}
+                menus={menus}
                 onSearchOpen={() => setIsSearchOpen(true)}
             />
 

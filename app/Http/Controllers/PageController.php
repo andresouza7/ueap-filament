@@ -65,6 +65,16 @@ class PageController extends Controller
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
 
         if ($post) {
+            // Apply clean_text to content blocks before sending to frontend
+            if (is_array($post->content)) {
+                $post->content = array_map(function ($block) {
+                    if (isset($block['type']) && $block['type'] === 'text' && isset($block['data']['body'])) {
+                        $block['data']['body'] = clean_text($block['data']['body']);
+                    }
+                    return $block;
+                }, $post->content);
+            }
+
             WebPost::withoutTimestamps(function () use ($post) {
                 $post->increment('hits', 1);
             });
