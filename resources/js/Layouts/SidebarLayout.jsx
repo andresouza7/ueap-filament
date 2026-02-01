@@ -5,7 +5,7 @@ import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 
-const SidebarLayout = ({ children, menu, recentNews, header, bottom }) => {
+const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) => {
     return (
         <SiteLayout>
             {header && (
@@ -22,7 +22,9 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom }) => {
 
                     {/* Sidebar Area */}
                     <aside className="lg:w-1/3">
-                        {menu ? (
+                        {sidebar ? (
+                            sidebar
+                        ) : menu ? (
                             /* Placeholder for future menu implementation */
                             <div className="bg-gray-50 p-6 border-l-4 border-[#0052CC]">
                                 <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-4">Menu</h3>
