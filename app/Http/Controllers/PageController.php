@@ -2,84 +2,214 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WebPage;
+use App\Models\ConsuResolution;
+use App\Models\Document;
+use App\Models\Portaria;
+use App\Models\WebCategory;
 use App\Models\WebPost;
+use App\Models\WebBanner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $posts = WebPost::whereRelation('category.section', 'slug', 'news')->where('status', 'published')->orderByDesc('created_at')->take(6)->get();
-        $events = WebPost::whereRelation('category.section', 'slug', 'events')->where('status', 'published')->orderByDesc('created_at')->take(3)->get();
-        return view('novosite.pages.home', compact('posts', 'events'));
-    }
+        $banners = WebBanner::orderByDesc('created_at')->take(3)->get();
 
-    public function pageShow($slug)
-    {
+        $featuredCount = $banners->count() > 0 ? 2 : 3;
 
-        $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
+        $featured = WebPost::where('type', 'news')->where('status', 'published')
+            ->where('featured', true)->orderByDesc('created_at')->take($featuredCount)->get();
 
-        if($page){
-            $page->hits = $page->hits+1;
-            $page->save();
+        $posts = WebPost::where('type', 'news')->where('status', 'published')
+            ->where('featured', false)->orderByDesc('created_at')->take(3)->get();
+        $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
 
-            return view('novosite.pages.page-show', compact('page'));
-        }else{
-            return redirect()->route('novosite.home');
-        }
+        return Inertia::render('Home', compact('featured', 'posts', 'events', 'banners'));
     }
 
     public function postList(Request $request)
     {
-        $searchString = $request->input('qry');
+        $searchString = $request->input('search');
+        $postType = $request->input('type');
+        $categorySlug = $request->query('category');
 
-        $query = WebPost::where('status', 'published')->whereRelation('category.section', 'slug', 'news');
+        $query = WebPost::where('status', 'published')->with('category');
 
         if ($searchString) {
-            $query->search($searchString);
+            $query->where('title', 'ilike', "%$searchString%")
+                ->orWhere('content', 'ilike', "%$searchString%");
         }
 
-        $posts = $query->orderByDesc('id')->simplePaginate(10)->withQueryString();
+        if ($postType) {
+            $query->where('type', $postType);
+        }
 
-        return view('novosite.pages.post-list', compact('posts', 'searchString'));
+        if ($categorySlug) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+
+        $categories = WebCategory::has('posts')
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+
+        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+            ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+
+        return Inertia::render('PostList', compact('posts', 'categories', 'searchString', 'latestPosts'));
     }
 
     public function postShow($slug)
     {
         $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
-        $extra_posts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
-        if($post){
-            $post->hits = $post->hits+1;
-            $post->save();
-            return view('novosite.pages.post-show', compact('post', 'extra_posts'));
-        }else{
-            return redirect()->route('novosite.home');
+        if ($post) {
+            // Apply clean_text to content blocks before sending to frontend
+            if (is_array($post->content)) {
+                $post->content = array_map(function ($block) {
+                    if (isset($block['type']) && $block['type'] === 'text' && isset($block['data']['body'])) {
+                        $block['data']['body'] = clean_text($block['data']['body']);
+                    }
+                    return $block;
+                }, $post->content);
+            }
+
+            WebPost::withoutTimestamps(function () use ($post) {
+                $post->increment('hits', 1);
+            });
+
+            $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+                ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
+
+            $relatedPosts = WebPost::latest('id')->where('status', 'published')
+                ->whereHas('category', function ($query) use ($post) {
+                    $query->where('name', $post->category->name);
+                })
+                ->with(['category'])
+                ->take(4)->get();
+
+            $categories = WebCategory::has('posts')
+                ->inRandomOrder()
+                ->take(6)
+                ->get();
+
+            return Inertia::render('PostShow', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
+            // return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
+        } else {
+            return abort(404);
         }
-
     }
 
-    // public function documentList($type)
-    // {
-    //     $check = new DocumentController();
+    #################################
+    ## DOCUMENTS LIST
+    #################################
 
-    //     if($check->checkType($type)){
-    //         $documents = Document::where('type', $type)->orderByDesc('year')->orderByDesc('title')->paginate(25)->withQueryString();
-    //         return view('site.pages.document-list', compact('documents'));
-    //     }
-    //     return redirect()->route('site.home');
-    // }
+    public function calendarList(Request $request)
+    {
+        $query = Document::where('type', 'calendar')->orderByDesc('year')->orderBy('title');
 
+        if ($request->search) {
+            $query->where('title', 'ilike', "%$request->search%")
+                ->orWhere('description', 'ilike', "%$request->search%");
+        }
 
-    // public function normativeInstructionList($type=false)
-    // {
-    //     $instructions = NormativeInstruction::orderBy('year', 'DESC')
-    //     ->orderBy('number', 'DESC')
-    //     ->paginate(25)
-    //     ->withQueryString();
-    //     return view('site.pages.document-normative-instruction-list', compact('instructions'));
+        $items = $query->paginate(25)->withQueryString();
 
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'date' => $item->created_at->format('d/m/Y'),
+                'url' => $item->file_url,
+            ];
+        });
 
-    // }
+        return Inertia::render('DocumentList', [
+            'title' => 'Calendário Acadêmico',
+            'documents' => $items,
+        ]);
+    }
+
+    public function listOrdinance(Request $request)
+    {
+        $query = Portaria::where('origin', 'CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+
+        if ($request->search || $request->name) { // Support both new unified search and legacy param
+            $term = $request->search ?? $request->name;
+            $query->where('description', 'ilike', "%$term%");
+        }
+
+        if ($request->number) {
+            $request->validate(['number' => 'integer']);
+            $query->where('number',  $request->number);
+        }
+
+        if ($request->year) {
+            $request->validate(['year' => 'integer']);
+            $query->where('year',  $request->year);
+        }
+
+        $items = $query->paginate(25)->withQueryString();
+        $title = 'CONSU Portarias';
+
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => "Portaria Nº {$item->number}/{$item->year}" . ($item->description ? " - " . Str::limit($item->description, 100) : ""),
+                'category' => 'PORTARIA',
+                'date' => (string)$item->number . '/' . (string)$item->year,
+                'url' => $item->file_url,
+            ];
+        });
+
+        return Inertia::render('DocumentList', [
+            'title' => $title,
+            'documents' => $items
+        ]);
+    }
+
+    public function listResolution(Request $request)
+    {
+        $query = ConsuResolution::orderBy('year', 'DESC')->orderBy('number', 'DESC');
+
+        if ($request->search || $request->name) { // Support both new unified search and legacy param
+            $term = $request->search ?? $request->name;
+            $query->where('name', 'ilike', "%$term%");
+        }
+
+        if ($request->number) {
+            $request->validate(['number' => 'integer']);
+            $query->where('number',  $request->number);
+        }
+
+        if ($request->year) {
+            $request->validate(['year' => 'integer']);
+            $query->where('year',  $request->year);
+        }
+
+        $items = $query->paginate(25)->withQueryString();
+        $title = 'CONSU Resoluções';
+
+        $items->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->name ?? "Resolução Nº {$item->number}/{$item->year}",
+                'category' => 'RESOLUÇÃO',
+                'date' => (string)$item->number . '/' . (string)$item->year,
+                'url' => $item->file_url,
+            ];
+        });
+
+        return Inertia::render('DocumentList', [
+            'title' => $title,
+            'documents' => $items
+        ]);
+    }
 }

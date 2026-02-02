@@ -15,6 +15,7 @@
         "flowframe/laravel-trend": "^0.4.0",
         "google/apiclient": "^2.18",
         "laravel/framework": "^12.0",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "12.2.0",
@@ -22,10 +23,12 @@
         "opcodesio/log-viewer": "^3.19",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-medialibrary": "^11.8",
-        "spatie/laravel-permission": "^6.9"
+        "spatie/laravel-permission": "^6.9",
+        "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
@@ -75,7 +78,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "wikimedia/composer-merge-plugin": true
         }
     },
     "minimum-stability": "stable",

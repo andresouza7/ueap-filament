@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.jsx';
+
+@theme {
+    --color-ueap-primary: #0052CC;
+    --color-ueap-accent: #A3E635;
+    --color-ueap-secondary: #0F172A;
+    
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Custom Base Styles */
+@layer base {
+    body {
+        @apply antialiased font-sans text-gray-900 overflow-x-hidden bg-white;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-bold tracking-tighter;
+    }
+}
+
+/* Custom Components if needed */
+@layer components {
+    .btn-ueap {
+        @apply bg-[#0052CC] text-white px-6 py-3 font-bold text-[10px] uppercase tracking-widest hover:bg-[#A3E635] hover:text-[#0052CC] transition-all flex items-center gap-2;
+    }
+}

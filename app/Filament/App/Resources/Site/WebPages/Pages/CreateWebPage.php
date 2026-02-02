@@ -21,18 +21,20 @@ class CreateWebPage extends CreateRecord
         $data['id'] = $last ? $last->id + 1 : 1;
         $data['user_created_id'] = Auth::id();
         $data['uuid'] = Str::uuid();
+        $data['text'] = '';
+        $data['type'] = 'page';
 
         return $data;
     }
 
-    protected function handleRecordCreation(array $data): Model
-    {
-        $record = static::getModel()::create($data);
+    // protected function handleRecordCreation(array $data): Model
+    // {
+    //     $record = static::getModel()::create($data);
 
-        if ($data['file']) $record->storeFileWithModelId($data['file'], 'web/pages');
+    //     if ($data['file']) $record->storeFileWithModelId($data['file'], 'web/pages');
 
-        return $record;
-    }
+    //     return $record;
+    // }
 
     protected function getRedirectUrl(): string
     {

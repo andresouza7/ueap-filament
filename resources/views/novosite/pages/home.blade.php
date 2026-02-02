@@ -1,12 +1,15 @@
-@extends('novosite.template.main')
+@extends('novosite.template.master')
 
-@section('title', 'Home')
+@section('title', 'Início')
 
 @section('content')
-    @include('novosite.partials.home-banner')
-    @include('novosite.partials.home-menu')
-    @include('novosite.partials.servicos')
-    @include('novosite.partials.programas')
-    @include('novosite.partials.stats')
-    @include('novosite.partials.faq')
+    <div class="flex flex-col">
+        @include('novosite.components.home-destaques')
+        {{-- @include('novosite.components.home-acesso-rapido') --}}
+        @include('novosite.components.home-noticias')
+        @include('novosite.components.home-eventos')
+        @include('novosite.components.home-institucional')
+        @include('novosite.components.home-programas')
+        {{-- @include('novosite.components.videos') --}}
+    </div>
 @endsection

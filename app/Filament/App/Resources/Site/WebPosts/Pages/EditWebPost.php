@@ -7,6 +7,7 @@ use App\Filament\App\Resources\Site\WebPosts\WebPostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class EditWebPost extends EditRecord
 {

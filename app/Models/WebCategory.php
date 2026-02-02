@@ -28,9 +28,15 @@ class WebCategory extends Model
         'slug',
     ];
 
+    // public function posts()
+    // {
+    //     return $this->hasMany(WebPost::class);
+    // }
+
+    // Em WebCategory.php
     public function posts()
     {
-        return $this->hasMany(WebPost::class);
+        return $this->belongsToMany(WebPost::class, 'web_category_post', 'web_category_id', 'web_post_id');
     }
 
     public function pages()

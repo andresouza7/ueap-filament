@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class WebPage extends Model
+class WebPage extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity;
+    use HasFactory, SoftDeletes, HandlesFileUpload, LogsActivity, InteractsWithMedia;
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -33,11 +35,16 @@ class WebPage extends Model
         'title',
         'description',
         'text',
+        'content',
         'status',
     ];
 
     protected $appends = [
-        'image_url'
+        'image_url',
+    ];
+
+    protected $casts = [
+        'content' => 'array'
     ];
 
     public function getImageUrlAttribute()

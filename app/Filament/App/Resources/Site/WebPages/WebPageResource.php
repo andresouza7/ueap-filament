@@ -19,17 +19,25 @@ use App\Filament\App\Resources\Site\WebPages\Pages\EditWebPage;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\App\Resources\Site\WebPageResource\Pages;
 use App\Filament\App\Resources\Site\WebPages\RelationManagers\MenuItemsRelationManager;
+use App\Filament\App\Resources\Site\WebPosts\WebPostResource;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CourseCoordinator;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CurriculumBlock;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\HeroBlock;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\SimpleTextSection;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\StaffBlock;
 use App\Models\WebMenu;
 use App\Models\WebMenuPlace;
 use App\Models\WebPage;
 use Filament\Forms;
+use Filament\Forms\Components\Builder;
+use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
@@ -38,6 +46,8 @@ class WebPageResource extends Resource
     protected static ?string $model = WebPage::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
     protected static string | \UnitEnum | null $navigationGroup = 'Site';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
     {
@@ -68,20 +78,8 @@ class WebPageResource extends Resource
                             'unpublished' => 'Despublicado'
                         ]),
 
-                    RichEditor::make('text')
-                        ->label('Texto')
-                        ->required()
-                        ->formatStateUsing(fn($state) => clean_text($state))
-                        ->extraInputAttributes(['style' => 'min-height: 20rem;'])
-                        ->disableToolbarButtons(['attachFiles'])
-                        ->columnSpanFull(),
-                    FileUpload::make('file')
-                        ->label('Imagem JPG')
-                        ->directory('web/pages')
-                        ->acceptedFileTypes(['image/jpeg'])
-                        ->previewable(false)
-                        ->maxFiles(1)
-                        ->getUploadedFileNameForStorageUsing(fn($record) => $record?->id . '.jpg'),
+                    WebPostResource::PageContentBlock(),
+
                     Select::make('web_menu_id')
                         ->hiddenOn('create')
                         ->label('Exibir menu nesta página?')
@@ -216,11 +214,11 @@ class WebPageResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     return parent::getEloquentQuery()
+    //         ->withoutGlobalScopes([
+    //             SoftDeletingScope::class,
+    //         ]);
+    // }
 }

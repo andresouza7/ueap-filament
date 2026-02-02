@@ -10,6 +10,9 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransparencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+//
+use App\Http\Controllers\NewsletterController;
+//
 
 
 // Intercepta o subdominio da intranet
@@ -67,7 +70,7 @@ Route::domain(env('TRANSPARENCY_URL'))->name('transparency.')->group(function ()
 // ===== Daqui para baixo Intercepta todas as requisições que não caírem nos subdomínios =====
 
 // Rotas do site institucional
-Route::name('site.')->group(function () {
+Route::name('old.site.')->prefix('old/')->group(function () {
     Route::get('/',                         [OldPageController::class, 'home'])->name('home');
     Route::get('/postagens',                [OldPageController::class, 'postList'])->name('post.list');
     Route::get('/postagem/{slug}',          [OldPageController::class, 'postShow'])->name('post.show');
@@ -84,22 +87,18 @@ Route::name('site.')->group(function () {
     Route::get('/busca', [SearchController::class, 'index'])->name('search');
 });
 
-// Route::name('novosite.')->prefix('/novo')->group(function () {
-//     Route::get('/',                         [PageController::class, 'home'])->name('home');
-//     Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
-//     Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
-//     Route::get('/pagina/{slug}',            [PageController::class, 'pageShow'])->name('page.show');
-//     Route::get('/documentos/{slug}',        [PageController::class, 'documentList'])->name('document.list');
-//     Route::get('/instrucoes_normativas/{slug?}', [PageController::class, 'normativeInstructionList'])->name('normative-instruction.list');
+Route::name('site.')->group(function () {
+    Route::get('/',                         [PageController::class, 'home'])->name('home');
+    Route::get('/postagens',                [PageController::class, 'postList'])->name('post.list');
+    Route::get('/postagem/{slug}',          [PageController::class, 'postShow'])->name('post.show');
+    Route::get('/pagina/{slug}',            [PageController::class, 'postShow'])->name('page.show');
 
-//     Route::name('document.')->group(function () {
-//         Route::get('consu/portarias',      [ConsuController::class, 'listOrdinance'])->name('consu-ordinance.list');
-//         Route::get('consu/resolucoes',      [ConsuController::class, 'listResolution'])->name('resolution.list');
-//         Route::get('/atas/{issuer}',       [ConsuController::class, 'listAta'])->name('ata.list');
-//             Route::get('/',                 [TransparencyController::class, 'home']            )->name('home');
-//             Route::get('/agenda',           [TransparencyController::class, 'listCalendar']    )->name('calendar.list');
-//     });
-// });
+    Route::name('documentos.')->group(function () {
+        Route::get('consu/portarias',      [PageController::class, 'listOrdinance'])->name('ordinance.list');
+        Route::get('consu/resolucoes',      [PageController::class, 'listResolution'])->name('resolution.list');
+        Route::get('calendario-academico',      [PageController::class, 'calendarList'])->name('calendar.list');
+    });
+});
 
 // Exibir tela de login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')
@@ -112,3 +111,20 @@ Route::post('/login', [AuthController::class, 'login'])
 // Rotas de call back da autenticação OAuth2
 Route::get('auth/google', [GoogleController::class, 'signInwithGoogle']);
 Route::get('callback/google', [GoogleController::class, 'callbackToGoogle']);
+##################
+## NEWSLETTER
+#####################
+
+//ROTA DO SUBSCRIBE
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.subscribe');
+
+//ROTA DO UNSUBSCRIBE
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.unsubscribe');
+
+//Rota do email em massa
+Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
+    ->name('newsletter.dispatch');

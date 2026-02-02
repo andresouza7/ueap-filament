@@ -127,6 +127,7 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             @php
                                 $menu_top = \App\Models\WebMenu::where('web_menu_place_id', 5)->first();
+                                // dd($menu_top);
                                 $menu_top_itens = $menu_top ? 
                                     $menu_top->items->where('menu_parent_id', null)
                                     ->where('status', 'published')
