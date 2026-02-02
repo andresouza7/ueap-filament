@@ -20,7 +20,7 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
             slug: '#'
         },
         {
-            title: "RENOVAÇÃO DE BOLSAS PIBEX",
+            title: "RENOVAÇÃO DE BOLSA PIBEX",
             category: { name: "EXTENSÃO" },
             image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800",
             slug: '#'
