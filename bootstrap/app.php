@@ -18,7 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Custom exception handler that REPLACES Laravel's default logging
         $exceptions->reportable(function (Throwable $e) {
-            $user = Auth::user();
+            try {
+                $user = Auth::user();
+            } catch (Throwable $t) {
+                $user = null;
+            }
 
             logger()->error($e->getMessage(), [
                 'user_id'   => $user->id ?? null,
