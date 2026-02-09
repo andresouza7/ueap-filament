@@ -26,7 +26,7 @@ const SearchModal = ({ isOpen, onClose }) => {
                     <input
                         autoFocus
                         type="text"
-                        placeholder="O que você está procurando na UEAP?"
+                        placeholder="O que você procura?"
                         className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-medium text-gray-800 placeholder:text-gray-300"
                         value={term}
                         onChange={(e) => setTerm(e.target.value)}
@@ -54,8 +54,8 @@ const SearchModal = ({ isOpen, onClose }) => {
 };
 
 const TopBar = () => (
-    <div className="bg-[#0052CC] text-white py-1.5 px-6 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+    <div className="bg-[#0052CC] text-white py-1.5 px-2 md:px-6 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 flex justify-end md:justify-between items-center">
             {/* Texto alinhado à esquerda conforme solicitado */}
             <span className="hidden md:inline-block text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
 
@@ -89,13 +89,13 @@ const MobileMenuItem = ({ item }) => {
                 {hasSubMenu ? (
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="flex-1 flex items-center justify-between text-left text-sm font-black text-[#0052CC] uppercase tracking-widest"
+                        className="flex-1 flex items-center justify-between text-left text-sm font-bold text-[#0052CC] uppercase tracking-widest"
                     >
                         {item.name}
                         <ChevronDown size={16} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                     </button>
                 ) : (
-                    <a href={resolveUrl(item.url)} className="block w-full text-sm font-black text-[#0052CC] uppercase tracking-widest">
+                    <a href={resolveUrl(item.url)} className="block w-full text-sm font-bold text-[#0052CC] uppercase tracking-widest">
                         {item.name}
                     </a>
                 )}
@@ -108,7 +108,7 @@ const MobileMenuItem = ({ item }) => {
                             <a
                                 key={subItem.id}
                                 href={resolveUrl(subItem.url)}
-                                className="text-xs font-bold text-gray-600 hover:text-[#0052CC] uppercase tracking-widest block py-1"
+                                className="text-xs font-medium text-gray-600 hover:text-[#0052CC] uppercase tracking-widest block py-1"
                             >
                                 {subItem.name}
                             </a>
@@ -122,15 +122,15 @@ const MobileMenuItem = ({ item }) => {
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
     <nav className="sticky top-0 z-50">
-        <div className="absolute inset-0 bg-gray-100/90 backdrop-blur-md shadow-md z-20 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gray-50/90 backdrop-blur-md shadow-md z-20 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 relative">
-            <div className="flex justify-between h-20">
+            <div className="flex justify-between h-16 lg:h-20">
                 <div className="flex items-center">
                     <Link href={route('site.home')} className="flex items-center gap-4 transition-all hover:translate-x-1 group text-left relative z-30">
-                        <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
+                        <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-10 lg:h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
                         <div className="-ml-4">
                             {/* Fonte Inter aplicada e cores ajustadas para quebrar o excesso de azul */}
-                            <h1 className="text-green-800/85 font-black text-2xl leading-none uppercase font-sans">
+                            <h1 className="text-green-800/85 font-black text-xl lg:text-2xl leading-none uppercase font-sans">
                                 UEAP
                             </h1>
                             <p className="text-[7px] md:text-[8px] font-medium text-gray-500 uppercase tracking-widest leading-tight mt-0.5">
@@ -140,47 +140,51 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                         </div>
                     </Link>
                 </div>
-                <div className="hidden lg:flex items-center space-x-8">
-                    {menus && menus.items && menus.items.length > 0 ? menus.items.map((item) => {
-                        const hasSubMenu = item.sub_itens && item.sub_itens.length > 0;
-                        return (
-                            <div key={item.id} className="relative group h-full flex items-center">
-                                {hasSubMenu ? (
-                                    <>
-                                        <button className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 z-30">
+                <div className="hidden lg:flex flex-1 items-center justify-between">
+                    <div className="flex-1 flex justify-center items-center gap-1">
+                        {menus && menus.items && menus.items.length > 0 ? menus.items.map((item) => {
+                            const hasSubMenu = item.sub_itens && item.sub_itens.length > 0;
+                            return (
+                                <div key={item.id} className="relative group h-full flex items-center">
+                                    {hasSubMenu ? (
+                                        <>
+                                            <button className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
+                                                {item.name}
+                                                <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
+                                            </button>
+
+                                            <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block animate-in fade-in slide-in-from-top-2 z-10">
+                                                {item.sub_itens.map(subItem => (
+                                                    <a
+                                                        key={subItem.id}
+                                                        href={resolveUrl(subItem.url)}
+                                                        className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-[#0052CC] hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-[#A3E635]"
+                                                    >
+                                                        {subItem.name}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <a
+                                            href={resolveUrl(item.url)}
+                                            className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
+                                        >
                                             {item.name}
                                             <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
-                                        </button>
+                                        </a>
+                                    )}
+                                </div>
+                            );
+                        }) : (
+                            <span className="text-xs text-gray-400 relative z-30">Carregando menu...</span>
+                        )}
+                    </div>
 
-                                        <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block animate-in fade-in slide-in-from-top-2 z-10">
-                                            {item.sub_itens.map(subItem => (
-                                                <a
-                                                    key={subItem.id}
-                                                    href={resolveUrl(subItem.url)}
-                                                    className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-[#0052CC] hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-[#A3E635]"
-                                                >
-                                                    {subItem.name}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </>
-                                ) : (
-                                    <a
-                                        href={resolveUrl(item.url)}
-                                        className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 z-30 flex items-center"
-                                    >
-                                        {item.name}
-                                        <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
-                                    </a>
-                                )}
-                            </div>
-                        );
-                    }) : (
-                        <span className="text-xs text-gray-400 relative z-30">Carregando menu...</span>
-                    )}
-
-                    <div className="h-6 w-px bg-gray-200 relative z-30"></div>
-                    <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
+                    <div className="flex items-center gap-2">
+                        <div className="h-6 w-px bg-gray-200 relative z-30"></div>
+                        <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
+                    </div>
                 </div>
                 <div className="flex lg:hidden items-center gap-4">
                     <button onClick={onSearchOpen} className="text-[#0052CC] p-2 relative z-30"><Search size={22} /></button>
