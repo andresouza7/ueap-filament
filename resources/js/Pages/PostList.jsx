@@ -44,8 +44,8 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
                     <ChevronRight size={12} />
                     <span className="text-[#0052CC]">Publicações</span>
                 </nav>
-                <h2 className="text-4xl md:text-6xl font-black text-[#0052CC] uppercase tracking-tighter mb-4">Explorar Publicações</h2>
-                <div className="h-2 w-24 bg-[#A3E635]"></div>
+                <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">Explorar Publicações</h2>
+                <div className="h-2 w-24 bg-ueap-primary"></div>
             </div>
         </div>
     );

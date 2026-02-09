@@ -15,16 +15,16 @@ const SidebarNews = ({ recentNews = [] }) => {
                     <a
                         key={item.id}
                         href={route('site.post.show', item.slug || item.id)}
-                        className="flex gap-4 group text-left w-full"
+                        className="flex gap-4 group text-left w-full items-center"
                     >
-                        <div className="w-20 h-20 bg-gray-100 shrink-0 overflow-hidden">
+                        <div className="w-24 h-16 bg-gray-100 shrink-0 overflow-hidden">
                             <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         </div>
-                        <div>
-                            <h4 className="text-xs font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-snug line-clamp-2 uppercase">
+                        <div className="flex flex-col justify-center">
+                            <span className="text-[11px] text-gray-400 font-bold mb-1 block uppercase tracking-tight">{item.date}</span>
+                            <h4 className="text-md font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-snug line-clamp-2">
                                 {item.title}
                             </h4>
-                            <span className="text-[9px] text-gray-400 font-bold mt-1 block uppercase tracking-tighter">{item.date}</span>
                         </div>
                     </a>
                 ))}

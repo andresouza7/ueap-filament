@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronRight, ArrowUpRight, ChevronLeft } from 'lucide-react';
 import { route } from 'ziggy-js';
 import QuickAccessSection from '@/Components/Site/QuickAccessSection';
@@ -6,7 +6,7 @@ import QuickAccessSection from '@/Components/Site/QuickAccessSection';
 const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
     // Adapter for props to match the layout's expectations if necessary
     // or just use featured directly.
-    const highlights = featured.length > 0 ? featured : [
+    const highlights = useMemo(() => featured.length > 0 ? featured : [
         {
             title: "PS UEAP 2025: CHAMADA OFICIAL DO RESULTADO PRELIMINAR",
             category: { name: "PROCESSO SELETIVO" },
@@ -25,32 +25,60 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
             image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800",
             slug: '#'
         }
-    ];
+    ], [featured]);
 
     const mainHighlight = highlights[0];
-    const secondaryHighlights = (banners && banners.length > 0) ? highlights.slice(0, 2) : highlights.slice(1, 3);
+    const secondaryHighlights = useMemo(() => (banners && banners.length > 0) ? highlights.slice(0, 2) : highlights.slice(1, 3), [banners, highlights]);
 
     // Carousel State
     const [currentBanner, setCurrentBanner] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 1024);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const carouselItems = useMemo(() => {
+        if (!isMobile) return banners || [];
+
+        const newsItems = secondaryHighlights.map((item, idx) => ({
+            id: item.id || `news-${idx}`,
+            url: item.slug ? route('site.post.show', item.slug) : '#',
+            image_url: item.image_url,
+            title: item.title,
+            description: item.category?.name || 'NOTÍCIA'
+        }));
+
+        return [...(banners || []), ...newsItems];
+    }, [isMobile, banners, secondaryHighlights]);
+
+    useEffect(() => {
+        if (currentBanner >= carouselItems.length) {
+            setCurrentBanner(0);
+        }
+    }, [carouselItems.length]);
 
     // Auto-play carousel
     useEffect(() => {
-        if (banners.length > 1) {
+        if (carouselItems.length > 1) {
             const interval = setInterval(() => {
-                setCurrentBanner((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+                setCurrentBanner((prev) => (prev >= carouselItems.length - 1 ? 0 : prev + 1));
             }, 5000);
             return () => clearInterval(interval);
         }
-    }, [banners]);
+    }, [carouselItems.length]);
 
     const nextBanner = (e) => {
         e.preventDefault();
-        setCurrentBanner((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+        setCurrentBanner((prev) => (prev >= carouselItems.length - 1 ? 0 : prev + 1));
     };
 
     const prevBanner = (e) => {
         e.preventDefault();
-        setCurrentBanner((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
+        setCurrentBanner((prev) => (prev === 0 ? carouselItems.length - 1 : prev - 1));
     };
 
     return (
@@ -67,9 +95,9 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
 
                     {/* COLUNA ESQUERDA: BANNERS ou NOTÍCIA DESTAQUE (66% / col-span-4) */}
                     <div className="lg:col-span-4 relative overflow-hidden h-[250px] lg:h-full block group">
-                        {banners && banners.length > 0 ? (
+                        {carouselItems.length > 0 ? (
                             <div className="relative w-full h-full">
-                                {banners.map((banner, index) => (
+                                {carouselItems.map((banner, index) => (
                                     <div
                                         key={banner.id}
                                         className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentBanner ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
@@ -84,12 +112,14 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
                                             {/* Gradiente e Texto Opcional no Banner - Overlay Unificado */}
                                             <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 z-10"></div>
                                             {(banner.title || banner.description) && (
-                                                <div className="absolute bottom-0 left-0 p-8 md:p-12 z-20">
+                                                <div className="absolute bottom-0 left-0 px-6 pb-10 pt-6 md:p-12 z-20 w-full">
                                                     {banner.description && (
-                                                        <span className="text-[#A3E635] font-bold uppercase tracking-widest text-xs mb-2 block">{banner.description}</span>
+                                                        <span className="text-[#A3E635] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-2 block">{banner.description}</span>
                                                     )}
                                                     {banner.title && (
-                                                        <h2 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter shadow-black drop-shadow-lg">{banner.title}</h2>
+                                                        <h2 className="text-white text-xl md:text-4xl lg:text-5xl font-bold md:font-black uppercase tracking-tighter shadow-black drop-shadow-lg leading-tight md:leading-none">
+                                                            {banner.title}
+                                                        </h2>
                                                     )}
                                                 </div>
                                             )}
@@ -98,7 +128,7 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
                                 ))}
 
                                 {/* Controls */}
-                                {banners.length > 1 && (
+                                {carouselItems.length > 1 && (
                                     <>
                                         <button
                                             onClick={prevBanner}
@@ -115,7 +145,7 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
 
                                         {/* Indicators */}
                                         <div className="absolute bottom-6 right-6 z-30 flex gap-2">
-                                            {banners.map((_, idx) => (
+                                            {carouselItems.map((_, idx) => (
                                                 <button
                                                     key={idx}
                                                     onClick={() => setCurrentBanner(idx)}
@@ -154,7 +184,7 @@ const AlternativeHeroSection = ({ featured = [], banners = [] }) => {
                     </div>
 
                     {/* COLUNA DIREITA: Menor (33% / col-span-2) */}
-                    <div className="lg:col-span-2 flex flex-col gap-0 h-[400px] lg:h-full overflow-hidden">
+                    <div className="hidden lg:flex lg:col-span-2 flex-col gap-0 h-[400px] lg:h-full overflow-hidden">
                         {secondaryHighlights.map((item, idx) => (
                             <a
                                 key={item.id || idx}

@@ -228,30 +228,43 @@ const SiteLayout = ({ children }) => {
             </main>
 
             {/* RODAPÉ */}
-            <footer className="bg-white pt-24 pb-12 border-t border-gray-100">
+            <footer className="bg-[#003D99] pt-24 pb-12 border-t border-white/10">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24 text-center md:text-left">
+                        {/* Coluna Logo e Info */}
                         <div className="md:col-span-1 flex flex-col items-center md:items-start">
-                            <div className="flex items-center gap-3 mb-8 grayscale opacity-70">
-                                <img src="/img/site/logo.png" alt="UEAP" className="h-10 w-auto" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; }} />
-                                <h4 className="font-bold text-gray-800 text-lg tracking-tighter">UEAP</h4>
+                            <div className="mb-6">
+                                {/* Logo com filtro para garantir branco total */}
+                                <img src="/img/site/logo_white.png" alt="UEAP" className="h-10 w-auto brightness-0 invert"
+                                    onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_white.png"; e.target.classList.remove('brightness-0', 'invert'); }}
+                                />
                             </div>
-                            <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em] leading-loose max-w-[200px]">
-                                UNIVERSIDADE DO ESTADO DO AMAPÁ — FORMANDO PROFISSIONAIS PARA O DESENVOLVIMENTO DA AMAZÔNIA.
-                            </p>
+
+                            <div className="space-y-2 max-w-[220px]">
+                                <h4 className="font-bold text-white text-[10px] uppercase tracking-[0.2em] leading-tight border-l-2 border-[#A3E635] pl-3">
+                                    Universidade do<br />Estado do Amapá
+                                </h4>
+                                <p className="text-[10px] text-white/60 font-medium leading-relaxed pl-3">
+                                    Formando profissionais para o desenvolvimento da Amazônia.
+                                </p>
+                            </div>
                         </div>
 
+                        {/* Colunas de Links */}
                         {[
                             { title: "INSTITUCIONAL", links: ["HISTÓRICO", "REITORIA", "CAMPI", "TRANSPARÊNCIA"] },
                             { title: "SISTEMAS", links: ["WEBMAIL", "SIGAA", "BIBLIOTECA", "EDITAIS"] },
                             { title: "CONTATO", links: ["FALE CONOSCO", "LOCALIZAÇÃO", "OUVIDORIA"] }
                         ].map((col, i) => (
                             <div key={i}>
-                                <h5 className="font-bold text-[#0052CC] uppercase mb-8 text-[10px] tracking-[0.2em]">{col.title}</h5>
-                                <ul className="space-y-4">
+                                {/* Títulos em Verde Limão para contraste máximo */}
+                                <h5 className="font-bold text-[#A3E635] uppercase mb-8 text-xs tracking-[0.2em]">
+                                    {col.title}
+                                </h5>
+                                <ul className="space-y-3">
                                     {col.links.map(link => (
                                         <li key={link}>
-                                            <a href="#" className="text-[10px] font-bold text-gray-400 uppercase hover:text-[#0052CC] transition-colors tracking-widest relative group">
+                                            <a href="#" className="text-xs font-bold text-white/70 uppercase hover:text-white transition-colors tracking-widest relative group">
                                                 {link}
                                                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#A3E635] transition-all group-hover:w-full"></span>
                                             </a>
@@ -262,17 +275,18 @@ const SiteLayout = ({ children }) => {
                         ))}
                     </div>
 
-                    <div className="pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-300 font-bold uppercase tracking-[0.4em]">
+                    {/* Bottom Footer */}
+                    <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-[0.4em]">
                         <p>© 2026 UEAP — SECRETARIA DE TECNOLOGIA DA INFORMAÇÃO</p>
                         <div className="mt-6 md:mt-0 flex gap-8">
-                            <a href="#" className="hover:text-[#0052CC] transition-colors">POLÍTICA DE PRIVACIDADE</a>
-                            <a href="#" className="hover:text-[#0052CC] transition-colors">TERMOS DE USO</a>
+                            <a href="#" className="hover:text-white transition-colors">POLÍTICA DE PRIVACIDADE</a>
+                            <a href="#" className="hover:text-white transition-colors">TERMOS DE USO</a>
                         </div>
                     </div>
                 </div>
             </footer>
 
-            <AIChatbot />
+            {/* <AIChatbot /> */}
         </div>
     );
 };

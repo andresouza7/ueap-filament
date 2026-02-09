@@ -3,50 +3,61 @@ import { Mail, Send } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 const NewsSection = ({ posts = [] }) => {
+    // Garantindo que temos 4 itens para o exemplo de layout
+    const displayPosts = posts.slice(0, 4);
+
     return (
-        <section className="max-w-7xl mx-auto px-4 py-20">
+        <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
+            {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-                <div className="border-l-4 border-[#0052CC] pl-6">
-                    <h2 className="text-3xl font-bold text-[#0052CC] uppercase tracking-tighter">Notícias Recentes</h2>
-                    <p className="text-gray-400 font-bold text-[10px] mt-1 tracking-[0.2em] uppercase">Comunicados e Atualizações</p>
+                <div className="border-l-4 border-[#0052CC] pl-4 md:pl-5">
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-[#0052CC] tracking-tighter uppercase leading-none">
+                        Notícias <span className="font-light text-gray-500">Recentes</span>
+                    </h2>
+                    <p className="block text-gray-400 font-bold text-[9px] md:text-xs mt-2 tracking-[0.2em] uppercase">
+                        Comunicados e Atualizações Oficiais
+                    </p>
                 </div>
+
                 <a
                     href={route('site.post.list', { type: 'news' })}
-                    className="self-end md:self-auto group text-[#0052CC] font-black uppercase text-xs tracking-[0.2em] flex items-center gap-2 border-2 border-[#0052CC] px-4 py-2 hover:bg-[#0052CC] hover:text-white transition-all duration-200"
+                    className="w-full md:w-auto text-center group text-[#0052CC] font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 border-2 border-[#0052CC] px-6 py-3 hover:bg-[#0052CC] hover:text-white transition-all duration-300"
                 >
                     Ver acervo completo
                 </a>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                {posts.map((news) => (
+            {/* Grid de Notícias - Agora com 4 colunas em lg: */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                {displayPosts.map((news) => (
                     <a href={route('site.post.show', news.slug)} key={news.id} className="group cursor-pointer block">
-                        <div className="relative aspect-16/10 overflow-hidden mb-6 bg-gray-100 rounded-sm">
+                        <div className="relative aspect-video md:aspect-[4/3] overflow-hidden mb-5 bg-gray-100 rounded-sm">
                             <img
                                 src={news.image_url || "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=400"}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 alt={news.title}
                             />
-                            <div className="absolute top-0 right-0 bg-[#A3E635] text-[#0052CC] px-3 py-1 font-bold text-[9px] uppercase tracking-widest shadow-sm">
+                            <div className="absolute top-0 right-0 bg-[#A3E635] text-[#0052CC] px-2 py-1 font-black text-[9px] uppercase tracking-tighter shadow-md">
                                 {news.category?.name || "GERAL"}
                             </div>
                         </div>
+
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="w-10 h-[2px] bg-[#A3E635]"></span>
+                            <span className="w-6 h-[2px] bg-[#A3E635] group-hover:w-10 transition-all duration-300"></span>
                             <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">
-                                {new Date(news.created_at).toLocaleDateString()}
+                                {new Date(news.created_at).toLocaleDateString('pt-BR')}
                             </p>
                         </div>
-                        <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight">
+
+                        {/* Tipografia do Título Melhorada */}
+                        <h4 className="text-base md:text-lg font-medium text-gray-900 group-hover:text-[#0052CC] transition-colors leading-[1.2] tracking-tight">
                             {news.title}
                         </h4>
                     </a>
                 ))}
             </div>
 
-            {/* NEWSLETTER BOX */}
-            {/* NEWSLETTER BOX (RE-DESIGNED to match Events Section) */}
-            <div className="mt-20 p-8 md:p-12 bg-[#0052CC] relative overflow-hidden shadow-2xl rounded-sm flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="mt-12 md:mt-20 p-8 md:p-12 bg-[#0052CC] relative overflow-hidden shadow-2xl rounded-sm flex flex-col md:flex-row items-center justify-between gap-8">
                 {/* Decorative Element */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rotate-45 transform translate-x-16 -translate-y-16 pointer-events-none"></div>
 
@@ -64,10 +75,12 @@ const NewsSection = ({ posts = [] }) => {
                         placeholder="seu-email@exemplo.com"
                         className="w-full sm:w-80 px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-[#A3E635] text-sm font-medium text-white placeholder:text-white/50 transition-colors rounded-sm"
                     />
+
                     <button className="w-full sm:w-auto bg-[#A3E635] text-[#0052CC] px-6 py-3 font-bold text-[10px] uppercase tracking-widest hover:bg-white hover:text-[#0052CC] transition-all shadow-md flex items-center justify-center gap-2 group rounded-sm">
                         Inscrever <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </button>
                 </div>
+
             </div>
         </section>
     );
