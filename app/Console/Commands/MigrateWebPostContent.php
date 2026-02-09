@@ -47,10 +47,17 @@ class MigrateWebPostContent extends Command
                  * 2. TEXT NODE
                  */
                 if (!empty($post->text)) {
+
+                    // Remove parágrafos vazios ou com apenas &nbsp; (lixo do editor antigo)
+                    $cleanBody = preg_replace('/<p[^>]*>(?:&nbsp;|\s)*<\/p>/iu', '', $post->text);
+
+                    // Limpa caracteres especiais e espaços extras
+                    $cleanBody = clean_text($cleanBody);
+
                     $content[] = [
                         'type' => 'text',
                         'data' => [
-                            'body' => $post->text,
+                            'body' => $cleanBody,
                         ],
                     ];
                 }

@@ -9,9 +9,9 @@
     --color-ueap-primary: #0052CC;
     --color-ueap-accent: #A3E635;
     --color-ueap-secondary: #0F172A;
-    
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Montserrat', sans-serif;
+
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 /* Custom Base Styles */
@@ -19,123 +19,49 @@
     body {
         @apply antialiased font-sans text-gray-900 overflow-x-hidden bg-white;
     }
-    
-    h1, h2, h3, h4, h5, h6 {
-        @apply font-bold tracking-tighter;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-bold tracking-tight;
     }
-}
-
-/* Custom Components if needed */
-@layer components {
-    .btn-ueap {
-        @apply bg-[#0052CC] text-white px-6 py-3 font-bold text-[10px] uppercase tracking-widest hover:bg-[#A3E635] hover:text-[#0052CC] transition-all flex items-center gap-2;
-    }
-}
-
-table {
-  border-collapse: collapse;
-  width: auto !important;
-  /* permite expandir além do container */
-  min-width: 100% !important;
-  /* nunca menor que o container */
-  table-layout: auto !important;
-  /* deixa o browser calcular as larguras */
-  display: block;
-  /* permite scroll horizontal */
-  overflow-x: auto;
-  /* ativa o scroll */
-  max-width: 100%;
-  /* não ultrapassa o container */
-  line-height: 1.2rem;
-  font-size: 13px;
-}
-
-/* células */
-table th,
-table td {
-  min-width: 120px;
-  /* impede colunas minúsculas */
-  padding: 6px 8px;
-  white-space: normal;
-  /* quebra linha normal */
-  word-break: break-word;
-  /* quebra palavras grandes */
-  overflow: visible;
-  /* não esconder conteúdo */
-  box-sizing: border-box;
 }
 
 /* pagina post-show */
-.article-body {
-    /* Reseta a base para garantir consistência */
-    @apply text-slate-600 leading-relaxed text-base;
-}
-
-/* Mata estilos do banco, EXCETO o que está dentro do figcaption */
 .article-body *:not(figure, figure *) {
-    color: inherit !important;
-    font-size: 16px !important;
-    font-family: inherit !important;
-    background-color: transparent !important;
-    box-sizing: border-box;
-}
-
-/* Agora suas classes (que passei na resposta anterior) aplicam o estilo correto */
-.article-body p {
-    @apply mb-4 text-slate-600 leading-relaxed text-base;
-}
-
-/* Títulos: Identidade do Header (Peso 1000 + Itálico + Tracking) */
-.article-body h1, 
-.article-body h2, 
-.article-body h3 {
-    @apply mt-12 mb-6 font-[1000] text-slate-900 uppercase italic tracking-tighter leading-[1.1];
-}
-
-.article-body h2 { @apply text-2xl md:text-3xl; }
-.article-body h3 { @apply text-xl md:text-2xl; }
-
-/* Listas: Limpas e Técnicas */
-.article-body ul, 
-.article-body ol {
-    @apply ml-5 mb-2 space-y-2;
-}
-
-.article-body ul { @apply list-disc; }
-.article-body ol { @apply list-decimal; }
-
-.article-body li {
-    @apply pl-2;
-}
-
-/* Negrito: Contraste Máximo */
-.article-body strong {
-    @apply font-black text-slate-900;
-}
-
-/* Citações: Brutalista (Sem arredondamentos) */
-.article-body blockquote {
-    @apply my-12 p-8 bg-slate-50 border-l-8 border-emerald-500 italic text-slate-800 text-xl font-bold uppercase tracking-tight;
-}
-
-/* Links: Identidade UEAP com efeitos modernos */
-.article-body a {
-    @apply relative font-semibold text-[#0052CC] transition-all duration-300;
-    text-decoration: underline;
-    text-decoration-color: rgba(0, 82, 204, 0.1);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+    /* Reseta a base para garantir consistência */
+    font-size: 15px !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 .article-body a:hover {
-    @apply text-[#003d99];
-    text-decoration-color: #A3E635;
-    padding: 0 2px;
-    border-radius: 2px;
+    text-decoration: underline !important;
 }
 
-.article-body a:active {
-    @apply text-[#002d70];
-    text-decoration-color: #A3E635;
+table {
+    border-collapse: collapse;
+    width: 100% !important;
+    table-layout: auto !important;
+    display: table !important;
+    margin-bottom: 1.5rem;
+    border-spacing: 0;
+    font-size: 13px !important;
 }
-/* fim pagina post show */
+
+/* células */
+.article-body table,
+.article-body table * {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+}
+
+table th,
+table td {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: top;
+}

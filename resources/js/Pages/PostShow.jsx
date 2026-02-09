@@ -69,7 +69,22 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             setLoadingSummary(false);
         }
     };
-
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: newsData.title,
+                    text: newsData.category,
+                    url: window.location.href,
+                });
+            } catch (error) {
+                console.log('Error sharing', error);
+            }
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copiado para a área de transferência!');
+        }
+    };
 
     const headerContent = (
         <div className="relative overflow-hidden bg-gray-50 border-b border-gray-200">
@@ -110,7 +125,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                 </div>
 
                 {/* Meta Info mais compacto */}
-                <div className="grid grid-cols-2 md:flex items-center gap-y-3 md:gap-10 pt-6 border-t border-gray-900/10 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                <div className="flex flex-wrap items-center gap-4 md:gap-10 pt-6 border-t border-gray-900/10 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
                     <div className="flex items-center gap-2.5">
                         <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
                             <Calendar size={12} className="text-[#0052CC]" />
@@ -123,18 +138,20 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                         </div>
                         <span>{newsData.views}</span>
                     </div>
-                    <div className="md:ml-auto flex gap-4">
-                        <button className="flex items-center gap-2 hover:text-[#0052CC] transition-colors">
+                    <div className="mx-auto md:mx-0 md:ml-auto flex gap-4">
+                        <button
+                            onClick={handleShare}
+                            className="flex items-center gap-2 hover:text-[#0052CC] transition-colors cursor-pointer"
+                        >
                             <Share2 size={12} /> Compartilhar
-                        </button>
-                        <button className="flex items-center gap-2 hover:text-[#0052CC] transition-colors">
-                            <Bookmark size={12} /> Salvar
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     );
+
+
 
     return (
         <SidebarLayout
@@ -143,6 +160,8 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             header={headerContent}
             bottom={<RelatedPosts posts={relatedPosts} />}
         >
+            {/* ... (rest of the component) */}
+
             {summary && (
                 <div className="mb-12 bg-gray-50 border-l-4 border-[#A3E635] p-8 rounded-none animate-in fade-in slide-in-from-left-4">
                     <div className="flex items-center gap-2 mb-4 text-[#0052CC] font-black text-xs uppercase tracking-widest"><Sparkles size={18} className="text-[#A3E635]" /> Resumo Inteligente por IA</div>

@@ -1,10 +1,19 @@
-import React from 'react';
+const TextBlock = ({ data }) => {
+    // Wrap tables in a scrollable container to fix overflow issues
+    const processedBody = (data.body || '').replace(
+        /<table/g,
+        '<div class="w-full overflow-x-auto mb-6"><table'
+    ).replace(
+        /<\/table>/g,
+        '</table></div>'
+    );
 
-const TextBlock = ({ data }) => (
-    <div
-        className="article-body prose-custom text-lg leading-relaxed font-[480] mb-6 space-y-6 text-gray-800"
-        dangerouslySetInnerHTML={{ __html: data.body || '' }}
-    />
-);
+    return (
+        <div
+            className="article-body prose-custom mb-6 space-y-2"
+            dangerouslySetInnerHTML={{ __html: processedBody }}
+        />
+    );
+};
 
 export default TextBlock;

@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/login.css',
                 'resources/css/site.css',
+                'resources/css/novosite.css',
                 'resources/js/app.jsx',
                 'resources/js/tutorial.js',
                 'resources/js/tutorial-ponto.js',

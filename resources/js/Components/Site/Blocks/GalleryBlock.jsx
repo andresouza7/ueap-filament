@@ -19,8 +19,8 @@ const GalleryBlock = ({ data }) => {
     if (!images.length) return null;
 
     return (
-        <figure className="w-full flex flex-col my-8">
-            <div className="relative overflow-hidden aspect-video bg-white rounded-[2rem] border-[6px] border-[#A3E635] shadow-xl group">
+        <figure className="w-full flex flex-col mb-8">
+            <div className="relative overflow-hidden aspect-video bg-white shadow-xl group">
                 {/* Scrollable Container */}
                 <div
                     ref={sliderRef}
@@ -76,14 +76,14 @@ const GalleryBlock = ({ data }) => {
             {/* Caption / Credits */}
             {(data.subtitle || data.credits) && (
                 <figcaption className="mt-4 px-2 flex flex-col gap-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start gap-2">
                         <div className="h-4 w-1 bg-[#0052CC]"></div>
-                        <span className="text-[#002855] font-black uppercase text-sm tracking-widest">
+                        <span className="text-[#002855] text-sm font-medium">
                             {data.subtitle || 'Galeria UEAP'}
                         </span>
                     </div>
                     {data.credits && (
-                        <span className="text-xs font-bold text-gray-500 uppercase ml-3">
+                        <span className="text-sm font-bold text-gray-500 ml-3">
                             Foto: {data.credits}
                         </span>
                     )}

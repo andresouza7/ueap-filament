@@ -6,65 +6,84 @@ import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 
 const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) => {
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+    // Filter menu items based on current active item
+    const currentMenuItem = menu?.items?.find(item => window.location.pathname.includes(item.url));
+
     return (
         <SiteLayout>
             {header && (
-                <div className="w-full mb-12">
+                <div className="w-full mb-2 md:mb-12">
                     {header}
                 </div>
             )}
-            <div className="max-w-7xl mx-auto px-4 py-6 md:py-12">
+            <div className="max-w-7xl mx-auto px-4 py-6 md:py-12 relative">
+
+                {/* Mobile Menu Toggle (Only if menu exists) */}
+                {menu && (
+                    <div className="lg:hidden mb-6 sticky top-20 z-30">
+                        <button
+                            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                            className="w-full bg-[#0052CC] text-white p-4 rounded-lg shadow-lg flex items-center justify-between font-bold uppercase text-xs tracking-widest"
+                        >
+                            <span>{currentMenuItem ? currentMenuItem.name : 'Nesta Seção'}</span>
+                            <span className={`transform transition-transform ${isDrawerOpen ? 'rotate-180' : ''}`}>▼</span>
+                        </button>
+
+                        {/* Mobile Drawer */}
+                        <div className={`absolute top-full left-0 w-full bg-white shadow-xl border border-gray-100 rounded-b-lg transition-all duration-300 origin-top z-40 ${isDrawerOpen ? 'max-h-[60vh] overflow-y-auto opacity-100' : 'max-h-0 overflow-hidden opacity-0 pointer-events-none'}`}>
+                            <nav className="flex flex-col p-2">
+                                {menu.items && menu.items.map((item, index) => {
+                                    const isActive = window.location.pathname.includes(item.url);
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={'/' + item.url}
+                                            className={`py-3 px-4 border-l-4 transition-colors text-xs font-bold uppercase tracking-wider ${isActive
+                                                ? 'border-[#A3E635] bg-blue-50 text-[#0052CC]'
+                                                : 'border-transparent text-gray-500 hover:bg-gray-50'}`}
+                                        >
+                                            {item.name}
+                                        </a>
+                                    );
+                                })}
+                            </nav>
+                        </div>
+                    </div>
+                )}
+
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Main Content Area */}
                     <main className="lg:w-2/3">
                         {children}
                     </main>
 
-                    {/* Sidebar Area */}
-                    <aside className="lg:w-1/3">
+                    {/* Sidebar Area (Desktop Only for Menu) */}
+                    <aside className={`lg:w-1/3 ${menu ? 'hidden lg:block' : ''}`}>
                         {sidebar ? (
                             sidebar
                         ) : menu ? (
-                            /* Page Menu Navigation */
-                            <nav className="space-y-2">
+                            /* Page Menu Navigation - Desktop */
+                            <nav className="space-y-2 sticky top-24">
                                 <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
                                     Nesta Seção
                                 </h4>
                                 {menu.items && menu.items.length > 0 ? (
                                     menu.items.map((item, index) => {
-                                        const isActive = window.location.href === item.url;
+                                        const isActive = window.location.pathname.includes(item.url);
                                         return (
                                             <a
                                                 key={index}
                                                 href={'/' + item.url}
-                                                className={`group flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${isActive
-                                                    ? 'bg-[#0052CC] border-[#0052CC] text-white shadow-md'
-                                                    : 'bg-gray-50 border-gray-100 text-gray-800 hover:border-[#A3E635] hover:bg-white hover:shadow-sm'
+                                                className={`group relative flex items-center justify-between py-2 px-3 border-l-[3px] transition-all hover:bg-gray-50 hover:pl-4 ${isActive
+                                                    ? 'border-[#0052CC] text-[#0052CC] bg-blue-50 font-black'
+                                                    : 'border-transparent text-gray-500 font-bold hover:border-[#A3E635] hover:text-gray-900'
                                                     }`}
                                             >
-                                                <span className="text-[10px] font-bold uppercase tracking-wide">
+                                                <span className="text-[11px] uppercase tracking-wider">
                                                     {item.name}
                                                 </span>
-                                                <div
-                                                    className={`w-6 h-6 rounded-full flex items-center justify-center transition-all shrink-0 ml-2 ${isActive
-                                                        ? 'bg-[#A3E635]'
-                                                        : 'bg-white shadow-sm group-hover:bg-[#A3E635]'
-                                                        }`}
-                                                >
-                                                    <svg
-                                                        className={`w-2.5 h-2.5 ${isActive ? 'text-[#0052CC]' : 'text-gray-600 group-hover:text-[#0052CC]'}`}
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2.5}
-                                                            d="M9 5l7 7-7 7"
-                                                        />
-                                                    </svg>
-                                                </div>
                                             </a>
                                         );
                                     })
@@ -84,7 +103,7 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) 
                 </div>
 
                 {bottom && (
-                    <div className="w-full">
+                    <div className="w-full mt-12">
                         {bottom}
                     </div>
                 )}
