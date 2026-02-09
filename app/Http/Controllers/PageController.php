@@ -68,7 +68,12 @@ class PageController extends Controller
 
     public function postShow($slug)
     {
-        $post = WebPost::where('slug', $slug)->where('status', 'published')->first();
+        $post = WebPost::where('slug', $slug)
+            ->where('status', 'published')
+            ->with(['web_menu.items' => function ($query) {
+                $query->where('status', 'published')->orderBy('position');
+            }])
+            ->first();
 
         if ($post) {
             // Apply clean_text to content blocks before sending to frontend

@@ -122,7 +122,7 @@ const MobileMenuItem = ({ item }) => {
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
     <nav className="sticky top-0 z-50">
-        <div className="absolute inset-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-50 z-20 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gray-100/90 backdrop-blur-md shadow-md z-20 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 relative">
             <div className="flex justify-between h-20">
                 <div className="flex items-center">
@@ -130,7 +130,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                         <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
                         <div className="-ml-4">
                             {/* Fonte Inter aplicada e cores ajustadas para quebrar o excesso de azul */}
-                            <h1 className="text-[#0052CC] font-black text-2xl leading-none uppercase tracking-tighter group-hover:text-[#003D99] transition-colors font-sans">
+                            <h1 className="text-green-800/85 font-black text-2xl leading-none uppercase font-sans">
                                 UEAP
                             </h1>
                             <p className="text-[7px] md:text-[8px] font-medium text-gray-500 uppercase tracking-widest leading-tight mt-0.5">

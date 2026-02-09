@@ -23,7 +23,7 @@ const StudentAssistanceSection = () => {
                             <div className="w-8 h-1 bg-[#A3E635]"></div>
                             <span className="text-gray-400 font-bold text-xs uppercase tracking-[0.3em]">Programas & Auxílios</span>
                         </div>
-                        <h2 className="text-5xl md:text-6xl font-black text-[#0052CC] uppercase tracking-tighter leading-[0.9]">
+                        <h2 className="text-3xl md:text-5xl font-black text-[#0052CC] uppercase tracking-tighter leading-[0.9]">
                             Assistência<br />Estudantil
                         </h2>
                     </div>

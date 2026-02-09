@@ -25,14 +25,53 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) 
                         {sidebar ? (
                             sidebar
                         ) : menu ? (
-                            /* Placeholder for future menu implementation */
-                            <div className="bg-gray-50 p-6 border-l-4 border-[#0052CC]">
-                                <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-4">Menu</h3>
-                                <div className="space-y-2">
-                                    {/* Render menu items here in future */}
-                                    <p className="text-sm text-gray-500">Menu content goes here.</p>
-                                </div>
-                            </div>
+                            /* Page Menu Navigation */
+                            <nav className="space-y-2">
+                                <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
+                                    Nesta Seção
+                                </h4>
+                                {menu.items && menu.items.length > 0 ? (
+                                    menu.items.map((item, index) => {
+                                        const isActive = window.location.href === item.url;
+                                        return (
+                                            <a
+                                                key={index}
+                                                href={'/' + item.url}
+                                                className={`group flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${isActive
+                                                    ? 'bg-[#0052CC] border-[#0052CC] text-white shadow-md'
+                                                    : 'bg-gray-50 border-gray-100 text-gray-800 hover:border-[#A3E635] hover:bg-white hover:shadow-sm'
+                                                    }`}
+                                            >
+                                                <span className="text-[10px] font-bold uppercase tracking-wide">
+                                                    {item.name}
+                                                </span>
+                                                <div
+                                                    className={`w-6 h-6 rounded-full flex items-center justify-center transition-all shrink-0 ml-2 ${isActive
+                                                        ? 'bg-[#A3E635]'
+                                                        : 'bg-white shadow-sm group-hover:bg-[#A3E635]'
+                                                        }`}
+                                                >
+                                                    <svg
+                                                        className={`w-2.5 h-2.5 ${isActive ? 'text-[#0052CC]' : 'text-gray-600 group-hover:text-[#0052CC]'}`}
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2.5}
+                                                            d="M9 5l7 7-7 7"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                        );
+                                    })
+                                ) : (
+                                    <p className="text-xs text-gray-500">Nenhum item disponível.</p>
+                                )}
+                            </nav>
                         ) : (
                             <div className="space-y-12">
                                 <SidebarSearch />

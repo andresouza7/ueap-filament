@@ -3,7 +3,7 @@ import SidebarLayout from '@/Layouts/SidebarLayout';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
 import { callGemini } from '@/Services/GeminiService';
-import { Calendar, Eye, Share2, Sparkles, Loader2, Clock } from 'lucide-react';
+import { Calendar, Eye, Share2, Sparkles, Loader2, Clock, ChevronRight, Bookmark } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
@@ -70,36 +70,67 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
         }
     };
 
-    const headerContent = (
-        <div className="animate-fade-in-up bg-gradient-to-r from-[#0052CC] to-[#003d99] border-b border-white/10 w-full relative overflow-hidden">
-            {/* Decoration */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-            <div className="max-w-7xl mx-auto px-4 py-12 md:py-20 relative z-10">
-                {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/60 mb-8">
-                    <a href={route('site.home')} className="hover:text-white transition-colors">Início</a>
-                    <span className="text-white/40">/</span>
-                    <span className="text-white">{newsData.category}</span>
+    const headerContent = (
+        <div className="relative overflow-hidden bg-gray-50 border-b border-gray-200">
+            {/* Elementos Decorativos de Fundo */}
+            {/* <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#A3E635]/10 to-transparent rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0052CC]/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div> */}
+
+            <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
+                {/* Breadcrumb refinado e mais próximo do título */}
+                <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-6">
+                    <a href="#" className="hover:text-[#0052CC] transition-colors">Início</a>
+                    <ChevronRight size={10} className="text-gray-300" />
+                    <span className="text-gray-900">{newsData.category}</span>
                 </nav>
 
-                <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-                    <span className="inline-block px-3 py-1 bg-[#A3E635] text-[#0052CC] text-[10px] font-black uppercase rounded-none tracking-[0.2em] shadow-md">
-                        {newsData.category}
-                    </span>
-                    <button onClick={generateAISummary} className="flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase rounded-none hover:bg-white hover:text-[#0052CC] transition-all backdrop-blur-sm">
-                        {loadingSummary ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} {summary ? "✨ Atualizado" : "✨ Resumo IA"}
+                <div className="flex flex-wrap justify-between items-end gap-6 mb-6">
+                    <div className="space-y-4 flex-1 min-w-[300px]">
+                        <span className="inline-flex items-center px-3 py-1 bg-[#0052CC] text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                            {newsData.category}
+                        </span>
+                        {/* Fonte do título reduzida e espaçamento entre linhas ajustado */}
+                        <h1 className="text-3xl md:text-4xl font-black text-gray-900 leading-[1.05] tracking-tighter uppercase break-words max-w-4xl">
+                            {newsData.title}
+                        </h1>
+                    </div>
+
+                    <button
+                        onClick={() => generateAISummary()}
+                        className="group relative flex items-center gap-3 px-5 py-2.5 bg-white border-2 border-[#0052CC] text-[#0052CC] text-[10px] font-black uppercase tracking-widest hover:bg-[#0052CC] hover:text-white transition-all duration-300 shadow-[3px_3px_0px_0px_#A3E635] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
+                    >
+                        {loadingSummary ? (
+                            <Loader2 size={14} className="animate-spin" />
+                        ) : (
+                            <Sparkles size={14} className="group-hover:animate-pulse" />
+                        )}
+                        {summary ? "Resumo Atualizado" : "Resumo IA"}
                     </button>
                 </div>
 
-                <h1 className="text-3xl md:text-5xl font-black text-white mb-8 leading-[1.1] uppercase tracking-tighter max-w-5xl drop-shadow-md">
-                    {newsData.title}
-                </h1>
-
-                <div className="flex flex-wrap items-center gap-8 text-[10px] font-bold text-white/80 uppercase tracking-widest border-t border-white/10 pt-8">
-                    <div className="flex items-center gap-2 border-r border-white/10 pr-8 last:border-0"><Calendar size={14} className="text-[#A3E635]" /> {newsData.date}</div>
-                    <div className="flex items-center gap-2 border-r border-white/10 pr-8 last:border-0"><Eye size={14} className="text-[#A3E635]" /> {newsData.views}</div>
-                    <button className="ml-auto flex items-center gap-2 text-white hover:text-[#A3E635] transition-colors"><Share2 size={14} /> Compartilhar</button>
+                {/* Meta Info mais compacto */}
+                <div className="grid grid-cols-2 md:flex items-center gap-y-3 md:gap-10 pt-6 border-t border-gray-900/10 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                    <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
+                            <Calendar size={12} className="text-[#0052CC]" />
+                        </div>
+                        <span>{newsData.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
+                            <Eye size={12} className="text-[#0052CC]" />
+                        </div>
+                        <span>{newsData.views}</span>
+                    </div>
+                    <div className="md:ml-auto flex gap-4">
+                        <button className="flex items-center gap-2 hover:text-[#0052CC] transition-colors">
+                            <Share2 size={12} /> Compartilhar
+                        </button>
+                        <button className="flex items-center gap-2 hover:text-[#0052CC] transition-colors">
+                            <Bookmark size={12} /> Salvar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,7 +139,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
     return (
         <SidebarLayout
             recentNews={recentNews}
-            menu={post?.menu}
+            menu={post?.web_menu}
             header={headerContent}
             bottom={<RelatedPosts posts={relatedPosts} />}
         >
