@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, Send } from 'lucide-react';
 import { route } from 'ziggy-js';
+import NewsletterForm from './NewsletterForm';
 
 const NewsSection = ({ posts = [] }) => {
     // Garantindo que temos 4 itens para o exemplo de layout
@@ -69,17 +70,7 @@ const NewsSection = ({ posts = [] }) => {
                     <p className="text-white/80 text-sm font-medium tracking-wide">Assine nossa newsletter e receba as últimas notícias e editais diretamente no seu e-mail.</p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3 relative z-10">
-                    <input
-                        type="email"
-                        placeholder="seu-email@exemplo.com"
-                        className="w-full sm:w-80 px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-[#A3E635] text-sm font-medium text-white placeholder:text-white/50 transition-colors rounded-sm"
-                    />
-
-                    <button className="w-full sm:w-auto bg-[#A3E635] text-[#0052CC] px-6 py-3 font-bold text-[10px] uppercase tracking-widest hover:bg-white hover:text-[#0052CC] transition-all shadow-md flex items-center justify-center gap-2 group rounded-sm">
-                        Inscrever <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </button>
-                </div>
+                <NewsletterForm variant="default" />
 
             </div>
         </section>
