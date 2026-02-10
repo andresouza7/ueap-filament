@@ -99,7 +99,7 @@
             <h1>Inscrição Confirmada!</h1>
             <p>
                 Obrigado por se inscrever na nossa newsletter.<br>
-                Agora você receberá as principais notícias, editais e atualizações da Universidade do Estado do Amapá
+                Agora você receberá as principais publicações da Universidade do Estado do Amapá
                 diretamente no seu e-mail.
             </p>
             <a href="{{ route('site.home') }}" class="btn">Voltar para o Site</a>

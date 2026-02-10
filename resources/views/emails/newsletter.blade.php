@@ -114,7 +114,7 @@
         .news-title {
             color: #111827;
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 500;
             line-height: 1.3;
             margin: 0 0 8px 0;
             text-transform: uppercase;
@@ -128,7 +128,7 @@
         .btn-link {
             display: inline-block;
             color: #0052CC;
-            font-weight: 800;
+            font-weight: 700;
             text-decoration: none;
             text-transform: uppercase;
             font-size: 10px;
