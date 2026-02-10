@@ -125,7 +125,7 @@ class PageController extends Controller
                 ->orWhere('description', 'ilike', "%$request->search%");
         }
 
-        $items = $query->paginate(25)->withQueryString();
+        $items = $query->paginate(15)->withQueryString();
 
         $items->through(function ($item) {
             return [
@@ -161,7 +161,7 @@ class PageController extends Controller
             $query->where('year',  $request->year);
         }
 
-        $items = $query->paginate(25)->withQueryString();
+        $items = $query->paginate(15)->withQueryString();
         $title = 'CONSU Portarias';
 
         $items->through(function ($item) {
@@ -199,7 +199,7 @@ class PageController extends Controller
             $query->where('year',  $request->year);
         }
 
-        $items = $query->paginate(25)->withQueryString();
+        $items = $query->paginate(15)->withQueryString();
         $title = 'CONSU Resoluções';
 
         $items->through(function ($item) {

@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Home, ChevronRight, Search, FileText, Eye, Download } from 'lucide-react';
 import SidebarNewsletter from '../Components/Site/SidebarNewsletter';
 import SidebarCategories from '../Components/Site/SidebarCategories';
+import Pagination from '@/Components/Site/Pagination';
 
 const DocumentList = ({ title = "Documentos e Publicações", documents = [], onNavigate }) => {
     // Handle pagination data if provided by Laravel
@@ -67,11 +68,11 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                 <button onClick={handleSearch} className="bg-[#0052CC] text-white px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-[#A3E635] hover:text-[#0052CC] transition-all rounded-none shadow-lg">Buscar</button>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-0 border-t border-gray-100">
                                 {docs.length > 0 ? docs.map((doc, idx) => (
-                                    <div key={idx} className="group flex items-center gap-6 p-6 border-b border-gray-100 hover:bg-gray-50 transition-all cursor-pointer">
-                                        <div className="w-12 h-12 bg-gray-100 flex items-center justify-center text-[#0052CC] shrink-0 group-hover:bg-[#A3E635] transition-colors rounded-none">
-                                            <FileText size={24} />
+                                    <div key={idx} className="group flex items-center gap-4 py-3 px-4 border-b border-gray-100 hover:bg-gray-50 transition-all cursor-pointer">
+                                        <div className="w-10 h-10 bg-gray-50 flex items-center justify-center text-[#0052CC] shrink-0 group-hover:bg-[#A3E635] transition-colors rounded-sm">
+                                            <FileText size={20} />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-1">
@@ -81,16 +82,17 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                                 </div>}
                                                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{doc.date || '-'}</span>
                                             </div>
-                                            <h3 className="text-sm md:text-base font-bold text-gray-800 group-hover:text-[#0052CC] transition-colors tracking-normal leading-snug">
-                                                {doc.title}
+                                            <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors tracking-normal leading-snug">
+                                                {doc.url ? (
+                                                    <a href={doc.url} target="_blank" rel="noopener noreferrer">
+                                                        {doc.title}
+                                                    </a>
+                                                ) : doc.title}
                                             </h3>
                                         </div>
                                         <div className="hidden md:flex items-center gap-4">
                                             {doc.url && (
-                                                <>
-                                                    <a href={doc.url} target="_blank" rel="noopener noreferrer" className="p-2 text-gray-300 hover:text-[#0052CC] transition-colors" title="Visualizar"><Eye size={20} /></a>
-                                                    <a href={doc.url} download className="p-2 text-gray-300 hover:text-[#A3E635] transition-colors" title="Baixar PDF"><Download size={20} /></a>
-                                                </>
+                                                <a href={doc.url} download className="p-2 text-gray-300 hover:text-[#A3E635] transition-colors" title="Baixar PDF"><Download size={20} /></a>
                                             )}
                                         </div>
                                     </div>
@@ -100,33 +102,9 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                             </div>
 
                             {/* Paginação Documentos */}
-                            {links.length > 3 ? (
-                                <div className="mt-12 pt-8 border-t border-gray-100 flex justify-center gap-2">
-                                    {links.map((link, k) => (
-                                        link.url ? (
-                                            <Link
-                                                key={k}
-                                                href={link.url}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                                className={`px-4 py-2 font-bold text-[10px] ${link.active ? 'bg-[#0052CC] text-white shadow-lg' : 'bg-white text-gray-400 hover:text-[#0052CC] border border-gray-100'} transition-all`}
-                                            />
-                                        ) : (
-                                            <span
-                                                key={k}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                                className="px-4 py-2 font-bold text-[10px] bg-white text-gray-300 border border-gray-50 cursor-not-allowed transition-all"
-                                            />
-                                        )
-                                    ))}
-                                </div>
-                            ) : (
-                                /* Fallback mock pagination if no real links props (or empty) */
-                                <div className="mt-12 pt-8 border-t border-gray-100 flex justify-center gap-2">
-                                    {[1, 2, 3].map(p => (
-                                        <button key={p} className={`w-10 h-10 font-bold text-[10px] ${p === 1 ? 'bg-[#0052CC] text-white shadow-lg' : 'bg-white text-gray-400 hover:text-[#0052CC] border border-gray-100'} transition-all`}>{p}</button>
-                                    ))}
-                                </div>
-                            )}
+                            <div className="mt-12">
+                                <Pagination links={links} currentPage={documents.current_page} lastPage={documents.last_page} />
+                            </div>
                         </main>
 
                         {/* SIDEBAR DIREITA */}

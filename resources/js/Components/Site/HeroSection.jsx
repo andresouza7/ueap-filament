@@ -179,9 +179,11 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                 >
                                     <img
                                         src={item.image_url}
-                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700 brightness-75 group-hover:brightness-50"
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700 brightness-75 group-hover:brightness-100"
                                         alt={item.title}
                                     />
+                                    {/* Overlay escuro para melhorar contraste e separação */}
+                                    <div className="absolute inset-0 bg-black/50 group-hover:bg-black/10 transition-colors duration-500"></div>
                                     <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                                     <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
                                         <div className="flex items-center gap-2 text-[#A3E635] text-[10px] font-bold uppercase mb-2 tracking-widest drop-shadow-md">
