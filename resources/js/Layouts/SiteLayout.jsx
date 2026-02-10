@@ -130,7 +130,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                         <img src="/img/site/logo.png" alt="Brasão UEAP" className="h-10 lg:h-14 w-auto object-contain" onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_black.png"; e.target.className = "h-10 w-auto object-contain opacity-20 grayscale"; }} />
                         <div className="-ml-4">
                             {/* Fonte Inter aplicada e cores ajustadas para quebrar o excesso de azul */}
-                            <h1 className="text-green-800/85 font-black text-xl lg:text-2xl leading-none uppercase font-sans">
+                            <h1 className="text-green-800/85 font-extrabold text-xl lg:text-2xl leading-none uppercase" style={{ fontFamily: 'Rubik, sans-serif' }}>
                                 UEAP
                             </h1>
                             <p className="text-[7px] md:text-[8px] font-medium text-gray-500 uppercase tracking-widest leading-tight mt-0.5">
@@ -228,59 +228,170 @@ const SiteLayout = ({ children }) => {
             </main>
 
             {/* RODAPÉ */}
-            <footer className="bg-[#003D99] pt-24 pb-12 border-t border-white/10">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24 text-center md:text-left">
-                        {/* Coluna Logo e Info */}
-                        <div className="md:col-span-1 flex flex-col items-center md:items-start">
-                            <div className="mb-6">
-                                {/* Logo com filtro para garantir branco total */}
-                                <img src="/img/site/logo_white.png" alt="UEAP" className="h-10 w-auto brightness-0 invert"
-                                    onError={(e) => { e.target.src = "https://ueap.edu.br/img/nova_logo_white.png"; e.target.classList.remove('brightness-0', 'invert'); }}
-                                />
-                            </div>
+            <footer className="bg-[#003D99] pt-16 md:pt-20 pb-8 relative overflow-hidden">
+                {/* Decorative layer */}
+                <div className="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none"></div>
 
-                            <div className="space-y-2 max-w-[220px]">
-                                <h4 className="font-bold text-white text-[10px] uppercase tracking-[0.2em] leading-tight border-l-2 border-[#A3E635] pl-3">
-                                    Universidade do<br />Estado do Amapá
-                                </h4>
-                                <p className="text-[10px] text-white/60 font-medium leading-relaxed pl-3">
-                                    Formando profissionais para o desenvolvimento da Amazônia.
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Colunas de Links */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    {/* GRID DE LINKS */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10 mb-12 lg:mb-16">
                         {[
-                            { title: "INSTITUCIONAL", links: ["HISTÓRICO", "REITORIA", "CAMPI", "TRANSPARÊNCIA"] },
-                            { title: "SISTEMAS", links: ["WEBMAIL", "SIGAA", "BIBLIOTECA", "EDITAIS"] },
-                            { title: "CONTATO", links: ["FALE CONOSCO", "LOCALIZAÇÃO", "OUVIDORIA"] }
-                        ].map((col, i) => (
-                            <div key={i}>
-                                {/* Títulos em Verde Limão para contraste máximo */}
-                                <h5 className="font-bold text-[#A3E635] uppercase mb-8 text-xs tracking-[0.2em]">
-                                    {col.title}
-                                </h5>
-                                <ul className="space-y-3">
-                                    {col.links.map(link => (
-                                        <li key={link}>
-                                            <a href="#" className="text-xs font-bold text-white/70 uppercase hover:text-white transition-colors tracking-widest relative group">
-                                                {link}
-                                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#A3E635] transition-all group-hover:w-full"></span>
+                            {
+                                title: "Institucional",
+                                links: [
+                                    { label: "Sobre a UEAP", url: "/pagina/historia.html" },
+                                    { label: "Reitoria", url: "/pagina/reitoria.html" },
+                                    { label: "Pró-Reitorias", url: "/pagina/pro_reitorias.html" },
+                                    { label: "Conselhos", url: "#" },
+                                    { label: "Campi e Polos", url: "#" }
+                                ]
+                            },
+                            {
+                                title: "Cursos",
+                                links: [
+                                    { label: "Graduação", url: "#" },
+                                    { label: "Pós-Graduação", url: "#" },
+                                    { label: "Extensão", url: "#" },
+                                    { label: "EAD", url: "#" }
+                                ]
+                            },
+                            {
+                                title: "Ensino",
+                                links: [
+                                    { label: "Biblioteca", url: "/pagina/biblioteca.html" },
+                                    { label: "Portal do Aluno", url: "https://sigaa.ueap.edu.br/sigaa/" },
+                                    { label: "Calendário", url: "/documentos/calendar" }
+                                ]
+                            },
+                            {
+                                title: "Comunidade",
+                                links: [
+                                    { label: "Notícias", url: "/postagens?type=news" },
+                                    { label: "Eventos", url: "/postagens?type=event" },
+                                    { label: "Editais", url: "https://processoseletivo.ueap.edu.br" }
+                                ]
+                            },
+                            {
+                                title: "Transparência",
+                                links: [
+                                    { label: "Dados Abertos", url: "#" },
+                                    { label: "Licitações", url: "https://transparencia.ueap.edu.br/licitacoes" },
+                                    { label: "Ouvidoria (e-SIC)", url: "https://ouvamapa.portal.ap.gov.br/" }
+                                ]
+                            }
+                        ].map((section, i) => (
+                            <nav key={i} aria-label={`Menu ${section.title}`}>
+                                <div className="flex items-center gap-2 mb-4">
+                                    <span className="w-4 h-[2px] bg-[#A3E635]"></span>
+                                    <h4 className="text-xs font-bold uppercase tracking-widest text-[#A3E635]">
+                                        {section.title}
+                                    </h4>
+                                </div>
+                                <ul className="space-y-3 text-sm text-blue-100/70 font-medium">
+                                    {section.links.map((link, j) => (
+                                        <li key={j}>
+                                            <a href={link.url} className="hover:text-white transition-colors">
+                                                {link.label}
                                             </a>
                                         </li>
                                     ))}
                                 </ul>
-                            </div>
+                            </nav>
                         ))}
                     </div>
 
-                    {/* Bottom Footer */}
-                    <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-[0.4em]">
-                        <p>© 2026 UEAP — SECRETARIA DE TECNOLOGIA DA INFORMAÇÃO</p>
-                        <div className="mt-6 md:mt-0 flex gap-8">
-                            <a href="#" className="hover:text-white transition-colors">POLÍTICA DE PRIVACIDADE</a>
-                            <a href="#" className="hover:text-white transition-colors">TERMOS DE USO</a>
+                    {/* INFO PRINCIPAL */}
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 border-t border-white/5 pt-12 mb-12">
+                        {/* Bloco Institucional */}
+                        <div className="flex flex-col gap-4 max-w-lg">
+                            <div className="flex items-center gap-3">
+                                <span className="px-2 py-0.5 bg-[#A3E635]/10 border border-[#A3E635]/20 text-[#A3E635] text-[10px] font-bold uppercase tracking-widest rounded-sm">
+                                    Desde 2006
+                                </span>
+                                <img src="/img/nova_logo_white.png" alt="UEAP" className="h-12 lg:h-10 w-auto grayscale brightness-250 contrast-150" onError={(e) => { e.target.src = "/img/nova_logo_white.png"; }} />
+                            </div>
+
+                            <h3 className="text-xl text-white font-medium leading-tight">
+                                Universidade do Estado do Amapá
+                            </h3>
+
+                            <p className="text-blue-100/60 text-sm leading-relaxed">
+                                Promovendo educação de qualidade e desenvolvimento sustentável para a região amazônica.
+                            </p>
+                        </div>
+
+                        {/* Selo MEC */}
+                        <a
+                            href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/NTcwMQ=="
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-4 bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors"
+                        >
+                            <div className="text-right">
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#A3E635] mb-1">
+                                    Credenciada
+                                </p>
+                                <p className="text-xs text-white font-bold">
+                                    Portal e-MEC
+                                </p>
+                            </div>
+
+                            <div className="bg-white p-1 rounded-sm w-20 h-20 flex items-center justify-center">
+                                <img className="max-w-full max-h-full" src="/img/site/banner_mec.png" alt="Selo e-MEC" />
+                            </div>
+                        </a>
+                    </div>
+
+                    {/* ENDEREÇOS */}
+                    <section className="mb-12 border-b border-white/5 pb-12" aria-labelledby="footer-enderecos-title">
+                        <h5 id="footer-enderecos-title" className="text-[10px] font-bold uppercase tracking-widest text-[#A3E635]/60 mb-6 flex items-center gap-3">
+                            <span className="w-8 h-[1px] bg-[#A3E635]/30"></span>
+                            Nossos endereços
+                        </h5>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8">
+                            {[
+                                { nome: "Campus I", end: "Av. Presidente Vargas, 650 - Centro" },
+                                { nome: "Território dos Lagos", end: "Av. Desidério Antônio, 470 - Amapá-AP" },
+                                { nome: "Administrativo", end: "Rua Tiradentes, 284 - Centro" },
+                                { nome: "Anexo Graziela", end: "Av. Duque de Caxias, 60 - Centro" },
+                                { nome: "NTE", end: "Av. 13 de Setembro, 2081 - Buritizal" },
+                                { nome: "Campus III", end: "Av. Mendonça Furtado - Centro" }
+                            ].map((item, i) => (
+                                <div key={i} className="flex flex-col">
+                                    <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
+                                        {item.nome}
+                                    </h5>
+                                    <p className="text-xs text-blue-100/50">
+                                        {item.end}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* BOTTOM */}
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <p className="text-blue-100/40 text-[10px] font-bold uppercase tracking-widest">
+                            © 2026 UEAP — Desenvolvido pela <span className="text-white">DINFO</span><i className="fa-solid fa-code text-[#A3E635] ml-1"></i>.
+                        </p>
+                        <div className="flex gap-4">
+                            <a
+                                href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#A3E635] transition-all text-blue-100/40 hover:text-white"
+                            >
+                                <i className="fa-brands fa-youtube text-sm"></i>
+                            </a>
+                            <a
+                                href="https://www.instagram.com/ueapoficial/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#A3E635] transition-all text-blue-100/40 hover:text-white"
+                            >
+                                <i className="fa-brands fa-instagram text-sm"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
