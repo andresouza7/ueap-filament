@@ -183,7 +183,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                         alt={item.title}
                                     />
                                     {/* Overlay gradiente lateral para separar da coluna principal sem escurecer tudo */}
-                                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent group-hover:from-black/40 group-hover:via-black/20 transition-all duration-500"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent group-hover:from-black/10 group-hover:via-black/5 transition-all duration-500"></div>
                                     <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                                     <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
                                         <div className="flex items-center gap-2 text-[#A3E635] text-[10px] font-bold uppercase mb-2 tracking-widest drop-shadow-md">
