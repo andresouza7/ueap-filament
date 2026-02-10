@@ -64,7 +64,7 @@ const EventsSection = ({ events = [] }) => {
                             </h3>
 
                             <div className="grid grid-cols-1 gap-4">
-                                <a href="#" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-[#A3E635] shadow-sm hover:shadow-md transition-all group">
+                                <a href="https://cartaservico.portal.ap.gov.br/carta-de-servico-publica/orgao/46/servicos" target="_blank" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-[#A3E635] shadow-sm hover:shadow-md transition-all group">
                                     <div className="flex items-center gap-4">
                                         <div className="p-3 bg-blue-50 text-[#0052CC] rounded-full group-hover:bg-[#0052CC] group-hover:text-white transition-colors">
                                             <FileText size={24} />
@@ -77,7 +77,7 @@ const EventsSection = ({ events = [] }) => {
                                     <ChevronRight size={20} className="text-gray-300 group-hover:text-[#A3E635] transition-colors" />
                                 </a>
 
-                                <a href="#" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-[#A3E635] shadow-sm hover:shadow-md transition-all group">
+                                <a href="https://ouvamapa.portal.ap.gov.br/" target="_blank" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-[#A3E635] shadow-sm hover:shadow-md transition-all group">
                                     <div className="flex items-center gap-4">
                                         <div className="p-3 bg-blue-50 text-[#0052CC] rounded-full group-hover:bg-[#0052CC] group-hover:text-white transition-colors">
                                             <MessageSquare size={24} />
@@ -106,10 +106,10 @@ const EventsSection = ({ events = [] }) => {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <a href="#" className="flex-1 bg-white text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-gray-200 transition-all group">
+                                    <a href="https://www.instagram.com/ueapoficial/" className="flex-1 bg-white text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-gray-200 transition-all group">
                                         <Instagram size={20} /> INSTAGRAM
                                     </a>
-                                    <a href="#" className="flex-1 bg-[#A3E635] text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-[#89c02e] transition-all group">
+                                    <a href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ" className="flex-1 bg-[#A3E635] text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-[#89c02e] transition-all group">
                                         <Youtube size={20} /> YOUTUBE
                                     </a>
                                 </div>

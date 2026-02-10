@@ -1,6 +1,6 @@
 import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
-import AlternativeHeroSection from '@/Components/Site/AlternativeHeroSection';
+import HeroSection from '@/Components/Site/HeroSection';
 import NewsSection from '@/Components/Site/NewsSection';
 import StudentAssistanceSection from '@/Components/Site/StudentAssistanceSection';
 import EventsSection from '@/Components/Site/EventsSection';
@@ -11,7 +11,7 @@ const Home = ({ featured, posts, events, banners }) => {
   return (
     <SiteLayout>
       {/* <HeroSection featured={featured} /> */}
-      <AlternativeHeroSection featured={featured} banners={banners} />
+      <HeroSection featured={featured} banners={banners} />
 
       <NewsSection posts={posts} />
       <EventsSection events={events} />

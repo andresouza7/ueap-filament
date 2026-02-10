@@ -303,21 +303,28 @@ const SiteLayout = ({ children }) => {
                     {/* INFO PRINCIPAL */}
                     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 border-t border-white/5 pt-12 mb-12">
                         {/* Bloco Institucional */}
-                        <div className="flex flex-col gap-4 max-w-lg">
-                            <div className="flex items-center gap-3">
-                                <span className="px-2 py-0.5 bg-[#A3E635]/10 border border-[#A3E635]/20 text-[#A3E635] text-[10px] font-bold uppercase tracking-widest rounded-sm">
-                                    Desde 2006
-                                </span>
-                                <img src="/img/nova_logo_white.png" alt="UEAP" className="h-12 lg:h-10 w-auto grayscale brightness-250 contrast-150" onError={(e) => { e.target.src = "/img/nova_logo_white.png"; }} />
+                        <div className="relative pl-6 border-l border-white/10 max-w-lg group">
+                            {/* Animated Active Border */}
+                            <div className="absolute left-[-1px] top-0 h-8 w-[1px] bg-[#A3E635] group-hover:h-full transition-all duration-500 ease-out"></div>
+
+                            <div className="flex flex-col gap-5">
+                                <div className="flex items-center gap-4">
+                                    <img src="/img/nova_logo_white.png" alt="UEAP" className="h-10 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity" onError={(e) => { e.target.src = "/img/nova_logo_white.png"; }} />
+                                    <span className="px-2 py-0.5 bg-[#A3E635]/10 border border-[#A3E635]/20 text-[#A3E635] text-[9px] font-bold uppercase tracking-widest rounded-sm">
+                                        Desde 2006
+                                    </span>
+                                </div>
+
+                                <div>
+                                    {/* <h3 className="text-xl text-white font-medium leading-tight mb-2">
+                                        Universidade do Estado do Amapá
+                                    </h3> */}
+
+                                    <p className="text-blue-100/50 text-sm leading-relaxed font-light">
+                                        Promovendo educação de qualidade e desenvolvimento sustentável para a região amazônica.
+                                    </p>
+                                </div>
                             </div>
-
-                            <h3 className="text-xl text-white font-medium leading-tight">
-                                Universidade do Estado do Amapá
-                            </h3>
-
-                            <p className="text-blue-100/60 text-sm leading-relaxed">
-                                Promovendo educação de qualidade e desenvolvimento sustentável para a região amazônica.
-                            </p>
                         </div>
 
                         {/* Selo MEC */}
@@ -336,7 +343,7 @@ const SiteLayout = ({ children }) => {
                                 </p>
                             </div>
 
-                            <div className="bg-white p-1 rounded-sm w-20 h-20 flex items-center justify-center">
+                            <div className="bg-white p-1 rounded-sm w-24 h-24 flex items-center justify-center">
                                 <img className="max-w-full max-h-full" src="/img/site/banner_mec.png" alt="Selo e-MEC" />
                             </div>
                         </a>
