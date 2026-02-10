@@ -81,6 +81,10 @@ class DocumentsRelationManager extends RelationManager
             ->defaultSort('id', 'desc')
             ->recordAction(null)
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable()
+                    ->visible(fn() => auth()->user()->hasRole('dinfo')),
                 TextColumn::make('title')
                     ->label('Título')
                     ->searchable()
