@@ -25,7 +25,7 @@ const PostCard = ({ item }) => {
                             <Calendar size={12} className="text-[#A3E635]" /> {new Date(item.created_at).toLocaleDateString()}
                         </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight tracking-tight line-clamp-4">
+                    <h3 className="text-xl md:text-lg font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight tracking-tight line-clamp-4">
                         {item.title}
                     </h3>
                     <div className="mt-5 flex items-center gap-2 text-[10px] font-bold text-[#0052CC] group-hover:gap-4 transition-all uppercase tracking-widest">

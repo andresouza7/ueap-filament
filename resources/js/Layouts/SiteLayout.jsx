@@ -37,7 +37,7 @@ const SearchModal = ({ isOpen, onClose }) => {
                 <div className="p-8 bg-gray-50 text-left">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Sugestões de busca</h4>
                     <div className="flex flex-wrap gap-2">
-                        {['Processo Seletivo 2025', 'Calendário Acadêmico', 'Editais Proace', 'Matrícula Online', 'Bolsas Pibex'].map(tag => (
+                        {['Calendário Acadêmico', 'Edital', 'Matrícula', 'Bolsa', 'Inscrições'].map(tag => (
                             <button
                                 key={tag}
                                 onClick={() => { setTerm(tag); window.location.href = route('site.post.list', { search: tag }); onClose(); }}
