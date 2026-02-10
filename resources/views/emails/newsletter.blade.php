@@ -84,7 +84,7 @@
 
         .news-title {
             color: #111827;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             line-height: 1.25;
             margin: 0 0 8px 0;
