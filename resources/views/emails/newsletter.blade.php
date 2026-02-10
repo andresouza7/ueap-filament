@@ -5,75 +5,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newsletter UEAP</title>
-    @vite(['resources/css/novosite.css'])
+    <style>
+        /* Email clients (like Gmail) strip <style> tags, so we use this for preview
+           and hope for basic support. Ideally, these would be inlined. */
+        body {
+            background-color: #f3f4f6;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #0052CC;
+            padding: 40px 32px;
+            text-align: center;
+            border-bottom: 4px solid #A3E635;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .header .tag {
+            color: #A3E635;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .content {
+            padding: 40px 32px;
+        }
+
+        .news-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+        }
+
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .news-img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+            display: block;
+        }
+
+        .news-date {
+            color: #0052CC;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .news-title {
+            color: #111827;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+        }
+
+        .news-title a {
+            color: #111827;
+            text-decoration: none;
+        }
+
+        .btn-link {
+            display: inline-block;
+            color: #0052CC;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #A3E635;
+            padding-bottom: 2px;
+        }
+
+        .footer {
+            background-color: #003D99;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #bfdbfe;
+            font-size: 11px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .footer a {
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #A3E635;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 font-sans m-0 p-0 text-gray-800 antialiased">
-    <div class="w-full bg-gray-100 py-10 flex justify-center px-4">
-        <div class="bg-white w-full max-w-[600px] shadow-lg overflow-hidden flex flex-col">
-
+<body style="background-color: #f3f4f6; padding: 40px 0;">
+    <center>
+        <table class="container" width="600" cellpadding="0" cellspacing="0" role="presentation"
+            style="background-color: #ffffff; width: 600px; max-width: 600px;">
             <!-- Header -->
-            <header class="bg-[#0052CC] py-10 px-8 flex flex-col items-center border-b-4 border-[#A3E635] text-center">
-                <h1 class="text-white text-[28px] font-black uppercase tracking-tighter m-0 leading-none italic">
-                    UEAP<span class="text-[#A3E635]">NOTÍCIAS</span>
-                </h1>
-                <span class="text-[#A3E635] text-[10px] font-bold uppercase tracking-[3px] mt-2">
-                    Resumo Semanal
-                </span>
-            </header>
+            <tr>
+                <td class="header" align="center"
+                    style="background-color: #0052CC; padding: 40px 32px; border-bottom: 4px solid #A3E635;">
+                    <h1
+                        style="color: #ffffff; font-size: 28px; font-weight: 900; text-transform: uppercase; margin: 0; font-style: italic;">
+                        UEAP<span style="color: #A3E635;">NOTÍCIAS</span>
+                    </h1>
+                    <span class="tag"
+                        style="color: #A3E635; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; display: block; margin-top: 8px;">
+                        Resumo Semanal
+                    </span>
+                </td>
+            </tr>
 
             <!-- Intro -->
-            <div class="pt-8 px-8 pb-4 text-center text-gray-500 text-sm">
-                <p class="m-0">Confira os últimos destaques e atualizações oficiais da Universidade.</p>
-            </div>
+            <tr>
+                <td style="padding: 32px 32px 16px 32px; text-align: center; color: #6b7280; font-size: 14px;">
+                    Confira os últimos destaques e atualizações oficiais da Universidade.
+                </td>
+            </tr>
 
             <!-- Content -->
-            <main class="px-8 pb-10 flex flex-col gap-6 mt-4">
-                @foreach ($content as $post)
-                    <div class="flex flex-col sm:flex-row gap-5 pb-5 last:pb-0">
-                        @if (!empty($post->image_url))
-                            <div class="shrink-0">
-                                <a href="{{ $post->url }}" class="block">
-                                    <img src="{{ $post->image_url }}" alt="{{ $post->title }}"
-                                        class="w-full sm:w-[120px] h-auto sm:h-[90px] object-cover rounded shadow-sm bg-gray-200 block">
-                                </a>
-                            </div>
-                        @endif
-                        <div class="flex flex-col justify-start">
-                            <span
-                                class="text-[#0052CC] text-[10px] font-bold uppercase tracking-widest mb-1 leading-tight">
-                                {{ $post->publishedAt }}
-                            </span>
-                            <h2 class="text-[#111827] text-[15px] font-bold leading-tight mb-2 uppercase m-0">
-                                <a href="{{ $post->url }}" class="no-underline text-[#111827] hover:text-[#0052CC]">
-                                    {{ $post->title }}
-                                </a>
-                            </h2>
-                            <a href="{{ $post->url }}"
-                                class="inline-block self-start text-[#0052CC] font-extrabold no-underline uppercase text-[10px] tracking-wider border-b-2 border-[#A3E635] pb-0.5 mt-1 transition-all hover:opacity-80">
-                                LER MATÉRIA COMPLETA &rarr;
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </main>
+            <tr>
+                <td class="content" style="padding: 0 32px 40px 32px;">
+                    @foreach ($content as $post)
+                        <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                            style="margin-bottom: 24px;">
+                            <tr>
+                                @if (!empty($post->image_url))
+                                    <td width="120" valign="top" style="padding-right: 20px;">
+                                        <a href="{{ $post->url }}">
+                                            <img src="{{ $post->image_url }}" alt="{{ $post->title }}" width="120"
+                                                height="90"
+                                                style="width: 120px; height: 90px; object-fit: cover; border-radius: 4px; display: block;">
+                                        </a>
+                                    </td>
+                                @endif
+                                <td valign="top">
+                                    <div
+                                        style="color: #0052CC; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">
+                                        {{ $post->publishedAt }}
+                                    </div>
+                                    <h2
+                                        style="color: #111827; font-size: 15px; font-weight: 700; line-height: 1.3; margin: 0 0 8px 0; text-transform: uppercase;">
+                                        <a href="{{ $post->url }}" style="color: #111827; text-decoration: none;">
+                                            {{ $post->title }}
+                                        </a>
+                                    </h2>
+                                    <a href="{{ $post->url }}"
+                                        style="display: inline-block; color: #0052CC; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 10px; border-bottom: 2px solid #A3E635; padding-bottom: 2px;">
+                                        LER MATÉRIA COMPLETA &rarr;
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+            </tr>
 
             <!-- Footer -->
-            <footer class="bg-[#003D99] p-8 flex flex-col items-center text-center">
-                <div class="text-blue-200 text-[11px] leading-relaxed m-0 flex flex-col items-center">
-                    <strong class="text-white uppercase mb-1">Universidade do Estado do Amapá</strong>
-                    <p class="m-0">Assessoria de Comunicação</p>
-                    <div class="mt-4 pt-4 border-t border-white/10 w-full max-w-[200px]"></div>
-                    <p class="mt-4 mb-0 opacity-80">Você está recebendo este e-mail porque se inscreveu em nossa
-                        newsletter.</p>
-                    <a href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token ?? '') }}"
-                        class="mt-4 text-white font-bold underline decoration-[#A3E635] underline-offset-4 hover:text-[#A3E635] transition-colors">
-                        Cancelar inscrição aqui
-                    </a>
-                </div>
-            </footer>
-        </div>
-    </div>
+            <tr>
+                <td class="footer" align="center" style="background-color: #003D99; padding: 32px;">
+                    <p style="color: #bfdbfe; font-size: 11px; line-height: 1.6; margin: 0;">
+                        <strong style="color: #ffffff; text-transform: uppercase;">Universidade do Estado do
+                            Amapá</strong><br>
+                        Assessoria de Comunicação<br><br>
+                        Você está recebendo este e-mail porque se inscreveu em nossa newsletter através do site
+                        oficial.<br><br>
+                        <a href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token ?? '') }}"
+                            style="color: #ffffff; font-weight: 700; text-decoration: underline;">
+                            Cancelar inscrição aqui
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </center>
 </body>
 
 </html>
