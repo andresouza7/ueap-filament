@@ -14,8 +14,6 @@ class NewsletterSubscribed extends Mailable implements ShouldQueue
 
     use Queueable, SerializesModels;
 
-    public $queue = 'newsletter';
-
     public $subscriber;
 
     /**
@@ -24,6 +22,7 @@ class NewsletterSubscribed extends Mailable implements ShouldQueue
     public function __construct($subscriber)
     {
         $this->subscriber = $subscriber;
+        $this->onQueue('newsletter');
     }
 
     /**

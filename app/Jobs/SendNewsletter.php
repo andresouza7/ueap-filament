@@ -18,11 +18,6 @@ class SendNewsletter implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Define a fila específica para este Job.
-     */
-    public $queue = 'newsletter';
-
-    /**
      * O tempo (em segundos) que o job pode levar para ser processado.
      * Importante para envios em massa que levam tempo.
      */
@@ -38,7 +33,9 @@ class SendNewsletter implements ShouldQueue
      */
     public function __construct(
         protected Collection $items
-    ) {}
+    ) {
+        $this->onQueue('newsletter');
+    }
 
     public function handle(): void
     {
