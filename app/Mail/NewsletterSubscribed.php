@@ -46,13 +46,15 @@ class NewsletterSubscribed extends Mailable implements ShouldQueue
     }
 
     /**
-     * Get the message headers.
+     * Build the message.
      */
-    public function headers(): array
+    public function build()
     {
-        return [
-            'List-Unsubscribe' => '<' . route('newsletter.unsubscribe', $this->subscriber->unsubscribe_token) . '>',
-        ];
+        $unsubscribeUrl = route('newsletter.unsubscribe', $this->subscriber->unsubscribe_token);
+
+        return $this->withSymfonyMessage(function ($message) use ($unsubscribeUrl) {
+            $message->getHeaders()->addTextHeader('List-Unsubscribe', '<' . $unsubscribeUrl . '>');
+        });
     }
 
 
