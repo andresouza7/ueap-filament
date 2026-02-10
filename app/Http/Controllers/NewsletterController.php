@@ -84,4 +84,38 @@ class NewsletterController extends Controller
             'itens' => $items->count(),
         ]);
     }
+    public function previewNewsletter()
+    {
+        $subscriber = new Subscriber(['unsubscribe_token' => 'dummy-token']);
+        $content = collect([
+            new NewsletterItem(
+                title: 'Exemplo de Notícia Ueap',
+                excerpt: 'Este é um exemplo de resumo de notícia para visualização da newsletter.',
+                url: '#',
+                publishedAt: now()->format('d/m/Y'),
+                image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&auto=format&fit=crop&q=60'
+            ),
+            new NewsletterItem(
+                title: 'Outra Notícia Importante',
+                excerpt: 'Mais um exemplo para compor o layout da newsletter.',
+                url: '#',
+                publishedAt: now()->subDay()->format('d/m/Y'),
+                image_url: null
+            ),
+            new NewsletterItem(
+                title: 'Processo Seletivo Aberto',
+                excerpt: 'Confira os detalhes do novo edital publicado recentemente.',
+                url: '#',
+                publishedAt: now()->subDays(2)->format('d/m/Y'),
+                image_url: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&auto=format&fit=crop&q=60'
+            ),
+        ]);
+
+        return view('emails.newsletter', compact('content', 'subscriber'));
+    }
+
+    public function previewSubscribed()
+    {
+        return view('emails.newsletter-subscribed');
+    }
 }

@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Helvetica', Arial, sans-serif;
-            background-color: #020617;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
             margin: 0;
             padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         .wrapper {
             width: 100%;
-            background-color: #020617;
-            padding: 20px 0;
+            table-layout: fixed;
+            background-color: #f3f4f6;
+            padding-bottom: 40px;
         }
 
         .main {
@@ -24,185 +27,198 @@
             width: 100%;
             max-width: 600px;
             border-spacing: 0;
-            color: #1e293b;
-            border-radius: 4px;
-            overflow: hidden;
+            color: #1f2937;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        /* Header Tech Style */
+        /* Header */
         .header {
-            background-color: #020617;
-            padding: 35px 25px;
-            text-align: left;
-            border-bottom: 4px solid #10b981;
+            background-color: #0052CC;
+            padding: 40px 30px;
+            text-align: center;
         }
 
-        .lvl-tag {
-            color: #10b981;
-            font-family: monospace;
-            font-size: 10px;
-            letter-spacing: 3px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .title {
+        .logo-text {
             color: #ffffff;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             text-transform: uppercase;
-            font-style: italic;
+            letter-spacing: -1px;
             margin: 0;
             line-height: 1;
         }
 
-        /* Body / Cards */
-        .container {
-            padding: 30px 25px;
+        .logo-sub {
+            color: #A3E635;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            display: block;
         }
 
-        .post-card {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 35px;
+        /* Body */
+        .intro {
+            padding: 30px 30px 10px 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
         }
 
-        .post-card:last-child {
+        .content {
+            padding: 20px 30px 40px 30px;
+        }
+
+        /* News Card */
+        .news-card {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            padding-bottom: 20px;
+        }
+
+        .news-card:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
-        .meta {
-            color: #10b981;
-            font-family: monospace;
-            font-size: 10px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .post-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0f172a;
-            text-transform: uppercase;
-            text-decoration: none;
-            line-height: 1.2;
+        .news-img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 4px;
             display: block;
-            margin-bottom: 12px;
+            background-color: #e5e7eb;
         }
 
-        .post-excerpt {
-            font-size: 14px;
-            color: #64748b;
-            line-height: 1.6;
-            margin: 0 0 20px 0;
+        .news-img-col {
+            width: 120px;
+            padding-right: 20px;
         }
 
-        /* Button */
-        .btn-table {
-            background-color: #0f172a;
-            border-radius: 2px;
+        .news-body {
+            vertical-align: top;
+        }
+
+        .news-date {
+            color: #0052CC;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .news-title {
+            color: #111827;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+        }
+
+        .news-title a {
+            color: #111827;
+            text-decoration: none;
         }
 
         .btn-link {
             display: inline-block;
-            color: #ffffff !important;
-            padding: 12px 20px;
+            color: #0052CC;
+            font-weight: 800;
             text-decoration: none;
-            font-size: 10px;
-            font-weight: bold;
             text-transform: uppercase;
+            font-size: 10px;
             letter-spacing: 1px;
-            font-family: monospace;
+            border-bottom: 2px solid #A3E635;
+            padding-bottom: 1px;
         }
 
         /* Footer */
         .footer {
+            background-color: #003D99;
             padding: 30px;
             text-align: center;
-            background-color: #f8fafc;
-            border-top: 1px solid #f1f5f9;
+            margin-top: 20px;
         }
 
         .footer-text {
-            font-size: 10px;
-            color: #94a3b8;
-            font-family: monospace;
-            line-height: 1.5;
+            color: #93c5fd;
+            font-size: 11px;
+            line-height: 1.6;
+            margin: 0;
         }
 
-        .unsub {
-            color: #ef4444;
-            text-decoration: underline;
+        .footer a {
+            color: #ffffff;
             font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            .main {
+                width: 100% !important;
+            }
+
+            .content {
+                padding: 15px !important;
+            }
+
+            .news-img-col {
+                width: 100px !important;
+                padding-right: 15px !important;
+            }
+
+            .news-img {
+                width: 100px !important;
+                height: 75px !important;
+            }
         }
     </style>
 </head>
 
 <body>
     <center class="wrapper">
-        <table class="main" cellpadding="0" cellspacing="0" role="presentation">
+        <table class="main" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <!-- Header -->
             <tr>
                 <td class="header">
-                    <div class="lvl-tag">DEPT_COMUNICACAO // BROADCAST</div>
-                    <h1 class="title">Newsletter <span style="color: #10b981;">UEAP</span></h1>
+                    <h1 class="logo-text">UEAP<span style="color: #A3E635;">NOTÍCIAS</span></h1>
+                    <span class="logo-sub">Resumo Semanal</span>
                 </td>
             </tr>
 
+            <!-- Intro -->
             <tr>
-                <td class="container">
+                <td class="intro">
+                    Confira os últimos destaques e atualizações oficiais da Universidade.
+                </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+                <td class="content">
                     @foreach ($content as $post)
-                        <div class="post-card">
-                            <table width="100%" role="presentation" cellspacing="0" cellpadding="0">
+                        <div class="news-card">
+                            <table width="100%" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    {{-- COLUNA DA IMAGEM (THUMBNAIL) --}}
                                     @if (!empty($post->image_url))
-                                        <td width="150" valign="top" style="padding-right: 20px;">
+                                        <td width="200" valign="top" class="news-img-col">
                                             <a href="{{ $post->url }}">
                                                 <img src="{{ $post->image_url }}" alt="{{ $post->title }}"
-                                                    width="150"
-                                                    style="
-                                display: block;
-                                width: 150px;
-                                height: auto;
-                                border-radius: 3px;
-                                object-fit: cover;
-                            ">
+                                                    class="news-img">
                                             </a>
                                         </td>
                                     @endif
-
-                                    {{-- COLUNA DO TEXTO --}}
-                                    <td valign="top">
-                                        {{-- META --}}
-                                        <div class="meta">
-                                            [ {{ $post->publishedAt }} ]
-                                        </div>
-
-                                        {{-- TÍTULO --}}
-                                        <a href="{{ $post->url }}" class="post-title"
-                                            style="font-size: 16px; margin-bottom: 8px;">
-                                            {{ $post->title }}
-                                        </a>
-
-                                        {{-- RESUMO --}}
-                                        <p class="post-excerpt" style="margin-bottom: 15px; font-size: 13px;">
-                                            {{ Str::limit($post->excerpt, 120) }}
-                                        </p>
-
-                                        {{-- BOTÃO --}}
-                                        <table class="btn-table" role="presentation" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td>
-                                                    <a href="{{ $post->url }}" class="btn-link"
-                                                        style="padding: 8px 12px; font-size: 9px;">
-                                                        LER_AGORA_
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <td valign="top" class="news-body">
+                                        <div class="news-date">{{ $post->publishedAt }}</div>
+                                        <h2 class="news-title">
+                                            <a href="{{ $post->url }}">{{ $post->title }}</a>
+                                        </h2>
+                                        <a href="{{ $post->url }}" class="btn-link">LER MATÉRIA COMPLETA &rarr;</a>
                                     </td>
                                 </tr>
                             </table>
@@ -211,16 +227,15 @@
                 </td>
             </tr>
 
+            <!-- Footer -->
             <tr>
                 <td class="footer">
                     <p class="footer-text">
                         <strong>UNIVERSIDADE DO ESTADO DO AMAPÁ</strong><br>
-                        SISTEMA DE DIVULGAÇÃO CIENTÍFICA E INSTITUCIONAL<br>
-                        <br>
-                        Caso não deseje mais receber, <a
-                            href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token) }}" class="unsub">
-                            remova aqui
-                        </a>
+                        Assessoria de Comunicação<br><br>
+                        Você está recebendo este e-mail porque se inscreveu em nossa newsletter.<br>
+                        <a href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token ?? '') }}">Cancelar
+                            inscrição</a>
                     </p>
                 </td>
             </tr>

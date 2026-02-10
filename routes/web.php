@@ -128,3 +128,7 @@ Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'uns
 //Rota do email em massa
 Route::get('/newsletter', [NewsletterController::class, 'dispatch'])
     ->name('newsletter.dispatch');
+
+// Preview Routes
+Route::get('/newsletter/preview', [NewsletterController::class, 'previewNewsletter'])->name('newsletter.preview');
+Route::get('/newsletter/subscribed/preview', [NewsletterController::class, 'previewSubscribed'])->name('newsletter.subscribed.preview');
