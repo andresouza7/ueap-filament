@@ -106,10 +106,10 @@ const EventsSection = ({ events = [] }) => {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <a href="#" className="flex-1 bg-white text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-[#A3E635] transition-all group">
+                                    <a href="#" className="flex-1 bg-white text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-gray-200 transition-all group">
                                         <Instagram size={20} /> INSTAGRAM
                                     </a>
-                                    <a href="#" className="flex-1 bg-[#A3E635] text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-white transition-all group">
+                                    <a href="#" className="flex-1 bg-[#A3E635] text-[#0052CC] flex items-center justify-center gap-3 py-4 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-[#89c02e] transition-all group">
                                         <Youtube size={20} /> YOUTUBE
                                     </a>
                                 </div>
