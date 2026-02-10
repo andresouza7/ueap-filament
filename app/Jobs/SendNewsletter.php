@@ -18,7 +18,23 @@ class SendNewsletter implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @param Collection $items  Coleção de DTOs (NewsletterItem)
+     * Define a fila específica para este Job.
+     */
+    public $queue = 'newsletter';
+
+    /**
+     * O tempo (em segundos) que o job pode levar para ser processado.
+     * Importante para envios em massa que levam tempo.
+     */
+    public $timeout = 3600;
+
+    /**
+     * Número de tentativas em caso de falha.
+     */
+    public $tries = 3;
+
+    /**
+     * @param Collection $items Coleção de DTOs (NewsletterItem)
      */
     public function __construct(
         protected Collection $items
@@ -26,57 +42,41 @@ class SendNewsletter implements ShouldQueue
 
     public function handle(): void
     {
-        try {
-            Log::info(
-                'Iniciando envio da Newsletter',
-                [
-                    'itens' => $this->items->count(),
-                ]
-            );
+        Log::info('Iniciando envio em massa da Newsletter', ['postagens' => $this->items->count()]);
 
-            $totalSent = 0;
+        $totalSent = 0;
+        $totalFailed = 0;
 
-            Subscriber::where('active', true)
-                ->chunk(1, function ($subscribers) use (&$totalSent) {
-                    foreach ($subscribers as $subscriber) {
-                        try {
-                            Log::info('Enviando para: ' . $subscriber->email);
-                            Mail::to($subscriber->email)
-                                ->send(new NewsletterMail($this->items, $subscriber));
+        // chunkById é mais estável para tabelas grandes
+        Subscriber::query()
+            ->chunkById(50, function ($subscribers) use (&$totalSent, &$totalFailed) {
+                foreach ($subscribers as $subscriber) {
+                    try {
+                        Mail::to($subscriber->email)
+                            ->send(new NewsletterMail($this->items, $subscriber));
 
-                            $totalSent++;
+                        $totalSent++;
 
-                            // Throttle conservador (Gmail-safe)
-                            sleep(30);
-                        } catch (\Throwable $e) {
-                            Log::error(
-                                'Erro ao enviar newsletter',
-                                [
-                                    'email' => $subscriber->email,
-                                    'error' => $e->getMessage(),
-                                ]
-                            );
-                            // continua com os próximos
-                        }
+                        // Delay para evitar picos de envio (rate limiting conservador)
+                        // Google sugere evitar disparos simultâneos gigantescos
+                        usleep(500000); // 0.5 segundos entre cada e-mail
+
+                    } catch (\Throwable $e) {
+                        $totalFailed++;
+                        Log::warning('Falha ao enviar newsletter individual', [
+                            'email' => $subscriber->email,
+                            'error' => $e->getMessage()
+                        ]);
                     }
-                });
+                }
 
-            Log::info(
-                'Envio de Newsletter finalizado',
-                [
-                    'total_enviado' => $totalSent,
-                ]
-            );
-        } catch (\Throwable $e) {
-            Log::critical(
-                'Falha crítica no Job de Newsletter',
-                [
-                    'error' => $e->getMessage(),
-                ]
-            );
+                // Pequena pausa entre lotes de 50 para "respiro" do SMTP
+                sleep(2);
+            });
 
-            // Marca o job como failed
-            throw $e;
-        }
+        Log::info('Processamento de Newsletter concluído', [
+            'sucesso' => $totalSent,
+            'falhas' => $totalFailed,
+        ]);
     }
 }

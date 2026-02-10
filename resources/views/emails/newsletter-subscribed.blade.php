@@ -5,111 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscrição Confirmada - UEAP</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            color: #1f2937;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            overflow: hidden;
-        }
-
-        .header {
-            background-color: #0052CC;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .logo-text {
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        .content {
-            padding: 40px 30px;
-            text-align: center;
-        }
-
-        .icon-check {
-            color: #A3E635;
-            font-size: 48px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        h1 {
-            color: #0052CC;
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        p {
-            font-size: 16px;
-            color: #4b5563;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #A3E635;
-            color: #0052CC;
-            font-weight: 800;
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 4px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .footer {
-            background-color: #003D99;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #93c5fd;
-        }
-    </style>
+    @vite(['resources/css/novosite.css'])
 </head>
 
-<body>
-    <div class="container">
+<body class="bg-gray-100 font-sans text-gray-800 antialiased m-0 p-0">
+    <div class="max-w-[600px] mx-auto bg-white overflow-hidden">
         <!-- Header -->
-        <div class="header">
-            <h1 class="logo-text">UEAP<span style="color: #A3E635;">NOTÍCIAS</span></h1>
+        <div class="bg-[#0052CC] py-10 px-5 text-center">
+            <h1 class="text-white text-2xl font-extrabold uppercase tracking-widest m-0">
+                UEAP<span class="text-[#A3E635]">NOTÍCIAS</span>
+            </h1>
         </div>
 
         <!-- Content -->
-        <div class="content">
-            <span class="icon-check">✓</span>
-            <h1>Inscrição Confirmada!</h1>
-            <p>
+        <div class="py-10 px-8 text-center">
+            <span class="text-[#A3E635] text-5xl mb-5 block">✓</span>
+            <h1 class="text-[#0052CC] text-[22px] font-bold mb-4 uppercase">Inscrição Confirmada!</h1>
+            <p class="text-base text-gray-600 mb-8">
                 Obrigado por se inscrever na nossa newsletter.<br>
                 Agora você receberá as principais publicações da Universidade do Estado do Amapá
                 diretamente no seu e-mail.
             </p>
-            <a href="{{ route('site.home') }}" class="btn">Voltar para o Site</a>
+            <a href="{{ route('site.home') }}"
+                class="inline-block bg-[#A3E635] text-[#0052CC] font-bold no-underline py-3 px-8 rounded text-sm uppercase tracking-wide">
+                Voltar para o Site
+            </a>
         </div>
 
         <!-- Footer -->
-        <div class="footer">
-            <p style="margin: 0; color: #ffffff80;">
+        <div class="bg-[#003D99] p-8 text-center text-xs text-blue-300">
+            <p class="m-0 text-white/50 mb-4">
                 &copy; {{ date('Y') }} Universidade do Estado do Amapá.<br>
                 Todos os direitos reservados.
+            </p>
+            <p class="m-0">
+                Caso não deseje mais receber,
+                <a href="{{ route('newsletter.unsubscribe', $subscriber->unsubscribe_token ?? '') }}"
+                    class="text-white font-bold underline decoration-[#A3E635] underline-offset-4">
+                    remova sua inscrição aqui
+                </a>
             </p>
         </div>
     </div>

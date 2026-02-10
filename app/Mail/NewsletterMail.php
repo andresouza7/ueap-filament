@@ -21,11 +21,16 @@ class NewsletterMail extends Mailable
 
     public function build()
     {
+        $unsubscribeUrl = route('newsletter.unsubscribe', $this->subscriber->unsubscribe_token);
+
         return $this
-            ->subject('Nova publicação')
+            ->subject('Nova publicação - UEAP')
             ->view('emails.newsletter')
             ->with([
                 'content' => $this->content,
-            ]);
+            ])
+            ->withSymfonyMessage(function ($message) use ($unsubscribeUrl) {
+                $message->getHeaders()->addTextHeader('List-Unsubscribe', '<' . $unsubscribeUrl . '>');
+            });
     }
 }

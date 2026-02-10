@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DTOs\NewsletterItem;
 use App\Jobs\SendNewsletter;
 use App\Models\Subscriber;
-use App\Models\WebPage;
 use Illuminate\Http\Request;
 use App\Mail\NewsletterSubscribed;
 use App\Models\WebPost;
@@ -30,7 +29,7 @@ class NewsletterController extends Controller
         ]);
 
         // email de confirmação (ok ser síncrono ou queued)
-        Mail::to($subscriber->email)->send(new NewsletterSubscribed());
+        Mail::to($subscriber->email)->send(new NewsletterSubscribed($subscriber));
 
         return redirect()
             ->to(url()->previous() . '#newsletter')
@@ -116,6 +115,7 @@ class NewsletterController extends Controller
 
     public function previewSubscribed()
     {
-        return view('emails.newsletter-subscribed');
+        $subscriber = new Subscriber(['unsubscribe_token' => 'dummy-token']);
+        return view('emails.newsletter-subscribed', compact('subscriber'));
     }
 }

@@ -14,12 +14,16 @@ class NewsletterSubscribed extends Mailable implements ShouldQueue
 
     use Queueable, SerializesModels;
 
+    public $queue = 'newsletter';
+
+    public $subscriber;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($subscriber)
     {
-        //
+        $this->subscriber = $subscriber;
     }
 
     /**
@@ -40,6 +44,16 @@ class NewsletterSubscribed extends Mailable implements ShouldQueue
         return new Content(
             view: 'emails.newsletter-subscribed',
         );
+    }
+
+    /**
+     * Get the message headers.
+     */
+    public function headers(): array
+    {
+        return [
+            'List-Unsubscribe' => '<' . route('newsletter.unsubscribe', $this->subscriber->unsubscribe_token) . '>',
+        ];
     }
 
 
