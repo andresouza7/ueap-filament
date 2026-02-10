@@ -6,26 +6,7 @@ import QuickAccessSection from '@/Components/Site/QuickAccessSection';
 const HeroSection = ({ featured = [], banners = [] }) => {
     // Adapter for props to match the layout's expectations if necessary
     // or just use featured directly.
-    const highlights = useMemo(() => featured.length > 0 ? featured : [
-        {
-            title: "PS UEAP 2025: CHAMADA OFICIAL DO RESULTADO PRELIMINAR",
-            category: { name: "PROCESSO SELETIVO" },
-            image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200",
-            slug: '#'
-        },
-        {
-            title: "SUFRAMA CREDENCIA UEAP PARA INVESTIMENTOS",
-            category: { name: "INOVAÇÃO" },
-            image_url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
-            slug: '#'
-        },
-        {
-            title: "RENOVAÇÃO DE BOLSA PIBEX",
-            category: { name: "EXTENSÃO" },
-            image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800",
-            slug: '#'
-        }
-    ], [featured]);
+    const highlights = useMemo(() => featured.length > 0 ? featured : [], [featured]);
 
     const mainHighlight = highlights[0];
     const secondaryHighlights = useMemo(() => (banners && banners.length > 0) ? highlights.slice(0, 2) : highlights.slice(1, 3), [banners, highlights]);
@@ -185,31 +166,43 @@ const HeroSection = ({ featured = [], banners = [] }) => {
 
                     {/* COLUNA DIREITA: Menor (33% / col-span-2) */}
                     <div className="hidden lg:flex lg:col-span-2 flex-col gap-0 h-[400px] lg:h-full overflow-hidden">
-                        {secondaryHighlights.map((item, idx) => (
-                            <a
-                                key={item.id || idx}
-                                href={route('site.post.show', item.slug || '#')}
-                                className="flex-1 relative group overflow-hidden cursor-pointer block shadow-sm hover:shadow-xl transition-all duration-500"
-                            >
-                                <img
-                                    src={item.image_url}
-                                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700 brightness-75 group-hover:brightness-50"
-                                    alt={item.title}
-                                />
-                                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
-                                <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
-                                    <span className="text-[#A3E635] text-[10px] font-bold uppercase mb-2 block tracking-widest drop-shadow-md">
-                                        {item.category?.name || "NOTÍCIA"}
-                                    </span>
-                                    <h3 className="text-white text-lg md:text-2xl font-bold uppercase leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg">
-                                        {item.title}
-                                    </h3>
-                                    <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                        SAIBA MAIS <ArrowUpRight size={14} className="text-[#A3E635]" />
+                        {secondaryHighlights.map((item, idx) => {
+                            const dateObj = new Date(item.created_at);
+                            const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' });
+                            const dateStr = !isNaN(dateObj) ? formatter.format(dateObj).toUpperCase().replace('.', '') : null;
+
+                            return (
+                                <a
+                                    key={item.id || idx}
+                                    href={route('site.post.show', item.slug || '#')}
+                                    className="flex-1 relative group overflow-hidden cursor-pointer block shadow-sm hover:shadow-xl transition-all duration-500"
+                                >
+                                    <img
+                                        src={item.image_url}
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700 brightness-75 group-hover:brightness-50"
+                                        alt={item.title}
+                                    />
+                                    <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                                    <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
+                                        <div className="flex items-center gap-2 text-[#A3E635] text-[10px] font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                            <span>{item.category?.name || "NOTÍCIA"}</span>
+                                            {dateStr && (
+                                                <>
+                                                    <span className="text-gray-400 opacity-60">•</span>
+                                                    <span className="text-gray-400 font-medium tracking-wider">{dateStr}</span>
+                                                </>
+                                            )}
+                                        </div>
+                                        <h3 className="text-white text-lg md:text-xl font-bold uppercase leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
+                                            {item.title}
+                                        </h3>
+                                        <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                            SAIBA MAIS <ArrowUpRight size={14} className="text-[#A3E635]" />
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        ))}
+                                </a>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

@@ -5,8 +5,6 @@ import NewsSection from '@/Components/Site/NewsSection';
 import StudentAssistanceSection from '@/Components/Site/StudentAssistanceSection';
 import EventsSection from '@/Components/Site/EventsSection';
 
-import HeroSection from '@/Components/Site/HeroSection';
-
 const Home = ({ featured, posts, events, banners }) => {
   return (
     <SiteLayout>
