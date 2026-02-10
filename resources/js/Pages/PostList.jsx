@@ -37,7 +37,7 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
 
     // Header Content similar to DocumentList
     const headerContent = (
-        <div className="bg-white border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
+        <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
             <div className="max-w-7xl mx-auto px-4">
                 <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
                     <Link href={route('site.home')} className="hover:text-[#0052CC] transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
@@ -55,12 +55,12 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
         <div className="space-y-12">
             <SidebarNews recentNews={recentNews} />
             <SidebarNewsletter />
-            <SidebarCategories />
+            <SidebarCategories categories={categories} />
         </div>
     );
 
     return (
-        <SidebarLayout recentNews={recentNews} header={headerContent} sidebar={sidebarContent}>
+        <SidebarLayout recentNews={recentNews} header={headerContent} sidebar={sidebarContent} >
 
             <PostFilter
                 searchTerm={searchTerm}

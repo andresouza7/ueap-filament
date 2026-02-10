@@ -16,7 +16,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return dateString; // Fallback se não for data válida
 
-        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
         if (includeTime) {
             options.hour = '2-digit';
             options.minute = '2-digit';
@@ -24,12 +24,22 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
         return date.toLocaleDateString('pt-BR', options);
     };
 
+    // Helper para formatar números (1000+ = 1k)
+    const formatNumber = (num) => {
+        if (!num) return 0;
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+        }
+        return num;
+    };
+
     const newsData = {
         title: post?.title,
         category: post?.category?.name,
+        categorySlug: post?.category?.slug,
         image: post?.image_url,
         date: formatDate(post?.published_at || post?.created_at),
-        views: post?.hits ? `${post.hits} Acessos` : null
+        views: post?.hits ? `${formatNumber(post.hits)} Leituras` : null
     };
 
     const recentNews = latestPosts?.map(p => ({
@@ -102,9 +112,12 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
 
                 <div className="flex flex-wrap justify-between items-end gap-6 mb-6">
                     <div className="space-y-4 flex-1 min-w-[300px]">
-                        <span className="inline-flex items-center px-3 py-1 bg-[#0052CC] text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                        <a
+                            href={route('site.post.list', { category: newsData.categorySlug })}
+                            className="inline-flex items-center px-3 py-1 bg-[#0052CC] text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#A3E635] hover:text-[#0052CC] transition-colors"
+                        >
                             {newsData.category}
-                        </span>
+                        </a>
                         {/* Fonte do título reduzida e espaçamento entre linhas ajustado */}
                         <h1 className="text-3xl md:text-4xl font-black text-gray-900 leading-[1.05] tracking-tighter uppercase break-words max-w-4xl">
                             {newsData.title}
@@ -156,6 +169,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
     return (
         <SidebarLayout
             recentNews={recentNews}
+            categories={categories}
             menu={post?.web_menu}
             header={headerContent}
             bottom={<RelatedPosts posts={relatedPosts} />}

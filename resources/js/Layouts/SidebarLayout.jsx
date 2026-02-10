@@ -5,7 +5,7 @@ import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 
-const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) => {
+const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom, sidebar }) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     // Filter menu items based on current active item
@@ -65,7 +65,9 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) 
                             sidebar
                         ) : menu ? (
                             /* Page Menu Navigation - Desktop */
-                            <nav className="space-y-2 sticky top-24">
+                            <nav className="space-y-2 sticky top-24
+                            max-w-xs
+                            ">
                                 <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
                                     Nesta Seção
                                 </h4>
@@ -96,7 +98,7 @@ const SidebarLayout = ({ children, menu, recentNews, header, bottom, sidebar }) 
                                 <SidebarSearch />
                                 <SidebarNews recentNews={recentNews} />
                                 <SidebarNewsletter />
-                                <SidebarCategories />
+                                <SidebarCategories categories={categories} />
                             </div>
                         )}
                     </aside>
