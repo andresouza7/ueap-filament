@@ -3,16 +3,41 @@ import { useForm } from '@inertiajs/react';
 import { Mail, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
 const NewsletterForm = ({ variant = 'default' }) => {
-    const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
+    // Destructure additional helpers from useForm
+    const { data, setData, errors, setError, clearErrors, reset } = useForm({
         email: '',
     });
 
-    const submit = (e) => {
+    const [processing, setProcessing] = useState(false);
+    const [recentlySuccessful, setRecentlySuccessful] = useState(false);
+
+    const submit = async (e) => {
         e.preventDefault();
-        post(route('newsletter.subscribe'), {
-            preserveScroll: true,
-            onSuccess: () => reset(),
-        });
+        setProcessing(true);
+        clearErrors();
+
+        try {
+            await window.axios.post(route('newsletter.subscribe'), data);
+
+            reset();
+            setRecentlySuccessful(true);
+            setTimeout(() => setRecentlySuccessful(false), 3000);
+
+        } catch (error) {
+            if (error.response?.status === 429) {
+                // Handle 429 specifically
+                setError('email', 'Muitas tentativas. Aguarde um momento.');
+            } else if (error.response?.data?.errors) {
+                // Handle validation errors
+                Object.keys(error.response.data.errors).forEach(key => {
+                    setError(key, error.response.data.errors[key][0]);
+                });
+            } else {
+                setError('email', 'Ocorreu um erro. Tente novamente.');
+            }
+        } finally {
+            setProcessing(false);
+        }
     };
 
     if (variant === 'sidebar') {

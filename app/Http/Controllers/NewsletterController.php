@@ -38,7 +38,7 @@ class NewsletterController extends Controller
     }
 
 
-//método do unsubscribe
+    //método do unsubscribe
     public function unsubscribe(string $token)
     {
         $subscriber = Subscriber::where('unsubscribe_token', $token)->first();
@@ -47,9 +47,7 @@ class NewsletterController extends Controller
             return response()->view('newsletter.unsubscribe-invalid');
         }
 
-        $subscriber->update([
-            'active' => false,
-        ]);
+        $subscriber->delete();
 
         return response()->view('newsletter.unsubscribe-success');
     }
@@ -67,7 +65,7 @@ class NewsletterController extends Controller
             ->orderByDesc('created_at')
             ->limit(5)
             ->get()
-            ->map(fn ($post) => new NewsletterItem(
+            ->map(fn($post) => new NewsletterItem(
                 title: $post->title,
                 excerpt: $post->resume
                     ?? str($post->title)->limit(140),
