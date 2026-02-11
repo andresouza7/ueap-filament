@@ -43,11 +43,32 @@ class WebPost extends Model implements HasMedia
         'type'
     ];
 
-    protected $appends = ['image_url'];
+    protected $appends = ['image_url', 'has_image'];
 
     protected $casts = [
         'content' => 'array'
     ];
+
+    public function getHasImageAttribute()
+    {
+        if (is_array($this->content)) {
+            foreach ($this->content as $block) {
+                if (
+                    ($block['type'] ?? null) === 'image' &&
+                    !empty($block['data']['path']) &&
+                    is_array($block['data']['path'])
+                ) {
+                    $path = $block['data']['path'][0] ?? null;
+
+                    if ($path) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
     public function getImageUrlAttribute()
     {
@@ -61,14 +82,12 @@ class WebPost extends Model implements HasMedia
                     $path = $block['data']['path'][0] ?? null;
 
                     if ($path) {
-                        return Storage::url($path); // or return $path
+                        return Storage::url($path);
                     }
                 }
             }
         }
 
-        // ✅ fallback image
-        // return 'https://picsum.photos/seed/' . $this->id . '/600/400';
         return asset('img/site/default-thumbnail.jpg');
     }
 
@@ -107,5 +126,10 @@ class WebPost extends Model implements HasMedia
         $query
             ->where('title', 'ilike', "%$value%")
             ->orWhere('text', 'ilike', "%$value%");
+    }
+
+    public function scopeOnlyWithImage($query)
+    {
+        return $query->where('content', 'ilike', '%"type":"image"%');
     }
 }

@@ -53,13 +53,32 @@ const HeroSection = ({ featured = [], banners = [] }) => {
     }, [carouselItems.length]);
 
     const nextBanner = (e) => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         setCurrentBanner((prev) => (prev >= carouselItems.length - 1 ? 0 : prev + 1));
     };
 
     const prevBanner = (e) => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         setCurrentBanner((prev) => (prev === 0 ? carouselItems.length - 1 : prev - 1));
+    };
+
+    // Drag/Swipe Logic
+    const [dragStart, setDragStart] = useState(null);
+
+    const handleTouchStart = (e) => setDragStart(e.touches[0].clientX);
+    const handleTouchEnd = (e) => {
+        if (dragStart === null) return;
+        const diff = dragStart - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) diff > 0 ? nextBanner() : prevBanner();
+        setDragStart(null);
+    };
+
+    const handleMouseDown = (e) => setDragStart(e.clientX);
+    const handleMouseUp = (e) => {
+        if (dragStart === null) return;
+        const diff = dragStart - e.clientX;
+        if (Math.abs(diff) > 50) diff > 0 ? nextBanner() : prevBanner();
+        setDragStart(null);
     };
 
     return (
@@ -75,7 +94,14 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 lg:h-[550px] items-stretch bg-gray-900 shadow-xl mx-0">
 
                     {/* COLUNA ESQUERDA: BANNERS ou NOTÍCIA DESTAQUE (66% / col-span-4) */}
-                    <div className="lg:col-span-4 relative overflow-hidden h-[250px] lg:h-full block group">
+                    <div
+                        className="lg:col-span-4 relative overflow-hidden h-[250px] lg:h-full block group cursor-grab active:cursor-grabbing"
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
+                        onMouseDown={handleMouseDown}
+                        onMouseUp={handleMouseUp}
+                        onMouseLeave={() => setDragStart(null)}
+                    >
                         {carouselItems.length > 0 ? (
                             <div className="relative w-full h-full">
                                 {carouselItems.map((banner, index) => (
@@ -98,7 +124,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                         <span className="text-[#A3E635] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-2 block">{banner.description}</span>
                                                     )}
                                                     {banner.title && (
-                                                        <h2 className="text-white text-xl md:text-4xl lg:text-5xl font-bold md:font-black uppercase tracking-tighter shadow-black drop-shadow-lg leading-tight md:leading-none">
+                                                        <h2 className="text-white text-base md:text-4xl lg:text-5xl font-bold md:font-black uppercase tracking-tighter shadow-black drop-shadow-lg leading-tight md:leading-none">
                                                             {banner.title}
                                                         </h2>
                                                     )}
@@ -113,15 +139,15 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                     <>
                                         <button
                                             onClick={prevBanner}
-                                            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-black/30 hover:bg-[#0052CC] text-white rounded-full transition-colors backdrop-blur-sm"
+                                            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-white/50 hover:text-white transition-all rounded-full bg-transparent"
                                         >
-                                            <ChevronLeft size={24} />
+                                            <ChevronLeft size={32} strokeWidth={1.5} />
                                         </button>
                                         <button
                                             onClick={nextBanner}
-                                            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-black/30 hover:bg-[#0052CC] text-white rounded-full transition-colors backdrop-blur-sm"
+                                            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-white/50 hover:text-white transition-all rounded-full bg-transparent"
                                         >
-                                            <ChevronRight size={24} />
+                                            <ChevronRight size={32} strokeWidth={1.5} />
                                         </button>
 
                                         {/* Indicators */}
@@ -195,7 +221,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                 </>
                                             )}
                                         </div>
-                                        <h3 className="text-white text-lg md:text-xl font-bold uppercase leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
+                                        <h3 className="text-white text-base uppercase font-bold leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
                                             {item.title}
                                         </h3>
                                         <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">

@@ -10,20 +10,34 @@ import { Home, ChevronRight } from 'lucide-react';
 import { route } from 'ziggy-js';
 import { router, Link } from '@inertiajs/react';
 
-const PostList = ({ posts, categories, searchString, latestPosts }) => {
+const PostList = ({ posts, categories, searchString, latestPosts, activeCategory, postType }) => {
     const [searchTerm, setSearchTerm] = useState(searchString || '');
-    const [filterType, setFilterType] = useState('todos');
+    const [filterType, setFilterType] = useState(postType || 'todos');
 
     const handleSearch = (e) => {
         if (e.key === 'Enter') {
-            router.get(route('site.post.list'), { search: searchTerm, type: filterType !== 'todos' ? filterType : undefined }, { preserveState: true });
+            router.get(route('site.post.list'), {
+                search: searchTerm,
+                type: filterType !== 'todos' ? filterType : undefined,
+                category: activeCategory?.slug
+            }, { preserveState: true });
         }
     };
 
     const handleFilterChange = (e) => {
         const newType = e.target.value;
         setFilterType(newType);
-        router.get(route('site.post.list'), { search: searchTerm, type: newType !== 'todos' ? newType : undefined }, { preserveState: true });
+        router.get(route('site.post.list'), {
+            search: searchTerm,
+            type: newType !== 'todos' ? newType : undefined,
+            category: activeCategory?.slug
+        }, { preserveState: true });
+    };
+
+    const clearFilters = () => {
+        setSearchTerm('');
+        setFilterType('todos');
+        router.get(route('site.post.list'));
     };
 
     // Helper for recentNews items adaptation
@@ -59,6 +73,8 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
         </div>
     );
 
+    const hasActiveFilters = searchString || activeCategory || (postType && postType !== 'todos');
+
     return (
         <SidebarLayout recentNews={recentNews} header={headerContent} sidebar={sidebarContent} >
 
@@ -69,6 +85,51 @@ const PostList = ({ posts, categories, searchString, latestPosts }) => {
                 filterType={filterType}
                 onFilterChange={handleFilterChange}
             />
+
+            {hasActiveFilters ? (
+                <div className="mb-8 p-4 bg-gray-50 border border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Filtrando por:</span>
+
+                            {searchString && (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                    Busca: "{searchString}"
+                                </span>
+                            )}
+
+                            {activeCategory && (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                    Categoria: {activeCategory.name}
+                                </span>
+                            )}
+
+                            {postType && postType !== 'todos' && (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                    Tipo: {postType === 'news' ? 'Notícias' : 'Eventos'}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="h-4 w-px bg-gray-200 hidden md:block"></div>
+
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                            {posts.total} {posts.total === 1 ? 'Resultado' : 'Resultados'}
+                        </span>
+                    </div>
+
+                    <button
+                        onClick={clearFilters}
+                        className="text-[10px] font-bold text-red-500 uppercase tracking-widest hover:underline"
+                    >
+                        Limpar Filtros
+                    </button>
+                </div>
+            ) : (
+                <div className="mb-8 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                    {posts.total} {posts.total === 1 ? 'Publicação encontrada' : 'Publicações encontradas'}
+                </div>
+            )}
 
             {/* Lista de Notícias em formato Paisagem */}
             <div className="space-y-10">

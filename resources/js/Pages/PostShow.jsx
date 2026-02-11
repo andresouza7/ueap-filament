@@ -101,10 +101,12 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
 
             <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
                 {/* Breadcrumb refinado e mais próximo do título */}
-                <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-6">
-                    <a href="#" className="hover:text-[#0052CC] transition-colors">Início</a>
+                <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-6 flex-wrap">
+                    <a href={route('site.home')} className="hover:text-[#0052CC] transition-colors">Início</a>
                     <ChevronRight size={10} className="text-gray-300" />
-                    <span className="text-gray-900">{newsData.category}</span>
+                    <a href={route('site.post.list')} className="hover:text-[#0052CC] transition-colors">Publicações</a>
+                    <ChevronRight size={10} className="text-gray-300" />
+                    <span className="text-gray-900 line-clamp-1 max-w-[400px]">{newsData.title}</span>
                 </nav>
 
                 <div className="flex flex-wrap justify-between items-end gap-6 mb-6">
@@ -182,8 +184,6 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             </div>
         </div>
     );
-
-
 
     return (
         <SidebarLayout

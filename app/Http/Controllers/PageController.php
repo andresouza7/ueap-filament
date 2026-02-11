@@ -22,10 +22,19 @@ class PageController extends Controller
         $featuredCount = $banners->count() > 0 ? 2 : 3;
 
         $featured = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', true)->orderByDesc('created_at')->take($featuredCount)->get();
+            ->where('featured', true)
+            ->onlyWithImage()
+            ->orderByDesc('created_at')->take($featuredCount)->get();
 
-        $posts = WebPost::where('type', 'news')->where('status', 'published')
-            ->where('featured', false)->orderByDesc('created_at')->take(4)->get();
+        $featuredIds = $featured->pluck('id');
+
+        $posts = WebPost::where('type', 'news')
+            ->where('status', 'published')
+            ->whereNotIn('id', $featuredIds)
+            ->orderByDesc('created_at')
+            ->take(4)
+            ->get();
+
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
 
         return Inertia::render('Home', compact('featured', 'posts', 'events', 'banners'));
@@ -61,10 +70,12 @@ class PageController extends Controller
             ->take(6)
             ->get();
 
+        $activeCategory = $categorySlug ? WebCategory::where('slug', $categorySlug)->first() : null;
+
         $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
             ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
 
-        return Inertia::render('PostList', compact('posts', 'categories', 'searchString', 'latestPosts'));
+        return Inertia::render('PostList', compact('posts', 'categories', 'searchString', 'latestPosts', 'activeCategory', 'postType'));
     }
 
     public function postShow($slug)

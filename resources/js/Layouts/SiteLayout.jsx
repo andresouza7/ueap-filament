@@ -246,6 +246,15 @@ const SiteLayout = ({ children }) => {
                                 ]
                             },
                             {
+                                title: "Ensino",
+                                links: [
+                                    { label: "Biblioteca", url: "/pagina/biblioteca.html" },
+                                    { label: "Portal do Aluno", url: "https://sigaa.ueap.edu.br/sigaa/" },
+                                    { label: "Portal de Periódicos", url: "https://periodicos.ueap.edu.br/" },
+                                    { label: "Calendário", url: "/calendario-academico" }
+                                ]
+                            },
+                            {
                                 title: "Cursos",
                                 links: [
                                     { label: "Graduação", url: "/cursos/graduacao" },
@@ -253,14 +262,7 @@ const SiteLayout = ({ children }) => {
                                     { label: "Extensão", url: "/cursos/ext" }
                                 ]
                             },
-                            {
-                                title: "Ensino",
-                                links: [
-                                    { label: "Biblioteca", url: "/pagina/biblioteca.html" },
-                                    { label: "Portal do Aluno", url: "https://sigaa.ueap.edu.br/sigaa/" },
-                                    { label: "Calendário", url: "/calendario-academico" }
-                                ]
-                            },
+
                             {
                                 title: "Comunidade",
                                 links: [
