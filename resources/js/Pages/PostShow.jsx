@@ -98,9 +98,6 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
 
     const headerContent = (
         <div className="relative overflow-hidden bg-gray-50 border-b border-gray-200">
-            {/* Elementos Decorativos de Fundo */}
-            {/* <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#A3E635]/10 to-transparent rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0052CC]/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div> */}
 
             <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
                 {/* Breadcrumb refinado e mais próximo do título */}
@@ -124,7 +121,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                         </h1>
                     </div>
 
-                    <button
+                    {/* <button
                         onClick={() => generateAISummary()}
                         className="group relative flex items-center gap-3 px-5 py-2.5 bg-white border-2 border-[#0052CC] text-[#0052CC] text-[10px] font-black uppercase tracking-widest hover:bg-[#0052CC] hover:text-white transition-all duration-300 shadow-[3px_3px_0px_0px_#A3E635] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
                     >
@@ -134,7 +131,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                             <Sparkles size={14} className="group-hover:animate-pulse" />
                         )}
                         {summary ? "Resumo Atualizado" : "Resumo IA"}
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Meta Info mais compacto */}
@@ -151,13 +148,35 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                         </div>
                         <span>{newsData.views}</span>
                     </div>
-                    <div className="mx-auto md:mx-0 md:ml-auto flex gap-4">
-                        <button
-                            onClick={handleShare}
-                            className="flex items-center gap-2 hover:text-[#0052CC] transition-colors cursor-pointer"
-                        >
-                            <Share2 size={12} /> Compartilhar
-                        </button>
+                    <div className="mx-auto md:mx-0 md:ml-auto flex items-center gap-3 mt-6 md:mt-0">
+                        <span className="hidden sm:block text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Compartilhar</span>
+                        <div className="flex items-center gap-5 md:gap-3">
+                            <a
+                                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(newsData.title + ' - ' + window.location.href)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#25D366] hover:text-white transition-all duration-300"
+                                title="WhatsApp"
+                            >
+                                <i className="fa-brands fa-whatsapp text-sm" />
+                            </a>
+                            <a
+                                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300"
+                                title="Facebook"
+                            >
+                                <i className="fa-brands fa-facebook-f text-sm" />
+                            </a>
+                            <button
+                                onClick={handleShare}
+                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#0052CC] hover:text-white transition-all duration-300 cursor-pointer"
+                                title="Mais opções de compartilhamento"
+                            >
+                                <i className="fa-solid fa-share-nodes text-sm" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

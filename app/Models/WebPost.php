@@ -67,7 +67,8 @@ class WebPost extends Model implements HasMedia
         }
 
         // ✅ fallback image
-        return 'https://picsum.photos/seed/' . $this->id . '/600/400';
+        // return 'https://picsum.photos/seed/' . $this->id . '/600/400';
+        return asset('img/site/default-thumbnail.jpg');
     }
 
     public function category()

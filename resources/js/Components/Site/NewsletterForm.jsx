@@ -47,7 +47,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                     <Mail size={80} />
                 </div>
                 <h3 className="text-lg font-bold uppercase tracking-tighter mb-2 relative z-10">Newsletter</h3>
-                <p className="text-[10px] text-white/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba atualizações oficiais</p>
+                <p className="text-[10px] text-white/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba as últimas publicações</p>
 
                 <form onSubmit={submit} className="space-y-3 relative z-10">
                     <div>
@@ -60,7 +60,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                             className="w-full px-4 py-3 bg-white/10 border border-white/20 text-xs focus:outline-none focus:bg-white focus:text-[#0052CC] transition-all placeholder:text-white/50"
                             required
                         />
-                        {errors.email && <div className="text-[#A3E635] text-[10px] uppercase font-bold mt-1">{errors.email}</div>}
+                        {errors.email && <div className="text-red-300 text-[10px] uppercase font-bold mt-1">{errors.email}</div>}
                     </div>
 
                     <button

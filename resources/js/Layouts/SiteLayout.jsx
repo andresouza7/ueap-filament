@@ -242,17 +242,15 @@ const SiteLayout = ({ children }) => {
                                     { label: "Sobre a UEAP", url: "/pagina/historia.html" },
                                     { label: "Reitoria", url: "/pagina/reitoria.html" },
                                     { label: "Pró-Reitorias", url: "/pagina/pro_reitorias.html" },
-                                    { label: "Conselhos", url: "#" },
-                                    { label: "Campi e Polos", url: "#" }
+                                    { label: "Imprensa", url: "/pagina/sala_de_imprensa.html" },
                                 ]
                             },
                             {
                                 title: "Cursos",
                                 links: [
-                                    { label: "Graduação", url: "#" },
-                                    { label: "Pós-Graduação", url: "#" },
-                                    { label: "Extensão", url: "#" },
-                                    { label: "EAD", url: "#" }
+                                    { label: "Graduação", url: "/cursos/graduacao" },
+                                    { label: "Pós-Graduação", url: "/cursos/pos" },
+                                    { label: "Extensão", url: "/cursos/ext" }
                                 ]
                             },
                             {
@@ -260,7 +258,7 @@ const SiteLayout = ({ children }) => {
                                 links: [
                                     { label: "Biblioteca", url: "/pagina/biblioteca.html" },
                                     { label: "Portal do Aluno", url: "https://sigaa.ueap.edu.br/sigaa/" },
-                                    { label: "Calendário", url: "/documentos/calendar" }
+                                    { label: "Calendário", url: "/calendario-academico" }
                                 ]
                             },
                             {
@@ -274,9 +272,9 @@ const SiteLayout = ({ children }) => {
                             {
                                 title: "Transparência",
                                 links: [
-                                    { label: "Dados Abertos", url: "#" },
+                                    { label: "Prestação de Contas", url: "http://transparencia.ueap.edu.br/" },
                                     { label: "Licitações", url: "https://transparencia.ueap.edu.br/licitacoes" },
-                                    { label: "Ouvidoria (e-SIC)", url: "https://ouvamapa.portal.ap.gov.br/" }
+                                    { label: "Ouvidoria", url: "https://ouvamapa.portal.ap.gov.br/" }
                                 ]
                             }
                         ].map((section, i) => (

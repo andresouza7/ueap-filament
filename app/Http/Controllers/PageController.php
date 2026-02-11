@@ -8,6 +8,7 @@ use App\Models\Portaria;
 use App\Models\WebCategory;
 use App\Models\WebPost;
 use App\Models\WebBanner;
+use App\Models\WebMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -215,6 +216,40 @@ class PageController extends Controller
         return Inertia::render('DocumentList', [
             'title' => $title,
             'documents' => $items
+        ]);
+    }
+
+    public function courseList($slug)
+    {
+        if (!in_array($slug, ['graduacao', 'pos', 'ext'])) {
+            return abort(404);
+        }
+
+        $menu = WebMenu::where('slug', 'ilike', $slug)
+            ->where('status', 'published')
+            ->with(['items' => function ($query) {
+                $query->where('status', 'published')->orderBy('name');
+            }])
+            ->first();
+
+        $cursos = $menu ? $menu->items : [];
+
+        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        $categories = WebCategory::has('posts')
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+
+        return Inertia::render('CourseList', [
+            'slug' => $slug,
+            'cursos' => $cursos,
+            'menu' => $menu,
+            'latestPosts' => $latestPosts,
+            'categories' => $categories
         ]);
     }
 }

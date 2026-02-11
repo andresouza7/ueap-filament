@@ -57,6 +57,12 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                     {/* Main Content Area */}
                     <main className="lg:w-2/3">
                         {children}
+
+                        {bottom && (
+                            <div className="w-full mt-12">
+                                {bottom}
+                            </div>
+                        )}
                     </main>
 
                     {/* Sidebar Area (Desktop Only for Menu) */}
@@ -104,11 +110,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                     </aside>
                 </div>
 
-                {bottom && (
-                    <div className="w-full mt-12">
-                        {bottom}
-                    </div>
-                )}
+
             </div>
         </SiteLayout>
     );

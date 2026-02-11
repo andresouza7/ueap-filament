@@ -67,7 +67,7 @@ const NewsSection = ({ posts = [] }) => {
                         <Mail size={32} />
                         <h3 className="text-3xl font-bold uppercase tracking-tighter">Fique por dentro</h3>
                     </div>
-                    <p className="text-white/80 text-sm font-medium tracking-wide">Assine nossa newsletter e receba as últimas notícias e editais diretamente no seu e-mail.</p>
+                    <p className="text-white/80 text-sm font-medium tracking-wide">Assine nossa newsletter e receba as últimas publicações diretamente no seu e-mail.</p>
                 </div>
 
                 <NewsletterForm variant="default" />
