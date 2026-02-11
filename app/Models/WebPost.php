@@ -20,6 +20,7 @@ class WebPost extends Model implements HasMedia
     {
         return LogOptions::defaults()
             ->logAll()
+            ->logExcept(['hits'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
