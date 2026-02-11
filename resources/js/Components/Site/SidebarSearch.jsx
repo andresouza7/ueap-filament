@@ -13,7 +13,7 @@ const SidebarSearch = () => {
 
     return (
         <div className="bg-gray-50 p-6 border-l-4 border-[#0052CC]">
-            <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-4">Pesquisar Notícias</h3>
+            <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-4">Pesquisar no Portal</h3>
             <div className="relative">
                 <input
                     type="text"

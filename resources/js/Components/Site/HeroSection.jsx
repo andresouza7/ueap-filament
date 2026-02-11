@@ -11,6 +11,10 @@ const HeroSection = ({ featured = [], banners = [] }) => {
     const mainHighlight = highlights[0];
     const secondaryHighlights = useMemo(() => (banners && banners.length > 0) ? highlights.slice(0, 2) : highlights.slice(1, 3), [banners, highlights]);
 
+    const mainDateObj = new Date(mainHighlight?.created_at);
+    const mainFormatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' });
+    const mainDateStr = !isNaN(mainDateObj) ? mainFormatter.format(mainDateObj).toUpperCase().replace('.', '') : null;
+
     // Carousel State
     const [currentBanner, setCurrentBanner] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
@@ -25,16 +29,23 @@ const HeroSection = ({ featured = [], banners = [] }) => {
     const carouselItems = useMemo(() => {
         if (!isMobile) return banners || [];
 
-        const newsItems = secondaryHighlights.map((item, idx) => ({
+        // No mobile, se não houver banners, usamos TODOS os destaques (incluindo o principal)
+        // Se houver banners, o mobile exibe os banners + as notícias secundárias
+        const newsItems = (banners && banners.length > 0)
+            ? secondaryHighlights
+            : highlights;
+
+        const adaptedNews = newsItems.map((item, idx) => ({
             id: item.id || `news-${idx}`,
             url: item.slug ? route('site.post.show', item.slug) : '#',
             image_url: item.image_url,
             title: item.title,
-            description: item.category?.name || 'NOTÍCIA'
+            description: item.category?.name || 'NOTÍCIA',
+            created_at: item.created_at
         }));
 
-        return [...(banners || []), ...newsItems];
-    }, [isMobile, banners, secondaryHighlights]);
+        return [...(banners || []), ...adaptedNews];
+    }, [isMobile, banners, highlights, secondaryHighlights]);
 
     useEffect(() => {
         if (currentBanner >= carouselItems.length) {
@@ -120,11 +131,24 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                             <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 z-10"></div>
                                             {(banner.title || banner.description) && (
                                                 <div className="absolute bottom-0 left-0 px-6 pb-10 pt-6 md:p-12 z-20 w-full">
-                                                    {banner.description && (
-                                                        <span className="text-[#A3E635] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-2 block">{banner.description}</span>
-                                                    )}
+                                                    <div className="flex items-center gap-2 text-[#A3E635] text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                                        {banner.description && (
+                                                            <span>{banner.description}</span>
+                                                        )}
+                                                        {banner.created_at && (
+                                                            <>
+                                                                <span className="text-gray-400 opacity-60">•</span>
+                                                                <span className="text-gray-400 font-medium tracking-wider">
+                                                                    {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' })
+                                                                        .format(new Date(banner.created_at))
+                                                                        .toUpperCase()
+                                                                        .replace('.', '')}
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </div>
                                                     {banner.title && (
-                                                        <h2 className="text-white text-base md:text-4xl lg:text-5xl font-bold md:font-black uppercase tracking-tighter shadow-black drop-shadow-lg leading-tight md:leading-none">
+                                                        <h2 className="text-white text-base md:text-4xl lg:text-5xl font-bold md:font-black tracking-normal shadow-black drop-shadow-lg leading-tight md:leading-none">
                                                             {banner.title}
                                                         </h2>
                                                     )}
@@ -176,10 +200,16 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
 
                                 <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end text-left z-10">
-                                    <span className="bg-[#A3E635] text-[#0052CC] inline-flex w-fit items-center justify-center px-3 py-1 font-bold text-[10px] md:text-xs mb-4 uppercase tracking-[0.2em] shadow-lg transform group-hover:-translate-y-1 transition-transform">
-                                        {mainHighlight.category?.name || "DESTAQUE"}
-                                    </span>
-                                    <h2 className="text-white text-2xl md:text-5xl font-black mb-6 tracking-tighter leading-tight uppercase drop-shadow-xl max-w-3xl group-hover:text-[#A3E635] transition-colors">
+                                    <div className="flex items-center gap-2 text-[#A3E635] text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                        <span>{mainHighlight.category?.name || "DESTAQUE"}</span>
+                                        {mainDateStr && (
+                                            <>
+                                                <span className="text-gray-400 opacity-60">•</span>
+                                                <span className="text-gray-400 font-medium tracking-wider">{mainDateStr}</span>
+                                            </>
+                                        )}
+                                    </div>
+                                    <h2 className="text-white text-2xl md:text-3xl font-bold mb-6 tracking-tighter leading-tight drop-shadow-xl max-w-3xl group-hover:text-[#A3E635] transition-colors">
                                         {mainHighlight.title}
                                     </h2>
                                     <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-[#A3E635] transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-[#A3E635] pb-1">
@@ -221,7 +251,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                 </>
                                             )}
                                         </div>
-                                        <h3 className="text-white text-base uppercase font-bold leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
+                                        <h3 className="text-white text-base font-bold leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
                                             {item.title}
                                         </h3>
                                         <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
