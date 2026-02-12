@@ -1,4 +1,5 @@
 ﻿import React, { cloneElement, useState } from 'react';
+import { Link, usePage } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
@@ -19,10 +20,10 @@ import {
     PenTool,
     GraduationCap
 } from 'lucide-react';
-import { Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 
-const CourseList = ({ slug, cursos, categories, latestPosts }) => {
+const CourseList = ({ slug, cursos }) => {
+    const { latestPosts, categories } = usePage().props;
     const [busca, setBusca] = useState('');
     const normalizedSlug = slug?.toLowerCase();
     const title = normalizedSlug === 'graduacao' ? 'Cursos de Graduação' : (normalizedSlug === 'ext' ? 'Cursos de Extensão' : 'Pós-Graduação');

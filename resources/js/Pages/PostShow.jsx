@@ -1,4 +1,5 @@
 ﻿import React, { useState } from 'react';
+import { usePage } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
@@ -6,7 +7,8 @@ import { callGemini } from '@/Services/GeminiService';
 import { Calendar, Eye, Share2, Sparkles, Loader2, Clock, ChevronRight, Bookmark } from 'lucide-react';
 import { route } from 'ziggy-js';
 
-const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
+const PostShow = ({ post, relatedPosts }) => {
+    const { latestPosts, categories } = usePage().props;
     const [summary, setSummary] = useState('');
     const [loadingSummary, setLoadingSummary] = useState(false);
 

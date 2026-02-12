@@ -50,6 +50,15 @@ class HandleInertiaRequests extends Middleware
                 }])
                 ->orderBy('position')
                 ->first(),
+            'latestPosts' => \App\Models\WebPost::where('status', 'published')
+                ->where('type', 'news')
+                ->latest()
+                ->take(4)
+                ->get(),
+            'categories' => \App\Models\WebCategory::has('posts')
+                ->inRandomOrder()
+                ->take(6)
+                ->get(),
         ];
     }
 }

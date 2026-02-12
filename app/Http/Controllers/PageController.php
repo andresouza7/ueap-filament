@@ -65,17 +65,9 @@ class PageController extends Controller
 
         $posts = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
 
-        $categories = WebCategory::has('posts')
-            ->inRandomOrder()
-            ->take(6)
-            ->get();
-
         $activeCategory = $categorySlug ? WebCategory::where('slug', $categorySlug)->first() : null;
 
-        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
-            ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
-
-        return Inertia::render('PostList', compact('posts', 'categories', 'searchString', 'latestPosts', 'activeCategory', 'postType'));
+        return Inertia::render('PostList', compact('posts', 'searchString', 'activeCategory', 'postType'));
     }
 
     public function postShow($slug)
@@ -102,9 +94,6 @@ class PageController extends Controller
                 $post->increment('hits', 1);
             });
 
-            $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
-                ->orderBy('created_at', 'desc')->orderBy('hits', 'desc')->take(4)->get();
-
             $relatedPosts = WebPost::latest('id')->where('status', 'published')
                 ->whereHas('category', function ($query) use ($post) {
                     $query->where('name', $post->category->name);
@@ -112,12 +101,7 @@ class PageController extends Controller
                 ->with(['category'])
                 ->take(4)->get();
 
-            $categories = WebCategory::has('posts')
-                ->inRandomOrder()
-                ->take(6)
-                ->get();
-
-            return Inertia::render('PostShow', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
+            return Inertia::render('PostShow', compact('post', 'relatedPosts'));
             // return view('novosite.pages.post-show', compact('post', 'latestPosts', 'relatedPosts', 'categories'));
         } else {
             return abort(404);
@@ -245,22 +229,10 @@ class PageController extends Controller
 
         $cursos = $menu ? $menu->items : [];
 
-        $latestPosts = WebPost::where('status', 'published')->where('type', 'news')
-            ->latest()
-            ->take(4)
-            ->get();
-
-        $categories = WebCategory::has('posts')
-            ->inRandomOrder()
-            ->take(6)
-            ->get();
-
         return Inertia::render('CourseList', [
             'slug' => $slug,
             'cursos' => $cursos,
             'menu' => $menu,
-            'latestPosts' => $latestPosts,
-            'categories' => $categories
         ]);
     }
 }

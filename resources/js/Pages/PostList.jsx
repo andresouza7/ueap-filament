@@ -1,4 +1,5 @@
 ﻿import React, { useState } from 'react';
+import { router, Link, usePage } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostFilter from '@/Components/Site/PostFilter';
 import PostCard from '@/Components/Site/PostCard';
@@ -8,9 +9,9 @@ import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 import { Home, ChevronRight } from 'lucide-react';
 import { route } from 'ziggy-js';
-import { router, Link } from '@inertiajs/react';
 
-const PostList = ({ posts, categories, searchString, latestPosts, activeCategory, postType }) => {
+const PostList = ({ posts, searchString, activeCategory, postType }) => {
+    const { latestPosts, categories } = usePage().props;
     const [searchTerm, setSearchTerm] = useState(searchString || '');
     const [filterType, setFilterType] = useState(postType || 'todos');
 
