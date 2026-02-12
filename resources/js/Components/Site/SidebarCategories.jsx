@@ -14,7 +14,7 @@ const SidebarCategories = ({ categories = [] }) => {
                     <a
                         key={cat.id}
                         href={route('site.post.list', { category: cat.slug })}
-                        className="px-4 py-2 bg-gray-100 hover:bg-ueap-accent text-[10px] font-bold text-gray-600 hover:text-ueap-primary uppercase tracking-widest transition-colors rounded-full"
+                        className="px-4 py-2 bg-gray-100 hover:bg-ueap-accent text-[10px] font-bold text-contrast-body hover:text-ueap-primary uppercase tracking-widest transition-colors rounded-full"
                     >
                         {cat.name}
                     </a>

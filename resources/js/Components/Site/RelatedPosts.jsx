@@ -38,8 +38,8 @@ const RelatedPosts = ({ posts }) => {
                                 {post.category?.name || 'Notícia'}
                             </div>
                         </div>
-                        <p className="text-[8px] text-gray-400 font-bold mb-2 uppercase tracking-widest">{formatDate(post.created_at)}</p>
-                        <h4 className="text-xs font-bold text-gray-800 group-hover:text-ueap-primary transition-colors leading-snug uppercase tracking-tight line-clamp-3">
+                        <p className="text-[8px] text-contrast-muted font-bold mb-2 uppercase tracking-widest">{formatDate(post.created_at)}</p>
+                        <h4 className="text-xs font-bold text-contrast-heading group-hover:text-ueap-primary transition-colors leading-snug uppercase tracking-tight line-clamp-3">
                             {post.title}
                         </h4>
                     </Link>

@@ -6,11 +6,62 @@
 @source '../**/*.jsx';
 
 @theme {
+    /* ========================================
+       CORES PRINCIPAIS
+       ======================================== */
     --color-ueap-primary: #0052CC;
     --color-ueap-accent: #A3E635;
-    --color-ueap-secondary: #0F172A;
-    --color-ueap-footer: #003D99;
+    --color-ueap-secondary: #ffffff;  /* Branco - usado para texto em fundos escuros */
 
+    /* ========================================
+       TONS DE CONTRASTE (TEXTO)
+       Baseados na escala de cinza do Tailwind
+       ======================================== */
+    
+    /* contrast-primary: gray-900 (#111827)
+       Uso: Títulos principais (h1), breadcrumb ativo, texto de maior destaque
+       Contraste: Máximo contraste com fundo branco */
+    --color-contrast-primary: #111827;
+    
+    /* contrast-heading: gray-800 (#1f2937)
+       Uso: Títulos de seção (h2, h3), títulos de cards, headings secundários
+       Contraste: Alto contraste, ideal para hierarquia visual */
+    --color-contrast-heading: #1f2937;
+    
+    /* contrast-body: gray-500 (#6b7280)
+       Uso: Corpo de texto, descrições, parágrafos, menus, links de submenu
+       Contraste: Médio, confortável para leitura prolongada */
+    --color-contrast-body: #6b7280;
+    
+    /* contrast-muted: gray-400 (#9ca3af)
+       Uso: Labels, metadados, timestamps, placeholders, textos de suporte
+       Contraste: Baixo, para informações secundárias */
+    --color-contrast-muted: #9ca3af;
+    
+    /* contrast-subtle: gray-300 (#d1d5db)
+       Uso: Ícones decorativos, separadores, elementos de baixo contraste
+       Contraste: Muito baixo, apenas para elementos visuais sutis */
+    --color-contrast-subtle: #d1d5db;
+
+    /* ========================================
+       FOOTER - TEXTO EM FUNDO ESCURO
+       ======================================== */
+
+    /* ueap-footer: blue-600
+       Uso: Background do footer */
+    --color-ueap-footer: #003D99;
+    
+    /* footer-primary-light: blue-100/70
+       Uso: Links e textos secundários no footer */
+    --color-footer-primary-light: rgb(219 234 254 / 0.7);
+    
+    /* footer-primary-subtle: blue-100/40
+       Uso: Textos descritivos, copyright, ícones de redes sociais */
+    --color-footer-primary-subtle: rgb(219 234 254 / 0.4);
+
+    /* ========================================
+       TIPOGRAFIA
+       ======================================== */
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
 }

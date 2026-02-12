@@ -23,7 +23,7 @@ const SidebarSearch = () => {
                     onChange={(e) => setTerm(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
-                <button onClick={handleSearch} className="absolute right-3 top-3 text-gray-300 hover:text-ueap-primary transition-colors">
+                <button onClick={handleSearch} className="absolute right-3 top-3 text-contrast-subtle hover:text-ueap-primary transition-colors">
                     <Search size={18} />
                 </button>
             </div>

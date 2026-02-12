@@ -21,8 +21,8 @@ const SidebarNews = ({ recentNews = [] }) => {
                             <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         </div>
                         <div className="flex flex-col justify-center">
-                            <span className="text-[11px] text-gray-400 font-bold mb-1 block uppercase tracking-tight">{item.date}</span>
-                            <h4 className="text-md font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors leading-snug line-clamp-2">
+                            <span className="text-[11px] text-contrast-muted font-bold mb-1 block uppercase tracking-tight">{item.date}</span>
+                            <h4 className="text-md font-semibold text-contrast-heading group-hover:text-ueap-primary transition-colors leading-snug line-clamp-2">
                                 {item.title}
                             </h4>
                         </div>

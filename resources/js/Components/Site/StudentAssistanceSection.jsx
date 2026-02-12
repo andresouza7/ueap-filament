@@ -23,7 +23,7 @@ const StudentAssistanceSection = () => {
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-1 bg-ueap-accent"></div>
-                            <span className="text-gray-500 font-bold text-xs uppercase tracking-[0.3em]">Programas & Auxílios</span>
+                            <span className="text-contrast-body font-bold text-xs uppercase tracking-[0.3em]">Programas & Auxílios</span>
                         </div>
                         {/* Ajuste de tamanho de fonte no mobile (text-3xl) vs desktop (md:text-5xl) */}
                         <h2 className="text-4xl md:text-5xl font-black text-ueap-primary uppercase tracking-tighter leading-[0.9]">
@@ -32,7 +32,7 @@ const StudentAssistanceSection = () => {
                     </div>
 
                     <div className="md:text-right max-w-sm pb-1 border-l-4 md:border-l-0 md:border-r-4 border-ueap-accent pl-6 md:pl-0 md:pr-6">
-                        <p className="text-sm text-gray-600 font-medium leading-relaxed">
+                        <p className="text-sm text-contrast-body font-medium leading-relaxed">
                             Ações de <span className="font-bold text-ueap-primary">incentivo à pesquisa</span> e <span className="font-bold text-ueap-primary">apoio à permanência</span> estudantil na universidade.
                         </p>
                     </div>
@@ -58,7 +58,7 @@ const StudentAssistanceSection = () => {
                                 {p.sigla}
                             </h3>
 
-                            <p className="text-[9px] md:text-[10px] text-gray-600 font-bold uppercase tracking-widest group-hover:text-gray-900 transition-colors relative z-10 leading-tight">
+                            <p className="text-[9px] md:text-[10px] text-contrast-body font-bold uppercase tracking-widest group-hover:text-contrast-primary transition-colors relative z-10 leading-tight">
                                 {p.desc}
                             </p>
                         </a>

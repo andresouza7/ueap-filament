@@ -137,8 +137,8 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                         )}
                                                         {banner.created_at && (
                                                             <>
-                                                                <span className="text-gray-400 opacity-60">•</span>
-                                                                <span className="text-gray-400 font-medium tracking-wider">
+                                                                <span className="text-contrast-muted opacity-60">•</span>
+                                                                <span className="text-contrast-muted font-medium tracking-wider">
                                                                     {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' })
                                                                         .format(new Date(banner.created_at))
                                                                         .toUpperCase()
@@ -148,7 +148,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                         )}
                                                     </div>
                                                     {banner.title && (
-                                                        <h2 className="text-white text-base md:text-4xl lg:text-5xl font-bold md:font-black tracking-normal shadow-black drop-shadow-lg leading-tight md:leading-none">
+                                                        <h2 className="text-ueap-secondary text-base md:text-4xl lg:text-5xl font-bold md:font-black tracking-normal shadow-black drop-shadow-lg leading-tight md:leading-none">
                                                             {banner.title}
                                                         </h2>
                                                     )}
@@ -163,13 +163,13 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                     <>
                                         <button
                                             onClick={prevBanner}
-                                            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-white/50 hover:text-white transition-all rounded-full bg-transparent"
+                                            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-ueap-secondary/50 hover:text-ueap-secondary transition-all rounded-full bg-transparent"
                                         >
                                             <ChevronLeft size={32} strokeWidth={1.5} />
                                         </button>
                                         <button
                                             onClick={nextBanner}
-                                            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-white/50 hover:text-white transition-all rounded-full bg-transparent"
+                                            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center text-ueap-secondary/50 hover:text-ueap-secondary transition-all rounded-full bg-transparent"
                                         >
                                             <ChevronRight size={32} strokeWidth={1.5} />
                                         </button>
@@ -204,15 +204,15 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                         <span>{mainHighlight.category?.name || "DESTAQUE"}</span>
                                         {mainDateStr && (
                                             <>
-                                                <span className="text-gray-400 opacity-60">•</span>
-                                                <span className="text-gray-400 font-medium tracking-wider">{mainDateStr}</span>
+                                                <span className="text-contrast-muted opacity-60">•</span>
+                                                <span className="text-contrast-muted font-medium tracking-wider">{mainDateStr}</span>
                                             </>
                                         )}
                                     </div>
-                                    <h2 className="text-white text-2xl md:text-3xl font-bold mb-6 tracking-tighter leading-tight drop-shadow-xl max-w-3xl group-hover:text-ueap-accent transition-colors">
+                                    <h2 className="text-ueap-secondary text-2xl md:text-3xl font-bold mb-6 tracking-tighter leading-tight drop-shadow-xl max-w-3xl group-hover:text-ueap-accent transition-colors">
                                         {mainHighlight.title}
                                     </h2>
-                                    <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-ueap-accent transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-ueap-accent pb-1">
+                                    <div className="text-ueap-secondary w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-ueap-accent transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-ueap-accent pb-1">
                                         LER MATÉRIA COMPLETA <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
                                     </div>
                                 </div>
@@ -246,15 +246,15 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                             <span>{item.category?.name || "NOTÍCIA"}</span>
                                             {dateStr && (
                                                 <>
-                                                    <span className="text-gray-400 opacity-60">•</span>
-                                                    <span className="text-gray-400 font-medium tracking-wider">{dateStr}</span>
+                                                    <span className="text-contrast-muted opacity-60">•</span>
+                                                    <span className="text-contrast-muted font-medium tracking-wider">{dateStr}</span>
                                                 </>
                                             )}
                                         </div>
-                                        <h3 className="text-white text-base font-bold leading-tight group-hover:text-ueap-accent transition-colors drop-shadow-lg line-clamp-3">
+                                        <h3 className="text-ueap-secondary text-base font-bold leading-tight group-hover:text-ueap-accent transition-colors drop-shadow-lg line-clamp-3">
                                             {item.title}
                                         </h3>
-                                        <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                        <div className="mt-4 flex items-center gap-2 text-ueap-secondary/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                                             SAIBA MAIS <ArrowUpRight size={14} className="text-ueap-accent" />
                                         </div>
                                     </div>

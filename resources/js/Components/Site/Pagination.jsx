@@ -18,15 +18,15 @@ const Pagination = ({ links, currentPage, lastPage }) => {
                         key={i}
                         href={link.url || '#'}
                         className={`px-4 py-2 border text-[10px] font-bold uppercase tracking-wider transition-all ${link.active
-                            ? 'bg-ueap-primary text-white border-ueap-primary'
-                            : 'border-gray-100 text-gray-500 hover:border-ueap-primary hover:text-ueap-primary bg-white'
-                            } ${!link.url && 'opacity-50 cursor-not-allowed hover:border-gray-100 hover:text-gray-500'}`}
+                            ? 'bg-ueap-primary text-ueap-secondary border-ueap-primary'
+                            : 'border-gray-100 text-contrast-body hover:border-ueap-primary hover:text-ueap-primary bg-white'
+                            } ${!link.url && 'opacity-50 cursor-not-allowed hover:border-gray-100 hover:text-contrast-body'}`}
                         dangerouslySetInnerHTML={{ __html: translateLabel(link.label) }}
                         preserveState
                     />
                 ))}
             </div>
-            <div className="w-full mt-2 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            <div className="w-full mt-2 text-center text-[10px] font-bold text-contrast-muted uppercase tracking-widest">
                 Página {currentPage} de {lastPage}
             </div>
         </div>

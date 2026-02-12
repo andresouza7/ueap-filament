@@ -13,7 +13,7 @@ const PostFilter = ({ searchTerm, onSearchChange, onSearchSubmit, filterType, on
                     onChange={(e) => onSearchChange(e.target.value)}
                     onKeyDown={onSearchSubmit}
                 />
-                <Search className="absolute left-4 top-4 text-gray-300" size={18} />
+                <Search className="absolute left-4 top-4 text-contrast-subtle" size={18} />
             </div>
             <div className="relative">
                 <select
@@ -26,7 +26,7 @@ const PostFilter = ({ searchTerm, onSearchChange, onSearchSubmit, filterType, on
                     <option value="event">Evento</option>
                     <option value="page">Página</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-5 text-gray-400 pointer-events-none" size={14} />
+                <ChevronDown className="absolute right-4 top-5 text-contrast-muted pointer-events-none" size={14} />
             </div>
         </div>
     );

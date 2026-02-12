@@ -37,12 +37,12 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                 {/* Cabeçalho da Página */}
                 <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
                     <div className="max-w-7xl mx-auto px-4">
-                        <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+                        <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
                             <button onClick={() => handleNavigate('home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</button>
                             <ChevronRight size={12} />
                             <span className="text-ueap-primary">Repositório Digital</span>
                         </nav>
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">{title}</h2>
+                        <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">{title}</h2>
                         <div className="h-2 w-24 bg-ueap-primary/80"></div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                     />
                                     <Search className="absolute left-4 top-4 text-ueap-primary" size={18} />
                                 </div>
-                                <button onClick={handleSearch} className="bg-ueap-primary text-white px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-ueap-accent hover:text-ueap-primary transition-all rounded-none shadow-lg">Buscar</button>
+                                <button onClick={handleSearch} className="bg-ueap-primary text-ueap-secondary px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-ueap-accent hover:text-ueap-primary transition-all rounded-none shadow-lg">Buscar</button>
                             </div>
 
                             <div className="space-y-0 border-t border-gray-100">
@@ -80,9 +80,9 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                                     <span className="text-[9px] font-black text-ueap-primary uppercase tracking-widest">{doc.category}</span>
                                                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                                                 </div>}
-                                                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{doc.date || '-'}</span>
+                                                <span className="text-[9px] font-bold text-contrast-muted uppercase tracking-widest">{doc.date || '-'}</span>
                                             </div>
-                                            <h3 className="text-sm font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors tracking-normal leading-snug">
+                                            <h3 className="text-sm font-semibold text-contrast-heading group-hover:text-ueap-primary transition-colors tracking-normal leading-snug">
                                                 {doc.url ? (
                                                     <a href={doc.url} target="_blank" rel="noopener noreferrer">
                                                         {doc.title}
@@ -92,12 +92,12 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                         </div>
                                         <div className="hidden md:flex items-center gap-4">
                                             {doc.url && (
-                                                <a href={doc.url} download className="p-2 text-gray-300 hover:text-ueap-accent transition-colors" title="Baixar PDF"><Download size={20} /></a>
+                                                <a href={doc.url} download className="p-2 text-contrast-subtle hover:text-ueap-accent transition-colors" title="Baixar PDF"><Download size={20} /></a>
                                             )}
                                         </div>
                                     </div>
                                 )) : (
-                                    <div className="text-center py-10 text-gray-500">Nenhum documento encontrado.</div>
+                                    <div className="text-center py-10 text-contrast-body">Nenhum documento encontrado.</div>
                                 )}
                             </div>
 
@@ -113,7 +113,7 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                             <SidebarCategories />
                             <div className="p-8 bg-gray-50 border-l-4 border-ueap-accent rounded-none">
                                 <h3 className="text-xs font-black text-ueap-primary uppercase tracking-widest mb-4">Ajuda</h3>
-                                <p className="text-[10px] font-bold text-gray-500 uppercase leading-relaxed">Não encontrou o documento? Utilize o Service Desk ou entre em contato com o departamento responsável.</p>
+                                <p className="text-[10px] font-bold text-contrast-body uppercase leading-relaxed">Não encontrou o documento? Utilize o Service Desk ou entre em contato com o departamento responsável.</p>
                             </div>
                         </aside>
                     </div>

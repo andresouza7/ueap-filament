@@ -53,12 +53,12 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
     const headerContent = (
         <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
             <div className="max-w-7xl mx-auto px-4">
-                <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
                     <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
                     <ChevronRight size={12} />
                     <span className="text-ueap-primary">Publicações</span>
                 </nav>
-                <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">Explorar Publicações</h2>
+                <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">Explorar Publicações</h2>
                 <div className="h-2 w-24 bg-ueap-primary"></div>
             </div>
         </div>
@@ -90,7 +90,7 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
                 <div className="mb-8 p-4 bg-gray-50 border border-gray-100 flex flex-wrap items-center justify-between gap-4">
                     <div className="flex flex-wrap items-center gap-4">
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Filtrando por:</span>
+                            <span className="text-[10px] font-bold text-contrast-muted uppercase tracking-widest">Filtrando por:</span>
 
                             {searchString && (
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-ueap-primary text-[10px] font-bold uppercase tracking-wider">
@@ -113,7 +113,7 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
 
                         <div className="h-4 w-px bg-gray-200 hidden md:block"></div>
 
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span className="text-[10px] font-bold text-contrast-muted uppercase tracking-widest">
                             {posts.total} {posts.total === 1 ? 'Resultado' : 'Resultados'}
                         </span>
                     </div>
@@ -126,7 +126,7 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
                     </button>
                 </div>
             ) : (
-                <div className="mb-8 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                <div className="mb-8 text-[10px] font-bold text-contrast-muted uppercase tracking-[0.2em]">
                     {posts.total} {posts.total === 1 ? 'Publicação encontrada' : 'Publicações encontradas'}
                 </div>
             )}

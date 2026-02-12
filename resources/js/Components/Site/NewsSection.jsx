@@ -13,16 +13,16 @@ const NewsSection = ({ posts = [] }) => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
                 <div className="border-l-4 border-ueap-primary pl-4 md:pl-5">
                     <h2 className="text-2xl md:text-4xl font-extrabold text-ueap-primary tracking-tighter uppercase leading-none">
-                        Notícias <span className="font-light text-gray-500">Recentes</span>
+                        Notícias <span className="font-light text-contrast-body">Recentes</span>
                     </h2>
-                    <p className="block text-gray-400 font-bold text-[9px] md:text-xs mt-2 tracking-[0.2em] uppercase">
+                    <p className="block text-contrast-muted font-bold text-[9px] md:text-xs mt-2 tracking-[0.2em] uppercase">
                         Comunicados e Atualizações Oficiais
                     </p>
                 </div>
 
                 <a
                     href={route('site.post.list', { type: 'news' })}
-                    className="w-full md:w-auto text-center group text-ueap-primary font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 border-2 border-ueap-primary px-6 py-3 hover:bg-ueap-primary hover:text-white transition-all duration-300"
+                    className="w-full md:w-auto text-center group text-ueap-primary font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 border-2 border-ueap-primary px-6 py-3 hover:bg-ueap-primary hover:text-ueap-secondary transition-all duration-300"
                 >
                     Ver acervo completo
                 </a>
@@ -45,13 +45,13 @@ const NewsSection = ({ posts = [] }) => {
 
                         <div className="flex items-center gap-2 mb-3">
                             <span className="w-6 h-[2px] bg-ueap-accent group-hover:w-10 transition-all duration-300"></span>
-                            <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">
+                            <p className="text-[10px] text-contrast-muted font-bold tracking-widest uppercase">
                                 {new Date(news.created_at).toLocaleDateString('pt-BR')}
                             </p>
                         </div>
 
                         {/* Tipografia do Título Melhorada */}
-                        <h4 className="text-base md:text-lg font-medium text-gray-900 group-hover:text-ueap-primary transition-colors leading-[1.2] tracking-tight">
+                        <h4 className="text-base md:text-lg font-medium text-contrast-primary group-hover:text-ueap-primary transition-colors leading-[1.2] tracking-tight">
                             {news.title}
                         </h4>
                     </a>
@@ -63,11 +63,11 @@ const NewsSection = ({ posts = [] }) => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rotate-45 transform translate-x-16 -translate-y-16 pointer-events-none"></div>
 
                 <div className="max-w-md text-center md:text-left relative z-10">
-                    <div className="flex items-center justify-center md:justify-start gap-4 mb-2 text-white">
+                    <div className="flex items-center justify-center md:justify-start gap-4 mb-2 text-ueap-secondary">
                         <Mail size={32} />
                         <h3 className="text-3xl font-bold uppercase tracking-tighter">Fique por dentro</h3>
                     </div>
-                    <p className="text-white/80 text-sm font-medium tracking-wide">Assine nossa newsletter e receba semanalmente as últimas notícias diretamente no seu e-mail.</p>
+                    <p className="text-ueap-secondary/80 text-sm font-medium tracking-wide">Assine nossa newsletter e receba semanalmente as últimas notícias diretamente no seu e-mail.</p>
                 </div>
 
                 <NewsletterForm variant="default" />

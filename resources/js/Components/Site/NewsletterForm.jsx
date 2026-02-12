@@ -42,12 +42,12 @@ const NewsletterForm = ({ variant = 'default' }) => {
 
     if (variant === 'sidebar') {
         return (
-            <div className="bg-ueap-primary p-8 text-white relative overflow-hidden">
+            <div className="bg-ueap-primary p-8 text-ueap-secondary relative overflow-hidden">
                 <div className="absolute -top-4 -right-4 opacity-10">
                     <Mail size={80} />
                 </div>
                 <h3 className="text-lg font-bold uppercase tracking-tighter mb-2 relative z-10">Newsletter</h3>
-                <p className="text-[10px] text-white/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba as últimas publicações</p>
+                <p className="text-[10px] text-ueap-secondary/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba as últimas publicações</p>
 
                 <form onSubmit={submit} className="space-y-3 relative z-10">
                     <div>
@@ -57,7 +57,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="Seu e-mail"
-                            className="w-full px-4 py-3 bg-white/10 border border-white/20 text-xs focus:outline-none focus:bg-white focus:text-ueap-primary transition-all placeholder:text-white/50"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 text-xs focus:outline-none focus:bg-white focus:text-ueap-primary transition-all placeholder:text-ueap-secondary/50"
                             required
                         />
                         {errors.email && <div className="text-red-300 text-[10px] uppercase font-bold mt-1">{errors.email}</div>}
@@ -85,7 +85,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
                     placeholder="seu-email@exemplo.com"
-                    className={`w-full px-4 py-3 bg-white/10 border ${errors.email ? 'border-red-400' : 'border-white/20'} focus:outline-none focus:border-ueap-accent text-sm font-medium text-white placeholder:text-white/50 transition-colors rounded-sm`}
+                    className={`w-full px-4 py-3 bg-white/10 border ${errors.email ? 'border-red-400' : 'border-white/20'} focus:outline-none focus:border-ueap-accent text-sm font-medium text-ueap-secondary placeholder:text-ueap-secondary/50 transition-colors rounded-sm`}
                     required
                 />
                 {errors.email && <span className="text-red-300 text-[10px] mt-1 font-bold uppercase tracking-wider flex items-center gap-1"><AlertCircle size={10} /> {errors.email}</span>}

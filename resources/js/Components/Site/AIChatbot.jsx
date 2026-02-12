@@ -81,7 +81,7 @@ const AIChatbot = () => {
         <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end print:hidden">
             {isOpen && (
                 <div className="mb-4 w-80 md:w-96 bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-100 flex flex-col h-[500px] animate-in slide-in-from-bottom-4">
-                    <div className="bg-ueap-primary p-4 text-white flex justify-between items-center">
+                    <div className="bg-ueap-primary p-4 text-ueap-secondary flex justify-between items-center">
                         <div className="flex items-center gap-2">
                             <Sparkles size={20} className="text-ueap-accent animate-pulse" />
                             <span className="font-bold text-sm uppercase tracking-widest">Assistente ✨ UEAP</span>
@@ -92,7 +92,7 @@ const AIChatbot = () => {
                     <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                         {messages.map((m, i) => (
                             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] p-3 rounded-lg text-xs leading-relaxed shadow-sm ${m.role === 'user' ? 'bg-ueap-accent text-ueap-primary font-bold' : 'bg-white text-gray-700 border border-gray-100'}`}>
+                                <div className={`max-w-[80%] p-3 rounded-lg text-xs leading-relaxed shadow-sm ${m.role === 'user' ? 'bg-ueap-accent text-ueap-primary font-bold' : 'bg-white text-contrast-body border border-gray-100'}`}>
                                     {m.text}
                                 </div>
                             </div>
@@ -101,7 +101,7 @@ const AIChatbot = () => {
                             <div className="flex justify-start">
                                 <div className="bg-white p-3 rounded-lg border border-gray-100 flex items-center gap-2">
                                     <Loader2 size={16} className="animate-spin text-ueap-primary" />
-                                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Pensando...</span>
+                                    <span className="text-[10px] font-bold text-contrast-muted uppercase tracking-widest">Pensando...</span>
                                 </div>
                             </div>
                         )}
@@ -117,7 +117,7 @@ const AIChatbot = () => {
                                 placeholder="Tire suas dúvidas acadêmicas..."
                                 className="flex-1 px-3 py-2 bg-gray-100 border-none text-xs focus:ring-1 focus:ring-ueap-primary rounded-md outline-none"
                             />
-                            <button onClick={handleSend} className="bg-ueap-primary text-white p-2 rounded-md hover:bg-ueap-accent hover:text-ueap-primary transition-colors">
+                            <button onClick={handleSend} className="bg-ueap-primary text-ueap-secondary p-2 rounded-md hover:bg-ueap-accent hover:text-ueap-primary transition-colors">
                                 <Send size={18} />
                             </button>
                         </div>
@@ -126,7 +126,7 @@ const AIChatbot = () => {
             )}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 bg-ueap-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform border-4 border-ueap-accent"
+                className="w-14 h-14 bg-ueap-primary text-ueap-secondary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform border-4 border-ueap-accent"
             >
                 {isOpen ? <X size={28} /> : <Bot size={28} />}
             </button>

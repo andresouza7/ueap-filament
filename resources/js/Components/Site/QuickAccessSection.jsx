@@ -20,7 +20,7 @@ const QuickAccessSection = () => {
                         <div className="mb-2 md:mb-3 text-ueap-primary group-hover:scale-110 group-hover:text-ueap-accent transition-all duration-300 transform">
                             {link.icon}
                         </div>
-                        <span className="text-[10px] font-bold text-gray-600 group-hover:text-ueap-primary uppercase tracking-widest leading-tight transition-colors">
+                        <span className="text-[10px] font-bold text-contrast-body group-hover:text-ueap-primary uppercase tracking-widest leading-tight transition-colors">
                             {link.label}
                         </span>
                     </a>

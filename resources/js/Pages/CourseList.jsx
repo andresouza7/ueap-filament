@@ -45,18 +45,18 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
     const headerContent = (
         <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
             <div className="max-w-7xl mx-auto px-4">
-                <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
                     <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1">
                         <Home size={12} /> Início
                     </Link>
                     <ChevronRight size={12} />
                     <span className="text-ueap-primary">{title}</span>
                 </nav>
-                <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">
+                <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">
                     {title}
                 </h2>
                 <div className="h-2 w-24 bg-ueap-primary mb-6"></div>
-                <p className="text-gray-500 max-w-4xl text-sm leading-relaxed font-medium">
+                <p className="text-contrast-body max-w-4xl text-sm leading-relaxed font-medium">
                     {description}
                 </p>
             </div>
@@ -105,7 +105,7 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
             return { icon: <PenTool />, color: 'text-fuchsia-600', bg: 'bg-fuchsia-50' };
 
         // PADRÃO
-        return { icon: <GraduationCap />, color: 'text-gray-600', bg: 'bg-gray-50' };
+        return { icon: <GraduationCap />, color: 'text-contrast-body', bg: 'bg-gray-50' };
     };
 
     // Filtra os cursos conforme o usuário digita
@@ -119,12 +119,12 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
             <div className="mb-10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800">Cursos Disponíveis</h2>
-                        <p className="text-gray-500 text-sm">Explore nossa lista completa de cursos</p>
+                        <h2 className="text-2xl font-bold text-contrast-heading">Cursos Disponíveis</h2>
+                        <p className="text-contrast-body text-sm">Explore nossa lista completa de cursos</p>
                     </div>
 
                     <div className="relative group w-full md:w-96">
-                        <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors"></i>
+                        <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-contrast-muted group-focus-within:text-blue-600 transition-colors"></i>
                         <input
                             type="text"
                             placeholder="O que você procura?"
@@ -135,7 +135,7 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
                         {busca && (
                             <button
                                 onClick={() => setBusca('')}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-contrast-muted hover:text-red-500"
                             >
                                 <i className="fa-solid fa-xmark"></i>
                             </button>
@@ -144,7 +144,7 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
                 </div>
 
                 {/* Contador de resultados */}
-                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                <div className="text-xs font-bold text-contrast-muted uppercase tracking-widest mb-4">
                     {cursosFiltrados?.length} {cursosFiltrados?.length === 1 ? 'Curso encontrado' : 'Cursos encontrados'}
                 </div>
             </div>
@@ -172,11 +172,11 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
 
                                     <div className="flex-1">
 
-                                        <h3 className="text-base font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors leading-tight mb-4">
+                                        <h3 className="text-base font-semibold text-contrast-heading group-hover:text-ueap-primary transition-colors leading-tight mb-4">
                                             {item.name}
                                         </h3>
 
-                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 group-hover:text-ueap-primary transition-all">
+                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-contrast-body group-hover:text-ueap-primary transition-all">
                                             Ver detalhes
                                             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                         </span>
@@ -191,7 +191,7 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
                         );
                     })) : (
                     <div className="col-span-full py-12 text-center">
-                        <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">Nenhum curso encontrado</p>
+                        <p className="text-contrast-muted font-bold uppercase text-[10px] tracking-widest">Nenhum curso encontrado</p>
                     </div>
                 )}
             </div>

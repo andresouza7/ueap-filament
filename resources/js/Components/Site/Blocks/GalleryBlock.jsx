@@ -47,13 +47,13 @@ const GalleryBlock = ({ data }) => {
                         <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
                             <button
                                 onClick={() => scrollTo(active === 0 ? images.length - 1 : active - 1)}
-                                className="pointer-events-auto bg-ueap-primary text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
+                                className="pointer-events-auto bg-ueap-primary text-ueap-secondary p-2 rounded-full hover:bg-black transition-colors shadow-lg"
                             >
                                 <ChevronLeft size={24} />
                             </button>
                             <button
                                 onClick={() => scrollTo(active === images.length - 1 ? 0 : active + 1)}
-                                className="pointer-events-auto bg-ueap-primary text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
+                                className="pointer-events-auto bg-ueap-primary text-ueap-secondary p-2 rounded-full hover:bg-black transition-colors shadow-lg"
                             >
                                 <ChevronRight size={24} />
                             </button>
@@ -83,7 +83,7 @@ const GalleryBlock = ({ data }) => {
                         </span>
                     </div>
                     {data.credits && (
-                        <span className="text-sm font-bold text-gray-500 ml-3">
+                        <span className="text-sm font-bold text-contrast-body ml-3">
                             Foto: {data.credits}
                         </span>
                     )}

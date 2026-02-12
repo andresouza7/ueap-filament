@@ -27,15 +27,15 @@ const SearchModal = ({ isOpen, onClose }) => {
                         autoFocus
                         type="text"
                         placeholder="O que você procura?"
-                        className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-medium text-gray-800 placeholder:text-gray-300"
+                        className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-medium text-contrast-heading placeholder:text-contrast-subtle"
                         value={term}
                         onChange={(e) => setTerm(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     />
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-ueap-primary"><X size={24} /></button>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-contrast-muted hover:text-ueap-primary"><X size={24} /></button>
                 </div>
                 <div className="p-8 bg-gray-50 text-left">
-                    <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Sugestões de busca</h4>
+                    <h4 className="text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-4">Sugestões de busca</h4>
                     <div className="flex flex-wrap gap-2">
                         {['Calendário Acadêmico', 'Edital', 'Matrícula', 'Bolsa', 'Inscrições'].map(tag => (
                             <button
@@ -54,7 +54,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 };
 
 const TopBar = () => (
-    <div className="bg-ueap-primary text-white py-1.5 px-2 md:px-6 border-b border-white/5">
+    <div className="bg-ueap-primary text-ueap-secondary py-1.5 px-2 md:px-6 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 flex justify-end md:justify-between items-center">
             {/* Texto alinhado à esquerda conforme solicitado */}
             <span className="hidden md:inline-block text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
@@ -108,7 +108,7 @@ const MobileMenuItem = ({ item }) => {
                             <a
                                 key={subItem.id}
                                 href={resolveUrl(subItem.url)}
-                                className="text-xs font-medium text-gray-600 hover:text-ueap-primary uppercase tracking-widest block py-1"
+                                className="text-xs font-medium text-contrast-body hover:text-ueap-primary uppercase tracking-widest block py-1"
                             >
                                 {subItem.name}
                             </a>
@@ -133,9 +133,9 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                             <h1 className="text-green-800/85 font-extrabold text-xl lg:text-2xl leading-none uppercase" style={{ fontFamily: 'Rubik, sans-serif' }}>
                                 UEAP
                             </h1>
-                            <p className="text-[7px] md:text-[8px] font-medium text-gray-500 uppercase tracking-widest leading-tight mt-0.5">
+                            <p className="text-[7px] md:text-[8px] font-medium text-contrast-body uppercase tracking-widest leading-tight mt-0.5">
                                 Universidade do <br />
-                                <span className="text-gray-800 font-bold">Estado do Amapá</span>
+                                <span className="text-contrast-heading font-bold">Estado do Amapá</span>
                             </p>
                         </div>
                     </Link>
@@ -148,7 +148,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                 <div key={item.id} className="relative group h-full flex items-center">
                                     {hasSubMenu ? (
                                         <>
-                                            <button className="text-gray-800 hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
+                                            <button className="text-contrast-heading hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
                                                 {item.name}
                                                 <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
                                             </button>
@@ -158,7 +158,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                                     <a
                                                         key={subItem.id}
                                                         href={resolveUrl(subItem.url)}
-                                                        className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-ueap-primary hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-ueap-accent"
+                                                        className="px-6 py-3 text-[10px] font-bold text-contrast-body hover:text-ueap-primary hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-ueap-accent"
                                                     >
                                                         {subItem.name}
                                                     </a>
@@ -168,7 +168,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                     ) : (
                                         <a
                                             href={resolveUrl(item.url)}
-                                            className="text-gray-800 hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
+                                            className="text-contrast-heading hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
                                         >
                                             {item.name}
                                             <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
@@ -177,7 +177,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                 </div>
                             );
                         }) : (
-                            <span className="text-xs text-gray-400 relative z-30">Carregando menu...</span>
+                            <span className="text-xs text-contrast-muted relative z-30">Carregando menu...</span>
                         )}
                     </div>
 
@@ -210,7 +210,7 @@ const SiteLayout = ({ children }) => {
     console.log(menus)
 
     return (
-        <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden flex flex-col">
+        <div className="min-h-screen bg-white font-sans text-contrast-primary overflow-x-hidden flex flex-col">
             <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
             <TopBar />
@@ -287,10 +287,10 @@ const SiteLayout = ({ children }) => {
                                         {section.title}
                                     </h4>
                                 </div>
-                                <ul className="space-y-3 text-sm text-blue-100/70 font-medium">
+                                <ul className="space-y-3 text-sm text-footer-primary-light font-medium">
                                     {section.links.map((link, j) => (
                                         <li key={j}>
-                                            <a href={link.url} className="hover:text-white transition-colors">
+                                            <a href={link.url} className="hover:text-ueap-secondary transition-colors">
                                                 {link.label}
                                             </a>
                                         </li>
@@ -316,11 +316,11 @@ const SiteLayout = ({ children }) => {
                                 </div>
 
                                 <div>
-                                    {/* <h3 className="text-xl text-white font-medium leading-tight mb-2">
+                                    {/* <h3 className="text-xl text-ueap-secondary font-medium leading-tight mb-2">
                                         Universidade do Estado do Amapá
                                     </h3> */}
 
-                                    <p className="text-blue-100/50 text-sm leading-relaxed font-light">
+                                    <p className="text-footer-primary-subtle text-sm leading-relaxed font-light">
                                         Promovendo educação de qualidade e desenvolvimento sustentável para a região amazônica.
                                     </p>
                                 </div>
@@ -338,7 +338,7 @@ const SiteLayout = ({ children }) => {
                                 <p className="text-[10px] font-bold uppercase tracking-widest text-ueap-accent mb-1">
                                     Credenciada
                                 </p>
-                                <p className="text-xs text-white font-bold">
+                                <p className="text-xs text-ueap-secondary font-bold">
                                     Portal e-MEC
                                 </p>
                             </div>
@@ -366,10 +366,10 @@ const SiteLayout = ({ children }) => {
                                 { nome: "Campus III", end: "Av. Mendonça Furtado - Centro" }
                             ].map((item, i) => (
                                 <div key={i} className="flex flex-col">
-                                    <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
+                                    <h5 className="text-xs font-bold text-ueap-secondary uppercase tracking-wider mb-1">
                                         {item.nome}
                                     </h5>
-                                    <p className="text-xs text-blue-100/50">
+                                    <p className="text-xs text-footer-primary-subtle">
                                         {item.end}
                                     </p>
                                 </div>
@@ -379,15 +379,15 @@ const SiteLayout = ({ children }) => {
 
                     {/* BOTTOM */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <p className="text-blue-100/40 text-[10px] font-bold uppercase tracking-widest">
-                            © 2026 UEAP — Desenvolvido pela <span className="text-white">DINFO</span><i className="fa-solid fa-code text-ueap-accent ml-1"></i>.
+                        <p className="text-footer-primary-subtle text-[10px] font-bold uppercase tracking-widest">
+                            © 2026 UEAP — Desenvolvido pela <span className="text-ueap-secondary">DINFO</span><i className="fa-solid fa-code text-ueap-accent ml-1"></i>.
                         </p>
                         <div className="flex gap-4">
                             <a
                                 href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-blue-100/40 hover:text-white"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-footer-primary-subtle hover:text-ueap-secondary"
                             >
                                 <i className="fa-brands fa-youtube text-sm"></i>
                             </a>
@@ -395,7 +395,7 @@ const SiteLayout = ({ children }) => {
                                 href="https://www.instagram.com/ueapoficial/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-blue-100/40 hover:text-white"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-footer-primary-subtle hover:text-ueap-secondary"
                             >
                                 <i className="fa-brands fa-instagram text-sm"></i>
                             </a>

@@ -32,15 +32,15 @@ const EventsSection = ({ events = [] }) => {
                                         </div>
                                     ) : (
                                         <div className="w-full sm:w-40 h-48 sm:h-28 bg-ueap-primary shrink-0 flex items-center justify-center p-4 text-center shadow-md rounded-sm">
-                                            <span className="text-white font-bold text-[10px] uppercase tracking-widest opacity-40 italic">PUBLICAÇÃO INSTITUCIONAL</span>
+                                            <span className="text-ueap-secondary font-bold text-[10px] uppercase tracking-widest opacity-40 italic">PUBLICAÇÃO INSTITUCIONAL</span>
                                         </div>
                                     )}
                                     <div className="flex flex-col justify-center">
-                                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                        <p className="text-[10px] font-bold text-contrast-body uppercase tracking-widest mb-2 flex items-center gap-2">
                                             <Calendar size={12} className="text-ueap-accent" />
                                             {event.created_at ? new Date(event.created_at).toLocaleDateString() : 'DATA INDEFINIDA'}
                                         </p>
-                                        <h4 className="text-lg font-medium text-gray-900 group-hover:text-ueap-primary transition-colors leading-tight line-clamp-3">
+                                        <h4 className="text-lg font-medium text-contrast-primary group-hover:text-ueap-primary transition-colors leading-tight line-clamp-3">
                                             {event.title}
                                         </h4>
                                     </div>
@@ -66,28 +66,28 @@ const EventsSection = ({ events = [] }) => {
                             <div className="grid grid-cols-1 gap-4">
                                 <a href="https://cartaservico.portal.ap.gov.br/carta-de-servico-publica/orgao/46/servicos" target="_blank" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-ueap-accent shadow-sm hover:shadow-md transition-all group">
                                     <div className="flex items-center gap-4">
-                                        <div className="p-3 bg-blue-50 text-ueap-primary rounded-full group-hover:bg-ueap-primary group-hover:text-white transition-colors">
+                                        <div className="p-3 bg-blue-50 text-ueap-primary rounded-full group-hover:bg-ueap-primary group-hover:text-ueap-secondary transition-colors">
                                             <FileText size={24} />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-ueap-primary uppercase tracking-widest text-sm mb-1">Carta de Serviços</h4>
-                                            <p className="text-[13px] text-gray-500 font-medium">Consulte os serviços disponíveis</p>
+                                            <p className="text-[13px] text-contrast-body font-medium">Consulte os serviços disponíveis</p>
                                         </div>
                                     </div>
-                                    <ChevronRight size={20} className="text-gray-300 group-hover:text-ueap-accent transition-colors" />
+                                    <ChevronRight size={20} className="text-contrast-subtle group-hover:text-ueap-accent transition-colors" />
                                 </a>
 
                                 <a href="https://ouvamapa.portal.ap.gov.br/" target="_blank" className="flex items-center justify-between p-5 md:p-6 bg-white border-l-4 border-gray-100 hover:border-l-ueap-accent shadow-sm hover:shadow-md transition-all group">
                                     <div className="flex items-center gap-4">
-                                        <div className="p-3 bg-blue-50 text-ueap-primary rounded-full group-hover:bg-ueap-primary group-hover:text-white transition-colors">
+                                        <div className="p-3 bg-blue-50 text-ueap-primary rounded-full group-hover:bg-ueap-primary group-hover:text-ueap-secondary transition-colors">
                                             <MessageSquare size={24} />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-ueap-primary uppercase tracking-widest text-sm mb-1">Ouvidoria</h4>
-                                            <p className="text-[13px] text-gray-500 font-medium">Registre sua manifestação</p>
+                                            <p className="text-[13px] text-contrast-body font-medium">Registre sua manifestação</p>
                                         </div>
                                     </div>
-                                    <ChevronRight size={20} className="text-gray-300 group-hover:text-ueap-accent transition-colors" />
+                                    <ChevronRight size={20} className="text-contrast-subtle group-hover:text-ueap-accent transition-colors" />
                                 </a>
                             </div>
                         </div>
@@ -98,10 +98,10 @@ const EventsSection = ({ events = [] }) => {
                             <div className="absolute bottom-0 left-0 w-24 h-24 bg-black/5 rounded-full transform -translate-x-8 translate-y-8"></div>
 
                             <div className="relative z-10">
-                                <h4 className="text-3xl md:text-4xl font-bold text-white uppercase mb-4 tracking-tighter leading-none">
+                                <h4 className="text-3xl md:text-4xl font-bold text-ueap-secondary uppercase mb-4 tracking-tighter leading-none">
                                     CONECTE-SE À <span className="text-ueap-accent">UEAP</span>
                                 </h4>
-                                <p className="text-white/80 font-bold text-[10px] mb-8 md:mb-10 uppercase tracking-[0.3em] leading-relaxed">
+                                <p className="text-ueap-secondary/80 font-bold text-[10px] mb-8 md:mb-10 uppercase tracking-[0.3em] leading-relaxed">
                                     Siga nossos canais oficiais.
                                 </p>
 

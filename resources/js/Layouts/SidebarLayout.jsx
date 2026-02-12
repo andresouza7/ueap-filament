@@ -25,7 +25,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                     <div className="lg:hidden mb-6 sticky top-20 z-30">
                         <button
                             onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-                            className="w-full bg-ueap-primary text-white p-4 rounded-lg shadow-lg flex items-center justify-between font-bold uppercase text-xs tracking-widest"
+                            className="w-full bg-ueap-primary text-ueap-secondary p-4 rounded-lg shadow-lg flex items-center justify-between font-bold uppercase text-xs tracking-widest"
                         >
                             <span>{currentMenuItem ? currentMenuItem.name : 'Nesta Seção'}</span>
                             <span className={`transform transition-transform ${isDrawerOpen ? 'rotate-180' : ''}`}>▼</span>
@@ -42,7 +42,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                                             href={'/' + item.url}
                                             className={`py-3 px-4 border-l-4 transition-colors text-xs font-bold uppercase tracking-wider ${isActive
                                                 ? 'border-ueap-accent bg-blue-50 text-ueap-primary'
-                                                : 'border-transparent text-gray-500 hover:bg-gray-50'}`}
+                                                : 'border-transparent text-contrast-body hover:bg-gray-50'}`}
                                         >
                                             {item.name}
                                         </a>
@@ -86,7 +86,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                                                 href={'/' + item.url}
                                                 className={`group relative flex items-center justify-between py-2 px-3 border-l-[3px] transition-all hover:bg-gray-50 hover:pl-4 ${isActive
                                                     ? 'border-ueap-primary text-ueap-primary bg-blue-50 font-black'
-                                                    : 'border-transparent text-gray-500 font-bold hover:border-ueap-accent hover:text-gray-900'
+                                                    : 'border-transparent text-contrast-body font-bold hover:border-ueap-accent hover:text-contrast-primary'
                                                     }`}
                                             >
                                                 <span className="text-[11px] uppercase tracking-wider">
@@ -96,7 +96,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                                         );
                                     })
                                 ) : (
-                                    <p className="text-xs text-gray-500">Nenhum item disponível.</p>
+                                    <p className="text-xs text-contrast-body">Nenhum item disponível.</p>
                                 )}
                             </nav>
                         ) : (
