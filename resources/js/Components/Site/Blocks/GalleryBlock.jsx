@@ -33,7 +33,7 @@ const GalleryBlock = ({ data }) => {
                     {images.map((src, idx) => (
                         <div key={idx} className="snap-center shrink-0 w-full h-full overflow-hidden">
                             <img
-                                src={src}
+                                src={'/storage/' + src}
                                 alt={`Imagem ${idx + 1}`}
                                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             />
