@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { BookOpen, GraduationCap, Users, Info, FlaskConical, Mic, Search, Cpu } from 'lucide-react';
 
 const StudentAssistanceSection = () => {
@@ -22,18 +22,18 @@ const StudentAssistanceSection = () => {
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12 md:mb-20 relative">
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-1 bg-[#A3E635]"></div>
+                            <div className="w-8 h-1 bg-ueap-accent"></div>
                             <span className="text-gray-500 font-bold text-xs uppercase tracking-[0.3em]">Programas & Auxílios</span>
                         </div>
                         {/* Ajuste de tamanho de fonte no mobile (text-3xl) vs desktop (md:text-5xl) */}
-                        <h2 className="text-4xl md:text-5xl font-black text-[#0052CC] uppercase tracking-tighter leading-[0.9]">
+                        <h2 className="text-4xl md:text-5xl font-black text-ueap-primary uppercase tracking-tighter leading-[0.9]">
                             Assistência<br />Estudantil
                         </h2>
                     </div>
 
-                    <div className="md:text-right max-w-sm pb-1 border-l-4 md:border-l-0 md:border-r-4 border-[#A3E635] pl-6 md:pl-0 md:pr-6">
+                    <div className="md:text-right max-w-sm pb-1 border-l-4 md:border-l-0 md:border-r-4 border-ueap-accent pl-6 md:pl-0 md:pr-6">
                         <p className="text-sm text-gray-600 font-medium leading-relaxed">
-                            Ações de <span className="font-bold text-[#0052CC]">incentivo à pesquisa</span> e <span className="font-bold text-[#0052CC]">apoio à permanência</span> estudantil na universidade.
+                            Ações de <span className="font-bold text-ueap-primary">incentivo à pesquisa</span> e <span className="font-bold text-ueap-primary">apoio à permanência</span> estudantil na universidade.
                         </p>
                     </div>
                 </div>
@@ -47,14 +47,14 @@ const StudentAssistanceSection = () => {
                             className="bg-white p-5 md:p-8 shadow-md rounded-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-start justify-center relative overflow-hidden h-full border border-gray-200"
                         >
                             {/* Ícone oculto em telas muito pequenas (opcional) ou mantido como decorativo */}
-                            <div className="absolute top-0 right-0 p-2 md:p-3 opacity-10 group-hover:opacity-100 transition-opacity duration-300 text-[#0052CC]">
+                            <div className="absolute top-0 right-0 p-2 md:p-3 opacity-10 group-hover:opacity-100 transition-opacity duration-300 text-ueap-primary">
                                 {React.cloneElement(p.icon, {
                                     size: 24,
                                     className: 'group-hover:rotate-12 transition-transform duration-500 w-5 h-5 md:w-6 md:h-6'
                                 })}
                             </div>
 
-                            <h3 className="text-lg md:text-2xl font-black text-[#0052CC] mb-2 tracking-tighter relative z-10 break-words w-full">
+                            <h3 className="text-lg md:text-2xl font-black text-ueap-primary mb-2 tracking-tighter relative z-10 break-words w-full">
                                 {p.sigla}
                             </h3>
 

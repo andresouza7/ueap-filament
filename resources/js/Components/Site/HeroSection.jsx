@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronRight, ArrowUpRight, ChevronLeft } from 'lucide-react';
 import { route } from 'ziggy-js';
 import QuickAccessSection from '@/Components/Site/QuickAccessSection';
@@ -98,8 +98,8 @@ const HeroSection = ({ featured = [], banners = [] }) => {
 
 
             {/* Geometric Hollow Shapes (Side Decorations) */}
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] border-[4px] border-[#A3E635] rounded-full opacity-20 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] border-[4px] border-[#0052CC] rounded-[3rem] rotate-45 opacity-10 pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] border-[4px] border-ueap-accent rounded-full opacity-20 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] border-[4px] border-ueap-primary rounded-[3rem] rotate-45 opacity-10 pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
 
             <div className="max-w-7xl mx-auto px-0 lg:px-4 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-6 gap-0 lg:h-[550px] items-stretch bg-gray-900 shadow-xl mx-0">
@@ -131,7 +131,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                             <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 z-10"></div>
                                             {(banner.title || banner.description) && (
                                                 <div className="absolute bottom-0 left-0 px-6 pb-10 pt-6 md:p-12 z-20 w-full">
-                                                    <div className="flex items-center gap-2 text-[#A3E635] text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                                    <div className="flex items-center gap-2 text-ueap-accent text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
                                                         {banner.description && (
                                                             <span>{banner.description}</span>
                                                         )}
@@ -180,7 +180,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                 <button
                                                     key={idx}
                                                     onClick={() => setCurrentBanner(idx)}
-                                                    className={`h-1.5 transition-all duration-300 rounded-full ${idx === currentBanner ? 'w-8 bg-[#A3E635]' : 'w-2 bg-white/50 hover:bg-white'}`}
+                                                    className={`h-1.5 transition-all duration-300 rounded-full ${idx === currentBanner ? 'w-8 bg-ueap-accent' : 'w-2 bg-white/50 hover:bg-white'}`}
                                                 />
                                             ))}
                                         </div>
@@ -200,7 +200,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
 
                                 <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end text-left z-10">
-                                    <div className="flex items-center gap-2 text-[#A3E635] text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                    <div className="flex items-center gap-2 text-ueap-accent text-[10px] md:text-xs font-bold uppercase mb-2 tracking-widest drop-shadow-md">
                                         <span>{mainHighlight.category?.name || "DESTAQUE"}</span>
                                         {mainDateStr && (
                                             <>
@@ -209,10 +209,10 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                             </>
                                         )}
                                     </div>
-                                    <h2 className="text-white text-2xl md:text-3xl font-bold mb-6 tracking-tighter leading-tight drop-shadow-xl max-w-3xl group-hover:text-[#A3E635] transition-colors">
+                                    <h2 className="text-white text-2xl md:text-3xl font-bold mb-6 tracking-tighter leading-tight drop-shadow-xl max-w-3xl group-hover:text-ueap-accent transition-colors">
                                         {mainHighlight.title}
                                     </h2>
-                                    <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-[#A3E635] transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-[#A3E635] pb-1">
+                                    <div className="text-white w-fit font-bold text-xs uppercase tracking-[0.2em] group-hover:text-ueap-accent transition-all flex items-center gap-2 border-b-2 border-transparent group-hover:border-ueap-accent pb-1">
                                         LER MATÉRIA COMPLETA <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                     <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent group-hover:from-black/10 group-hover:via-black/5 transition-all duration-500"></div>
                                     <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                                     <div className="absolute inset-0 p-8 flex flex-col justify-end text-left z-10">
-                                        <div className="flex items-center gap-2 text-[#A3E635] text-[10px] font-bold uppercase mb-2 tracking-widest drop-shadow-md">
+                                        <div className="flex items-center gap-2 text-ueap-accent text-[10px] font-bold uppercase mb-2 tracking-widest drop-shadow-md">
                                             <span>{item.category?.name || "NOTÍCIA"}</span>
                                             {dateStr && (
                                                 <>
@@ -251,11 +251,11 @@ const HeroSection = ({ featured = [], banners = [] }) => {
                                                 </>
                                             )}
                                         </div>
-                                        <h3 className="text-white text-base font-bold leading-tight group-hover:text-[#A3E635] transition-colors drop-shadow-lg line-clamp-3">
+                                        <h3 className="text-white text-base font-bold leading-tight group-hover:text-ueap-accent transition-colors drop-shadow-lg line-clamp-3">
                                             {item.title}
                                         </h3>
                                         <div className="mt-4 flex items-center gap-2 text-white/80 text-[9px] font-bold tracking-[0.2em] opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                            SAIBA MAIS <ArrowUpRight size={14} className="text-[#A3E635]" />
+                                            SAIBA MAIS <ArrowUpRight size={14} className="text-ueap-accent" />
                                         </div>
                                     </div>
                                 </a>

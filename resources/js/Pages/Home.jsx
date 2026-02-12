@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
 import HeroSection from '@/Components/Site/HeroSection';
 import NewsSection from '@/Components/Site/NewsSection';

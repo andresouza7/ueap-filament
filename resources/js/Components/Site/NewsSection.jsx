@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Mail, Send } from 'lucide-react';
 import { route } from 'ziggy-js';
 import NewsletterForm from './NewsletterForm';
@@ -11,8 +11,8 @@ const NewsSection = ({ posts = [] }) => {
         <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-                <div className="border-l-4 border-[#0052CC] pl-4 md:pl-5">
-                    <h2 className="text-2xl md:text-4xl font-extrabold text-[#0052CC] tracking-tighter uppercase leading-none">
+                <div className="border-l-4 border-ueap-primary pl-4 md:pl-5">
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-ueap-primary tracking-tighter uppercase leading-none">
                         Notícias <span className="font-light text-gray-500">Recentes</span>
                     </h2>
                     <p className="block text-gray-400 font-bold text-[9px] md:text-xs mt-2 tracking-[0.2em] uppercase">
@@ -22,7 +22,7 @@ const NewsSection = ({ posts = [] }) => {
 
                 <a
                     href={route('site.post.list', { type: 'news' })}
-                    className="w-full md:w-auto text-center group text-[#0052CC] font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 border-2 border-[#0052CC] px-6 py-3 hover:bg-[#0052CC] hover:text-white transition-all duration-300"
+                    className="w-full md:w-auto text-center group text-ueap-primary font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 border-2 border-ueap-primary px-6 py-3 hover:bg-ueap-primary hover:text-white transition-all duration-300"
                 >
                     Ver acervo completo
                 </a>
@@ -38,27 +38,27 @@ const NewsSection = ({ posts = [] }) => {
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 alt={news.title}
                             />
-                            <div className="absolute top-0 right-0 bg-[#A3E635] text-[#0052CC] px-2 py-1 font-black text-[9px] uppercase tracking-tighter shadow-md">
+                            <div className="absolute top-0 right-0 bg-ueap-accent text-ueap-primary px-2 py-1 font-black text-[9px] uppercase tracking-tighter shadow-md">
                                 {news.category?.name || "GERAL"}
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="w-6 h-[2px] bg-[#A3E635] group-hover:w-10 transition-all duration-300"></span>
+                            <span className="w-6 h-[2px] bg-ueap-accent group-hover:w-10 transition-all duration-300"></span>
                             <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">
                                 {new Date(news.created_at).toLocaleDateString('pt-BR')}
                             </p>
                         </div>
 
                         {/* Tipografia do Título Melhorada */}
-                        <h4 className="text-base md:text-lg font-medium text-gray-900 group-hover:text-[#0052CC] transition-colors leading-[1.2] tracking-tight">
+                        <h4 className="text-base md:text-lg font-medium text-gray-900 group-hover:text-ueap-primary transition-colors leading-[1.2] tracking-tight">
                             {news.title}
                         </h4>
                     </a>
                 ))}
             </div>
 
-            <div className="mt-12 md:mt-20 p-8 md:p-12 bg-[#0052CC] relative overflow-hidden shadow-2xl rounded-sm flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="mt-12 md:mt-20 p-8 md:p-12 bg-ueap-primary relative overflow-hidden shadow-2xl rounded-sm flex flex-col md:flex-row items-center justify-between gap-8">
                 {/* Decorative Element */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rotate-45 transform translate-x-16 -translate-y-16 pointer-events-none"></div>
 

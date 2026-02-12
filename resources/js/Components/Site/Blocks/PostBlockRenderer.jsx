@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import TextBlock from './TextBlock';
 import QuoteBlock from './QuoteBlock';
 import GalleryBlock from './GalleryBlock';

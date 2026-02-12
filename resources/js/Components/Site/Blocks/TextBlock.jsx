@@ -1,4 +1,4 @@
-const TextBlock = ({ data }) => {
+﻿const TextBlock = ({ data }) => {
     // Wrap tables in a scrollable container to fix overflow issues
     const processedBody = (data.body || '').replace(
         /<table/g,

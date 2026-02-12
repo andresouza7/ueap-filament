@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Menu, X, Search, Instagram, Youtube, ChevronDown } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { route } from 'ziggy-js';
@@ -20,7 +20,7 @@ const SearchModal = ({ isOpen, onClose }) => {
             <div className="absolute inset-0 bg-[#003D99]/90 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose}></div>
             <div className="relative w-full max-w-3xl bg-white shadow-2xl rounded-sm overflow-hidden animate-in zoom-in-95 duration-300">
                 <div className="flex items-center p-6 border-b border-gray-100">
-                    <button onClick={handleSearch} className="mr-4 text-[#0052CC] hover:scale-110 transition-transform">
+                    <button onClick={handleSearch} className="mr-4 text-ueap-primary hover:scale-110 transition-transform">
                         <Search size={24} />
                     </button>
                     <input
@@ -32,7 +32,7 @@ const SearchModal = ({ isOpen, onClose }) => {
                         onChange={(e) => setTerm(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     />
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-[#0052CC]"><X size={24} /></button>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-ueap-primary"><X size={24} /></button>
                 </div>
                 <div className="p-8 bg-gray-50 text-left">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Sugestões de busca</h4>
@@ -41,7 +41,7 @@ const SearchModal = ({ isOpen, onClose }) => {
                             <button
                                 key={tag}
                                 onClick={() => { setTerm(tag); window.location.href = route('site.post.list', { search: tag }); onClose(); }}
-                                className="px-4 py-2 bg-white border border-gray-200 text-[10px] font-bold text-[#0052CC] hover:bg-[#A3E635] hover:border-[#A3E635] transition-all uppercase tracking-widest"
+                                className="px-4 py-2 bg-white border border-gray-200 text-[10px] font-bold text-ueap-primary hover:bg-ueap-accent hover:border-ueap-accent transition-all uppercase tracking-widest"
                             >
                                 {tag}
                             </button>
@@ -54,16 +54,16 @@ const SearchModal = ({ isOpen, onClose }) => {
 };
 
 const TopBar = () => (
-    <div className="bg-[#0052CC] text-white py-1.5 px-2 md:px-6 border-b border-white/5">
+    <div className="bg-ueap-primary text-white py-1.5 px-2 md:px-6 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 flex justify-end md:justify-between items-center">
             {/* Texto alinhado à esquerda conforme solicitado */}
             <span className="hidden md:inline-block text-[9px] font-bold uppercase tracking-[0.15em] opacity-70">Portal Institucional</span>
 
             <nav className="flex gap-4 items-center">
-                <a href="https://sigaa.ueap.edu.br/sigaa/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">SIGAA</a>
-                <a href="http://intranet.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Intranet</a>
-                <a href="http://transparencia.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Transparência</a>
-                <a href="https://servicedesk.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-[#A3E635] transition-colors uppercase tracking-[0.15em] opacity-90">Service Desk</a>
+                <a href="https://sigaa.ueap.edu.br/sigaa/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">SIGAA</a>
+                <a href="http://intranet.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">Intranet</a>
+                <a href="http://transparencia.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">Transparência</a>
+                <a href="https://servicedesk.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">Service Desk</a>
             </nav>
         </div>
     </div>
@@ -89,13 +89,13 @@ const MobileMenuItem = ({ item }) => {
                 {hasSubMenu ? (
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="flex-1 flex items-center justify-between text-left text-sm font-bold text-[#0052CC] uppercase tracking-widest"
+                        className="flex-1 flex items-center justify-between text-left text-sm font-bold text-ueap-primary uppercase tracking-widest"
                     >
                         {item.name}
                         <ChevronDown size={16} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                     </button>
                 ) : (
-                    <a href={resolveUrl(item.url)} className="block w-full text-sm font-bold text-[#0052CC] uppercase tracking-widest">
+                    <a href={resolveUrl(item.url)} className="block w-full text-sm font-bold text-ueap-primary uppercase tracking-widest">
                         {item.name}
                     </a>
                 )}
@@ -103,12 +103,12 @@ const MobileMenuItem = ({ item }) => {
 
             {hasSubMenu && (
                 <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100 mb-4' : 'max-h-0 opacity-0'}`}>
-                    <div className="flex flex-col gap-3 pl-4 border-l-2 border-[#A3E635] ml-1">
+                    <div className="flex flex-col gap-3 pl-4 border-l-2 border-ueap-accent ml-1">
                         {item.sub_itens.map(subItem => (
                             <a
                                 key={subItem.id}
                                 href={resolveUrl(subItem.url)}
-                                className="text-xs font-medium text-gray-600 hover:text-[#0052CC] uppercase tracking-widest block py-1"
+                                className="text-xs font-medium text-gray-600 hover:text-ueap-primary uppercase tracking-widest block py-1"
                             >
                                 {subItem.name}
                             </a>
@@ -148,9 +148,9 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                 <div key={item.id} className="relative group h-full flex items-center">
                                     {hasSubMenu ? (
                                         <>
-                                            <button className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
+                                            <button className="text-gray-800 hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
                                                 {item.name}
-                                                <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
+                                                <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
                                             </button>
 
                                             <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block animate-in fade-in slide-in-from-top-2 z-10">
@@ -158,7 +158,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                                     <a
                                                         key={subItem.id}
                                                         href={resolveUrl(subItem.url)}
-                                                        className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-[#0052CC] hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-[#A3E635]"
+                                                        className="px-6 py-3 text-[10px] font-bold text-gray-600 hover:text-ueap-primary hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-ueap-accent"
                                                     >
                                                         {subItem.name}
                                                     </a>
@@ -168,10 +168,10 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                     ) : (
                                         <a
                                             href={resolveUrl(item.url)}
-                                            className="text-gray-800 hover:text-[#0052CC] font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
+                                            className="text-gray-800 hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
                                         >
                                             {item.name}
-                                            <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-[#A3E635] transition-all group-hover:w-full"></span>
+                                            <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
                                         </a>
                                     )}
                                 </div>
@@ -183,12 +183,12 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
 
                     <div className="flex items-center gap-2">
                         <div className="h-6 w-px bg-gray-200 relative z-30"></div>
-                        <button onClick={onSearchOpen} className="text-[#0052CC] hover:text-[#A3E635] transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
+                        <button onClick={onSearchOpen} className="text-ueap-primary hover:text-ueap-accent transition-transform hover:scale-110 p-2 relative z-30"><Search size={20} /></button>
                     </div>
                 </div>
                 <div className="flex lg:hidden items-center gap-4">
-                    <button onClick={onSearchOpen} className="text-[#0052CC] p-2 relative z-30"><Search size={22} /></button>
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#0052CC] p-2 relative z-30">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
+                    <button onClick={onSearchOpen} className="text-ueap-primary p-2 relative z-30"><Search size={22} /></button>
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-ueap-primary p-2 relative z-30">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
                 </div>
             </div>
         </div >
@@ -228,7 +228,7 @@ const SiteLayout = ({ children }) => {
             </main>
 
             {/* RODAPÉ */}
-            <footer className="bg-[#003D99] pt-16 md:pt-20 pb-8 relative overflow-hidden">
+            <footer className="bg-ueap-footer pt-16 md:pt-20 pb-8 relative overflow-hidden">
                 {/* Decorative layer */}
                 <div className="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none"></div>
 
@@ -282,8 +282,8 @@ const SiteLayout = ({ children }) => {
                         ].map((section, i) => (
                             <nav key={i} aria-label={`Menu ${section.title}`}>
                                 <div className="flex items-center gap-2 mb-4">
-                                    <span className="w-4 h-[2px] bg-[#A3E635]"></span>
-                                    <h4 className="text-xs font-bold uppercase tracking-widest text-[#A3E635]">
+                                    <span className="w-4 h-[2px] bg-ueap-accent"></span>
+                                    <h4 className="text-xs font-bold uppercase tracking-widest text-ueap-accent">
                                         {section.title}
                                     </h4>
                                 </div>
@@ -305,12 +305,12 @@ const SiteLayout = ({ children }) => {
                         {/* Bloco Institucional */}
                         <div className="relative pl-6 border-l border-white/10 max-w-lg group">
                             {/* Animated Active Border */}
-                            <div className="absolute left-[-1px] top-0 h-8 w-[1px] bg-[#A3E635] group-hover:h-full transition-all duration-500 ease-out"></div>
+                            <div className="absolute left-[-1px] top-0 h-8 w-[1px] bg-ueap-accent group-hover:h-full transition-all duration-500 ease-out"></div>
 
                             <div className="flex flex-col gap-5">
                                 <div className="flex items-center gap-4">
                                     <img src="/img/nova_logo_white.png" alt="UEAP" className="h-10 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity" onError={(e) => { e.target.src = "/img/nova_logo_white.png"; }} />
-                                    <span className="px-2 py-0.5 bg-[#A3E635]/10 border border-[#A3E635]/20 text-[#A3E635] text-[9px] font-bold uppercase tracking-widest rounded-sm">
+                                    <span className="px-2 py-0.5 bg-ueap-accent/10 border border-ueap-accent/20 text-ueap-accent text-[9px] font-bold uppercase tracking-widest rounded-sm">
                                         Desde 2006
                                     </span>
                                 </div>
@@ -335,7 +335,7 @@ const SiteLayout = ({ children }) => {
                             className="group flex items-center gap-4 bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors"
                         >
                             <div className="text-right">
-                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#A3E635] mb-1">
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-ueap-accent mb-1">
                                     Credenciada
                                 </p>
                                 <p className="text-xs text-white font-bold">
@@ -351,8 +351,8 @@ const SiteLayout = ({ children }) => {
 
                     {/* ENDEREÇOS */}
                     <section className="mb-12 border-b border-white/5 pb-12" aria-labelledby="footer-enderecos-title">
-                        <h5 id="footer-enderecos-title" className="text-[10px] font-bold uppercase tracking-widest text-[#A3E635]/60 mb-6 flex items-center gap-3">
-                            <span className="w-8 h-[1px] bg-[#A3E635]/30"></span>
+                        <h5 id="footer-enderecos-title" className="text-[10px] font-bold uppercase tracking-widest text-ueap-accent/60 mb-6 flex items-center gap-3">
+                            <span className="w-8 h-[1px] bg-ueap-accent/30"></span>
                             Nossos endereços
                         </h5>
 
@@ -380,14 +380,14 @@ const SiteLayout = ({ children }) => {
                     {/* BOTTOM */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <p className="text-blue-100/40 text-[10px] font-bold uppercase tracking-widest">
-                            © 2026 UEAP — Desenvolvido pela <span className="text-white">DINFO</span><i className="fa-solid fa-code text-[#A3E635] ml-1"></i>.
+                            © 2026 UEAP — Desenvolvido pela <span className="text-white">DINFO</span><i className="fa-solid fa-code text-ueap-accent ml-1"></i>.
                         </p>
                         <div className="flex gap-4">
                             <a
                                 href="https://www.youtube.com/channel/UCB6gc6QS_nJmCP5rNBh0kQQ"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#A3E635] transition-all text-blue-100/40 hover:text-white"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-blue-100/40 hover:text-white"
                             >
                                 <i className="fa-brands fa-youtube text-sm"></i>
                             </a>
@@ -395,7 +395,7 @@ const SiteLayout = ({ children }) => {
                                 href="https://www.instagram.com/ueapoficial/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#A3E635] transition-all text-blue-100/40 hover:text-white"
+                                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-blue-100/40 hover:text-white"
                             >
                                 <i className="fa-brands fa-instagram text-sm"></i>
                             </a>

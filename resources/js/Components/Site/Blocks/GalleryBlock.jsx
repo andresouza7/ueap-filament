@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const GalleryBlock = ({ data }) => {
@@ -47,13 +47,13 @@ const GalleryBlock = ({ data }) => {
                         <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
                             <button
                                 onClick={() => scrollTo(active === 0 ? images.length - 1 : active - 1)}
-                                className="pointer-events-auto bg-[#0052CC] text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
+                                className="pointer-events-auto bg-ueap-primary text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
                             >
                                 <ChevronLeft size={24} />
                             </button>
                             <button
                                 onClick={() => scrollTo(active === images.length - 1 ? 0 : active + 1)}
-                                className="pointer-events-auto bg-[#0052CC] text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
+                                className="pointer-events-auto bg-ueap-primary text-white p-2 rounded-full hover:bg-black transition-colors shadow-lg"
                             >
                                 <ChevronRight size={24} />
                             </button>
@@ -65,7 +65,7 @@ const GalleryBlock = ({ data }) => {
                                 <button
                                     key={idx}
                                     onClick={() => scrollTo(idx)}
-                                    className={`h-2 rounded-full transition-all duration-300 ${active === idx ? 'w-8 bg-[#A3E635]' : 'w-2 bg-white/60'}`}
+                                    className={`h-2 rounded-full transition-all duration-300 ${active === idx ? 'w-8 bg-ueap-accent' : 'w-2 bg-white/60'}`}
                                 />
                             ))}
                         </div>
@@ -77,7 +77,7 @@ const GalleryBlock = ({ data }) => {
             {(data.subtitle || data.credits) && (
                 <figcaption className="mt-4 px-2 flex flex-col gap-1">
                     <div className="flex items-start gap-2">
-                        <div className="h-4 w-1 bg-[#0052CC]"></div>
+                        <div className="h-4 w-1 bg-ueap-primary"></div>
                         <span className="text-[#002855] text-sm font-medium">
                             {data.subtitle || 'Galeria UEAP'}
                         </span>

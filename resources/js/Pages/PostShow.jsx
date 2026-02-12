@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
@@ -102,9 +102,9 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
                 {/* Breadcrumb refinado e mais próximo do título */}
                 <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-6 flex-wrap">
-                    <a href={route('site.home')} className="hover:text-[#0052CC] transition-colors">Início</a>
+                    <a href={route('site.home')} className="hover:text-ueap-primary transition-colors">Início</a>
                     <ChevronRight size={10} className="text-gray-300" />
-                    <a href={route('site.post.list')} className="hover:text-[#0052CC] transition-colors">Publicações</a>
+                    <a href={route('site.post.list')} className="hover:text-ueap-primary transition-colors">Publicações</a>
                     <ChevronRight size={10} className="text-gray-300" />
                     <span className="text-gray-900 line-clamp-1 max-w-[400px]">{newsData.title}</span>
                 </nav>
@@ -113,7 +113,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                     <div className="space-y-4 flex-1 min-w-[300px]">
                         <a
                             href={route('site.post.list', { category: newsData.categorySlug })}
-                            className="inline-flex items-center px-3 py-1 bg-[#0052CC] text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#A3E635] hover:text-[#0052CC] transition-colors"
+                            className="inline-flex items-center px-3 py-1 bg-ueap-primary text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-ueap-accent hover:text-ueap-primary transition-colors"
                         >
                             {newsData.category}
                         </a>
@@ -125,7 +125,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
 
                     {/* <button
                         onClick={() => generateAISummary()}
-                        className="group relative flex items-center gap-3 px-5 py-2.5 bg-white border-2 border-[#0052CC] text-[#0052CC] text-[10px] font-black uppercase tracking-widest hover:bg-[#0052CC] hover:text-white transition-all duration-300 shadow-[3px_3px_0px_0px_#A3E635] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
+                        className="group relative flex items-center gap-3 px-5 py-2.5 bg-white border-2 border-ueap-primary text-ueap-primary text-[10px] font-black uppercase tracking-widest hover:bg-ueap-primary hover:text-white transition-all duration-300 shadow-[3px_3px_0px_0px_ueap-accent] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
                     >
                         {loadingSummary ? (
                             <Loader2 size={14} className="animate-spin" />
@@ -140,13 +140,13 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                 <div className="flex flex-wrap items-center gap-4 md:gap-10 pt-6 border-t border-gray-900/10 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
                     <div className="flex items-center gap-2.5">
                         <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
-                            <Calendar size={12} className="text-[#0052CC]" />
+                            <Calendar size={12} className="text-ueap-primary" />
                         </div>
                         <span>{newsData.date}</span>
                     </div>
                     <div className="flex items-center gap-2.5">
                         <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
-                            <Eye size={12} className="text-[#0052CC]" />
+                            <Eye size={12} className="text-ueap-primary" />
                         </div>
                         <span>{newsData.views}</span>
                     </div>
@@ -173,7 +173,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
                             </a>
                             <button
                                 onClick={handleShare}
-                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#0052CC] hover:text-white transition-all duration-300 cursor-pointer"
+                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-ueap-primary hover:text-white transition-all duration-300 cursor-pointer"
                                 title="Mais opções de compartilhamento"
                             >
                                 <i className="fa-solid fa-share-nodes text-sm" />
@@ -196,8 +196,8 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             {/* ... (rest of the component) */}
 
             {summary && (
-                <div className="mb-12 bg-gray-50 border-l-4 border-[#A3E635] p-8 rounded-none animate-in fade-in slide-in-from-left-4">
-                    <div className="flex items-center gap-2 mb-4 text-[#0052CC] font-black text-xs uppercase tracking-widest"><Sparkles size={18} className="text-[#A3E635]" /> Resumo Inteligente por IA</div>
+                <div className="mb-12 bg-gray-50 border-l-4 border-ueap-accent p-8 rounded-none animate-in fade-in slide-in-from-left-4">
+                    <div className="flex items-center gap-2 mb-4 text-ueap-primary font-black text-xs uppercase tracking-widest"><Sparkles size={18} className="text-ueap-accent" /> Resumo Inteligente por IA</div>
                     <div className="text-sm text-gray-600 leading-relaxed font-medium italic prose prose-sm max-w-none whitespace-pre-line">{summary}</div>
                 </div>
             )}
@@ -209,7 +209,7 @@ const PostShow = ({ post, latestPosts, relatedPosts, categories }) => {
             {post?.updated_at && (
                 <div className="mt-8 flex items-center justify-end text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     <div className="flex items-center gap-2">
-                        <Clock size={12} className="text-[#A3E635]" />
+                        <Clock size={12} className="text-ueap-accent" />
                         Atualizado em: {formatDate(post.updated_at, true)}
                     </div>
                 </div>

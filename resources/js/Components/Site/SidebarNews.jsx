@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Clock } from 'lucide-react';
 import { route } from 'ziggy-js';
 
@@ -7,7 +7,7 @@ const SidebarNews = ({ recentNews = [] }) => {
 
     return (
         <div>
-            <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-6 flex items-center gap-2">
+            <h3 className="text-xs font-bold text-ueap-primary uppercase tracking-widest mb-6 flex items-center gap-2">
                 <Clock size={16} /> Últimas Notícias
             </h3>
             <div className="space-y-6">
@@ -22,7 +22,7 @@ const SidebarNews = ({ recentNews = [] }) => {
                         </div>
                         <div className="flex flex-col justify-center">
                             <span className="text-[11px] text-gray-400 font-bold mb-1 block uppercase tracking-tight">{item.date}</span>
-                            <h4 className="text-md font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-snug line-clamp-2">
+                            <h4 className="text-md font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors leading-snug line-clamp-2">
                                 {item.title}
                             </h4>
                         </div>

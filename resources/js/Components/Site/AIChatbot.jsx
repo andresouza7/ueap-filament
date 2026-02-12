@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Sparkles, X, Loader2, Send, Bot } from 'lucide-react';
 
 // --- CONFIGURAÇÃO E UTILITÁRIO GEMINI API ---
@@ -81,9 +81,9 @@ const AIChatbot = () => {
         <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end print:hidden">
             {isOpen && (
                 <div className="mb-4 w-80 md:w-96 bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-100 flex flex-col h-[500px] animate-in slide-in-from-bottom-4">
-                    <div className="bg-[#0052CC] p-4 text-white flex justify-between items-center">
+                    <div className="bg-ueap-primary p-4 text-white flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                            <Sparkles size={20} className="text-[#A3E635] animate-pulse" />
+                            <Sparkles size={20} className="text-ueap-accent animate-pulse" />
                             <span className="font-bold text-sm uppercase tracking-widest">Assistente ✨ UEAP</span>
                         </div>
                         <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-1 rounded"><X size={20} /></button>
@@ -92,7 +92,7 @@ const AIChatbot = () => {
                     <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                         {messages.map((m, i) => (
                             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] p-3 rounded-lg text-xs leading-relaxed shadow-sm ${m.role === 'user' ? 'bg-[#A3E635] text-[#0052CC] font-bold' : 'bg-white text-gray-700 border border-gray-100'}`}>
+                                <div className={`max-w-[80%] p-3 rounded-lg text-xs leading-relaxed shadow-sm ${m.role === 'user' ? 'bg-ueap-accent text-ueap-primary font-bold' : 'bg-white text-gray-700 border border-gray-100'}`}>
                                     {m.text}
                                 </div>
                             </div>
@@ -100,7 +100,7 @@ const AIChatbot = () => {
                         {loading && (
                             <div className="flex justify-start">
                                 <div className="bg-white p-3 rounded-lg border border-gray-100 flex items-center gap-2">
-                                    <Loader2 size={16} className="animate-spin text-[#0052CC]" />
+                                    <Loader2 size={16} className="animate-spin text-ueap-primary" />
                                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Pensando...</span>
                                 </div>
                             </div>
@@ -115,9 +115,9 @@ const AIChatbot = () => {
                                 onChange={e => setInput(e.target.value)}
                                 onKeyDown={e => e.key === 'Enter' && handleSend()}
                                 placeholder="Tire suas dúvidas acadêmicas..."
-                                className="flex-1 px-3 py-2 bg-gray-100 border-none text-xs focus:ring-1 focus:ring-[#0052CC] rounded-md outline-none"
+                                className="flex-1 px-3 py-2 bg-gray-100 border-none text-xs focus:ring-1 focus:ring-ueap-primary rounded-md outline-none"
                             />
-                            <button onClick={handleSend} className="bg-[#0052CC] text-white p-2 rounded-md hover:bg-[#A3E635] hover:text-[#0052CC] transition-colors">
+                            <button onClick={handleSend} className="bg-ueap-primary text-white p-2 rounded-md hover:bg-ueap-accent hover:text-ueap-primary transition-colors">
                                 <Send size={18} />
                             </button>
                         </div>
@@ -126,7 +126,7 @@ const AIChatbot = () => {
             )}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 bg-[#0052CC] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform border-4 border-[#A3E635]"
+                className="w-14 h-14 bg-ueap-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform border-4 border-ueap-accent"
             >
                 {isOpen ? <X size={28} /> : <Bot size={28} />}
             </button>

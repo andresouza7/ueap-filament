@@ -1,4 +1,4 @@
-import React, { cloneElement, useState } from 'react';
+﻿import React, { cloneElement, useState } from 'react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
@@ -46,16 +46,16 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
         <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
             <div className="max-w-7xl mx-auto px-4">
                 <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
-                    <Link href={route('site.home')} className="hover:text-[#0052CC] transition-colors flex items-center gap-1">
+                    <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1">
                         <Home size={12} /> Início
                     </Link>
                     <ChevronRight size={12} />
-                    <span className="text-[#0052CC]">{title}</span>
+                    <span className="text-ueap-primary">{title}</span>
                 </nav>
                 <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">
                     {title}
                 </h2>
-                <div className="h-2 w-24 bg-[#0052CC] mb-6"></div>
+                <div className="h-2 w-24 bg-ueap-primary mb-6"></div>
                 <p className="text-gray-500 max-w-4xl text-sm leading-relaxed font-medium">
                     {description}
                 </p>
@@ -172,11 +172,11 @@ const CourseList = ({ slug, cursos, categories, latestPosts }) => {
 
                                     <div className="flex-1">
 
-                                        <h3 className="text-base font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight mb-4">
+                                        <h3 className="text-base font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors leading-tight mb-4">
                                             {item.name}
                                         </h3>
 
-                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 group-hover:text-[#0052CC] transition-all">
+                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 group-hover:text-ueap-primary transition-all">
                                             Ver detalhes
                                             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                         </span>

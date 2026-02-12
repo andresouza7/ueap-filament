@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from '@inertiajs/react';
 
 const Pagination = ({ links, currentPage, lastPage }) => {
@@ -18,8 +18,8 @@ const Pagination = ({ links, currentPage, lastPage }) => {
                         key={i}
                         href={link.url || '#'}
                         className={`px-4 py-2 border text-[10px] font-bold uppercase tracking-wider transition-all ${link.active
-                            ? 'bg-[#0052CC] text-white border-[#0052CC]'
-                            : 'border-gray-100 text-gray-500 hover:border-[#0052CC] hover:text-[#0052CC] bg-white'
+                            ? 'bg-ueap-primary text-white border-ueap-primary'
+                            : 'border-gray-100 text-gray-500 hover:border-ueap-primary hover:text-ueap-primary bg-white'
                             } ${!link.url && 'opacity-50 cursor-not-allowed hover:border-gray-100 hover:text-gray-500'}`}
                         dangerouslySetInnerHTML={{ __html: translateLabel(link.label) }}
                         preserveState

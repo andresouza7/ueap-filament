@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostFilter from '@/Components/Site/PostFilter';
 import PostCard from '@/Components/Site/PostCard';
@@ -54,9 +54,9 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
         <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
             <div className="max-w-7xl mx-auto px-4">
                 <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
-                    <Link href={route('site.home')} className="hover:text-[#0052CC] transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
+                    <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
                     <ChevronRight size={12} />
-                    <span className="text-[#0052CC]">Publicações</span>
+                    <span className="text-ueap-primary">Publicações</span>
                 </nav>
                 <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">Explorar Publicações</h2>
                 <div className="h-2 w-24 bg-ueap-primary"></div>
@@ -93,19 +93,19 @@ const PostList = ({ posts, categories, searchString, latestPosts, activeCategory
                             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Filtrando por:</span>
 
                             {searchString && (
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-ueap-primary text-[10px] font-bold uppercase tracking-wider">
                                     Busca: "{searchString}"
                                 </span>
                             )}
 
                             {activeCategory && (
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-ueap-primary text-[10px] font-bold uppercase tracking-wider">
                                     Categoria: {activeCategory.name}
                                 </span>
                             )}
 
                             {postType && postType !== 'todos' && (
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-ueap-primary text-[10px] font-bold uppercase tracking-wider">
                                     Tipo: {postType === 'news' ? 'Notícias' : 'Eventos'}
                                 </span>
                             )}

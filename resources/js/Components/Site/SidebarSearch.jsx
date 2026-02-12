@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { route } from 'ziggy-js';
 
@@ -12,18 +12,18 @@ const SidebarSearch = () => {
     };
 
     return (
-        <div className="bg-gray-50 p-6 border-l-4 border-[#0052CC]">
-            <h3 className="text-xs font-bold text-[#0052CC] uppercase tracking-widest mb-4">Pesquisar no Portal</h3>
+        <div className="bg-gray-50 p-6 border-l-4 border-ueap-primary">
+            <h3 className="text-xs font-bold text-ueap-primary uppercase tracking-widest mb-4">Pesquisar no Portal</h3>
             <div className="relative">
                 <input
                     type="text"
                     placeholder="O que você procura?"
-                    className="w-full pl-4 pr-10 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#A3E635] transition-colors"
+                    className="w-full pl-4 pr-10 py-3 border border-gray-200 text-sm focus:outline-none focus:border-ueap-accent transition-colors"
                     value={term}
                     onChange={(e) => setTerm(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
-                <button onClick={handleSearch} className="absolute right-3 top-3 text-gray-300 hover:text-[#0052CC] transition-colors">
+                <button onClick={handleSearch} className="absolute right-3 top-3 text-gray-300 hover:text-ueap-primary transition-colors">
                     <Search size={18} />
                 </button>
             </div>

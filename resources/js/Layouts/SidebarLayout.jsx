@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
 import SidebarSearch from '@/Components/Site/SidebarSearch';
 import SidebarNews from '@/Components/Site/SidebarNews';
@@ -25,7 +25,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                     <div className="lg:hidden mb-6 sticky top-20 z-30">
                         <button
                             onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-                            className="w-full bg-[#0052CC] text-white p-4 rounded-lg shadow-lg flex items-center justify-between font-bold uppercase text-xs tracking-widest"
+                            className="w-full bg-ueap-primary text-white p-4 rounded-lg shadow-lg flex items-center justify-between font-bold uppercase text-xs tracking-widest"
                         >
                             <span>{currentMenuItem ? currentMenuItem.name : 'Nesta Seção'}</span>
                             <span className={`transform transition-transform ${isDrawerOpen ? 'rotate-180' : ''}`}>▼</span>
@@ -41,7 +41,7 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                                             key={index}
                                             href={'/' + item.url}
                                             className={`py-3 px-4 border-l-4 transition-colors text-xs font-bold uppercase tracking-wider ${isActive
-                                                ? 'border-[#A3E635] bg-blue-50 text-[#0052CC]'
+                                                ? 'border-ueap-accent bg-blue-50 text-ueap-primary'
                                                 : 'border-transparent text-gray-500 hover:bg-gray-50'}`}
                                         >
                                             {item.name}
@@ -85,8 +85,8 @@ const SidebarLayout = ({ children, menu, recentNews, categories, header, bottom,
                                                 key={index}
                                                 href={'/' + item.url}
                                                 className={`group relative flex items-center justify-between py-2 px-3 border-l-[3px] transition-all hover:bg-gray-50 hover:pl-4 ${isActive
-                                                    ? 'border-[#0052CC] text-[#0052CC] bg-blue-50 font-black'
-                                                    : 'border-transparent text-gray-500 font-bold hover:border-[#A3E635] hover:text-gray-900'
+                                                    ? 'border-ueap-primary text-ueap-primary bg-blue-50 font-black'
+                                                    : 'border-transparent text-gray-500 font-bold hover:border-ueap-accent hover:text-gray-900'
                                                     }`}
                                             >
                                                 <span className="text-[11px] uppercase tracking-wider">

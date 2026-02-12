@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 
 const PostFilter = ({ searchTerm, onSearchChange, onSearchSubmit, filterType, onFilterChange }) => {
@@ -8,7 +8,7 @@ const PostFilter = ({ searchTerm, onSearchChange, onSearchSubmit, filterType, on
                 <input
                     type="text"
                     placeholder="Pesquisar notícias, eventos ou páginas..."
-                    className="w-full pl-12 pr-4 py-4 bg-white border-none text-xs font-medium focus:ring-2 focus:ring-[#0052CC] transition-all uppercase placeholder:normal-case"
+                    className="w-full pl-12 pr-4 py-4 bg-white border-none text-xs font-medium focus:ring-2 focus:ring-ueap-primary transition-all uppercase placeholder:normal-case"
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
                     onKeyDown={onSearchSubmit}
@@ -19,7 +19,7 @@ const PostFilter = ({ searchTerm, onSearchChange, onSearchSubmit, filterType, on
                 <select
                     value={filterType}
                     onChange={onFilterChange}
-                    className="w-full md:w-56 appearance-none pl-6 pr-12 py-4 bg-white border-none text-[10px] font-bold uppercase tracking-widest focus:ring-2 focus:ring-[#0052CC] cursor-pointer"
+                    className="w-full md:w-56 appearance-none pl-6 pr-12 py-4 bg-white border-none text-[10px] font-bold uppercase tracking-widest focus:ring-2 focus:ring-ueap-primary cursor-pointer"
                 >
                     <option value="todos">Todos os Formatos</option>
                     <option value="news">Notícia</option>

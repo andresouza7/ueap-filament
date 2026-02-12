@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
 import { Head, Link } from '@inertiajs/react';
 import { Home, ChevronRight, Search, FileText, Eye, Download } from 'lucide-react';
@@ -38,9 +38,9 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                 <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
                     <div className="max-w-7xl mx-auto px-4">
                         <nav className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
-                            <button onClick={() => handleNavigate('home')} className="hover:text-[#0052CC] transition-colors flex items-center gap-1"><Home size={12} /> Home</button>
+                            <button onClick={() => handleNavigate('home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</button>
                             <ChevronRight size={12} />
-                            <span className="text-[#0052CC]">Repositório Digital</span>
+                            <span className="text-ueap-primary">Repositório Digital</span>
                         </nav>
                         <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4">{title}</h2>
                         <div className="h-2 w-24 bg-ueap-primary/80"></div>
@@ -58,31 +58,31 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                     <input
                                         type="text"
                                         placeholder="Filtrar por nome do documento..."
-                                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border-none text-xs font-bold uppercase placeholder:normal-case focus:ring-1 focus:ring-[#0052CC] transition-all rounded-none"
+                                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border-none text-xs font-bold uppercase placeholder:normal-case focus:ring-1 focus:ring-ueap-primary transition-all rounded-none"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                     />
-                                    <Search className="absolute left-4 top-4 text-[#0052CC]" size={18} />
+                                    <Search className="absolute left-4 top-4 text-ueap-primary" size={18} />
                                 </div>
-                                <button onClick={handleSearch} className="bg-[#0052CC] text-white px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-[#A3E635] hover:text-[#0052CC] transition-all rounded-none shadow-lg">Buscar</button>
+                                <button onClick={handleSearch} className="bg-ueap-primary text-white px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-ueap-accent hover:text-ueap-primary transition-all rounded-none shadow-lg">Buscar</button>
                             </div>
 
                             <div className="space-y-0 border-t border-gray-100">
                                 {docs.length > 0 ? docs.map((doc, idx) => (
                                     <div key={idx} className="group flex items-center gap-4 py-3 px-4 border-b border-gray-100 hover:bg-gray-50 transition-all cursor-pointer">
-                                        <div className="w-10 h-10 bg-gray-50 flex items-center justify-center text-[#0052CC] shrink-0 group-hover:bg-[#A3E635] transition-colors rounded-sm">
+                                        <div className="w-10 h-10 bg-gray-50 flex items-center justify-center text-ueap-primary shrink-0 group-hover:bg-ueap-accent transition-colors rounded-sm">
                                             <FileText size={20} />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-1">
                                                 {doc.category && <div>
-                                                    <span className="text-[9px] font-black text-[#0052CC] uppercase tracking-widest">{doc.category}</span>
+                                                    <span className="text-[9px] font-black text-ueap-primary uppercase tracking-widest">{doc.category}</span>
                                                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                                                 </div>}
                                                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{doc.date || '-'}</span>
                                             </div>
-                                            <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors tracking-normal leading-snug">
+                                            <h3 className="text-sm font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors tracking-normal leading-snug">
                                                 {doc.url ? (
                                                     <a href={doc.url} target="_blank" rel="noopener noreferrer">
                                                         {doc.title}
@@ -92,7 +92,7 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                                         </div>
                                         <div className="hidden md:flex items-center gap-4">
                                             {doc.url && (
-                                                <a href={doc.url} download className="p-2 text-gray-300 hover:text-[#A3E635] transition-colors" title="Baixar PDF"><Download size={20} /></a>
+                                                <a href={doc.url} download className="p-2 text-gray-300 hover:text-ueap-accent transition-colors" title="Baixar PDF"><Download size={20} /></a>
                                             )}
                                         </div>
                                     </div>
@@ -111,8 +111,8 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                         <aside className="lg:w-1/3 space-y-16">
                             <SidebarNewsletter />
                             <SidebarCategories />
-                            <div className="p-8 bg-gray-50 border-l-4 border-[#A3E635] rounded-none">
-                                <h3 className="text-xs font-black text-[#0052CC] uppercase tracking-widest mb-4">Ajuda</h3>
+                            <div className="p-8 bg-gray-50 border-l-4 border-ueap-accent rounded-none">
+                                <h3 className="text-xs font-black text-ueap-primary uppercase tracking-widest mb-4">Ajuda</h3>
                                 <p className="text-[10px] font-bold text-gray-500 uppercase leading-relaxed">Não encontrou o documento? Utilize o Service Desk ou entre em contato com o departamento responsável.</p>
                             </div>
                         </aside>

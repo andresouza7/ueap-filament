@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import { Calendar, ArrowUpRight } from 'lucide-react';
@@ -18,17 +18,17 @@ const PostCard = ({ item }) => {
 
                 <div className="flex flex-col justify-center py-2">
                     <div className="flex items-center gap-4 mb-3">
-                        <span className="text-[9px] font-bold text-[#0052CC] bg-[#A3E635] px-2.5 py-1 uppercase tracking-widest">
+                        <span className="text-[9px] font-bold text-ueap-primary bg-ueap-accent px-2.5 py-1 uppercase tracking-widest">
                             {item.category?.name || "GERAL"}
                         </span>
                         <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Calendar size={12} className="text-[#A3E635]" /> {new Date(item.created_at).toLocaleDateString()}
+                            <Calendar size={12} className="text-ueap-accent" /> {new Date(item.created_at).toLocaleDateString()}
                         </span>
                     </div>
-                    <h3 className="text-xl md:text-lg font-semibold text-gray-800 group-hover:text-[#0052CC] transition-colors leading-tight tracking-tight line-clamp-4">
+                    <h3 className="text-xl md:text-lg font-semibold text-gray-800 group-hover:text-ueap-primary transition-colors leading-tight tracking-tight line-clamp-4">
                         {item.title}
                     </h3>
-                    <div className="mt-5 flex items-center gap-2 text-[10px] font-bold text-[#0052CC] group-hover:gap-4 transition-all uppercase tracking-widest">
+                    <div className="mt-5 flex items-center gap-2 text-[10px] font-bold text-ueap-primary group-hover:gap-4 transition-all uppercase tracking-widest">
                         Continuar Lendo <ArrowUpRight size={14} />
                     </div>
                 </div>
