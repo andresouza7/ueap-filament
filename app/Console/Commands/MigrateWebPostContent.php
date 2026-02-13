@@ -48,11 +48,8 @@ class MigrateWebPostContent extends Command
                  */
                 if (!empty($post->text)) {
 
-                    // Remove parágrafos vazios ou com apenas &nbsp; (lixo do editor antigo)
-                    $cleanBody = preg_replace('/<p[^>]*>(?:&nbsp;|\s)*<\/p>/iu', '', $post->text);
-
                     // Limpa caracteres especiais e espaços extras
-                    $cleanBody = clean_text($cleanBody);
+                    $cleanBody = clean_text($post->text);
 
                     $content[] = [
                         'type' => 'text',
@@ -67,7 +64,10 @@ class MigrateWebPostContent extends Command
                  */
                 if (!empty($content)) {
                     $post->content = $content;
-                    $post->save();
+
+                    WebPost::withoutTimestamps(function () use ($post) {
+                        $post->save();
+                    });
 
                     $this->line("✔ Migrated post ID {$post->id}");
                 }

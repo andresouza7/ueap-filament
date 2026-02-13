@@ -81,20 +81,35 @@ const PostShow = ({ post, relatedPosts }) => {
             setLoadingSummary(false);
         }
     };
+
     const handleShare = async () => {
-        if (navigator.share) {
-            try {
+        const shareData = {
+            title: newsData.title,
+            text: newsData.category || 'Notícia UEAP',
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                await navigator.share(shareData);
+            } else if (navigator.share) {
+                // Fallback for browsers that support share but maybe not canShare or specific data
                 await navigator.share({
-                    title: newsData.title,
-                    text: newsData.category,
-                    url: window.location.href,
+                    title: shareData.title,
+                    url: shareData.url
                 });
-            } catch (error) {
-                console.log('Error sharing', error);
+            } else {
+                throw new Error('Web Share API not supported');
             }
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copiado para a área de transferência!');
+        } catch (error) {
+            if (error.name === 'AbortError') return;
+
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                alert('Link copiado para a área de transferência!');
+            } catch (clipError) {
+                console.error('Falha ao copiar:', clipError);
+            }
         }
     };
 
