@@ -61,6 +61,7 @@ class NewsletterController extends Controller
         // 1️⃣ Busca as 5 últimas notícias publicadas
         $items = WebPost::query()
             ->where('status', 'published')
+            ->whereIn('type', ['news', 'event'])
             ->orderByDesc('created_at')
             ->limit(5)
             ->get()

@@ -32,6 +32,7 @@ class NewsletterCronCommand extends Command
 
         $items = WebPost::query()
             ->where('status', 'published')
+            ->whereIn('type', ['news', 'event'])
             ->orderByDesc('created_at')
             ->limit(5)
             ->get()
