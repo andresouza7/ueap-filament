@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\IntranetController;
+use App\Http\Controllers\Intranet\IntranetController;
 use Illuminate\Support\Facades\Route;
 
 // Intercepta o subdominio da intranet

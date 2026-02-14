@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SiteAntigo;
 
 use App\Http\Controllers\Controller;
 
@@ -21,20 +21,20 @@ class ConsuController extends Controller
     #################################
     public function listOrdinance(Request $request)
     {
-        $query = Portaria::where('origin','CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
+        $query = Portaria::where('origin', 'CONSU')->orderBy('year', 'DESC')->orderBy('number', 'DESC');
 
-        if($request->name){
+        if ($request->name) {
             $request->validate(['name' => 'string|max:255']);
             $query
-            ->where('description', 'ilike', "%$request->name%");
+                ->where('description', 'ilike', "%$request->name%");
         }
 
-        if($request->number){
+        if ($request->number) {
             $request->validate(['number' => 'integer']);
             $query->where('number',  $request->number);
         }
 
-        if($request->year){
+        if ($request->year) {
             $request->validate(['year' => 'integer']);
             $query->where('year',  $request->year);
         }
@@ -48,17 +48,17 @@ class ConsuController extends Controller
     {
         $query = ConsuResolution::orderBy('year', 'DESC')->orderBy('number', 'DESC');
 
-        if($request->name){
+        if ($request->name) {
             $request->validate(['name' => 'string|max:255']);
             $query->where('name', 'ilike', "%$request->name%");
         }
 
-        if($request->number){
+        if ($request->number) {
             $request->validate(['number' => 'integer']);
             $query->where('number',  $request->number);
         }
 
-        if($request->year){
+        if ($request->year) {
             $request->validate(['year' => 'integer']);
             $query->where('year',  $request->year);
         }
@@ -71,11 +71,11 @@ class ConsuController extends Controller
     {
         $query = ConsuAta::orderBy('issuance_date', 'DESC')->orderBy('id', 'DESC');
 
-        if($request->name){
+        if ($request->name) {
             $query->where('title', 'ilike', "%$request->name%");
         }
 
-        if($request->issuer){
+        if ($request->issuer) {
             $query->where('issuer', 'ilike', "%$request->issuer%");
         }
 

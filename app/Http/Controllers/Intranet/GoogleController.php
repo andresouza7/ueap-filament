@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Intranet;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -22,16 +23,15 @@ class GoogleController extends Controller
 
             $finduser = User::where('gauth_id', $user->id)->first();
 
-            if($finduser){
+            if ($finduser) {
 
                 Auth::login($finduser);
 
                 return redirect('/');
-
-            }else{
+            } else {
                 $findEmail = User::where('email', $user->email)->first();
 
-                if($findEmail){
+                if ($findEmail) {
 
                     $findEmail->gauth_id = $user->id;
                     $findEmail->gauth_type = 'google';
@@ -40,7 +40,6 @@ class GoogleController extends Controller
                     Auth::login($findEmail);
                     return redirect('/');
                 }
-
             }
             //else{
             //     $newUser = User::create([

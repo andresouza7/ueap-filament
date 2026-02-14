@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Intranet;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\CalendarOccurrence;
 use App\Models\User;

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SiteAntigo;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\DocumentController;
 use App\Models\Document;
 use App\Models\NormativeInstruction;
 use App\Models\WebPage;

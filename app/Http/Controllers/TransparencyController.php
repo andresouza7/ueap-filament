@@ -12,6 +12,7 @@ use App\Models\Orcamento;
 use App\Models\TransparencyBid;
 use App\Models\TransparencyOrder;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SiteAntigo\DocumentController;
 use Illuminate\Support\Facades\Auth;
 
 class TransparencyController extends Controller
@@ -159,7 +160,7 @@ class TransparencyController extends Controller
                 ->orderBy('year', 'DESC')
                 ->paginate(25)
                 ->withQueryString();
-            
+
             if ($type === 'ppa') {
                 return view('transparency.pages.ppa-list', compact('documents', 'type', 'year', 'category'));
             }

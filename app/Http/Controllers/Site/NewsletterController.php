@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Controller;
 use App\DTOs\NewsletterItem;
 use App\Jobs\SendNewsletter;
 use App\Models\Subscriber;

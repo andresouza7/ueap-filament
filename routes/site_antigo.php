@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ConsuController;
-use App\Http\Controllers\OldPageController;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SiteAntigo\ConsuController;
+use App\Http\Controllers\SiteAntigo\OldPageController;
+use App\Http\Controllers\SiteAntigo\SearchController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas do site institucional antigo

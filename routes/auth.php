@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\Intranet\AuthController;
+use App\Http\Controllers\Intranet\GoogleController;
 use Illuminate\Support\Facades\Route;
 
 // Exibir tela de login
