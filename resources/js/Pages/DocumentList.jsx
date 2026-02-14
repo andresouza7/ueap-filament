@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import SiteLayout from '@/Layouts/SiteLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Home, ChevronRight, Search, FileText, Eye, Download } from 'lucide-react';
 import SidebarNewsletter from '../Components/Site/SidebarNewsletter';
 import SidebarCategories from '../Components/Site/SidebarCategories';
@@ -10,6 +10,8 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
     // Handle pagination data if provided by Laravel
     const docs = documents.data ? documents.data : documents;
     const links = documents.links ? documents.links : [];
+
+    const { latestPosts, categories } = usePage().props;
 
     // Search State
     const [searchTerm, setSearchTerm] = React.useState(new URLSearchParams(window.location.search).get('search') || '');
@@ -109,12 +111,11 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
 
                         {/* SIDEBAR DIREITA */}
                         <aside className="lg:w-1/3 space-y-16">
-                            <SidebarNewsletter />
-                            <SidebarCategories />
                             <div className="p-8 bg-gray-50 border-l-4 border-ueap-accent rounded-none">
                                 <h3 className="text-xs font-black text-ueap-primary uppercase tracking-widest mb-4">Ajuda</h3>
-                                <p className="text-[10px] font-bold text-contrast-body uppercase leading-relaxed">Não encontrou o documento? Utilize o Service Desk ou entre em contato com o departamento responsável.</p>
+                                <p className="text-[10px] font-bold text-contrast-body uppercase leading-relaxed">Não encontrou o documento? Sugerimos entrar em contato diretamente com o setor responsável.</p>
                             </div>
+                            <SidebarCategories categories={categories} />
                         </aside>
                     </div>
                 </div>

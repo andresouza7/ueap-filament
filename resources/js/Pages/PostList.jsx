@@ -68,7 +68,6 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
     // Custom Sidebar without duplicate search
     const sidebarContent = (
         <div className="space-y-12">
-            <SidebarNews recentNews={recentNews} />
             <SidebarNewsletter />
             <SidebarCategories categories={categories} />
         </div>
@@ -77,7 +76,7 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
     const hasActiveFilters = searchString || activeCategory || (postType && postType !== 'todos');
 
     return (
-        <SidebarLayout recentNews={recentNews} header={headerContent} sidebar={sidebarContent} >
+        <SidebarLayout header={headerContent} sidebar={sidebarContent} >
 
             <PostFilter
                 searchTerm={searchTerm}

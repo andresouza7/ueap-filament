@@ -47,7 +47,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                     <Mail size={80} />
                 </div>
                 <h3 className="text-lg font-bold uppercase tracking-tighter mb-2 relative z-10">Newsletter</h3>
-                <p className="text-[10px] text-ueap-secondary/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba as últimas publicações</p>
+                <p className="text-[10px] text-ueap-secondary/70 font-bold uppercase tracking-wider mb-6 relative z-10">Receba semanalmente as últimas publicações</p>
 
                 <form onSubmit={submit} className="space-y-3 relative z-10">
                     <div>
