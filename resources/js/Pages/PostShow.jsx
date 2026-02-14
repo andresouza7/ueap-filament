@@ -1,11 +1,15 @@
 ﻿import React, { useState } from 'react';
 import { usePage, Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
-import RelatedPosts from '@/Components/Site/RelatedPosts';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
 import { callGemini } from '@/Services/GeminiService';
 import { Calendar, Eye, Share2, Sparkles, Loader2, Clock, ChevronRight, Bookmark } from 'lucide-react';
 import { route } from 'ziggy-js';
+import SidebarNews from '@/Components/Site/SidebarNews';
+import SidebarSearch from '@/Components/Site/SidebarSearch';
+import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
+import SidebarCategories from '@/Components/Site/SidebarCategories';
+import RelatedPosts from '@/Components/Site/RelatedPosts';
 
 const PostShow = ({ post, relatedPosts }) => {
     const { latestPosts, categories } = usePage().props;
@@ -202,13 +206,20 @@ const PostShow = ({ post, relatedPosts }) => {
         </div>
     );
 
+    const sidebarContent = (
+        <div className="space-y-12">
+            <SidebarSearch />
+            <SidebarNews recentNews={recentNews} />
+            <SidebarNewsletter />
+            <SidebarCategories categories={categories} />
+        </div>
+    );
+
     return (
         <SidebarLayout
             header={headerContent}
-            recentNews={recentNews}
-            categories={categories}
+            sidebar={sidebarContent}
             menu={post?.web_menu}
-            bottom={<RelatedPosts posts={relatedPosts} />}
         >
             <Head title={newsData.title} />
             {/* ... (rest of the component) */}
@@ -232,6 +243,10 @@ const PostShow = ({ post, relatedPosts }) => {
                     </div>
                 </div>
             )}
+
+            <div className="w-full mt-12">
+                <RelatedPosts posts={relatedPosts} />
+            </div>
         </SidebarLayout>
     );
 };

@@ -115,7 +115,7 @@ const CourseList = ({ slug, cursos }) => {
     );
 
     return (
-        <SidebarLayout recentNews={recentNews} categories={categories} header={headerContent} sidebar={sidebarContent}>
+        <SidebarLayout header={headerContent} sidebar={sidebarContent}>
             <Head title={title} />
             {/* SEÇÃO DE PESQUISA */}
             <div className="mb-10">

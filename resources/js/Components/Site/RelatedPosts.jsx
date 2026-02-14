@@ -28,7 +28,7 @@ const RelatedPosts = ({ posts }) => {
                         href={route('site.post.show', post.slug)}
                         className="group cursor-pointer flex flex-col"
                     >
-                        <div className="aspect-video overflow-hidden mb-4 bg-gray-100 shadow-sm border border-gray-50 rounded-none relative">
+                        {post.type !== 'page' && <div className="aspect-video overflow-hidden mb-4 bg-gray-100 shadow-sm border border-gray-50 rounded-none relative">
                             <img
                                 src={post.image_url || "https://placehold.co/600x400?text=UEAP"}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -37,11 +37,11 @@ const RelatedPosts = ({ posts }) => {
                             <div className="absolute top-0 right-0 bg-ueap-accent text-ueap-primary px-2 py-0.5 font-black text-[8px] uppercase tracking-widest">
                                 {post.category?.name || 'Notícia'}
                             </div>
-                        </div>
-                        <p className="text-[8px] text-contrast-muted font-bold mb-2 uppercase tracking-widest">{formatDate(post.created_at)}</p>
-                        <h4 className="text-xs font-bold text-contrast-heading group-hover:text-ueap-primary transition-colors leading-snug uppercase tracking-tight line-clamp-3">
+                        </div>}
+                        <h4 className="text-xs font-bold text-contrast-heading group-hover:text-ueap-primary transition-colors leading-snug uppercase tracking-tight line-clamp-3 mb-2">
                             {post.title}
                         </h4>
+                        <p className="text-[8px] text-contrast-muted font-bold uppercase tracking-widest">{formatDate(post.created_at)}</p>
                     </Link>
                 ))}
             </div>
