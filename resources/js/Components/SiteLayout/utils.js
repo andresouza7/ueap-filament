@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Resolve URLs para links internos e externos
  * @param {string} url - URL a ser resolvida

@@ -38,7 +38,29 @@ class PageController extends Controller
 
         $events = WebPost::where('type', 'event')->where('status', 'published')->orderByDesc('created_at')->take(4)->get();
 
-        return Inertia::render('Home', compact('featured', 'posts', 'events', 'banners'));
+        $graduacaoMenu = WebMenu::where('slug', 'graduacao')
+            ->with(['items' => function ($query) {
+                $query->where('status', 'published')->orderBy('name');
+            }])
+            ->first();
+
+        $posMenu = WebMenu::whereIn('slug', ['pos', 'POS'])
+            ->with(['items' => function ($query) {
+                $query->where('status', 'published')->orderBy('name');
+            }])
+            ->first();
+
+        $coursesGraduacao = $graduacaoMenu ? $graduacaoMenu->items->map(function ($item) {
+            $item->slug = 'graduacao';
+            return $item;
+        }) : collect([]);
+
+        $coursesPos = $posMenu ? $posMenu->items->map(function ($item) {
+            $item->slug = 'pos';
+            return $item;
+        }) : collect([]);
+
+        return Inertia::render('Home', compact('featured', 'posts', 'events', 'banners', 'coursesGraduacao', 'coursesPos'));
     }
 
     public function postList(Request $request)
