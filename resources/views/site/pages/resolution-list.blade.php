@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form class='form' action="{{ route('site.document.resolution.list') }}" method="get">
+    <form class='form' action="{{ route('old.site.document.resolution.list') }}" method="get">
         <div class='row m-2'>
 
             <div class='col-4'>
@@ -27,7 +27,7 @@
             </div>
             <div class='col-2'>
                 <a style='color:white !important;' class="form-control btn btn-secondary"
-                    href='{{ route('site.document.resolution.list') }}'>Limpar Filtro</a>
+                    href='{{ route('old.site.document.resolution.list') }}'>Limpar Filtro</a>
             </div>
 
         </div>

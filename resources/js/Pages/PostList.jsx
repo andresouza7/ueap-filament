@@ -1,17 +1,16 @@
 ﻿import React, { useState } from 'react';
-import { router, Link, usePage } from '@inertiajs/react';
+import { router, Link, usePage, Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostFilter from '@/Components/Site/PostFilter';
 import PostCard from '@/Components/Site/PostCard';
 import Pagination from '@/Components/Site/Pagination';
-import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 import { Home, ChevronRight } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 const PostList = ({ posts, searchString, activeCategory, postType }) => {
-    const { latestPosts, categories } = usePage().props;
+    const { categories } = usePage().props;
     const [searchTerm, setSearchTerm] = useState(searchString || '');
     const [filterType, setFilterType] = useState(postType || 'todos');
 
@@ -41,15 +40,6 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
         router.get(route('site.post.list'));
     };
 
-    // Helper for recentNews items adaptation
-    const recentNews = latestPosts?.map(p => ({
-        id: p.id,
-        title: p.title,
-        image_url: p.image_url || "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=400",
-        date: p.created_at ? new Date(p.created_at).toLocaleDateString() : "Recente",
-        slug: p.slug
-    })) || [];
-
     // Header Content similar to DocumentList
     const headerContent = (
         <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
@@ -77,6 +67,7 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
 
     return (
         <SidebarLayout header={headerContent} sidebar={sidebarContent} >
+            <Head title="Publicações" />
 
             <PostFilter
                 searchTerm={searchTerm}

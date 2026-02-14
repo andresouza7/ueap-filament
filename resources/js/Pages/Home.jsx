@@ -5,12 +5,13 @@ import NewsSection from '@/Components/Site/NewsSection';
 import StudentAssistanceSection from '@/Components/Site/StudentAssistanceSection';
 import EventsSection from '@/Components/Site/EventsSection';
 
+import { Head } from '@inertiajs/react';
+
 const Home = ({ featured, posts, events, banners }) => {
   return (
     <SiteLayout>
-      {/* <HeroSection featured={featured} /> */}
+      <Head title="Home" />
       <HeroSection featured={featured} banners={banners} />
-
       <NewsSection posts={posts} />
       <EventsSection events={events} />
       <StudentAssistanceSection />

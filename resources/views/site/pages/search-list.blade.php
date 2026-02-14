@@ -21,7 +21,7 @@
                                     {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}
                                 </span>
                                 <span>-</span>
-                                <a href="{{ route('site.' . $matches['route'] . '.show', $item->slug) }}"
+                                <a href="{{ route('old.site.' . $matches['route'] . '.show', $item->slug) }}"
                                     class="text-decoration-none">
                                     {{ $item->title }}
                                 </a>

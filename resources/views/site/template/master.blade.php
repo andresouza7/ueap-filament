@@ -65,22 +65,32 @@
 
         table {
             border-collapse: collapse;
-            width: auto !important;        /* permite expandir além do container */
-            min-width: 100% !important;    /* nunca menor que o container */
-            table-layout: auto !important; /* deixa o browser calcular as larguras */
-            display: block;                /* permite scroll horizontal */
-            overflow-x: auto;              /* ativa o scroll */
-            max-width: 100%;               /* não ultrapassa o container */
+            width: auto !important;
+            /* permite expandir além do container */
+            min-width: 100% !important;
+            /* nunca menor que o container */
+            table-layout: auto !important;
+            /* deixa o browser calcular as larguras */
+            display: block;
+            /* permite scroll horizontal */
+            overflow-x: auto;
+            /* ativa o scroll */
+            max-width: 100%;
+            /* não ultrapassa o container */
         }
 
         /* células */
         table th,
         table td {
-            min-width: 120px;        /* impede colunas minúsculas */
+            min-width: 120px;
+            /* impede colunas minúsculas */
             padding: 6px 8px;
-            white-space: normal;     /* quebra linha normal */
-            word-break: break-word;  /* quebra palavras grandes */
-            overflow: visible;       /* não esconder conteúdo */
+            white-space: normal;
+            /* quebra linha normal */
+            word-break: break-word;
+            /* quebra palavras grandes */
+            overflow: visible;
+            /* não esconder conteúdo */
             box-sizing: border-box;
         }
     </style>
@@ -98,7 +108,7 @@
 
         <header>
 
-            <a title="UNIVERSIDADE DO ESTADO DO AMAPÁ" href="{{ route('site.home') }}">
+            <a title="UNIVERSIDADE DO ESTADO DO AMAPÁ" href="{{ route('old.site.home') }}">
                 <div id='conteudo_topo'
                     style="background: url('{{ asset('site_antigo/img/banner/banner-large.jpg') }}') no-repeat #000 center; background-size: cover;">
                 </div>
@@ -108,32 +118,35 @@
                 <div class="container-fluid">
                     <div class="d-flex gap-2">
                         <!-- Toggle button Menu Institucional -->
-                        <button class="btn btn-link d-lg-none my-2 flex-1 fw-bold text-decoration-none" 
-                            style="color: #007838;" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                            aria-expanded="false" aria-controls="navbarSupportedContent">
+                        <button class="btn btn-link d-lg-none my-2 flex-1 fw-bold text-decoration-none"
+                            style="color: #007838;" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-expanded="false"
+                            aria-controls="navbarSupportedContent">
                             <i class='fa fa-building'></i> Institucional
                         </button>
-                    
+
                         <!-- Toggle Button Menu Lateral / Mapa do Site -->
-                        <button class="btn btn-link d-lg-none my-2 flex-1 fw-bold text-decoration-none" 
-                            style="color: #007838;" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-expanded="false" aria-controls="mobileMenu">
+                        <button class="btn btn-link d-lg-none my-2 flex-1 fw-bold text-decoration-none"
+                            style="color: #007838;" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#mobileMenu" aria-expanded="false" aria-controls="mobileMenu">
                             <i class='fa fa-sitemap'></i> Mapa do Site
                         </button>
                     </div>
-                    
-            
+
+
                     <div class="collapse navbar-collapse menu-topo" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             @php
                                 $menu_top = \App\Models\WebMenu::where('web_menu_place_id', 5)->first();
                                 // dd($menu_top);
-                                $menu_top_itens = $menu_top ? 
-                                    $menu_top->items->where('menu_parent_id', null)
-                                    ->where('status', 'published')
-                                    ->sortBy('position') : false;
+                                $menu_top_itens = $menu_top
+                                    ? $menu_top->items
+                                        ->where('menu_parent_id', null)
+                                        ->where('status', 'published')
+                                        ->sortBy('position')
+                                    : false;
                             @endphp
-            
+
                             @if ($menu_top_itens)
                                 @foreach ($menu_top_itens as $item)
                                     @if ($item->sub_itens->count() > 0)
@@ -144,28 +157,30 @@
                                             </a>
                                             <ul class="dropdown-menu">
                                                 @foreach ($item->sub_itens->where('status', 'published') as $sub)
-                                                    <li><a class="dropdown-item" href="{{ $sub->url }}">{{ $sub->name }}</a></li>
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ $sub->url }}">{{ $sub->name }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </li>
                                     @else
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{ $item->url }}">{{ $item->name }}</a>
+                                            <a class="nav-link active" aria-current="page"
+                                                href="{{ $item->url }}">{{ $item->name }}</a>
                                         </li>
                                     @endif
                                 @endforeach
                             @endif
                         </ul>
-            
-                        <form class="d-flex" action="{{ route('site.search') }}" method="GET">
-                            <input class="form-control me-2" type="text" name="query" placeholder="O que você procura?"
-                                aria-label="Search" value="{{ request('query') }}" />
+
+                        <form class="d-flex" action="{{ route('old.site.search') }}" method="GET">
+                            <input class="form-control me-2" type="text" name="query"
+                                placeholder="O que você procura?" aria-label="Search" value="{{ request('query') }}" />
                             <button class="btn btn-outline-success" type="submit">Buscar</button>
                         </form>
                     </div>
                 </div>
             </nav>
-            
+
 
 
         </header>
@@ -174,15 +189,15 @@
             <div class="row m-0 p-0">
                 <div class='col-md px-2 m-0'>
 
-                    
-                
+
+
                     <!-- Collapsible Menu -->
                     <div id="mobileMenu" class="collapse d-lg-block">
                         <div class='section'>
                             @php
                                 $menu_lateral = \App\Models\WebMenu::where('web_menu_place_id', 4)->get();
                             @endphp
-                
+
                             @foreach ($menu_lateral as $menu)
                                 <div class='titulo'>{{ $menu->name }}</div>
                                 <ul class="nav flex-column">
@@ -195,9 +210,9 @@
                             @endforeach
                         </div>
                     </div>
-                
+
                 </div>
-                
+
 
                 <div class='col-md-7 m-0 p-0'>
 
@@ -304,9 +319,10 @@
                         <div class="carousel-inner">
                             @php
                                 $banners_cta = \App\Models\WebBanner::where('status', 'published')
-                                    ->whereHas('banner_place', function($query){
+                                    ->whereHas('banner_place', function ($query) {
                                         $query->where('slug', 'banner_cta');
-                                })->get();
+                                    })
+                                    ->get();
                                 $isActive = true; // Flag to mark the first item as active
                             @endphp
                             @foreach ($banners_cta as $banner)
@@ -467,9 +483,9 @@
 
                 <div class="col-12 col-md campus w-100">
                     <div class="descricao"><i class='fa fa-building'></i> Território dos Lagos</div>
-                    <div class="endereco"><i class='fa fa-map-signs' ></i> Av. Desidério Antônio Coelho, 470
-                         Sete Mangueiras | CEP: 68950-000
-                         Amapá - AP
+                    <div class="endereco"><i class='fa fa-map-signs'></i> Av. Desidério Antônio Coelho, 470
+                        Sete Mangueiras | CEP: 68950-000
+                        Amapá - AP
                     </div>
                 </div>
 
@@ -516,7 +532,7 @@
                         </div>
                     </a>
                 </div>
-                
+
             </div>
 
             <hr />

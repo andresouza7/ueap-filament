@@ -1,5 +1,5 @@
 ﻿import React, { cloneElement, useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
@@ -116,6 +116,7 @@ const CourseList = ({ slug, cursos }) => {
 
     return (
         <SidebarLayout recentNews={recentNews} categories={categories} header={headerContent} sidebar={sidebarContent}>
+            <Head title={title} />
             {/* SEÇÃO DE PESQUISA */}
             <div className="mb-10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">

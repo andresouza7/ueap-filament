@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
@@ -204,12 +204,13 @@ const PostShow = ({ post, relatedPosts }) => {
 
     return (
         <SidebarLayout
+            header={headerContent}
             recentNews={recentNews}
             categories={categories}
             menu={post?.web_menu}
-            header={headerContent}
             bottom={<RelatedPosts posts={relatedPosts} />}
         >
+            <Head title={newsData.title} />
             {/* ... (rest of the component) */}
 
             {summary && (

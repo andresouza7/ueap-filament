@@ -26,7 +26,7 @@ class OldPageController extends Controller
     {
 
         $page = WebPage::where('slug', $slug)->where('status', 'published')->first();
-         $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
+        $latestPosts = WebPost::latest('id')->where('status', 'published')->take(4)->get();
 
         if ($page) {
             // Updating with logging disabled
@@ -35,9 +35,9 @@ class OldPageController extends Controller
                 $page->increment('hits', 1);
             });
 
-            return view('novosite.pages.page-show', compact('page', 'latestPosts'));
+            return view('site.pages.page-show', compact('page', 'latestPosts'));
         } else {
-            return redirect()->route('site.home');
+            return redirect()->route('old.site.home');
         }
     }
 
@@ -65,7 +65,7 @@ class OldPageController extends Controller
 
             return view('site.pages.post-show', compact('post'));
         } else {
-            return redirect()->route('site.home');
+            return redirect()->route('old.site.home');
         }
     }
 
@@ -77,16 +77,16 @@ class OldPageController extends Controller
             $documents = Document::where('type', $type)->orderByDesc('year')->orderByDesc('title')->paginate(25)->withQueryString();
             return view('site.pages.document-list', compact('documents'));
         }
-        return redirect()->route('site.home');
+        return redirect()->route('old.site.home');
     }
 
 
-    public function normativeInstructionList($type = false)
-    {
-        $instructions = NormativeInstruction::orderBy('year', 'DESC')
-            ->orderBy('number', 'DESC')
-            ->paginate(25)
-            ->withQueryString();
-        return view('site.pages.document-normative-instruction-list', compact('instructions'));
-    }
+    // public function normativeInstructionList($type = false)
+    // {
+    //     $instructions = NormativeInstruction::orderBy('year', 'DESC')
+    //         ->orderBy('number', 'DESC')
+    //         ->paginate(25)
+    //         ->withQueryString();
+    //     return view('site.pages.document-normative-instruction-list', compact('instructions'));
+    // }
 }
