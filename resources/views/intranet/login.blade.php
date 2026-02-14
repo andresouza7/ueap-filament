@@ -126,14 +126,14 @@
                                 <input type="checkbox" id="remember" name="remember"
                                     class="w-4 h-4 accent-[#007263] cursor-pointer">
                                 <label for="remember"
-                                    class="text-[11px] font-bold text-slate-500 uppercase tracking-tighter cursor-pointer">
+                                    class="text-[11px] font-bold text-slate-500 uppercase tracking-tight cursor-pointer">
                                     Lembrar neste dispositivo
                                 </label>
                             </div>
 
                             <a href="{{ route('filament.app.auth.password-reset.request') }}"
                                 class="text-[9px] font-black uppercase text-[#007263] hover:underline">
-                                Recuperar
+                                Esqueceu sua senha?
                             </a>
                         </div>
                     </div>

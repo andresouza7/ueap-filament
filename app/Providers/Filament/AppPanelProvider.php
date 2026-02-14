@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
 use App\Filament\App\Pages\Auth\Login;
+use App\Filament\Candidato\Pages\Auth\RequestPasswordReset;
 use App\Http\Middleware\PodeGerenciarControleDeFrequencia;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
@@ -48,7 +49,7 @@ class AppPanelProvider extends PanelProvider
             ->brandLogoHeight('36px')
             // ->login(Login::class)
             ->profile(EditProfile::class)
-            ->passwordReset()
+            ->passwordReset(RequestPasswordReset::class)
             ->discoverResources(in: app_path('Filament/App/Resources/Gestao'), for: 'App\\Filament\\App\\Resources\\Gestao')
             ->discoverResources(in: app_path('Filament/App/Resources/Site'), for: 'App\\Filament\\App\\Resources\\Site')
             ->discoverResources(in: app_path('Filament/App/Resources/Social'), for: 'App\\Filament\\App\\Resources\\Social')

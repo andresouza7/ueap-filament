@@ -17,6 +17,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -42,8 +43,14 @@ class DocumentsRelationManager extends RelationManager
                     ->label('Nome')
                     ->required(),
                 TextInput::make('description')
-                    ->label('Descrição')
-                    ->required(),
+                    ->label('Descrição'),
+                Select::make('type')
+                    ->label('Tipo')
+                    ->visible(fn() => auth()->user()->hasRole('dinfo'))
+                    ->options(fn() => \App\Models\Document::query()->distinct()->pluck('type', 'type')->all())
+                    ->searchable()
+                    ->preload(),
+
                 TextInput::make('year')
                     ->label('Ano')
                     ->integer()
@@ -74,6 +81,10 @@ class DocumentsRelationManager extends RelationManager
             ->defaultSort('id', 'desc')
             ->recordAction(null)
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable()
+                    ->visible(fn() => auth()->user()->hasRole('dinfo')),
                 TextColumn::make('title')
                     ->label('Título')
                     ->searchable()
