@@ -10,8 +10,6 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
     const docs = documents.data ? documents.data : documents;
     const links = documents.links ? documents.links : [];
 
-    const { categories } = usePage().props;
-
     // Search State
     const [searchTerm, setSearchTerm] = React.useState(new URLSearchParams(window.location.search).get('search') || '');
 
@@ -53,7 +51,7 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                 <h3 className="text-xs font-black text-ueap-primary uppercase tracking-widest mb-4">Ajuda</h3>
                 <p className="text-[10px] font-bold text-contrast-body uppercase leading-relaxed">Não encontrou o documento? Sugerimos entrar em contato diretamente com o setor responsável.</p>
             </div>
-            <SidebarCategories categories={categories} />
+            <SidebarCategories />
         </div>
     );
 

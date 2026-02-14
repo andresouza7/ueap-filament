@@ -23,7 +23,7 @@ import {
 import { route } from 'ziggy-js';
 
 const CourseList = ({ slug, cursos }) => {
-    const { latestPosts, categories } = usePage().props;
+    const { latestPosts } = usePage().props;
     const [busca, setBusca] = useState('');
     const normalizedSlug = slug?.toLowerCase();
     const title = normalizedSlug === 'graduacao' ? 'Cursos de Graduação' : (normalizedSlug === 'ext' ? 'Cursos de Extensão' : 'Pós-Graduação');
@@ -68,7 +68,7 @@ const CourseList = ({ slug, cursos }) => {
         <div className="space-y-12">
             <SidebarNews recentNews={recentNews} />
             <SidebarNewsletter />
-            <SidebarCategories categories={categories} />
+            <SidebarCategories />
         </div>
     );
 

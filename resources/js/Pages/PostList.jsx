@@ -10,7 +10,6 @@ import { Home, ChevronRight } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 const PostList = ({ posts, searchString, activeCategory, postType }) => {
-    const { categories } = usePage().props;
     const [searchTerm, setSearchTerm] = useState(searchString || '');
     const [filterType, setFilterType] = useState(postType || 'todos');
 
@@ -59,7 +58,7 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
     const sidebarContent = (
         <div className="space-y-12">
             <SidebarNewsletter />
-            <SidebarCategories categories={categories} />
+            <SidebarCategories />
         </div>
     );
 

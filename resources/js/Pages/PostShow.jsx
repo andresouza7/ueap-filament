@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { usePage, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
 import { callGemini } from '@/Services/GeminiService';
@@ -10,34 +10,11 @@ import SidebarSearch from '@/Components/Site/SidebarSearch';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
+import { formatDate, formatNumber } from '@/Components/SiteLayout/utils';
 
 const PostShow = ({ post, relatedPosts }) => {
-    const { latestPosts, categories } = usePage().props;
     const [summary, setSummary] = useState('');
     const [loadingSummary, setLoadingSummary] = useState(false);
-
-    // Helper para formatar datas (PT-BR)
-    const formatDate = (dateString, includeTime = false) => {
-        if (!dateString) return null;
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) return dateString; // Fallback se não for data válida
-
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        if (includeTime) {
-            options.hour = '2-digit';
-            options.minute = '2-digit';
-        }
-        return date.toLocaleDateString('pt-BR', options);
-    };
-
-    // Helper para formatar números (1000+ = 1k)
-    const formatNumber = (num) => {
-        if (!num) return 0;
-        if (num >= 1000) {
-            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-        }
-        return num;
-    };
 
     const newsData = {
         title: post?.title,
@@ -47,14 +24,6 @@ const PostShow = ({ post, relatedPosts }) => {
         date: formatDate(post?.published_at || post?.created_at),
         views: post?.hits ? `${formatNumber(post.hits)} Leituras` : null
     };
-
-    const recentNews = latestPosts?.map(p => ({
-        id: p.id,
-        title: p.title,
-        image_url: p.image_url,
-        date: formatDate(p.created_at),
-        slug: p.slug
-    })) || [];
 
     // Determine content to render
     let contentToRender = [];
@@ -206,19 +175,9 @@ const PostShow = ({ post, relatedPosts }) => {
         </div>
     );
 
-    const sidebarContent = (
-        <div className="space-y-12">
-            <SidebarSearch />
-            <SidebarNews recentNews={recentNews} />
-            <SidebarNewsletter />
-            <SidebarCategories categories={categories} />
-        </div>
-    );
-
     return (
         <SidebarLayout
             header={headerContent}
-            sidebar={sidebarContent}
             menu={post?.web_menu}
         >
             <Head title={newsData.title} />

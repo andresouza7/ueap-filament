@@ -1,9 +1,21 @@
 ﻿import React from 'react';
 import { Clock } from 'lucide-react';
 import { route } from 'ziggy-js';
+import { usePage } from '@inertiajs/react';
+import { formatDate } from '@/Components/SiteLayout/utils';
 
-const SidebarNews = ({ recentNews = [] }) => {
-    if (!recentNews || recentNews.length === 0) return null;
+const SidebarNews = () => {
+    const { latestPosts } = usePage().props;
+
+    if (!latestPosts || latestPosts.length === 0) return null;
+
+    const recentNews = latestPosts?.map(p => ({
+        id: p.id,
+        title: p.title,
+        image_url: p.image_url,
+        date: formatDate(p.created_at),
+        slug: p.slug
+    })) || [];
 
     return (
         <div>

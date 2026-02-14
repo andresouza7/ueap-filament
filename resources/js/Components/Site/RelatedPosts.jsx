@@ -1,18 +1,10 @@
 ﻿import React from 'react';
 import { Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import { formatDate } from '@/Components/SiteLayout/utils';
 
 const RelatedPosts = ({ posts }) => {
     if (!posts || posts.length === 0) return null;
-
-    const formatDate = (dateString) => {
-        if (!dateString) return '';
-        return new Date(dateString).toLocaleDateString('pt-BR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    };
 
     return (
         <div className="mt-20 pt-16 border-t border-gray-100 animate-fade-in-up">

@@ -2,6 +2,8 @@
 import SiteLayout from '@/Layouts/SiteLayout';
 import SidebarSearch from '@/Components/Site/SidebarSearch';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
+import SidebarNews from '@/Components/Site/SidebarNews';
+import SidebarCategories from '@/Components/Site/SidebarCategories';
 
 const PageMenu = ({ menu, mobile = false }) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -96,12 +98,12 @@ const SidebarLayout = ({ children, menu, header, sidebar }) => {
                     <aside className={`lg:w-1/3 ${menu ? 'hidden lg:block' : ''}`}>
                         {menu ? (
                             <PageMenu menu={menu} />
-                        ) : sidebar ? (
-                            sidebar
-                        ) : (
+                        ) : sidebar ?? (
                             <div className="space-y-12">
                                 <SidebarSearch />
+                                <SidebarNews />
                                 <SidebarNewsletter />
+                                <SidebarCategories />
                             </div>
                         )}
                     </aside>

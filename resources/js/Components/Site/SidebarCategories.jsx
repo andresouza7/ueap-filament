@@ -1,7 +1,10 @@
 ﻿import React from 'react';
 import { route } from 'ziggy-js';
+import { usePage } from '@inertiajs/react';
 
-const SidebarCategories = ({ categories = [] }) => {
+const SidebarCategories = () => {
+    const { categories } = usePage().props;
+
     if (!categories || categories.length === 0) {
         return null;
     }
