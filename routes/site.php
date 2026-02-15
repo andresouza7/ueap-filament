@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Site\PageController;
+use App\Http\Controllers\Site\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('site.')->group(function () {
@@ -15,4 +16,5 @@ Route::name('site.')->group(function () {
         Route::get('calendario-academico',      [PageController::class, 'calendarList'])->name('calendar.list');
         Route::get('cursos/{slug}',             [PageController::class, 'courseList'])->name('course.list');
     });
+    Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 });
