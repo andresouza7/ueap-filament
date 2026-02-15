@@ -180,7 +180,24 @@ const PostShow = ({ post, relatedPosts }) => {
             header={headerContent}
             menu={post?.web_menu}
         >
-            <Head title={newsData.title} />
+            <Head>
+                <title>{newsData.title}</title>
+                <meta name="description" content={summary || newsData.title} />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="article" />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:title" content={newsData.title} />
+                <meta property="og:description" content={summary || newsData.title} />
+                <meta property="og:image" content={newsData.image} />
+
+                {/* Twitter */}
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content={window.location.href} />
+                <meta property="twitter:title" content={newsData.title} />
+                <meta property="twitter:description" content={summary || newsData.title} />
+                <meta property="twitter:image" content={newsData.image} />
+            </Head>
             {/* ... (rest of the component) */}
 
             {summary && (
