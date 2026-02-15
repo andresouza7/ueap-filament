@@ -144,6 +144,11 @@ class PageController extends Controller
                 ->orWhere('description', 'ilike', "%$request->search%");
         }
 
+        if ($request->year) {
+            $request->validate(['year' => 'integer']);
+            $query->where('year', $request->year);
+        }
+
         $items = $query->paginate(15)->withQueryString();
 
         $items->through(function ($item) {

@@ -13,6 +13,11 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
 
     // Search State
     const [searchTerm, setSearchTerm] = React.useState(new URLSearchParams(window.location.search).get('search') || '');
+    const [selectedYear, setSelectedYear] = React.useState(new URLSearchParams(window.location.search).get('year') || '');
+
+    // Generate last 10 years
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 11 }, (_, i) => currentYear - i);
 
     const handleNavigate = (page) => {
         if (onNavigate) onNavigate(page);
@@ -26,6 +31,12 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
         } else {
             url.searchParams.delete('search');
         }
+        if (selectedYear) {
+            url.searchParams.set('year', selectedYear);
+        } else {
+            url.searchParams.delete('year');
+        }
+
         url.searchParams.set('page', '1'); // Reset to page 1
         window.location.href = url.toString();
     };
@@ -67,6 +78,20 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
                         />
                         <Search className="absolute left-4 top-4 text-ueap-primary" size={18} />
                     </div>
+
+                    <div className="w-full md:w-48">
+                        <select
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                            className="w-full h-full pl-4 pr-8 py-4 bg-gray-50 border-none text-xs font-bold uppercase text-contrast-body focus:ring-1 focus:ring-ueap-primary transition-all rounded-none appearance-none cursor-pointer"
+                        >
+                            <option value="">Todos os anos</option>
+                            {years.map(year => (
+                                <option key={year} value={year}>{year}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <button onClick={handleSearch} className="bg-ueap-primary text-ueap-secondary px-8 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-ueap-accent hover:text-ueap-primary transition-all rounded-none shadow-lg">Buscar</button>
                 </div>
 
