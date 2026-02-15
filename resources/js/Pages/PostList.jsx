@@ -60,7 +60,21 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
 
     return (
         <SidebarLayout header={headerContent} sidebar={sidebarContent} >
-            <Head title="Publicações" />
+            <Head>
+                <title>Publicações</title>
+                <meta name="description" content="Acompanhe as últimas publicações, notícias, editais e eventos da UEAP." />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Notícias e Publicações - UEAP" />
+                <meta property="og:description" content="Fique por dentro do que acontece na Universidade do Estado do Amapá." />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:image" content="https://ueap.edu.br/img/nova_logo_black.png" />
+
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:title" content="Notícias e Publicações - UEAP" />
+                <meta property="twitter:description" content="Últimas atualizações da UEAP." />
+                <meta property="twitter:image" content="https://ueap.edu.br/img/nova_logo_black.png" />
+            </Head>
 
             <PostFilter
                 searchTerm={searchTerm}

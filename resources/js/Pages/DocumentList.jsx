@@ -62,7 +62,20 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
 
     return (
         <SidebarLayout header={headerContent} sidebar={sidebarContent}>
-            <Head title={title} />
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={`Acesse ${title} da UEAP. Documentos, portarias, editais e publicações oficiais.`} />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content={`${title} - UEAP`} />
+                <meta property="og:description" content={`Consulte ${title} e outros documentos oficiais da Universidade do Estado do Amapá.`} />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:image" content="https://ueap.edu.br/img/nova_logo_black.png" />
+
+                <meta property="twitter:card" content="summary" />
+                <meta property="twitter:title" content={`${title} - UEAP`} />
+                <meta property="twitter:description" content={`Acesse documentos e publicações da UEAP: ${title}.`} />
+            </Head>
             <div className="font-sans">
 
                 {/* Filtros Simples */}

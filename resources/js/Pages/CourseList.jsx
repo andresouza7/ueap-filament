@@ -94,7 +94,20 @@ const CourseList = ({ slug, cursos }) => {
 
     return (
         <SidebarLayout header={headerContent} sidebar={sidebarContent}>
-            <Head title={title} />
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={description} />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content={`${title} - UEAP`} />
+                <meta property="og:description" content={description} />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:image" content="https://ueap.edu.br/img/nova_logo_black.png" />
+
+                <meta property="twitter:card" content="summary" />
+                <meta property="twitter:title" content={`${title} - UEAP`} />
+                <meta property="twitter:description" content={description} />
+            </Head>
             {/* SEÇÃO DE PESQUISA */}
             <div className="mb-10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
