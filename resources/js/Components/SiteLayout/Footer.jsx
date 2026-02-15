@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => (
-    <footer className="bg-ueap-footer pt-16 md:pt-20 pb-8 relative overflow-hidden">
+    <footer id="main-footer" className="bg-ueap-footer pt-16 md:pt-20 pb-8 relative overflow-hidden">
         {/* Decorative layer */}
         <div className="hidden 2xl:block absolute top-0 left-0 w-1/4 h-full bg-white/[0.02] -skew-x-12 -translate-x-1/2 pointer-events-none"></div>
 
@@ -161,16 +161,18 @@ const Footer = () => (
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-footer-primary-subtle hover:text-ueap-secondary"
+                        aria-label="YouTube da UEAP"
                     >
-                        <i className="fa-brands fa-youtube text-sm"></i>
+                        <i className="fa-brands fa-youtube text-sm" aria-hidden="true"></i>
                     </a>
                     <a
                         href="https://www.instagram.com/ueapoficial/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-ueap-accent transition-all text-footer-primary-subtle hover:text-ueap-secondary"
+                        aria-label="Instagram da UEAP"
                     >
-                        <i className="fa-brands fa-instagram text-sm"></i>
+                        <i className="fa-brands fa-instagram text-sm" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>

@@ -79,9 +79,9 @@ const SidebarLayout = ({ children, menu, header, sidebar }) => {
     return (
         <SiteLayout>
             {header && (
-                <div className="w-full mb-2 md:mb-12">
+                <header className="w-full mb-2 md:mb-12" role="banner">
                     {header}
-                </div>
+                </header>
             )}
             <div className="max-w-7xl mx-auto px-4 py-6 md:py-12 relative">
 
@@ -90,12 +90,12 @@ const SidebarLayout = ({ children, menu, header, sidebar }) => {
 
                 <div className="flex flex-col lg:flex-row gap-12">
                     {/* Main Content Area */}
-                    <main className="lg:w-2/3">
+                    <div className="lg:w-2/3" role="region" aria-label="Conteúdo Principal">
                         {children}
-                    </main>
+                    </div>
 
                     {/* Sidebar Area (Desktop Only for Menu) */}
-                    <aside className={`lg:w-1/3 ${menu ? 'hidden lg:block' : ''}`}>
+                    <aside className={`lg:w-1/3 ${menu ? 'hidden lg:block' : ''}`} role="complementary" aria-label="Barra Lateral">
                         {menu ? (
                             <PageMenu menu={menu} />
                         ) : sidebar ?? (
