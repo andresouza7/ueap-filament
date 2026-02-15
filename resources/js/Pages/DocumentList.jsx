@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
+import PageHeader from '@/Components/Site/PageHeader';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Home, ChevronRight, Search, FileText, Download } from 'lucide-react';
+import { Search, FileText, Download } from 'lucide-react';
 import SidebarCategories from '../Components/Site/SidebarCategories';
 import Pagination from '@/Components/Site/Pagination';
 
@@ -29,19 +30,12 @@ const DocumentList = ({ title = "Documentos e Publicações", documents = [], on
         window.location.href = url.toString();
     };
 
-    // Header Content
     const headerContent = (
-        <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
-            <div className="max-w-7xl mx-auto px-4">
-                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
-                    <button onClick={() => handleNavigate('home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</button>
-                    <ChevronRight size={12} />
-                    <span className="text-ueap-primary">Repositório Digital</span>
-                </nav>
-                <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">{title}</h2>
-                <div className="h-2 w-24 bg-ueap-primary/80"></div>
-            </div>
-        </div>
+        <PageHeader
+            title={title}
+            breadcrumbs={[{ label: 'Repositório Digital' }]}
+            description="Acesse documentos oficiais e outras publicações da universidade. Nosso repositório digital garante transparência e fácil acesso à informação."
+        />
     );
 
     // Sidebar Content

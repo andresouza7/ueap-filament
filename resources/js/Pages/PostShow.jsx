@@ -87,7 +87,7 @@ const PostShow = ({ post, relatedPosts }) => {
     };
 
     const headerContent = (
-        <div className="relative overflow-hidden bg-gray-50 border-b border-gray-200">
+        <div className="relative overflow-hidden bg-gray-50 border-b border-gray-100">
 
             <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
                 {/* Breadcrumb refinado e mais próximo do título */}

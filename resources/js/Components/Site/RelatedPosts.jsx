@@ -7,7 +7,7 @@ const RelatedPosts = ({ posts }) => {
     if (!posts || posts.length === 0) return null;
 
     return (
-        <div className="mt-20 pt-16 border-t border-gray-100 animate-fade-in-up">
+        <div className="mt-20 mb-10 pt-14 border-t border-gray-100 animate-fade-in-up">
             <div className="flex items-center gap-4 mb-10">
                 <div className="h-8 w-1.5 bg-ueap-accent"></div>
                 <h3 className="text-2xl font-black text-ueap-primary uppercase tracking-tighter">Veja Também</h3>

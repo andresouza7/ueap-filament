@@ -1,11 +1,12 @@
 ﻿import React, { cloneElement, useState } from 'react';
 import { Link, usePage, Head } from '@inertiajs/react';
+import PageHeader from '@/Components/Site/PageHeader';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import SidebarNews from '@/Components/Site/SidebarNews';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
 import {
-    Home, ChevronRight, ArrowRight,
+    ArrowRight,
     Sprout,
     Droplets,
     Waves,
@@ -23,7 +24,6 @@ import {
 import { route } from 'ziggy-js';
 
 const CourseList = ({ slug, cursos }) => {
-    const { latestPosts } = usePage().props;
     const [busca, setBusca] = useState('');
     const normalizedSlug = slug?.toLowerCase();
     const title = normalizedSlug === 'graduacao' ? 'Cursos de Graduação' : (normalizedSlug === 'ext' ? 'Cursos de Extensão' : 'Pós-Graduação');
@@ -34,39 +34,17 @@ const CourseList = ({ slug, cursos }) => {
             ? "Programas e projetos de extensão da UEAP que promovem a interação entre a universidade e a sociedade. Através de cursos, eventos e prestação de serviços, buscamos compartilhar o conhecimento e fortalecer os vínculos com a comunidade local."
             : "Nossos programas de pós-graduação visam o aperfeiçoamento profissional e a produção de conhecimento avançado. Com foco na pesquisa e inovação, buscamos a excelência acadêmica para transformar a realidade da Amazônia e do Brasil.";
 
-    // Adapt latestPosts for the sidebar (follow PostList pattern)
-    const recentNews = latestPosts?.map(p => ({
-        id: p.id,
-        title: p.title,
-        image_url: p.image_url,
-        date: p.created_at ? new Date(p.created_at).toLocaleDateString() : "Recente",
-        slug: p.slug
-    })) || [];
-
     const headerContent = (
-        <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
-            <div className="max-w-7xl mx-auto px-4">
-                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
-                    <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1">
-                        <Home size={12} /> Início
-                    </Link>
-                    <ChevronRight size={12} />
-                    <span className="text-ueap-primary">{title}</span>
-                </nav>
-                <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">
-                    {title}
-                </h2>
-                <div className="h-2 w-24 bg-ueap-primary mb-6"></div>
-                <p className="text-contrast-body max-w-4xl text-sm leading-relaxed font-medium">
-                    {description}
-                </p>
-            </div>
-        </div>
+        <PageHeader
+            title={title}
+            breadcrumbs={[{ label: title }]}
+            description={description}
+        />
     );
 
     const sidebarContent = (
         <div className="space-y-12">
-            <SidebarNews recentNews={recentNews} />
+            <SidebarNews />
             <SidebarNewsletter />
             <SidebarCategories />
         </div>

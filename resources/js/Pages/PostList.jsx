@@ -1,12 +1,13 @@
 ﻿import React, { useState } from 'react';
 import { router, Link, usePage, Head } from '@inertiajs/react';
+import PageHeader from '@/Components/Site/PageHeader';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostFilter from '@/Components/Site/PostFilter';
 import PostCard from '@/Components/Site/PostCard';
 import Pagination from '@/Components/Site/Pagination';
 import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
 import SidebarCategories from '@/Components/Site/SidebarCategories';
-import { Home, ChevronRight } from 'lucide-react';
+
 import { route } from 'ziggy-js';
 
 const PostList = ({ posts, searchString, activeCategory, postType }) => {
@@ -39,19 +40,12 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
         router.get(route('site.post.list'));
     };
 
-    // Header Content similar to DocumentList
     const headerContent = (
-        <div className="bg-gray-50 border-b border-gray-100 pt-12 md:pt-20 pb-8 md:pb-12 text-left">
-            <div className="max-w-7xl mx-auto px-4">
-                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-6">
-                    <Link href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1"><Home size={12} /> Home</Link>
-                    <ChevronRight size={12} />
-                    <span className="text-ueap-primary">Publicações</span>
-                </nav>
-                <h2 className="text-4xl md:text-5xl font-black text-contrast-heading uppercase tracking-tighter mb-4">Explorar Publicações</h2>
-                <div className="h-2 w-24 bg-ueap-primary"></div>
-            </div>
-        </div>
+        <PageHeader
+            title="Explorar Publicações"
+            breadcrumbs={[{ label: 'Publicações' }]}
+            description="Fique por dentro das últimas notícias, eventos e atualizações da UEAP. Assine nossa newsletter para receber um resumo semanal."
+        />
     );
 
     // Custom Sidebar without duplicate search
