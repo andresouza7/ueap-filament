@@ -6,7 +6,7 @@ import { resolveUrl } from './utils';
 import MobileMenuItem from './MobileMenuItem';
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
-    <nav className="sticky top-0 z-50">
+    <nav id="main-navigation" className="sticky top-0 z-50">
         <div className="absolute inset-0 bg-gray-50/90 backdrop-blur-md shadow-md z-20 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 relative">
             <div className="flex justify-between h-16 lg:h-20">
@@ -33,30 +33,39 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                 <div key={item.id} className="relative group h-full flex items-center">
                                     {hasSubMenu ? (
                                         <>
-                                            <button className="text-contrast-heading hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30">
+                                            <button
+                                                className="text-contrast-heading group-hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center gap-1 focus:outline-none focus:text-ueap-primary"
+                                                aria-haspopup="true"
+                                                aria-expanded="false" // Dynamic update would require state, keeping static for CSS-based menu for now or we update to state.
+                                            >
                                                 {item.name}
-                                                <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
+                                                <ChevronDown size={10} className="text-contrast-heading group-hover:text-ueap-primary" aria-hidden="true" />
+                                                <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full group-focus-within:w-full"></span>
                                             </button>
 
-                                            <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block animate-in fade-in slide-in-from-top-2 z-10">
-                                                {item.sub_itens.map(subItem => (
-                                                    <a
-                                                        key={subItem.id}
-                                                        href={resolveUrl(subItem.url)}
-                                                        className="px-6 py-3 text-[10px] font-bold text-contrast-body hover:text-ueap-primary hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-ueap-accent"
-                                                    >
-                                                        {subItem.name}
-                                                    </a>
-                                                ))}
+                                            <div className="absolute top-[65%] left-0 w-64 bg-white shadow-2xl py-4 pt-10 hidden group-hover:block group-focus-within:block animate-in fade-in slide-in-from-top-2 z-10">
+                                                <ul role="menu" aria-label={item.name}>
+                                                    {item.sub_itens.map(subItem => (
+                                                        <li key={subItem.id} role="none">
+                                                            <a
+                                                                href={resolveUrl(subItem.url)}
+                                                                className="px-6 py-3 text-[10px] font-bold text-contrast-body hover:text-ueap-primary hover:bg-gray-50 uppercase tracking-widest transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-ueap-accent focus:bg-gray-50 focus:border-ueap-accent focus:outline-none"
+                                                                role="menuitem"
+                                                            >
+                                                                {subItem.name}
+                                                            </a>
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </>
                                     ) : (
                                         <a
                                             href={resolveUrl(item.url)}
-                                            className="text-contrast-heading hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center"
+                                            className="text-contrast-heading hover:text-ueap-primary font-bold text-[11px] uppercase tracking-[0.1em] transition-all relative py-8 px-2 z-30 flex items-center focus:outline-none focus:text-ueap-primary"
                                         >
                                             {item.name}
-                                            <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full"></span>
+                                            <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full group-focus:w-full"></span>
                                         </a>
                                     )}
                                 </div>

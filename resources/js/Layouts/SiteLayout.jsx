@@ -15,7 +15,7 @@ const SiteLayout = ({ children }) => {
         <div className="min-h-screen flex flex-col bg-white">
             <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
-            <TopBar />
+            <TopBar onSearchOpen={() => setIsSearchOpen(true)} />
 
             <NavBar
                 isMenuOpen={isMenuOpen}
@@ -24,7 +24,7 @@ const SiteLayout = ({ children }) => {
                 onSearchOpen={() => setIsSearchOpen(true)}
             />
 
-            <main className="flex-1">
+            <main id="main-content" className="flex-1 w-full" role="main">
                 {children}
             </main>
 

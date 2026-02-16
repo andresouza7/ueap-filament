@@ -20,7 +20,7 @@ const PageHeader = ({ title, breadcrumbs = [], description }) => {
                                     {crumb.label}
                                 </Link>
                             ) : (
-                                <span className={index === breadcrumbs.length - 1 ? "text-ueap-primary" : ""}>
+                                <span className={index === breadcrumbs.length - 1 ? "text-ueap-primary line-clamp-1 max-w-[150px] md:max-w-[400px]" : ""}>
                                     {crumb.label}
                                 </span>
                             )}

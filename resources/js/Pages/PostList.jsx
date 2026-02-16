@@ -130,7 +130,7 @@ const PostList = ({ posts, searchString, activeCategory, postType }) => {
             )}
 
             {/* Lista de Notícias em formato Paisagem */}
-            <div className="space-y-10">
+            <div className="space-y-8">
                 {posts.data.map((item) => (
                     <PostCard key={item.id} item={item} />
                 ))}
