@@ -3,12 +3,8 @@ import { Head } from '@inertiajs/react';
 import SidebarLayout from '@/Layouts/SidebarLayout';
 import PostBlockRenderer from '@/Components/Site/Blocks/PostBlockRenderer';
 import { callGemini } from '@/Services/GeminiService';
-import { Calendar, Eye, Share2, Sparkles, Loader2, Clock, ChevronRight, Bookmark } from 'lucide-react';
+import { Calendar, Eye, Share2, Sparkles, Loader2, Clock, ChevronRight, Bookmark, Home } from 'lucide-react';
 import { route } from 'ziggy-js';
-import SidebarNews from '@/Components/Site/SidebarNews';
-import SidebarSearch from '@/Components/Site/SidebarSearch';
-import SidebarNewsletter from '@/Components/Site/SidebarNewsletter';
-import SidebarCategories from '@/Components/Site/SidebarCategories';
 import RelatedPosts from '@/Components/Site/RelatedPosts';
 import { formatDate, formatNumber } from '@/Components/SiteLayout/utils';
 
@@ -90,17 +86,19 @@ const PostShow = ({ post, relatedPosts }) => {
         <div className="relative overflow-hidden bg-gray-50 border-b border-gray-100">
 
             <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 relative z-10">
-                {/* Breadcrumb refinado e mais próximo do título */}
-                <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-contrast-muted mb-6 flex-wrap">
-                    <a href={route('site.home')} className="hover:text-ueap-primary transition-colors">Início</a>
-                    <ChevronRight size={10} className="text-contrast-subtle" />
+                {/* Breadcrumb refinado e estilizado como no PageHeader */}
+                <nav className="flex items-center gap-2 text-[10px] font-bold text-contrast-muted uppercase tracking-widest mb-4 md:mb-6 flex-wrap">
+                    <a href={route('site.home')} className="hover:text-ueap-primary transition-colors flex items-center gap-1">
+                        <Home size={12} /> Início
+                    </a>
+                    <ChevronRight size={12} className="text-contrast-subtle" />
                     <a href={route('site.post.list')} className="hover:text-ueap-primary transition-colors">Publicações</a>
-                    <ChevronRight size={10} className="text-contrast-subtle" />
-                    <span className="text-contrast-primary line-clamp-1 max-w-[400px]">{newsData.title}</span>
+                    <ChevronRight size={12} className="text-contrast-subtle" />
+                    <span className="text-contrast-primary line-clamp-1 max-w-[150px] md:max-w-[400px]">{newsData.title}</span>
                 </nav>
 
                 <div className="flex flex-wrap justify-between items-end gap-6 mb-6">
-                    <div className="space-y-4 flex-1 min-w-[300px]">
+                    <div className="space-y-3 md:space-y-4 flex-1 min-w-[300px]">
                         <a
                             href={route('site.post.list', { category: newsData.categorySlug })}
                             className="inline-flex items-center px-3 py-1 bg-ueap-primary text-ueap-secondary text-[10px] font-black uppercase tracking-[0.2em] hover:bg-ueap-accent hover:text-ueap-primary transition-colors"
@@ -108,7 +106,7 @@ const PostShow = ({ post, relatedPosts }) => {
                             {newsData.category}
                         </a>
                         {/* Fonte do título reduzida e espaçamento entre linhas ajustado */}
-                        <h1 className="text-3xl md:text-4xl font-black text-contrast-primary leading-[1.05] tracking-tighter uppercase break-words max-w-4xl">
+                        <h1 className="text-2xl md:text-4xl font-bold text-contrast-primary leading-[1.05] md:uppercase break-words max-w-4xl">
                             {newsData.title}
                         </h1>
                     </div>
@@ -127,7 +125,7 @@ const PostShow = ({ post, relatedPosts }) => {
                 </div>
 
                 {/* Meta Info mais compacto */}
-                <div className="flex flex-wrap items-center gap-4 md:gap-10 pt-6 border-t border-gray-900/10 text-[10px] font-bold text-contrast-body uppercase tracking-widest">
+                <div className="flex flex-wrap items-center gap-3 md:gap-10 pt-4 md:pt-6 border-t border-gray-900/10 text-[10px] font-bold text-contrast-body uppercase tracking-widest">
                     <div className="flex items-center gap-2.5">
                         <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
                             <Calendar size={12} className="text-ueap-primary" />
@@ -140,14 +138,16 @@ const PostShow = ({ post, relatedPosts }) => {
                         </div>
                         <span>{newsData.views}</span>
                     </div>
-                    <div className="mx-auto md:mx-0 md:ml-auto flex items-center gap-3 mt-6 md:mt-0">
-                        <span className="hidden sm:block text-[10px] font-bold text-contrast-muted uppercase tracking-[0.2em]">Compartilhar</span>
-                        <div className="flex items-center gap-5 md:gap-3">
+                    <div className="w-full md:w-auto md:ml-auto flex items-center justify-between gap-3 mt-4 md:mt-0">
+                        <span className="text-[10px] font-bold text-contrast-muted uppercase tracking-[0.2em] flex items-center gap-2 leading-none">
+                            Compartilhar <i className="fa-solid fa-arrow-right text-[10px] md:hidden! relative top-[0.3px]" />
+                        </span>
+                        <div className="flex items-center gap-3">
                             <a
                                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent(newsData.title + ' - ' + window.location.href)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-contrast-body hover:bg-[#25D366] hover:text-ueap-secondary transition-all duration-300"
+                                className="w-8 h-8 rounded-full bg-[#25D366] md:bg-gray-100 flex items-center justify-center text-white md:text-contrast-body md:hover:bg-[#25D366] md:hover:text-ueap-secondary transition-all duration-300"
                                 title="WhatsApp"
                             >
                                 <i className="fa-brands fa-whatsapp text-sm" />
@@ -156,14 +156,14 @@ const PostShow = ({ post, relatedPosts }) => {
                                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-contrast-body hover:bg-[#1877F2] hover:text-ueap-secondary transition-all duration-300"
+                                className="w-8 h-8 rounded-full bg-[#1877F2] md:bg-gray-100 flex items-center justify-center text-white md:text-contrast-body md:hover:bg-[#1877F2] md:hover:text-ueap-secondary transition-all duration-300"
                                 title="Facebook"
                             >
                                 <i className="fa-brands fa-facebook-f text-sm" />
                             </a>
                             <button
                                 onClick={handleShare}
-                                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-contrast-body hover:bg-ueap-primary hover:text-ueap-secondary transition-all duration-300 cursor-pointer"
+                                className="w-8 h-8 rounded-full bg-gray-100 md:bg-gray-100 flex items-center justify-center text-contrast-body md:text-contrast-body hover:bg-ueap-primary hover:text-ueap-secondary transition-all duration-300 cursor-pointer"
                                 title="Mais opções de compartilhamento"
                             >
                                 <i className="fa-solid fa-share-nodes text-sm" />

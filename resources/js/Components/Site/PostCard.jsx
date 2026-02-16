@@ -5,10 +5,10 @@ import { Calendar, ArrowUpRight } from 'lucide-react';
 
 const PostCard = ({ item }) => {
     return (
-        <div className="group flex flex-col md:flex-row gap-3 md:gap-8 pb-10 border-b border-gray-100 last:border-0 cursor-pointer">
+        <div className="group flex flex-col md:flex-row gap-3 md:gap-6 pb-8 border-b border-gray-100 last:border-0 cursor-pointer">
             <Link href={route('site.post.show', item.slug)} className="contents">
-                {/* Container da Imagem em Paisagem (16:9) */}
-                <div className="w-full md:w-56 aspect-video bg-gray-200 overflow-hidden shrink-0 shadow-md">
+                {/* Container da Imagem em Paisagem (16:9 movel, fixo desktop) */}
+                <div className="w-full aspect-video md:w-48 md:h-32 md:aspect-auto bg-gray-200 overflow-hidden shrink-0 shadow-md self-start">
                     <img
                         src={item.image_url || `https://picsum.photos/seed/${item.id + 50}/600/338`}
                         alt="" // Decorative since title is present in the link content
