@@ -33,7 +33,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
             <div className="absolute inset-0 bg-[#003D99]/90 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose}></div>
             <div className="relative w-full max-w-3xl bg-white shadow-2xl rounded-sm overflow-hidden animate-in zoom-in-95 duration-300">
                 <div className="flex items-center p-6 border-b border-gray-100">

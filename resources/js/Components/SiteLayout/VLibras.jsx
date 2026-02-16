@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const VLibras = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const triggerVLibras = () => {
         const widget = document.querySelector('[vw-access-button]');
         if (widget) {
@@ -8,9 +15,10 @@ const VLibras = () => {
         }
     };
 
-    return (
+    if (!mounted) return null;
+
+    return createPortal(
         <>
-            {/* Ocultar botão original do VLibras via style injetado */}
             <style>
                 {`
                     [vw-access-button] {
@@ -22,7 +30,7 @@ const VLibras = () => {
             {/* Botão Customizado Flutuante - Design Exato do Blade */}
             <div
                 onClick={triggerVLibras}
-                className="fixed right-4 top-[65%] -translate-y-1/2 z-[9999] bg-white rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.15)] cursor-pointer overflow-hidden flex flex-col items-center border border-gray-100 w-11 transition-all duration-200 hover:-translate-y-[55%] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
+                className="fixed right-4 bottom-[160px] z-[9999] bg-white rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.15)] cursor-pointer overflow-hidden flex flex-col items-center border border-gray-100 w-11 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
                 title="Acessível em Libras"
                 role="button"
                 aria-label="Ativar VLibras"
@@ -34,7 +42,8 @@ const VLibras = () => {
                     VLibras
                 </div>
             </div>
-        </>
+        </>,
+        document.body
     );
 };
 
