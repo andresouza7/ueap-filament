@@ -59,7 +59,7 @@ const NewsletterForm = ({ variant = 'default' }) => {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="Seu e-mail"
-                            className="w-full px-4 py-3 bg-white/10 border border-white/20 text-xs focus:outline-none focus:bg-white focus:text-ueap-primary transition-all placeholder:text-ueap-secondary/50"
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 text-xs focus:outline-none focus:border-ueap-accent transition-all placeholder:text-ueap-secondary/50 text-ueap-secondary font-medium"
                             required
                             aria-invalid={errors.email ? 'true' : 'false'}
                             aria-describedby={errors.email ? "newsletter-error-sidebar" : undefined}

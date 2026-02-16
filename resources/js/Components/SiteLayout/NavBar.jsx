@@ -39,7 +39,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, menus, onSearchOpen }) => (
                                                 aria-expanded="false" // Dynamic update would require state, keeping static for CSS-based menu for now or we update to state.
                                             >
                                                 {item.name}
-                                                <ChevronDown size={10} className="text-ueap-accent" aria-hidden="true" />
+                                                <ChevronDown size={10} className="text-contrast-heading hover:text-ueap-primary" aria-hidden="true" />
                                                 <span className="absolute bottom-6 left-0 w-0 h-0.5 bg-ueap-accent transition-all group-hover:w-full group-focus-within:w-full"></span>
                                             </button>
 
