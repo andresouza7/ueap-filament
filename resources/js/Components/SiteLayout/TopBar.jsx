@@ -19,7 +19,7 @@ const TopBar = ({ onSearchOpen }) => (
                 </a>
             </nav>
 
-            <nav className="flex gap-4 items-center pl-4 border-l border-white/10">
+            <nav className="flex gap-4 items-center pl-4 md:border-l border-white/10">
                 <a href="https://sigaa.ueap.edu.br/sigaa/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">SIGAA</a>
                 <a href="http://intranet.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">Intranet</a>
                 <a href="http://transparencia.ueap.edu.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] font-bold hover:text-ueap-accent transition-colors uppercase tracking-[0.15em] opacity-90">Transparência</a>

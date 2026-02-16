@@ -61,24 +61,41 @@ const PostShow = ({ post, relatedPosts }) => {
         try {
             if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
                 await navigator.share(shareData);
+                return;
             } else if (navigator.share) {
-                // Fallback for browsers that support share but maybe not canShare or specific data
                 await navigator.share({
                     title: shareData.title,
                     url: shareData.url
                 });
-            } else {
-                throw new Error('Web Share API not supported');
+                return;
             }
         } catch (error) {
+            console.error('Erro ao compartilhar:', error);
             if (error.name === 'AbortError') return;
+        }
 
+        // Fallback: Tentar copiar para a área de transferência
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            alert('Link copiado para a área de transferência!');
+        } catch (err) {
+            // Fallback legado para navegadores antigos ou contextos inseguros (HTTP)
+            console.error('Clipboard API falhou, tentando execCommand:', err);
+            const textArea = document.createElement("textarea");
+            textArea.value = window.location.href;
+            textArea.style.position = "fixed";  // Evitar scroll
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
             try {
-                await navigator.clipboard.writeText(window.location.href);
+                document.execCommand('copy');
                 alert('Link copiado para a área de transferência!');
-            } catch (clipError) {
-                console.error('Falha ao copiar:', clipError);
+            } catch (err2) {
+                console.error('Falha ao copiar link:', err2);
+                alert('Não foi possível compartilhar ou copiar o link automaticamente.');
             }
+            document.body.removeChild(textArea);
         }
     };
 
