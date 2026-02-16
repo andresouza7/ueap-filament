@@ -5,6 +5,7 @@ import TopBar from '@/Components/SiteLayout/TopBar';
 import SearchModal from '@/Components/SiteLayout/SearchModal';
 import NavBar from '@/Components/SiteLayout/NavBar';
 import Footer from '@/Components/SiteLayout/Footer';
+import VLibras from '@/Components/SiteLayout/VLibras';
 
 const SiteLayout = ({ children }) => {
     const { menus } = usePage().props;
@@ -30,6 +31,7 @@ const SiteLayout = ({ children }) => {
 
             <Footer />
 
+            <VLibras />
             {/* <AIChatbot /> */}
         </div>
     );
