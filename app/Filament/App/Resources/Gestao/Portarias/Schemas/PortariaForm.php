@@ -138,7 +138,6 @@ class PortariaForm
                     ->required(),
             ])
             ->addActionLabel('Adicionar')
-            ->minItems(1)
             ->maxItems(1)
             ->live()
             ->afterStateUpdated(function ($state, callable $set, callable $get) {
