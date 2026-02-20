@@ -65,7 +65,7 @@ class ConsultaImpedimentos extends Page implements HasForms, HasTable
                     ->formatStateUsing(fn($record) => "{$record->number}/{$record->year}")
                     ->description(fn($record) => $record->portaria_description)
                     ->wrap()
-                    ->extraAttributes(['class' => 'max-w-[15rem]'])
+                    ->extraAttributes(['class' => 'max-w-xs'])
                     ->sortable()
                     ->searchable(['number', 'year', 'description']),
 
