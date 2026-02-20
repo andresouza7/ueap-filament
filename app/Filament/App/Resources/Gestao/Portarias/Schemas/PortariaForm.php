@@ -43,6 +43,7 @@ class PortariaForm
                         ->maxLength(255),
                     DatePicker::make('created_at')
                         ->label('Data')
+                        ->required()
                         ->live(),
                     TextInput::make('origin')
                         ->hidden(fn() => Auth::user()->hasRole('consu'))
